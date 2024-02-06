@@ -74,6 +74,7 @@ export default defineNuxtConfig({
   modules: [
     "@pinia/nuxt",
     "nuxt-swiper",
+    "@nuxt/ui",
     // [
     //   "nuxt-lazy-load",
     //   {
@@ -105,6 +106,9 @@ export default defineNuxtConfig({
       tailwindcss: {},
       autoprefixer: {},
     },
+  },
+  colorMode: {
+    preference: "light",
   },
   // vite: {
   //   css: {
