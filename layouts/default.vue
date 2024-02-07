@@ -1,19 +1,19 @@
 <template>
-  <!-- <Header /> -->
-  <component :is="showHeader" @openModal="openModal"></component>
+    <!-- <Header /> -->
+    <component :is="showHeader" @openModal="openModal"></component>
 
-  <!-- 主要內容 -->
-  <main :class="containerClass">
-    <slot />
-  </main>
+    <!-- 主要內容 -->
+    <main :class="containerClass">
+        <slot />
+    </main>
 
-  <!-- 頁腳 -->
-  <!-- <TheFooter /> -->
+    <!-- 頁腳 -->
+    <!-- <TheFooter /> -->
 
-  <!-- Modal -->
-  <ModalRegister v-model="showModal" />
-  <ModalLogin v-model="showModal" />
-  <ModalForgotPassword v-model="showModal" />
+    <!-- Modal -->
+    <ModalRegister v-model="showModal" />
+    <ModalLogin v-model="showModal" />
+    <ModalForgotPassword v-model="showModal" />
 </template>
 
 <script setup>
@@ -25,17 +25,17 @@ const showHeader = shallowRef(null);
 const containerClass = ref("web-container");
 
 function checkWindowWidth() {
-  if (window.innerWidth < 768) {
-    showHeader.value = HeaderMobile;
-    containerClass.value = "mobile-container";
-  } else {
-    showHeader.value = HeaderWeb;
-    containerClass.value = "web-container";
-  }
+    if (window.innerWidth < 768) {
+        showHeader.value = HeaderMobile;
+        containerClass.value = "mobile-container";
+    } else {
+        showHeader.value = HeaderWeb;
+        containerClass.value = "web-container";
+    }
 }
 
 function openModal(modalName = "") {
-  showModal.value = modalName;
+    showModal.value = modalName;
 }
 
 // const baseStore = useBaseStore();
@@ -47,20 +47,20 @@ function openModal(modalName = "") {
 // });
 
 onMounted(() => {
-  checkWindowWidth();
-
-  window.addEventListener("resize", () => {
     checkWindowWidth();
-  });
+
+    window.addEventListener("resize", () => {
+        checkWindowWidth();
+    });
 });
 </script>
 
 <style scoped>
 .mobile-container {
-  padding-top: 52px;
+    padding-top: 52px;
 }
 
 .web-container {
-  padding-top: 74px;
+    padding-top: 74px;
 }
 </style>

@@ -1,7 +1,5 @@
 <template>
-	<footer class="bg-gray-100 p-5 text-center min-h-[20vh]">
-		Footer
-	</footer>
+    <footer class="bg-gray-100 p-5 text-center min-h-[20vh]">Footer</footer>
 </template>
 
 <script setup>
