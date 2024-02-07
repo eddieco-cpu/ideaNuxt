@@ -1,9 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-
 const host = process.env.NUXT_PUBLIC_HOST;
 const port = process.env.NUXT_PUBLIC_PORT;
-const baseUrl = process.env.NODE_ENV === 'development' ? `http://${host}:${port}` : ``;
+const baseUrl =
+  process.env.NODE_ENV === "development" ? `http://${host}:${port}` : ``;
 
 const apiBase = "";
 // process.env.NODE_ENV === "development"
@@ -66,7 +66,7 @@ export default defineNuxtConfig({
     public: {
       baseUrl: baseUrl,
       host: host,
-    }
+    },
   },
   build: {
     transpile: ["@vuepic/vue-datepicker"],
@@ -100,7 +100,7 @@ export default defineNuxtConfig({
   typescript: {
     typeCheck: false,
   },
-  css: ["~/assets/css/main.css"],
+  css: ["~/assets/css/main.css", "~/assets/css/transition.css"],
   postcss: {
     plugins: {
       tailwindcss: {},
