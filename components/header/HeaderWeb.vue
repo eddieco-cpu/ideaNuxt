@@ -3,15 +3,25 @@
         <div class="px-12 flex gap-8 items-center justify-between max-w-7xl mx-auto">
             <!-- logo -->
             <div class="logo cursor-pointer">
-                <img src="~assets/images/header/logo.png" alt="logo" width="213" />
+                <NuxtLink to="/">
+                    <img src="~assets/images/header/logo.png" alt="logo" width="213" />
+                </NuxtLink>
             </div>
 
             <!-- 導覽列 -->
             <ul class="flex gap-10 text-Primary-600-Dark-Primary font-medium text-sm">
-                <li><span>群眾集資</span></li>
-                <li><span>好評團購</span></li>
-                <li><span>團主推薦</span></li>
-                <li><span>好物分享</span></li>
+                <li>
+                    <NuxtLink to="/category">群眾集資</NuxtLink>
+                </li>
+                <li>
+                    <NuxtLink to="/category">好評團購</NuxtLink>
+                </li>
+                <li>
+                    <NuxtLink to="/category">團主推薦</NuxtLink>
+                </li>
+                <li>
+                    <NuxtLink to="/category">好物分享</NuxtLink>
+                </li>
             </ul>
 
             <!-- 搜尋欄 -->
