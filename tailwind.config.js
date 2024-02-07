@@ -24,6 +24,7 @@ export default {
                 "Neutral-900": "#1E2533",
                 "Neutral-600-Dark-Primary": "#787C85",
                 "Neutral-400-Hover": "#DDDEE0",
+                "Neutral-700": "#4B515C",
                 "Neutral-800": "#29303D",
             },
             fontFamily: {
@@ -31,6 +32,7 @@ export default {
             },
             boxShadow: {
                 DEFAULT: "0 1px 12px 0 rgb(0 0 0 / 0.04)",
+                card: "0px 0px 5px 0px rgb(0 0 0 / 0.02)",
             },
         },
     },
