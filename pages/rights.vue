@@ -1,4 +1,5 @@
 <template>
+    <RightsProgress :total="100" :price="60" />
     <div>
         <h1>Rights Page</h1>
         <h2 class="text-3xl font-bold underline text-gray-500">Welcome to the rights page!</h2>
