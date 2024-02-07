@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <!-- Your HTML content goes here -->
-  </div>
+    <div>
+        <!-- Your HTML content goes here -->
+    </div>
 </template>
 
-<script setup>
-
-</script>
+<script setup></script>
 
 <style scoped>
 /* Your CSS styles go here */
