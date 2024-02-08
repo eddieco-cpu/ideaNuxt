@@ -17,7 +17,7 @@
                     <NuxtLink to="/category">好評團購</NuxtLink>
                 </li>
                 <li>
-                    <NuxtLink to="/category">團主推薦</NuxtLink>
+                    <NuxtLink to="/kol">團主推薦</NuxtLink>
                 </li>
                 <li>
                     <NuxtLink to="/category">好物分享</NuxtLink>
