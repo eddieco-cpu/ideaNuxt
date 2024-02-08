@@ -2,7 +2,7 @@
     <div class="max-w-80 md:max-w-[1200px] mt-6 mx-auto md:grid md:grid-cols-12 md:gap-x-6 md:mt-10">
         <!-- 下拉選單 -->
         <div class="grid grid-cols-2 gap-3 md:flex md:flex-col md:col-span-2">
-            <UInputMenu
+            <USelectMenu
                 variant="none"
                 size="lg"
                 class="border border-Neutral-100 rounded-md bg-white"
@@ -12,7 +12,7 @@
             />
 
             <!-- 手機版分類 -->
-            <UInputMenu
+            <USelectMenu
                 variant="none"
                 size="lg"
                 class="border border-Neutral-100 rounded-md bg-white md:hidden"
@@ -39,7 +39,7 @@
                 <div class="grid grid-cols-9 gap-4 items-center mt-8 mb-4 md:mt-0">
                     <h1 class="text-black text-xl font-medium col-span-6 md:col-span-8">3C家電</h1>
 
-                    <UInputMenu
+                    <USelectMenu
                         variant="none"
                         size="sm"
                         class="border border-Neutral-100 rounded-md bg-white col-span-3 md:col-span-1"
@@ -50,7 +50,7 @@
                         <template #trailing>
                             <img src="~assets/images/icon/sort-icon.svg" alt="sort" />
                         </template>
-                    </UInputMenu>
+                    </USelectMenu>
                 </div>
 
                 <div class="grid grid-cols-1 gap-y-4 md:gap-5" :class="showCardClass">
@@ -60,7 +60,7 @@
             </template>
 
             <div class="pt-14 md:mt-9" v-else>
-                <img src="~assets\images\status\emptyData.svg" alt="empty" class="mx-auto" />
+                <img src="~assets/images/status/emptyData.svg" alt="empty" class="mx-auto" />
                 <p class="mt-2 text-xl font-medium text-Primary-500-Primary text-center">查無符合資料</p>
             </div>
         </div>

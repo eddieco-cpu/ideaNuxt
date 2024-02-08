@@ -12,6 +12,13 @@
 
             <div class="text-xs font-medium bg-Primary-500-Primary text-white px-2 py-1 rounded-md">獨家</div>
         </div>
+
+        <!-- 愛心 -->
+        <div class="absolute top-2 right-2">
+            <img src="~assets/images/icon/heart-icon.svg" alt="favorite" v-show="false" />
+            <img src="~assets/images/icon/heart-active-icon.svg" alt="favorite" v-show="true" />
+        </div>
+
         <!-- 主圖 -->
         <img
             :src="helperPicture()"

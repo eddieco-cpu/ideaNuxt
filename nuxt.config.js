@@ -16,17 +16,17 @@ export default defineNuxtConfig({
             htmlAttrs: { lang: "zh-TW" },
             charset: "utf-8",
             viewport: "width=device-width, initial-scale=1",
-            title: "idea2",
+            title: "idea2gether",
             meta: [
                 { name: "og:type", content: "website" },
                 {
                     name: "description",
-                    content: "idea2",
+                    content: "idea2gether",
                 },
-                { neme: "og:title", content: "idea2" },
+                { neme: "og:title", content: "idea2gether" },
                 {
                     neme: "og:description",
-                    content: "idea2",
+                    content: "idea2gether",
                 },
             ],
             // script: [
