@@ -88,6 +88,7 @@ export default defineNuxtConfig({
             {
                 families: {
                     "Noto+Sans+TC": [400, 500, 600, 700],
+                    Roboto: [400, 500, 600, 700],
                     download: true,
                     inject: true,
                 },
