@@ -26,9 +26,13 @@ export default {
                 "Neutral-400-Hover": "#DDDEE0",
                 "Neutral-700": "#4B515C",
                 "Neutral-800": "#29303D",
+                "Neutral-900": "#1E2533",
+                "Status-Color-Danger-500-Primary": "#EB5232",
+                "Status-Color-Success-400-Hover": "#9CD76A",
             },
             fontFamily: {
                 noto: ["Noto Sans TC"],
+                roboto: ["roboto"],
             },
             boxShadow: {
                 DEFAULT: "0 1px 12px 0 rgb(0 0 0 / 0.04)",

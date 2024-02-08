@@ -58,9 +58,11 @@ onMounted(() => {
 <style scoped>
 .mobile-container {
     padding-top: 52px;
+    padding-bottom: 40px;
 }
 
 .web-container {
     padding-top: 74px;
+    padding-bottom: 120px;
 }
 </style>
