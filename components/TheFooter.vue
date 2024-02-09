@@ -72,9 +72,9 @@ const footerLinks = reactive([
     {
         name: "關於我們",
         links: [
-            { name: "關於我們", url: "/about" },
-            { name: "聯絡我們", url: "/contact" },
-            { name: "隱私權政策", url: "/faq" },
+            { name: "關於我們", url: "/" },
+            { name: "聯絡我們", url: "/" },
+            { name: "隱私權政策", url: "/" },
         ],
     },
     {
