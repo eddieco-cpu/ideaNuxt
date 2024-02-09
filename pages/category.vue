@@ -36,13 +36,13 @@
         <div class="md:col-span-10">
             <!-- 排序 -->
             <template v-if="true">
-                <div class="grid grid-cols-9 gap-4 items-center mt-8 mb-4 md:mt-0">
-                    <h1 class="text-black text-xl font-medium col-span-6 md:col-span-8">3C家電</h1>
+                <div class="flex justify-between gap-4 items-center mt-8 mb-4 md:mt-0">
+                    <h1 class="text-black text-xl font-medium">3C家電</h1>
 
                     <USelectMenu
                         variant="none"
                         size="sm"
-                        class="border border-Neutral-100 rounded-md bg-white col-span-3 md:col-span-1"
+                        class="border border-Neutral-100 rounded-md bg-white"
                         placeholder="排序"
                         v-model="sortSelected"
                         :options="sort"

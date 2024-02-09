@@ -22,14 +22,14 @@
     <div>
         <Transition name="mask">
             <div
-                class="absolute left-0 top-0 h-full w-full bg-black bg-opacity-50 transition duration-1000 z-50"
+                class="fixed left-0 top-0 h-full w-full bg-black bg-opacity-50 transition duration-1000 z-50"
                 @click="hideSideNav = true"
                 v-if="!hideSideNav"
             ></div>
         </Transition>
 
         <div
-            class="w-64 absolute left-0 top-0 h-full bg-white overflow-x-auto transition duration-500 transform z-50"
+            class="w-64 fixed left-0 top-0 h-full bg-white overflow-x-auto transition duration-500 transform z-50"
             :class="{ '-translate-x-full': hideSideNav }"
         >
             <div class="auth py-4 px-7 flex justify-between items-center bg-Primary-500-Primary">
@@ -92,7 +92,11 @@
                                     name="i-heroicons-minus"
                                     class="w-5 h-5 ms-auto transform transition-transform duration-200 flex"
                                 />
-                                <UIcon v-else name=" i-heroicons-plus" class="w-5 h-5 ms-auto transform transition-transform duration-200 flex" />
+                                <UIcon
+                                    v-else
+                                    name=" i-heroicons-plus"
+                                    class="w-5 h-5 ms-auto transform transition-transform duration-200 flex"
+                                />
                             </div>
                         </template>
                     </UButton>
@@ -108,7 +112,18 @@ const items = [
         label: "分類",
         slot: "category",
         showOpenIcon: true,
-        lists: ["科技AI", "時尚流行", "書籍出版", "設計藝術", "遊戲動漫", "保健食品", "課程教育", "攝影圖像", "表演/門票", "服務/公益"],
+        lists: [
+            "科技AI",
+            "時尚流行",
+            "書籍出版",
+            "設計藝術",
+            "遊戲動漫",
+            "保健食品",
+            "課程教育",
+            "攝影圖像",
+            "表演/門票",
+            "服務/公益",
+        ],
     },
     {
         label: "群眾集資",

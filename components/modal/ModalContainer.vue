@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-lvh border border-black bg-black bg-opacity-70 absolute top-0 left-0">
+    <div class="w-full h-lvh border border-black bg-black bg-opacity-70 fixed top-0 left-0">
         <div class="modal-container rounded-lg mt-40 md:mt-44 py-8 mx-auto md:px-24 px-6 bg-white relative">
             <img
                 src="~assets/images/icon/close-icon.svg"
