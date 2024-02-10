@@ -96,7 +96,7 @@ export default defineNuxtConfig({
         ],
     ],
     swiper: {
-        modules: ["navigation", "pagination", "effect-creative"],
+        //modules: ["navigation", "pagination", "effect-creative"],
     },
     plugins: [],
     typescript: {
