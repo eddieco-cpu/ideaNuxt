@@ -35,7 +35,10 @@
                             class="inline-flex justify-center items-center px-4 py-1 text-sm font-light group text-Primary-500-Primary relative z-[2] max-md:translate-x-4"
                         >
                             <b class="block translate-y-[-1px] mr-1 font-light">找更多點子</b>
-                            <UiArrowIcon class="block w-4 h-4 group-hover:animate-ping"></UiArrowIcon>
+                            <UIcon
+                                name="i-heroicons-arrow-right-circle"
+                                class="block w-4 h-4 group-hover:animate-ping"
+                            />
                         </NuxtLink>
                     </div>
 
@@ -82,7 +85,10 @@
                             class="inline-flex justify-center items-center px-4 py-1 text-sm font-light group text-Primary-500-Primary relative z-[2] max-md:translate-x-4"
                         >
                             <b class="block translate-y-[-1px] mr-1 font-light">找更多點子</b>
-                            <UiArrowIcon class="block w-4 h-4 group-hover:animate-ping"></UiArrowIcon>
+                            <UIcon
+                                name="i-heroicons-arrow-right-circle"
+                                class="block w-4 h-4 group-hover:animate-ping"
+                            />
                         </NuxtLink>
                     </div>
 
@@ -104,13 +110,19 @@
             </section>
 
             <!--  -->
-            <section class="bg-[rgb(244, 244, 244)] py-[1px]">
+            <section class="bg-[#f4f4f4] py-[1px]">
                 <UiContainer>
                     <UiTitle>最後集資倒數</UiTitle>
-                    <div class="flex justify-center flex-wrap content-start w-[calc(100%+4px)] ml-[-2px]">
-                        <CardFundraiseHome v-for="(item, i) in 8" />
+                    <div
+                        class="flex justify-start flex-wrap content-start w-[calc(100%+4px)] ml-[-2px] max-xl:w-[calc(301*3px)] max-xl:mx-auto max-lg:w-[calc(301*2px)] max-md:w-[calc(301*1px)]"
+                    >
+                        <CardFundraiseHome v-for="(item, i) in 8" class="mb-4" />
                     </div>
-                    <UiPagination />
+                    <UiPagination
+                        :currentPage="currentPage"
+                        :totalPages="totalPages"
+                        @updateCurrentPage="updateCurrentPage"
+                    />
                 </UiContainer>
             </section>
         </div>
@@ -118,6 +130,15 @@
 </template>
 
 <script setup>
+import { ref, reactive } from "vue";
+
+const currentPage = ref(10);
+const totalPages = ref(20);
+const updateCurrentPage = (newPage) => {
+    console.log("newPage", newPage);
+    currentPage.value = newPage;
+};
+
 const category = [
     "科技AI",
     "時尚流行",
