@@ -16,8 +16,9 @@ export default {
             },
             colors: {
                 "Primary-50": "#F7F5FD",
-                "Primary-200": "CCBFF6",
                 "Primary-400-Hover": "#917FDD",
+                "Primary-100": "#E5DEFA",
+                "Primary-200": "#CCBFF6",
                 "Primary-500-Primary": "#6B56CA",
                 "Primary-600-Dark-Primary": "#513FAD",
                 "Neutral-100": "#F8F8F8",

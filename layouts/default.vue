@@ -8,7 +8,7 @@
     </main>
 
     <!-- 頁腳 -->
-    <!-- <TheFooter /> -->
+    <TheFooter />
 
     <!-- Modal -->
     <ModalRegister v-model="showModal" />
