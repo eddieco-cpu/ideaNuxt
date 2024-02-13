@@ -24,6 +24,7 @@ export default {
                 "Primary-500-Primary": "#6B56CA",
                 "Primary-600-Dark-Primary": "#513FAD",
                 "Neutral-100": "#F8F8F8",
+                "Neutral-200": "#F4F4F4",
                 "Neutral-400-Hover": "#DDDEE0",
                 "Neutral-500-Primary": "#BBBEC2",
                 "Neutral-600-Dark-Primary": "#787C85",
@@ -34,6 +35,7 @@ export default {
                 "Secondary-500-Primary": "#0F85FC",
                 "Status-Color-Success-400-Hover": "#9CD76A",
                 "Status-Color-Danger-500-Primary": "#EB5232",
+                "Status-Color-Danger-600-Dark-Primary": "#C93926",
             },
             fontFamily: {
                 noto: ["Noto Sans TC"],
