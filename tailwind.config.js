@@ -16,6 +16,8 @@ export default {
             },
             colors: {
                 "Primary-50": "#F7F5FD",
+                "Primary-100": "#E5DEFA",
+                "Primary-200": "#CCBFF6",
                 "Primary-400-Hover": "#917FDD",
                 "Primary-100": "#E5DEFA",
                 "Primary-200": "#CCBFF6",
@@ -23,6 +25,7 @@ export default {
                 "Primary-600-Dark-Primary": "#513FAD",
                 "Neutral-100": "#F8F8F8",
                 "Neutral-400-Hover": "#DDDEE0",
+                "Neutral-500-Primary": "#BBBEC2",
                 "Neutral-600-Dark-Primary": "#787C85",
                 "Neutral-700": "#4B515C",
                 "Neutral-800": "#29303D",
