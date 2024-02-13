@@ -19,40 +19,30 @@
             </div>
 
             <!-- 導航列 -->
-            <ul
+            <nav
                 ref="memberNav"
                 class="member-nav px-6 flex flex-nowrap gap-x-8 overflow-x-auto md:flex-col md:gap-y-2 md:items-center"
             >
-                <li
+                <nuxt-link
                     v-for="(item, index) in memberList"
                     :key="index"
-                    class="py-3 flex flex-shrink-0 items-center gap-x-3 cursor-pointer md:py-2 md:px-8 md:border-none"
+                    :to="item.link"
+                    class="flex gap-x-3 py-3 flex-shrink-0 items-center md:py-2 md:px-8 md:border-none"
                     :class="activeNav(item.name)"
                     @click="memberTypeChoose(item.name, index)"
                 >
                     <img :src="item.imgUrl" :alt="item.name" />
                     <span>{{ item.name }}</span>
-                </li>
-            </ul>
+                </nuxt-link>
+            </nav>
         </div>
 
         <!-- 導航列顯示內容 -->
-        <Transition name="card" mode="out-in">
-            <component :is="showNav" class="max-w-[323px] mx-auto mt-8 md:col-span-9 md:max-w-full md:flex-1" />
-        </Transition>
+        <NuxtPage class="max-w-[323px] mx-auto mt-8 md:col-span-9 md:max-w-full md:flex-1" />
     </div>
 </template>
 
 <script setup>
-import {
-    MemberPassword,
-    MemberAddress,
-    MemberInfomation,
-    MemberOrder,
-    MemberFollow,
-    MemberProposal,
-} from "#components";
-
 const navSelected = ref("基本資料");
 const memberNav = ref(null);
 
@@ -60,26 +50,32 @@ const memberList = ref([
     {
         name: "基本資料",
         imgUrl: "/_nuxt/assets/images/icon/user-info-icon.svg",
+        link: "/member/information",
     },
     {
         name: "我的地址",
         imgUrl: "/_nuxt/assets/images/icon/key-icon.svg",
+        link: "/member/address",
     },
     {
         name: "修改密碼",
         imgUrl: "/_nuxt/assets/images/icon/home-icon.svg",
+        link: "/member/password",
     },
     {
         name: "我的訂單",
         imgUrl: "/_nuxt/assets/images/icon/order-icon.svg",
+        link: "/member/order",
     },
     {
         name: "我的追蹤",
         imgUrl: "/_nuxt/assets/images/icon/heart-small-icon.svg",
+        link: "/member/follow",
     },
     {
         name: "提案管理",
         imgUrl: "/_nuxt/assets/images/icon/rocket-icon.svg",
+        link: "/member/proposal",
     },
 ]);
 
@@ -99,25 +95,6 @@ function memberTypeChoose(type, index) {
         behavior: "smooth",
     });
 }
-
-const showNav = computed(() => {
-    switch (navSelected.value) {
-        case "基本資料":
-            return MemberInfomation;
-        case "我的地址":
-            return MemberAddress;
-        case "修改密碼":
-            return MemberPassword;
-        case "我的訂單":
-            return MemberOrder;
-        case "我的追蹤":
-            return MemberFollow;
-        case "提案管理":
-            return MemberProposal;
-        default:
-            return MemberInfomation;
-    }
-});
 </script>
 
 <style scoped>
