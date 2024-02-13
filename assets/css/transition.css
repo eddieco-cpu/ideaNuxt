@@ -18,3 +18,14 @@
 .page-leave-to {
     opacity: 0;
 }
+
+/* 會員卡片 */
+.card-enter-active,
+.card-leave-active {
+    transition: opacity 0.3s ease;
+}
+
+.card-enter-from,
+.card-leave-to {
+    opacity: 0;
+}

@@ -13,7 +13,9 @@
 
         <div class="max-w-[324px] mx-auto md:max-w-[1086px]">
             <!-- 小banner -->
-            <div class="h-[75px] bg-purple-400 rounded-lg mt-40 md:mt-80 flex items-center justify-center">
+            <div
+                class="h-[75px] rounded-lg mt-40 md:mt-80 flex items-center justify-center bg-no-repeat bg-cover bg-[url('/_nuxt/assets/images/kol/banner-sm.png')] md:bg-[url('/_nuxt/assets/images/kol/banner-sm-web.png')]"
+            >
                 <p class="text-white text-sm font-medium">
                     已集結<span class="font-roboto text-4xl font-bold">128</span>位達人，一同分享好務!
                 </p>

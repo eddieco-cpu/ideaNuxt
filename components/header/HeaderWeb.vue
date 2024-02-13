@@ -55,7 +55,7 @@
             </div>
 
             <!-- 會員登入 -->
-            <UButton
+            <!-- <UButton
                 color="white"
                 variant="ghost"
                 class="rounded-lg bg-Primary-50 hover:bg-opacity-30 border border-Primary-50 hover:border-Primary-50 transition duration-500 text-Primary-400-Hover px-3 py-1.5 text-sm"
@@ -64,7 +64,20 @@
                 <template #leading>
                     <img src="~assets/images/header/user-purple.svg" class="text-Primary-400-Hover" />
                 </template>
+
                 <span class="font-normal"> 登入 /註冊 </span>
+            </UButton> -->
+
+            <!-- 會員登入 -->
+            <UButton
+                color="white"
+                variant="ghost"
+                class="rounded-lg bg-Primary-50 hover:bg-opacity-30 border border-Primary-50 hover:border-Primary-50 transition duration-500 text-Primary-400-Hover px-3 py-1.5 text-sm"
+            >
+                <template #leading>
+                    <img src="~assets/images/header/user-purple.svg" class="text-Primary-400-Hover" />
+                </template>
+                <NuxtLink to="/member">會員</NuxtLink>
             </UButton>
         </div>
     </header>
