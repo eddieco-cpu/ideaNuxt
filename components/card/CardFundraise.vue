@@ -1,5 +1,7 @@
 <template>
-    <div class="w-full rounded-lg shadow-card bg-white pb-3 cursor-pointer relative">
+    <div
+        class="w-full rounded-lg shadow-card bg-white pb-2 md:pb-0 cursor-pointer relative max-w-[322px] max-h-[320px] md:max-w-[318px] md:max-h-[308px]"
+    >
         <!-- 標籤 -->
         <div class="flex items-center gap-x-2 absolute top-2 left-2">
             <div class="text-xs font-medium bg-Status-Color-Danger-500-Primary text-white px-2 py-1 rounded-md">
@@ -12,6 +14,13 @@
 
             <div class="text-xs font-medium bg-Primary-500-Primary text-white px-2 py-1 rounded-md">獨家</div>
         </div>
+
+        <!-- 愛心 -->
+        <div class="absolute top-2 right-2">
+            <img src="~assets/images/icon/heart-icon.svg" alt="favorite" v-show="false" />
+            <img src="~assets/images/icon/heart-active-icon.svg" alt="favorite" v-show="true" />
+        </div>
+
         <!-- 主圖 -->
         <img
             :src="helperPicture()"
