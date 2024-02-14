@@ -1,3 +1,5 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-    console.log("to", to);
+    if (to.path === "/member") {
+        return navigateTo("/member/information");
+    }
 });

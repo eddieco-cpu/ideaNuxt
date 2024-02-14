@@ -1,7 +1,7 @@
 <template>
-    <div class="md:flex md:gap-x-10 md:w-[1082px] md:mx-auto md:pt-8">
+    <div class="md:flex md:gap-x-10 md:max-w-[1082px] md:mx-auto md:pt-8">
         <!-- 頭像 -->
-        <div class="bg-white md:w-[216px] md:bg-transparent md:mt-6">
+        <div class="bg-white md:max-w-[216px] md:bg-transparent md:mt-6">
             <div class="w-[137px] mx-auto py-4">
                 <div class="relative">
                     <img

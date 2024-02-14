@@ -13,7 +13,7 @@
         </div>
 
         <div v-if="orderTypeSelected">
-            <div class="flex gap-4 items-center justify-between mt-8 mb-4 md:mt-0">
+            <div class="flex gap-4 items-center justify-between mt-8 mb-4 md:mt-0 md:flex-col md:items-start">
                 <h1 class="text-black text-xl font-medium flex items-center gap-x-2">
                     <UIcon name="i-heroicons-chevron-left" class="block w-4 h-4 cursor-pointer" @click="goBack" />
                     團購訂單記錄
@@ -22,7 +22,7 @@
                 <USelectMenu
                     variant="none"
                     size="sm"
-                    class="border border-Neutral-100 rounded-md bg-white"
+                    class="border border-Neutral-100 rounded-md bg-white md:hidden"
                     placeholder="狀態"
                     v-model="orderSortTypeSelected"
                     :options="orderSortType"
@@ -31,6 +31,16 @@
                         <img src="~assets/images/icon/sort-icon.svg" alt="sort" />
                     </template>
                 </USelectMenu>
+
+                <div class="hidden md:flex">
+                    <div
+                        class="border border-Neutral-400-Hover text-sm py-2 px-4 cursor-pointer"
+                        v-for="(item, index) in orderSortType"
+                        :key="index"
+                    >
+                        {{ item }}
+                    </div>
+                </div>
             </div>
 
             <CardOrder />
