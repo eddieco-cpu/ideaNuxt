@@ -27,11 +27,11 @@
                     v-for="(item, index) in memberList"
                     :key="index"
                     :to="item.link"
-                    class="flex gap-x-3 py-3 flex-shrink-0 items-center md:py-2 md:px-8 md:border-none"
-                    :class="activeNav(item.name)"
-                    @click="memberTypeChoose(item.name, index)"
+                    class="flex gap-x-3 py-3 flex-shrink-0 items-center border-b-2 border-white md:py-2 md:px-8 md:border-none"
+                    @click="memberTypeChoose(index)"
                 >
-                    <img :src="item.imgUrl" :alt="item.name" />
+                    <img :src="item.imgUrl" :alt="item.name" class="default" />
+                    <img :src="item.imgActiveUrl" :alt="item.name" class="active" />
                     <span>{{ item.name }}</span>
                 </nuxt-link>
             </nav>
@@ -43,53 +43,48 @@
 </template>
 
 <script setup>
-const navSelected = ref("基本資料");
 const memberNav = ref(null);
 
 const memberList = ref([
     {
         name: "基本資料",
         imgUrl: "/_nuxt/assets/images/icon/user-info-icon.svg",
+        imgActiveUrl: "/_nuxt/assets/images/icon/user-info-active-icon.svg",
         link: "/member/information",
     },
     {
         name: "我的地址",
-        imgUrl: "/_nuxt/assets/images/icon/key-icon.svg",
+        imgUrl: "/_nuxt/assets/images/icon/home-icon.svg",
+        imgActiveUrl: "/_nuxt/assets/images/icon/home-active-icon.svg",
         link: "/member/address",
     },
     {
         name: "修改密碼",
-        imgUrl: "/_nuxt/assets/images/icon/home-icon.svg",
+        imgUrl: "/_nuxt/assets/images/icon/key-icon.svg",
+        imgActiveUrl: "/_nuxt/assets/images/icon/key-active-icon.svg",
         link: "/member/password",
     },
     {
         name: "我的訂單",
         imgUrl: "/_nuxt/assets/images/icon/order-icon.svg",
+        imgActiveUrl: "/_nuxt/assets/images/icon/order-active-icon.svg",
         link: "/member/order",
     },
     {
         name: "我的追蹤",
         imgUrl: "/_nuxt/assets/images/icon/heart-small-icon.svg",
+        imgActiveUrl: "/_nuxt/assets/images/icon/heart-small-active-icon.svg",
         link: "/member/follow",
     },
     {
         name: "提案管理",
         imgUrl: "/_nuxt/assets/images/icon/rocket-icon.svg",
+        imgActiveUrl: "/_nuxt/assets/images/icon/rocket-smaill-active-icon.svg",
         link: "/member/proposal",
     },
 ]);
 
-const activeNav = (type) => {
-    if (type === navSelected.value) {
-        return "border-b-2 border-Primary-500-Primary text-Primary-500-Primary font-medium md:bg-Primary-100 md:rounded-lg";
-    } else {
-        return "border-b-2 border-white";
-    }
-};
-
-function memberTypeChoose(type, index) {
-    navSelected.value = type;
-
+function memberTypeChoose(index) {
     memberNav.value.scrollTo({
         left: 122 * index,
         behavior: "smooth",
@@ -100,5 +95,33 @@ function memberTypeChoose(type, index) {
 <style scoped>
 .member-nav::-webkit-scrollbar {
     display: none;
+}
+
+.router-link-exact-active {
+    border-radius: 8px;
+    background-color: #e5defa;
+    color: #6b56ca;
+}
+
+img.active {
+    display: none;
+}
+
+.router-link-exact-active img.default {
+    display: none;
+}
+
+.router-link-exact-active img.active {
+    display: block;
+}
+
+@media screen and (width < 768px) {
+    .router-link-exact-active {
+        border-radius: 8px;
+        background-color: transparent;
+        color: #6b56ca;
+        border-bottom: 2px solid #6b56ca;
+        border-radius: 0px;
+    }
 }
 </style>
