@@ -125,6 +125,27 @@
                     />
                 </UiContainer>
             </section>
+
+            <!--  -->
+            <section class="bg-[rgb(247,248,252)] py-[1px]">
+                <UiContainer>
+                    <!--  -->
+                    <UiTitle>點子開箱！影音快播</UiTitle>
+                    <UCarousel
+                        v-slot="{ item }"
+                        :items="videoList"
+                        :ui="{ item: 'snap-start' }"
+                        class="max-w-[1200px] mx-auto py-3 mb-10"
+                    >
+                        <div class="mr-5 w-[183px] aspect-[183/256] rounded-[10px] overflow-hidden">
+                            <img :src="helperPicture()" class="block w-full h-full object-cover" />
+                        </div>
+                    </UCarousel>
+
+                    <!--  -->
+                    <UiTitle>網紅推薦！限時開團中</UiTitle>
+                </UiContainer>
+            </section>
         </div>
     </section>
 </template>
@@ -164,4 +185,6 @@ const newIdeasTypes = reactive({
         { id: "6", name: "科技AI" },
     ],
 });
+
+const videoList = [{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }, { id: "5" }, { id: "6" }];
 </script>
