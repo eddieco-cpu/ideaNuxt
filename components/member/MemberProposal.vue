@@ -61,17 +61,7 @@
 
                 <div class="md:flex md:items-end md:gap-x-3">
                     <div class="pb-6 pt-[10px] flex items-end gap-x-3 md:flex-1">
-                        <UFormGroup
-                            label="邀請成員電子信箱"
-                            name="groupMemberEmail"
-                            :ui="{
-                                help: 'text-xs mt-0 text-black/[0.45]',
-                                label: {
-                                    required: `before:content-['*'] before:mx-0.5 before:text-red-500 after:content-['']`,
-                                },
-                            }"
-                            class="flex-1"
-                        >
+                        <UFormGroup label="邀請成員電子信箱" name="groupMemberEmail" class="flex-1">
                             <UInput
                                 color="white"
                                 variant="none"

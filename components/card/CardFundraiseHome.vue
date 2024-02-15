@@ -53,7 +53,6 @@
                 <UMeter
                     :value="progressMeter"
                     :ui="{ meter: { color: 'text-Primary-500-Primary', background: 'bg-Primary-50' } }"
-                    color="violet"
                 />
                 <span class="text-Primary-500-Primary font-medium text-xs">{{ progressMeter }}%</span>
             </div>

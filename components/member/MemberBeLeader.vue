@@ -7,18 +7,7 @@
 
         <div class="p-3 mt-6 rounded-lg bg-white">
             <div class="flex flex-col gap-y-3 md:max-w-[434px]">
-                <UFormGroup
-                    label="個人網址名稱"
-                    name="siteName"
-                    help="此網址為您在本站的個人網址。"
-                    :ui="{
-                        help: 'text-xs mt-0 text-black/[0.45]',
-                        label: {
-                            required: `before:content-['*'] before:mx-0.5 before:text-red-500 after:content-['']`,
-                        },
-                    }"
-                    required
-                >
+                <UFormGroup label="個人網址名稱" name="siteName" help="此網址為您在本站的個人網址。" required>
                     <UButtonGroup size="sm" orientation="horizontal" class="shadow-none w-full">
                         <UInput
                             color="white"
@@ -37,17 +26,7 @@
                     </UButtonGroup>
                 </UFormGroup>
 
-                <UFormGroup
-                    label="個人自介"
-                    name="selfDescription"
-                    :ui="{
-                        help: 'text-xs mt-0 text-black/[0.45]',
-                        label: {
-                            required: `before:content-['*'] before:mx-0.5 before:text-red-500 after:content-['']`,
-                        },
-                    }"
-                    required
-                >
+                <UFormGroup label="個人自介" name="selfDescription" required>
                     <UTextarea
                         resize
                         placeholder="請用簡短一段描述，介紹您自己，也可以形容您的精采生活，與對商品的熱愛，讓大家更認識你/妳吧！
@@ -56,17 +35,7 @@
                     />
                 </UFormGroup>
 
-                <UFormGroup
-                    label="Facebook 網址"
-                    name="facebook"
-                    :ui="{
-                        help: 'text-xs mt-0 text-black/[0.45]',
-                        label: {
-                            required: `before:content-['*'] before:mx-0.5 before:text-red-500 after:content-['']`,
-                        },
-                    }"
-                    class="mt-9"
-                >
+                <UFormGroup label="Facebook 網址" name="facebook" class="mt-9">
                     <UInput
                         color="white"
                         variant="none"
@@ -77,17 +46,7 @@
                     />
                 </UFormGroup>
 
-                <UFormGroup
-                    label="Instagram網址"
-                    name="instagram"
-                    :ui="{
-                        help: 'text-xs mt-0 text-black/[0.45]',
-                        label: {
-                            required: `before:content-['*'] before:mx-0.5 before:text-red-500 after:content-['']`,
-                        },
-                    }"
-                    class="mt-9"
-                >
+                <UFormGroup label="Instagram網址" name="instagram" class="mt-9">
                     <UInput
                         color="white"
                         variant="none"
@@ -98,17 +57,7 @@
                     />
                 </UFormGroup>
 
-                <UFormGroup
-                    label="YouTube網址"
-                    name="youtube"
-                    :ui="{
-                        help: 'text-xs mt-0 text-black/[0.45]',
-                        label: {
-                            required: `before:content-['*'] before:mx-0.5 before:text-red-500 after:content-['']`,
-                        },
-                    }"
-                    class="mt-9"
-                >
+                <UFormGroup label="YouTube網址" name="youtube" class="mt-9">
                     <UInput
                         color="white"
                         variant="none"
@@ -119,17 +68,7 @@
                     />
                 </UFormGroup>
 
-                <UFormGroup
-                    label="個人/官方網站網址"
-                    name="officialSite"
-                    :ui="{
-                        help: 'text-xs mt-0 text-black/[0.45]',
-                        label: {
-                            required: `before:content-['*'] before:mx-0.5 before:text-red-500 after:content-['']`,
-                        },
-                    }"
-                    class="mt-9"
-                >
+                <UFormGroup label="個人/官方網站網址" name="officialSite" class="mt-9">
                     <UInput
                         color="white"
                         variant="none"

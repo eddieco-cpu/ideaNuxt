@@ -3,17 +3,7 @@
         <h1 class="text-xl mb-3">基本資料</h1>
         <div class="p-3 md:p-6 rounded-lg bg-white">
             <div class="md:max-w-[434px] flex flex-col gap-y-3">
-                <UFormGroup
-                    label="暱稱"
-                    name="nickName"
-                    help="使用平台時，大家會看到您的基本暱稱。"
-                    :ui="{
-                        help: 'text-xs mt-0 text-black/[0.45]',
-                        label: {
-                            required: `before:content-['*'] before:mx-0.5 before:text-red-500 after:content-['']`,
-                        },
-                    }"
-                >
+                <UFormGroup label="暱稱" name="nickName" help="使用平台時，大家會看到您的基本暱稱。">
                     <UInput
                         color="white"
                         variant="none"
@@ -27,12 +17,6 @@
                     label="真實姓名"
                     name="name"
                     help="請填寫您個人真實姓名，此為提案、身分驗證或寄送商品時使用。"
-                    :ui="{
-                        help: 'text-xs mt-0 text-black/[0.45]',
-                        label: {
-                            required: `before:content-['*'] before:mx-0.5 before:text-red-500 after:content-['']`,
-                        },
-                    }"
                     required
                 >
                     <UInput
@@ -48,12 +32,6 @@
                     label="手機號碼"
                     name="phone"
                     help="手機已驗證成功。若您需修改手機，請聯繫官方客服中心。"
-                    :ui="{
-                        help: 'text-xs mt-0 text-black/[0.45]',
-                        label: {
-                            required: `before:content-['*'] before:mx-0.5 before:text-red-500 after:content-['']`,
-                        },
-                    }"
                     required
                 >
                     <UInput
@@ -65,17 +43,7 @@
                     />
                 </UFormGroup>
 
-                <UFormGroup
-                    label="電子信箱"
-                    name="email"
-                    :ui="{
-                        help: 'text-xs mt-0 text-black/[0.45]',
-                        label: {
-                            required: `before:content-['*'] before:mx-0.5 before:text-red-500 after:content-['']`,
-                        },
-                    }"
-                    required
-                >
+                <UFormGroup label="電子信箱" name="email" required>
                     <UInput
                         color="white"
                         variant="none"
@@ -86,17 +54,7 @@
                 </UFormGroup>
 
                 <!-- 出生日 -->
-                <UFormGroup
-                    label="出生日"
-                    name="birth"
-                    :ui="{
-                        help: 'text-xs mt-0 text-black/[0.45]',
-                        label: {
-                            required: `before:content-['*'] before:mx-0.5 before:text-red-500 after:content-['']`,
-                        },
-                    }"
-                    class="mt-9"
-                >
+                <UFormGroup label="出生日" name="birth" class="mt-9">
                     <UInput
                         color="white"
                         variant="none"
@@ -139,9 +97,6 @@
                 label="我想註冊成為開團達人/推薦名人"
                 class="mb-2"
                 help="歡迎成為開團達人，我們將會為您設立個人頁面，開始你的團購之路！"
-                :ui="{
-                    help: 'text-xs mt-2 text-black/[0.45]',
-                }"
             />
         </div>
 
