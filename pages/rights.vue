@@ -1,4 +1,7 @@
 <template>
+    <div class="my-10">
+        <ModalSlider />
+    </div>
     <RightsProgress :total="100" :price="60" />
     <div>
         <h1>Rights Page</h1>

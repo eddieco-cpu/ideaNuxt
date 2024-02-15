@@ -22,7 +22,7 @@
             <section class="bg-[rgb(247,248,252)] py-[1px]">
                 <!--  -->
                 <div class="my-10">
-                    <ModalSlider />
+                    <HomeMainSlider :slides="slides" />
                 </div>
 
                 <UiContainer>
@@ -151,8 +151,6 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
-
 const currentPage = ref(10);
 const totalPages = ref(20);
 const updateCurrentPage = (newPage) => {
@@ -187,4 +185,12 @@ const newIdeasTypes = reactive({
 });
 
 const videoList = [{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }, { id: "5" }, { id: "6" }];
+
+const slides = ref([]);
+
+onBeforeMount(async () => {
+    const response = await fetch("/api/sliderDatas");
+    const { sliderDatas } = await response.json();
+    slides.value = sliderDatas;
+});
 </script>
