@@ -1,6 +1,6 @@
 <template>
     <div
-        class="relative max-w-[324px] w-full mx-auto rounded-2xl flex bg-white border border-Secondary-200 flex-shrink-0 group cursor-pointer"
+        class="relative max-w-[324px] min-h-[138px] w-full mx-auto rounded-2xl flex bg-white border border-Secondary-200 flex-shrink-0 group cursor-pointer"
     >
         <!-- 名次-->
         <div
@@ -9,7 +9,7 @@
             <span class="text-white text-center font-bold font-roboto text-xl">1</span>
         </div>
         <!-- 主圖 -->
-        <img :src="helperPicture()" alt="kol" class="w-[138px] h-full object-cover block rounded-2xl" />
+        <img :src="helperPicture()" alt="kol" class="w-[138px] h-[138px] object-cover block rounded-2xl" />
 
         <!-- 文字 -->
         <div class="px-3 py-4">
