@@ -1,7 +1,5 @@
 <template>
-    <div
-        class="w-full rounded-lg shadow-card bg-white pb-2 md:pb-0 cursor-pointer relative max-w-[322px] max-h-[320px] md:max-w-[318px] md:max-h-[308px] group"
-    >
+    <div class="w-full rounded-lg shadow-card bg-white pb-2 cursor-pointer relative group">
         <!-- 標籤 -->
         <div class="flex items-center gap-x-2 absolute top-2 left-2">
             <Tag v-for="(tag, index) in tags" :key="index" :tag="tag" />
@@ -20,7 +18,7 @@
             class="rounded-lg w-[322px] h-[194px] md:w-[318px] md:h-[182px] object-cover"
         />
 
-        <div class="w-72 mx-auto">
+        <div class="px-4">
             <!-- 文字 -->
             <p class="text-sm font-medium mt-3 mb-5 line-clamp-2 group-hover:underline">
                 All Day水潤機 | 突破日夜保濕侷限，填滿保養空窗期，創造24小時保養時區！

@@ -21,7 +21,7 @@
                 </USelectMenu>
             </div>
 
-            <div class="md:grid md:grid-cols-3 md:gap-5">
+            <div class="grid gap-y-5 md:grid md:grid-cols-3 md:gap-5">
                 <CardFundraise v-for="(item, index) in 7" :key="index" />
             </div>
         </div>
