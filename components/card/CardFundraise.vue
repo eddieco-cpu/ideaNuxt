@@ -30,7 +30,7 @@
 
         <div class="w-72 mx-auto">
             <!-- 文字 -->
-            <p class="text-sm font-medium mt-3 mb-5">
+            <p class="text-sm font-medium mt-3 mb-5 line-clamp-2">
                 All Day水潤機 | 突破日夜保濕侷限，填滿保養空窗期，創造24小時保養時區！
             </p>
 
