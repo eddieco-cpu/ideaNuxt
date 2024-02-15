@@ -15,7 +15,7 @@
         <img
             :src="helperPicture()"
             alt="product"
-            class="rounded-lg w-[322px] h-[194px] md:w-[318px] md:h-[182px] object-cover"
+            class="rounded w-[322px] h-[194px] md:w-[318px] md:h-[182px] object-cover"
         />
 
         <div class="px-4">

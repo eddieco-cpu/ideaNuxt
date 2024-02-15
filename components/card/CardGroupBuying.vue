@@ -1,7 +1,5 @@
 <template>
-    <div
-        class="w-full rounded-lg shadow-card bg-white cursor-pointer relative max-w-[316px] max-h-[146px] md:max-w-[232px] md:max-h-[322px] group"
-    >
+    <div class="w-full rounded-lg shadow-card bg-white cursor-pointer relative group">
         <!-- 標籤 -->
         <div class="flex flex-col items-start gap-y-2 absolute top-2 left-2" v-if="!isExpired">
             <Tag v-for="(tag, index) in tags" :key="index" :tag="tag" />
@@ -18,7 +16,7 @@
             <img
                 :src="helperPicture()"
                 alt="product"
-                class="rounded-lg w-[146px] h-[146px] md:w-[234px] md:h-[234px] object-cover"
+                class="rounded w-[146px] h-[146px] md:w-[234px] md:h-[234px] object-cover"
             />
             <!-- 文字 -->
             <div

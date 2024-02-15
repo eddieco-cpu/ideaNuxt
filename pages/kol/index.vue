@@ -43,8 +43,8 @@
             </div>
 
             <!-- 精選團主卡片 -->
-            <div class="flex flex-wrap justify-between items-center gap-y-2 md:justify-start md:gap-5">
-                <CardKolRecommend v-for="(item, index) in 10" :key="index" />
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-5">
+                <CardKolRecommend v-for="(item, index) in 8" :key="index" />
             </div>
 
             <UiPagination
