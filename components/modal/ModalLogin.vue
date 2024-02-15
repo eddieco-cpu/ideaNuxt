@@ -1,26 +1,26 @@
 <template>
     <Transition name="modal">
         <ModalContainer :text="'會員登入'" @hideModal="hideModal" v-if="modelValue === 'login'">
-            <UInput
-                variant="none"
-                placeholder="輸入手機號碼"
-                class="w-full mb-6 rounded-lg border border-Neutral-400-Hover"
-            >
-                <template #leading>
-                    <img src="~assets/images/icon/phone-icon.svg" alt="phone-icon" />
-                </template>
-            </UInput>
+            <UFormGroup class="w-full mb-6">
+                <UInput variant="none" placeholder="輸入手機號碼" class="rounded-lg border border-Neutral-400-Hover">
+                    <template #leading>
+                        <img src="~assets/images/icon/phone-icon.svg" alt="phone-icon" />
+                    </template>
+                </UInput>
+            </UFormGroup>
 
-            <UInput
-                type="password"
-                variant="none"
-                placeholder="輸入密碼"
-                class="w-full mb-6 rounded-lg border border-Neutral-400-Hover"
-            >
-                <template #leading>
-                    <img src="~assets/images/icon/lock-icon.svg" alt="lock-icon" />
-                </template>
-            </UInput>
+            <UFormGroup class="w-full mb-6">
+                <UInput
+                    type="password"
+                    variant="none"
+                    placeholder="輸入密碼"
+                    class="rounded-lg border border-Neutral-400-Hover"
+                >
+                    <template #leading>
+                        <img src="~assets/images/icon/lock-icon.svg" alt="lock-icon" />
+                    </template>
+                </UInput>
+            </UFormGroup>
 
             <div class="mt-6 flex items-center justify-between w-full">
                 <span

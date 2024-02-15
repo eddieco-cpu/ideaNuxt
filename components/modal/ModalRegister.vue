@@ -10,16 +10,28 @@
             <div class="w-full" v-if="registerStep === 1">
                 <p class="self-start mt-7 mb-2 text-sm text-opacity-85">手機號碼</p>
 
-                <UInput variant="none" placeholder="輸入手機號碼" class="w-full mb-6 rounded-lg border border-Neutral-400-Hover">
-                    <template #leading>
-                        <img src="~assets/images/icon/phone-icon.svg" alt="phone-icon" />
-                    </template>
-                </UInput>
+                <UFormGroup class="w-full mb-6">
+                    <UInput
+                        variant="none"
+                        placeholder="輸入手機號碼"
+                        class="rounded-lg border border-Neutral-400-Hover"
+                    >
+                        <template #leading>
+                            <img src="~assets/images/icon/phone-icon.svg" alt="phone-icon" />
+                        </template>
+                    </UInput>
+                </UFormGroup>
 
                 <p class="self-start mb-2 text-sm text-opacity-85">驗證碼：</p>
 
                 <UButtonGroup orientation="horizontal" class="self-start flex w-full shadow-none">
-                    <UInput variant="none" placeholder="ex: 0912345678" class="border border-Neutral-400-Hover rounded-lg mr-1 w-40 md:w-60" />
+                    <UFormGroup>
+                        <UInput
+                            variant="none"
+                            placeholder="ex: 0912345678"
+                            class="border border-Neutral-400-Hover rounded-lg mr-1 w-40 md:w-60"
+                        />
+                    </UFormGroup>
 
                     <button
                         class="hover:opacity-70 transition duration-500 rounded-lg flex-1 px-4 py-1 justify-center bg-Primary-500-Primary text-sm text-white"
@@ -28,7 +40,10 @@
                     </button>
                 </UButtonGroup>
 
-                <button class="w-full bg-Primary-500-Primary block p-2 rounded-lg text-white mb-3 mt-12 text-sm" @click="registerStepHandler(2)">
+                <button
+                    class="w-full bg-Primary-500-Primary block p-2 rounded-lg text-white mb-3 mt-12 text-sm"
+                    @click="registerStepHandler(2)"
+                >
                     只剩一步
                 </button>
             </div>
@@ -40,7 +55,12 @@
                     <span class="text-xs text-neutral-500">（長度至少為8個字元且含大寫字母）</span>
                 </p>
 
-                <UInput variant="none" type="password" placeholder="ex: A2345678" class="w-full mb-6 rounded-lg border border-Neutral-400-Hover">
+                <UInput
+                    variant="none"
+                    type="password"
+                    placeholder="ex: A2345678"
+                    class="w-full mb-6 rounded-lg border border-Neutral-400-Hover"
+                >
                     <template #leading>
                         <img src="~assets/images/icon/lock-icon.svg" alt="phone-icon" />
                     </template>
@@ -48,15 +68,24 @@
 
                 <p class="self-start mb-2 text-sm text-opacity-85">請再輸入密碼</p>
 
-                <UInput variant="none" type="password" placeholder="ex: A2345678" class="w-full mb-6 rounded-lg border border-Neutral-400-Hover">
+                <UInput
+                    variant="none"
+                    type="password"
+                    placeholder="ex: A2345678"
+                    class="w-full mb-6 rounded-lg border border-Neutral-400-Hover"
+                >
                     <template #leading>
                         <img src="~assets/images/icon/lock-icon.svg" alt="phone-icon" />
                     </template>
                 </UInput>
 
-                <p class="mt-12 mb-3 text-center text-sm underline cursor-pointer" @click="registerStepHandler(1)">回上一頁</p>
+                <p class="mt-12 mb-3 text-center text-sm underline cursor-pointer" @click="registerStepHandler(1)">
+                    回上一頁
+                </p>
 
-                <button class="w-full bg-Primary-500-Primary block p-2 rounded-lg text-white mb-3 text-sm">恭喜你，完成註冊！</button>
+                <button class="w-full bg-Primary-500-Primary block p-2 rounded-lg text-white mb-3 text-sm">
+                    恭喜你，完成註冊！
+                </button>
             </div>
         </ModalContainer>
     </Transition>

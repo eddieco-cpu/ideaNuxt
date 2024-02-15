@@ -43,9 +43,16 @@
             </div>
 
             <!-- 精選團主卡片 -->
-            <div class="flex flex-wrap justify-between items-center gap-y-2 md:justify-start md:gap-5">
-                <CardKolRecommend v-for="(item, index) in 10" :key="index" />
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-5">
+                <CardKolRecommend v-for="(item, index) in 8" :key="index" />
             </div>
+
+            <UiPagination
+                class="mt-6"
+                :currentPage="currentPage"
+                :totalPages="totalPages"
+                @updateCurrentPage="updateCurrentPage"
+            />
         </div>
     </div>
 </template>
@@ -53,6 +60,12 @@
 <script setup>
 const sort = ["新到舊", "舊到新", "開團數", "活耀度"];
 const sortSelected = ref(sort[0]);
+
+const currentPage = ref(1);
+const totalPages = ref(20);
+const updateCurrentPage = (newPage) => {
+    currentPage.value = newPage;
+};
 </script>
 
 <style scoped>

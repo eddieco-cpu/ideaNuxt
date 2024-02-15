@@ -1,7 +1,7 @@
 <template>
-    <div class="md:flex md:gap-x-10 md:w-[1082px] md:mx-auto md:pt-8">
+    <div class="md:flex md:gap-x-10 md:max-w-[1082px] md:mx-auto md:pt-8">
         <!-- 頭像 -->
-        <div class="bg-white md:w-[216px] md:bg-transparent md:mt-6">
+        <div class="bg-white md:max-w-[216px] md:bg-transparent md:mt-6">
             <div class="w-[137px] mx-auto py-4">
                 <div class="relative">
                     <img
@@ -19,109 +19,109 @@
             </div>
 
             <!-- 導航列 -->
-            <ul
+            <nav
                 ref="memberNav"
                 class="member-nav px-6 flex flex-nowrap gap-x-8 overflow-x-auto md:flex-col md:gap-y-2 md:items-center"
             >
-                <li
+                <nuxt-link
                     v-for="(item, index) in memberList"
                     :key="index"
-                    class="py-3 flex flex-shrink-0 items-center gap-x-3 cursor-pointer md:py-2 md:px-8 md:border-none"
-                    :class="activeNav(item.name)"
-                    @click="memberTypeChoose(item.name, index)"
+                    :to="item.link"
+                    class="flex gap-x-3 py-3 flex-shrink-0 items-center border-b-2 border-white md:py-2 md:px-8 md:border-none"
+                    @click="memberTypeChoose(index)"
                 >
-                    <img :src="item.imgUrl" :alt="item.name" />
+                    <img :src="item.imgUrl" :alt="item.name" class="default" />
+                    <img :src="item.imgActiveUrl" :alt="item.name" class="active" />
                     <span>{{ item.name }}</span>
-                </li>
-            </ul>
+                </nuxt-link>
+            </nav>
         </div>
 
         <!-- 導航列顯示內容 -->
-        <Transition name="card" mode="out-in">
-            <component :is="showNav" class="max-w-[323px] mx-auto mt-8 md:col-span-9 md:max-w-full md:flex-1" />
-        </Transition>
+        <NuxtPage class="max-w-[323px] mx-auto mt-8 md:col-span-9 md:max-w-full md:flex-1" />
     </div>
 </template>
 
 <script setup>
-import {
-    MemberPassword,
-    MemberAddress,
-    MemberInfomation,
-    MemberOrder,
-    MemberFollow,
-    MemberProposal,
-} from "#components";
-
-const navSelected = ref("基本資料");
 const memberNav = ref(null);
 
 const memberList = ref([
     {
         name: "基本資料",
         imgUrl: "/_nuxt/assets/images/icon/user-info-icon.svg",
+        imgActiveUrl: "/_nuxt/assets/images/icon/user-info-active-icon.svg",
+        link: "/member/information",
     },
     {
         name: "我的地址",
-        imgUrl: "/_nuxt/assets/images/icon/key-icon.svg",
+        imgUrl: "/_nuxt/assets/images/icon/home-icon.svg",
+        imgActiveUrl: "/_nuxt/assets/images/icon/home-active-icon.svg",
+        link: "/member/address",
     },
     {
         name: "修改密碼",
-        imgUrl: "/_nuxt/assets/images/icon/home-icon.svg",
+        imgUrl: "/_nuxt/assets/images/icon/key-icon.svg",
+        imgActiveUrl: "/_nuxt/assets/images/icon/key-active-icon.svg",
+        link: "/member/password",
     },
     {
         name: "我的訂單",
         imgUrl: "/_nuxt/assets/images/icon/order-icon.svg",
+        imgActiveUrl: "/_nuxt/assets/images/icon/order-active-icon.svg",
+        link: "/member/order",
     },
     {
         name: "我的追蹤",
         imgUrl: "/_nuxt/assets/images/icon/heart-small-icon.svg",
+        imgActiveUrl: "/_nuxt/assets/images/icon/heart-small-active-icon.svg",
+        link: "/member/follow",
     },
     {
         name: "提案管理",
         imgUrl: "/_nuxt/assets/images/icon/rocket-icon.svg",
+        imgActiveUrl: "/_nuxt/assets/images/icon/rocket-smaill-active-icon.svg",
+        link: "/member/proposal",
     },
 ]);
 
-const activeNav = (type) => {
-    if (type === navSelected.value) {
-        return "border-b-2 border-Primary-500-Primary text-Primary-500-Primary font-medium md:bg-Primary-100 md:rounded-lg";
-    } else {
-        return "border-b-2 border-white";
-    }
-};
-
-function memberTypeChoose(type, index) {
-    navSelected.value = type;
-
+function memberTypeChoose(index) {
     memberNav.value.scrollTo({
         left: 122 * index,
         behavior: "smooth",
     });
 }
-
-const showNav = computed(() => {
-    switch (navSelected.value) {
-        case "基本資料":
-            return MemberInfomation;
-        case "我的地址":
-            return MemberAddress;
-        case "修改密碼":
-            return MemberPassword;
-        case "我的訂單":
-            return MemberOrder;
-        case "我的追蹤":
-            return MemberFollow;
-        case "提案管理":
-            return MemberProposal;
-        default:
-            return MemberInfomation;
-    }
-});
 </script>
 
 <style scoped>
 .member-nav::-webkit-scrollbar {
     display: none;
+}
+
+.router-link-exact-active {
+    border-radius: 8px;
+    background-color: #e5defa;
+    color: #6b56ca;
+}
+
+img.active {
+    display: none;
+}
+
+.router-link-exact-active img.default {
+    display: none;
+}
+
+.router-link-exact-active img.active {
+    display: block;
+}
+
+@media screen and (width < 768px) {
+    .router-link-exact-active {
+        border-radius: 8px;
+        background-color: transparent;
+        color: #6b56ca;
+        border-bottom: 2px solid #6b56ca;
+        border-radius: 0px;
+    }
 }
 </style>
