@@ -80,6 +80,13 @@
                         <!-- 卡片 -->
                         <CardGroupBuying v-for="(item, index) in 10" :key="index" />
                     </div>
+
+                    <UiPagination
+                        class="mt-6"
+                        :currentPage="currentPage"
+                        :totalPages="totalPages"
+                        @updateCurrentPage="updateCurrentPage"
+                    />
                 </div>
 
                 <!-- 即將開團 -->
@@ -105,6 +112,13 @@
                         <!-- 卡片 -->
                         <CardComingBuying v-for="(item, index) in 6" :key="index" />
                     </div>
+
+                    <UiPagination
+                        class="mt-6"
+                        :currentPage="currentPage"
+                        :totalPages="totalPages"
+                        @updateCurrentPage="updateCurrentPage"
+                    />
                 </div>
 
                 <!-- 開團紀錄 -->
@@ -130,6 +144,13 @@
                         <!-- 卡片 -->
                         <CardGroupBuying v-for="(item, index) in 6" :key="index" :isExpired="true" />
                     </div>
+
+                    <UiPagination
+                        class="mt-6"
+                        :currentPage="currentPage"
+                        :totalPages="totalPages"
+                        @updateCurrentPage="updateCurrentPage"
+                    />
                 </div>
 
                 <div class="pt-14 md:mt-9" v-else>
@@ -145,6 +166,12 @@
 const sort = ["新到舊", "舊到新", "開團數", "活耀度"];
 const sortComing = ["新到舊", "舊到新", "開團數", "活耀度"];
 const sortHistory = ["新到舊", "舊到新", "開團數", "活耀度"];
+
+const currentPage = ref(1);
+const totalPages = ref(20);
+const updateCurrentPage = (newPage) => {
+    currentPage.value = newPage;
+};
 
 const sortSelected = ref(sort[0]);
 const sortComingSelected = ref(sortComing[0]);

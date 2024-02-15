@@ -32,24 +32,41 @@
             class="w-64 fixed left-0 top-0 h-full bg-white overflow-x-auto transition duration-500 transform z-50"
             :class="{ '-translate-x-full': hideSideNav }"
         >
-            <div class="auth py-4 px-7 flex justify-between items-center bg-Primary-500-Primary">
-                <UButton
-                    color="white"
-                    variant="ghost"
-                    class="rounded-lg bg-Primary-500-Primary hover:bg-opacity-30 border border-Primary-200 hover:border-Primary-500-Primary transition duration-500 text-white px-3 py-1.5 text-sm flex items-center justify-center"
+            <div class="auth py-4 px-7 flex items-center bg-Primary-500-Primary">
+                <!-- 會員登入 -->
+                <button
+                    class="rounded-lg bg-Primary-500-Primary border border-Primary-200 text-white px-3 py-1.5 text-sm flex gap-x-1 items-center justify-center"
+                    v-if="false"
                     @click="openModal"
                 >
-                    <template #leading>
-                        <img src="~assets/images/header/user.svg" />
-                    </template>
+                    <img src="~assets/images/header/user.svg" />
+
                     <span class="font-normal"> 登入 /註冊 </span>
-                </UButton>
+                </button>
 
-                <UButton color="white" variant="ghost" class="text-white underline hover:bg-opacity-0">
-                    <span class="font-normal"> 登出 </span>
-                </UButton>
+                <!-- 會員已登入 -->
+                <div class="flex" v-else>
+                    <button
+                        class="rounded-lg bg-Primary-500-Primary border border-Primary-200 text-white px-3 py-1.5 text-sm flex gap-x-1 items-center justify-center"
+                    >
+                        <img
+                            :src="helperPicture()"
+                            alt="memberPic"
+                            class="block rounded-full w-[18px] h-[18px] object-cover"
+                        />
 
-                <img src="~assets/images/header/arrow-left.svg" alt="arrow-left" @click="hideSideNav = true" />
+                        <span class="font-normal"> 會員中心 </span>
+                    </button>
+
+                    <button class="underline text-white text-sm ml-3">登出</button>
+                </div>
+
+                <img
+                    src="~assets/images/header/arrow-left.svg"
+                    alt="arrow-left"
+                    class="ml-auto"
+                    @click="hideSideNav = true"
+                />
             </div>
 
             <UAccordion
@@ -58,6 +75,9 @@
                 size="xl"
                 open-icon="i-heroicons-plus"
                 close-icon="i-heroicons-minus"
+                :ui="{
+                    item: { padding: 'pb-0' },
+                }"
                 class="text-Primary-600-Dark-Primary px-7"
             >
                 <template #category="{ item }">

@@ -1,18 +1,10 @@
 <template>
     <div
-        class="w-full rounded-lg shadow-card bg-white pb-2 md:pb-0 cursor-pointer relative max-w-[322px] max-h-[320px] md:max-w-[318px] md:max-h-[308px]"
+        class="w-full rounded-lg shadow-card bg-white pb-2 md:pb-0 cursor-pointer relative max-w-[322px] max-h-[320px] md:max-w-[318px] md:max-h-[308px] group"
     >
         <!-- 標籤 -->
         <div class="flex items-center gap-x-2 absolute top-2 left-2">
-            <div class="text-xs font-medium bg-Status-Color-Danger-500-Primary text-white px-2 py-1 rounded-md">
-                促銷
-            </div>
-
-            <div class="text-xs font-medium bg-Status-Color-Success-400-Hover text-white px-2 py-1 rounded-md">
-                免運
-            </div>
-
-            <div class="text-xs font-medium bg-Primary-500-Primary text-white px-2 py-1 rounded-md">獨家</div>
+            <Tag v-for="(tag, index) in tags" :key="index" :tag="tag" />
         </div>
 
         <!-- 愛心 -->
@@ -30,7 +22,7 @@
 
         <div class="w-72 mx-auto">
             <!-- 文字 -->
-            <p class="text-sm font-medium mt-3 mb-5 line-clamp-2">
+            <p class="text-sm font-medium mt-3 mb-5 line-clamp-2 group-hover:underline">
                 All Day水潤機 | 突破日夜保濕侷限，填滿保養空窗期，創造24小時保養時區！
             </p>
 
@@ -62,6 +54,12 @@
 
 <script setup>
 const progressMeter = ref(300);
+
+const tags = ref([
+    { name: "促銷", color: "primary", type: "text" },
+    { name: "免運", color: "danger", type: "text" },
+    { name: "獨家", color: "success", type: "text" },
+]);
 </script>
 
 <style scoped></style>

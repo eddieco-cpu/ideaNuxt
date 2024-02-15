@@ -3,6 +3,7 @@
         <!-- 下拉選單 -->
         <div class="grid grid-cols-2 gap-3 md:flex md:flex-col md:col-span-2">
             <USelectMenu
+                optionAttribute="name"
                 variant="none"
                 size="lg"
                 class="border border-Neutral-100 rounded-md bg-white"
@@ -13,6 +14,7 @@
 
             <!-- 手機版分類 -->
             <USelectMenu
+                optionAttribute="name"
                 variant="none"
                 size="lg"
                 class="border border-Neutral-100 rounded-md bg-white md:hidden"
@@ -26,93 +28,109 @@
                 <h2 class="text-Neutral-900 text-xl font-medium mb-7">分類</h2>
 
                 <div class="flex flex-col gap-y-5 items-start">
-                    <button class="text-Neutral-900" v-for="(item, index) in category" :key="index">
-                        {{ item }}
-                    </button>
+                    <NuxtLink :to="item.link" class="text-Neutral-900" v-for="(item, index) in category" :key="index">
+                        {{ item.name }}
+                    </NuxtLink>
                 </div>
             </div>
         </div>
 
-        <div class="md:col-span-10">
-            <!-- 排序 -->
-            <template v-if="true">
-                <div class="flex justify-between gap-4 items-center mt-8 mb-4 md:mt-0">
-                    <h1 class="text-black text-xl font-medium">3C家電</h1>
-
-                    <USelectMenu
-                        variant="none"
-                        size="sm"
-                        class="border border-Neutral-100 rounded-md bg-white"
-                        placeholder="排序"
-                        v-model="sortSelected"
-                        :options="sort"
-                    >
-                        <template #trailing>
-                            <img src="~assets/images/icon/sort-icon.svg" alt="sort" />
-                        </template>
-                    </USelectMenu>
-                </div>
-
-                <div class="grid grid-cols-1 gap-y-4 md:gap-5" :class="showCardClass">
-                    <!-- 卡片 -->
-                    <component :is="showCard" v-for="(item, index) in 12" :key="index" />
-                </div>
-            </template>
-
-            <div class="pt-14 md:mt-9" v-else>
-                <img src="~assets/images/status/emptyData.svg" alt="empty" class="mx-auto" />
-                <p class="mt-2 text-xl font-medium text-Primary-500-Primary text-center">查無符合資料</p>
-            </div>
-        </div>
+        <NuxtPage class="md:col-span-10" />
     </div>
 </template>
 
 <script setup>
-import { CardGroupBuying, CardFundraise } from "#components";
+const route = useRoute();
 
-const type = ["集資", "團購"];
-const category = [
-    "科技AI",
-    "時尚流行",
-    "3C家電",
-    "書籍出版",
-    "設計藝術",
-    "遊戲動漫",
-    "保健食品",
-    "課程教育",
-    "攝影圖像",
-    "表演/門票",
-    "服務/公益",
-];
-const sort = ["最新", "最熱門", "價格高", "價格低"];
+const type = ref([
+    { name: "集資", query: "fundraise" },
+    { name: "團購", query: "groupbuying" },
+]);
+const typeSelected = ref(type.value[0]);
 
-const typeSelected = ref(type[1]);
-const categorySelected = ref(category[0]);
-const sortSelected = ref(sort[0]);
+if (route.query.type) {
+    typeSelected.value = type.value.find((item) => item.query === route.query.type);
+}
 
-const showCard = computed(() => {
-    switch (typeSelected.value) {
-        case "集資":
-            return CardFundraise;
-        case "團購":
-            return CardGroupBuying;
-        default:
-            return CardFundraise;
-    }
+const category = computed(() => {
+    const link = [
+        {
+            name: "科技AI",
+            link: `/category/technology-ai?type=${typeSelected.value.query}`,
+        },
+        {
+            name: "時尚流行",
+            link: `/category/fashion?type=${typeSelected.value.query}`,
+        },
+        {
+            name: "3C家電",
+            link: `/category/appliance?type=${typeSelected.value.query}`,
+        },
+        {
+            name: "書籍出版",
+            link: `/category/books?type=${typeSelected.value.query}`,
+        },
+        {
+            name: "設計藝術",
+            link: `/category/design?type=${typeSelected.value.query}`,
+        },
+        {
+            name: "遊戲動漫",
+            link: `/category/gaming?type=${typeSelected.value.query}`,
+        },
+        {
+            name: "保健食品",
+            link: `/category/health?type=${typeSelected.value.query}`,
+        },
+        {
+            name: "課程教育",
+            link: `/category/education?type=${typeSelected.value.query}`,
+        },
+        {
+            name: "攝影圖像",
+            link: `/category/photography?type=${typeSelected.value.query}`,
+        },
+        {
+            name: "表演/門票",
+            link: `/category/tickets?type=${typeSelected.value.query}`,
+        },
+        {
+            name: "服務/公益",
+            link: `/category/welfare?type=${typeSelected.value.query}`,
+        },
+    ];
+
+    return link;
 });
 
-const showCardClass = computed(() => {
-    switch (typeSelected.value) {
-        case "集資":
-            return "md:grid-cols-3";
-        case "團購":
-            return "md:grid-cols-4";
-        default:
-            return "md:grid-cols-3";
-    }
+const categorySelected = ref(category.value[0]);
+
+watch(categorySelected, async (newValue) => {
+    await navigateTo(`${newValue.link}`);
 });
+
+watch(typeSelected, async (newValue) => {
+    await navigateTo({
+        path: route.path,
+        query: {
+            type: newValue.query,
+        },
+    });
+});
+
+watch(
+    () => route.query,
+    (query) => {
+        if (!!query?.type) {
+            typeSelected.value = type.value.find((item) => item.query === query.type);
+        }
+    },
+    { immediate: true },
+);
 </script>
 
 <style scoped>
-/* Your CSS styles go here */
+.router-link-exact-active {
+    color: #6b56ca;
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div
-        class="relative max-w-[324px] w-full mx-auto rounded-2xl flex bg-white border border-Secondary-200 flex-shrink-0"
+        class="relative max-w-[324px] w-full mx-auto rounded-2xl flex bg-white border border-Secondary-200 flex-shrink-0 group"
     >
         <!-- 名次-->
         <div
@@ -17,7 +17,9 @@
 
             <h1 class="font-medium text-Neutral-900 text-ellipsis">小雯媽咪愛漂亮</h1>
 
-            <p class="text-Secondary-500-Primary text-sm tracking-wide flex items-center gap-x-1 mt-9 cursor-pointer">
+            <p
+                class="text-Secondary-500-Primary text-sm tracking-wide flex items-center gap-x-1 mt-9 cursor-pointer group-hover:underline group-hover:text-Secondary-400-Hover"
+            >
                 瞧瞧達人推薦商品
                 <img src="~assets/images/kol/rightCircle-icon.svg" alt="rightCircle" />
             </p>

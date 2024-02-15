@@ -32,6 +32,7 @@ export default {
                 "Neutral-800": "#29303D",
                 "Neutral-900": "#1E2533",
                 "Secondary-200": "#9EDCFE",
+                "Secondary-400-Hover": "#4AACFD",
                 "Secondary-500-Primary": "#0F85FC",
                 "Status-Color-Success-50": "#F6FAF0",
                 "Status-Color-Success-400-Hover": "#9CD76A",

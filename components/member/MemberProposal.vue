@@ -36,6 +36,13 @@
             <div class="md:grid md:grid-cols-3 md:gap-5">
                 <CardFundraise v-for="(item, index) in 20" :key="index" />
             </div>
+
+            <UiPagination
+                class="mt-6"
+                :currentPage="currentPage"
+                :totalPages="totalPages"
+                @updateCurrentPage="updateCurrentPage"
+            />
         </div>
 
         <div v-if="proposalTypeSelected === '團隊共編設定'">
@@ -144,6 +151,12 @@
 <script setup>
 const proposalSortType = ["新到舊", "舊到新", "優先成功專案", "優先失敗專案"];
 const proposalSortTypeSelected = ref(proposalSortType[0]);
+
+const currentPage = ref(1);
+const totalPages = ref(20);
+const updateCurrentPage = (newPage) => {
+    currentPage.value = newPage;
+};
 
 const memberInfo = ref({
     groupMemberEmail: "",
