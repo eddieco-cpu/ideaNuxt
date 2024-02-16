@@ -1,11 +1,8 @@
 <template>
-    <div
-        class="w-full rounded-lg shadow-card bg-white pb-2 md:pb-0 cursor-pointer relative max-w-[322px] max-h-[320px] md:max-w-[344px] md:max-h-[308px]"
-    >
+    <div class="w-full rounded-lg shadow-card bg-white pb-2 md:pb-0 cursor-pointer relative">
         <!-- 愛心 -->
         <div class="absolute top-2 right-2">
-            <img src="~assets/images/icon/heart-icon.svg" alt="favorite" v-show="true" />
-            <img src="~assets/images/icon/heart-active-icon.svg" alt="favorite" v-show="false" />
+            <TagHeart />
         </div>
 
         <!-- 主圖 -->
