@@ -125,7 +125,8 @@
 </template>
 
 <script setup>
-import { navItemIds, navItemContents } from "/_nuxt/assets/others/proposal/data";
+import { navItemIds, navItemContents } from "@/assets/others/proposal/data";
+//import { navItemIds, navItemContents } from "@/data/proposal/data";
 
 const navItems = [
     {
