@@ -9,7 +9,7 @@ export const navItemContents = [
         id: navItemIds[0],
         datas: [
             {
-                label: "在idea2gether發起募資提案有哪些資格限制嗎 ?@@@@",
+                label: "在idea2gether發起募資提案有哪些資格限制嗎 ?",
                 defaultOpen: true,
                 content: [
                     "首先，提案人的身份，必須是本國的「自然人」或者在臺灣有合法註冊的「法人或者公司團體」，如您是外國人身分，需透過在臺灣的合法代理人或者公司企業，來發起募資專案。",
