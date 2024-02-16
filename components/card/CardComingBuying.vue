@@ -27,10 +27,10 @@
                         },
                     }"
                 />
-                <span class="font-medium text-sm text-ellipsis text-white">團購達人Charlie</span>
+                <span class="font-medium text-sm text-ellipsis text-white line-clamp-2">團購達人Charlie</span>
             </div>
             <!-- 文字 -->
-            <p class="text-sm font-medium mt-3 mb-2">
+            <p class="text-sm font-medium mt-3 mb-2 line-clamp-2">
                 All Day水潤機 | 突破日夜保濕侷限，填滿保養空窗期，創造24小時保養時區！
             </p>
 

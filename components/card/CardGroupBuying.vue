@@ -38,8 +38,8 @@
                                 },
                             }"
                         />
-                        <span class="text-xs md:text-base font-medium text-Neutral-700 text-ellipsis md:text-white"
-                            >小雯媽咪愛漂亮</span
+                        <span class="text-xs md:text-base font-medium text-Neutral-700 line-clamp-2 md:text-white"
+                            >小雯媽咪愛漂亮小雯媽咪愛漂亮小雯媽咪愛漂亮</span
                         >
                     </div>
 
