@@ -30,8 +30,8 @@
                     class="flex gap-x-3 py-3 flex-shrink-0 items-center border-b-2 border-white md:py-2 md:px-8 md:border-none"
                     @click="memberTypeChoose(index)"
                 >
-                    <img :src="item.imgUrl" :alt="item.name" class="default" />
-                    <img :src="item.imgActiveUrl" :alt="item.name" class="active" />
+                    <img :src="item.imgUrl" :alt="item.name" class="default w-[14px] h-[14px]" />
+                    <img :src="item.imgActiveUrl" :alt="item.name" class="active w-[14px] h-[14px]" />
                     <span>{{ item.name }}</span>
                 </nuxt-link>
             </nav>
