@@ -102,7 +102,8 @@
     </SubmissionLayout>
 </template>
 <script setup>
-import { descriptionDatas } from "/_nuxt/assets/others/submission/data";
+import { descriptionDatas } from "@/assets/others/submission/data";
+//import { descriptionDatas } from "@/data/submission/data";
 
 const userName = ref("");
 </script>
