@@ -48,7 +48,7 @@
             <!-- 會員註冊 -->
             <button
                 class="bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover"
-                v-if="true"
+                v-if="false"
                 @click="openModal"
             >
                 <img src="~assets/images/header/user-purple.svg" class="block w-[18px] h-[18px]" />

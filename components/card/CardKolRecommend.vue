@@ -5,8 +5,7 @@
 
         <!-- 愛心 -->
         <div class="absolute top-2 right-2">
-            <img src="~assets/images/icon/heart-icon.svg" alt="favorite" v-show="true" />
-            <img src="~assets/images/icon/heart-active-icon.svg" alt="favorite" v-show="false" />
+            <TagHeart />
         </div>
 
         <!-- 名稱 -->
