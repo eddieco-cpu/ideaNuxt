@@ -30,8 +30,8 @@
                     class="flex gap-x-3 py-3 flex-shrink-0 items-center border-b-2 border-white md:py-2 md:px-8 md:border-none"
                     @click="memberTypeChoose(index)"
                 >
-                    <img :src="item.imgUrl" :alt="item.name" class="default" />
-                    <img :src="item.imgActiveUrl" :alt="item.name" class="active" />
+                    <img :src="item.imgUrl" :alt="item.name" class="default w-[14px] h-[14px]" />
+                    <img :src="item.imgActiveUrl" :alt="item.name" class="active w-[14px] h-[14px]" />
                     <span>{{ item.name }}</span>
                 </nuxt-link>
             </nav>
@@ -43,43 +43,45 @@
 </template>
 
 <script setup>
+import Icon from "assets/images/";
+
 const memberNav = ref(null);
 
 const memberList = ref([
     {
         name: "基本資料",
-        imgUrl: "/_nuxt/assets/images/icon/user-info-icon.svg",
-        imgActiveUrl: "/_nuxt/assets/images/icon/user-info-active-icon.svg",
+        imgUrl: Icon.userInfo,
+        imgActiveUrl: Icon.userInfoActive,
         link: "/member/information",
     },
     {
         name: "我的地址",
-        imgUrl: "/_nuxt/assets/images/icon/home-icon.svg",
-        imgActiveUrl: "/_nuxt/assets/images/icon/home-active-icon.svg",
+        imgUrl: Icon.home,
+        imgActiveUrl: Icon.homeActive,
         link: "/member/address",
     },
     {
         name: "修改密碼",
-        imgUrl: "/_nuxt/assets/images/icon/key-icon.svg",
-        imgActiveUrl: "/_nuxt/assets/images/icon/key-active-icon.svg",
+        imgUrl: Icon.key,
+        imgActiveUrl: Icon.keyActive,
         link: "/member/password",
     },
     {
         name: "我的訂單",
-        imgUrl: "/_nuxt/assets/images/icon/order-icon.svg",
-        imgActiveUrl: "/_nuxt/assets/images/icon/order-active-icon.svg",
+        imgUrl: Icon.order,
+        imgActiveUrl: Icon.orderActive,
         link: "/member/order",
     },
     {
         name: "我的追蹤",
-        imgUrl: "/_nuxt/assets/images/icon/heart-small-icon.svg",
-        imgActiveUrl: "/_nuxt/assets/images/icon/heart-small-active-icon.svg",
+        imgUrl: Icon.heart,
+        imgActiveUrl: Icon.heartActive,
         link: "/member/follow",
     },
     {
         name: "提案管理",
-        imgUrl: "/_nuxt/assets/images/icon/rocket-icon.svg",
-        imgActiveUrl: "/_nuxt/assets/images/icon/rocket-smaill-active-icon.svg",
+        imgUrl: Icon.rocket,
+        imgActiveUrl: Icon.rocketActive,
         link: "/member/proposal",
     },
 ]);

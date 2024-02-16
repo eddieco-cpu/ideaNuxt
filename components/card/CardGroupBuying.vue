@@ -7,8 +7,7 @@
 
         <!-- 愛心 -->
         <div class="absolute top-2 right-[175px] md:top-2 md:right-2">
-            <img src="~assets/images/icon/heart-icon.svg" alt="favorite" v-show="true" />
-            <img src="~assets/images/icon/heart-active-icon.svg" alt="favorite" v-show="false" />
+            <TagHeart />
         </div>
 
         <div class="flex gap-x-3 md:flex-col">
@@ -16,7 +15,7 @@
             <img
                 :src="helperPicture()"
                 alt="product"
-                class="rounded w-[146px] h-[146px] md:w-[234px] md:h-[234px] object-cover"
+                class="rounded w-[146px] h-[146px] md:w-full md:h-[234px] object-cover"
             />
             <!-- 文字 -->
             <div
@@ -38,8 +37,8 @@
                                 },
                             }"
                         />
-                        <span class="text-xs md:text-base font-medium text-Neutral-700 text-ellipsis md:text-white"
-                            >小雯媽咪愛漂亮</span
+                        <span class="text-xs md:text-base font-medium text-Neutral-700 line-clamp-2 md:text-white"
+                            >小雯媽咪愛漂亮小雯媽咪愛漂亮小雯媽咪愛漂亮小雯媽咪愛漂亮小雯媽咪愛漂亮</span
                         >
                     </div>
 

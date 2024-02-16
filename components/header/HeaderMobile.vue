@@ -70,28 +70,38 @@
             </div>
 
             <UAccordion
-                :items="items"
+                :items="navItems"
                 color="black"
                 size="xl"
                 open-icon="i-heroicons-plus"
                 close-icon="i-heroicons-minus"
                 :ui="{
-                    item: { padding: 'pb-0' },
+                    item: { padding: 'p-0' },
                 }"
                 class="text-Primary-600-Dark-Primary px-7"
             >
                 <template #category="{ item }">
                     <ul class="text-left bg-Primary-50 py-3 px-5 text-Neutral-900">
-                        <li v-for="(list, index) in item.lists" :key="index" class="mb-5 last:mb-0">
-                            <p>{{ list }}</p>
+                        <li
+                            v-for="(list, index) in item.lists"
+                            :key="index"
+                            class="mb-5 last:mb-0 cursor-pointer"
+                            @click="goToPage(list.link)"
+                        >
+                            <p>{{ list.name }}</p>
                         </li>
                     </ul>
                 </template>
 
                 <template #proposal="{ item }">
                     <ul class="text-left bg-Primary-50 py-3 px-5 text-Neutral-900">
-                        <li v-for="(list, index) in item.lists" :key="index" class="mb-5 last:mb-0">
-                            <p>{{ list }}</p>
+                        <li
+                            v-for="(list, index) in item.lists"
+                            :key="index"
+                            class="mb-5 last:mb-0 cursor-pointer"
+                            @click="goToPage(list.link)"
+                        >
+                            <p>{{ list.name }}</p>
                         </li>
                     </ul>
                 </template>
@@ -101,7 +111,8 @@
                         color="white"
                         variant="ghost"
                         :ui="{ rounded: 'rounded-none' }"
-                        class="text-Primary-600-Dark-Primary disabled:opacity-100 text-base justify-between p-0 pt-6"
+                        class="text-Primary-600-Dark-Primary disabled:opacity-100 text-base justify-between p-0 pt-4 pb-2"
+                        @click="goToPage(item.link)"
                     >
                         <span class="truncate">{{ item.label }}</span>
 
@@ -127,53 +138,57 @@
 </template>
 
 <script setup>
-const items = [
+const navItems = [
     {
         label: "分類",
         slot: "category",
         showOpenIcon: true,
         lists: [
-            "科技AI",
-            "時尚流行",
-            "書籍出版",
-            "設計藝術",
-            "遊戲動漫",
-            "保健食品",
-            "課程教育",
-            "攝影圖像",
-            "表演/門票",
-            "服務/公益",
+            { name: "科技AI", link: "/category/technology-ai" },
+            { name: "時尚流行", link: "/category/fashion" },
+            { name: "書籍出版", link: "/category/books" },
+            { name: "設計藝術", link: "/category/design" },
+            { name: "遊戲動漫", link: "/category/gaming" },
+            { name: "保健食品", link: "/category/health" },
+            { name: "課程教育", link: "/category/education" },
+            { name: "攝影圖像", link: "/category/photography" },
+            { name: "表演/門票", link: "/category/tickets" },
+            { name: "服務/公益", link: "/category/welfare" },
         ],
     },
     {
         label: "群眾集資",
+        link: "/category/technology-ai?type=fundraise",
         showOpenIcon: false,
-        disabled: true,
     },
     {
         label: "好評團購",
+        link: "/category/technology-ai?type=groupbuying",
         showOpenIcon: false,
-        disabled: true,
     },
     {
         label: "團主推薦",
+        link: "/kol",
         showOpenIcon: false,
-        disabled: true,
     },
     {
         label: "好物分享",
+        link: "/category",
         showOpenIcon: false,
-        disabled: true,
     },
     {
         label: "關於我們",
         slot: "proposal",
         showOpenIcon: true,
-        lists: ["關於我們", "聯絡我們", "隱私權政策"],
+        lists: [
+            { name: "關於我們", link: "/" },
+            { name: "聯絡我們", link: "/" },
+            { name: "隱私權政策", link: "/" },
+        ],
     },
     {
         label: "提案",
-        disabled: true,
+        link: "/member/proposal",
         showOpenIcon: false,
     },
 ];
@@ -181,6 +196,14 @@ const items = [
 const emit = defineEmits(["openModal"]);
 
 const hideSideNav = ref(true);
+
+function goToPage(link) {
+    if (link) {
+        hideSideNav.value = true;
+
+        navigateTo(link);
+    }
+}
 
 function openModal() {
     hideSideNav.value = true;

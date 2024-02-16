@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            class="h-[246px] md:h-[260px] bg-no-repeat bg-cover bg-[url('/_nuxt/assets/images/kol/kol-hero.png')] md:bg-[url('/_nuxt/assets/images/kol/kol-hero-web.png')]"
+            class="h-[246px] md:h-[260px] bg-no-repeat bg-cover bg-[url('assets/images/kol/kol-hero.png')] md:bg-[url('assets/images/kol/kol-hero-web.png')]"
         >
             <!-- 團主排名卡片 -->
             <div
@@ -14,10 +14,14 @@
         <div class="max-w-[324px] mx-auto md:max-w-[1086px]">
             <!-- 小banner -->
             <div
-                class="h-[75px] rounded-lg mt-40 md:mt-80 flex items-center justify-center bg-no-repeat bg-cover bg-[url('/_nuxt/assets/images/kol/banner-sm.png')] md:bg-[url('/_nuxt/assets/images/kol/banner-sm-web.png')]"
+                class="h-[75px] rounded-lg mt-40 md:mt-80 flex items-center justify-center bg-no-repeat bg-cover bg-[url('assets/images/kol/banner-sm.png')] md:bg-[url('assets/images/kol/banner-sm-web.png')]"
             >
                 <p class="text-white text-sm font-medium">
-                    已集結<span class="font-roboto text-4xl font-bold">128</span>位達人，一同分享好務!
+                    已集結
+
+                    <UtilCounter class="font-roboto text-4xl font-bold" :endNumber="128" />
+
+                    位達人，一同分享好務!
                 </p>
             </div>
 
@@ -44,7 +48,7 @@
 
             <!-- 精選團主卡片 -->
             <div class="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-5">
-                <CardKolRecommend v-for="(item, index) in 8" :key="index" />
+                <CardKolRecommend v-for="(item, index) in 8" :key="index" @click="goToPage(index)" />
             </div>
 
             <UiPagination
@@ -66,6 +70,10 @@ const totalPages = ref(20);
 const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
 };
+
+function goToPage(index) {
+    navigateTo(`/kol/${index}`);
+}
 </script>
 
 <style scoped>
