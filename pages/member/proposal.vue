@@ -12,6 +12,7 @@
             </div>
         </div>
 
+        <!-- 提案編輯 -->
         <div v-if="proposalTypeSelected === '提案編輯'">
             <div class="flex gap-4 items-center justify-between mt-8 mb-4 md:mt-0">
                 <h1 class="text-black text-xl font-medium flex items-center gap-x-2">
@@ -34,7 +35,7 @@
             </div>
 
             <div class="md:grid md:grid-cols-3 md:gap-5">
-                <CardFundraise v-for="(item, index) in 20" :key="index" />
+                <CardFundraise v-for="(item, index) in 20" :key="index" :isEditMode="true" />
             </div>
 
             <UiPagination
@@ -45,6 +46,7 @@
             />
         </div>
 
+        <!-- 團隊共編設定 -->
         <div v-if="proposalTypeSelected === '團隊共編設定'">
             <div class="flex flex-col gap-y-4 items-start mt-8 mb-4 md:mt-0">
                 <h1 class="text-black text-xl font-medium flex items-center gap-x-2">

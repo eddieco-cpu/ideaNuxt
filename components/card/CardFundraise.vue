@@ -7,7 +7,7 @@
 
         <!-- 愛心 -->
         <div class="absolute top-2 right-2">
-            <TagHeart />
+            <TagHeart :isEditMode="isEditMode" />
         </div>
 
         <!-- 主圖 -->
@@ -25,31 +25,66 @@
 
             <div class="flex items-center">
                 <!-- 價格 -->
-                <p class="text-Neutral-800 font-medium">$ 544,980</p>
+                <p class="font-medium" :class="isExpiredClass('price')">$ 544,980</p>
 
                 <!-- 日期 -->
                 <img src="~assets/images/icon/clock-icon.svg" alt="clock" width="12" class="ml-auto" />
-                <p class="ml-1 text-Neutral-700 text-sm">19日</p>
+                <p class="ml-1 text-sm" :class="isExpiredClass('text')">{{ isExpired ? "已結束" : "19日" }}</p>
 
                 <!-- 人數 -->
-                <img src="~assets/images/icon/user-icon.svg" alt="clock" width="12" class="ml-3" />
-                <p class="ml-1 text-Neutral-700 text-sm">345人</p>
+                <img src="~assets/images/icon/user-icon.svg" alt="user" width="12" class="ml-3" />
+                <p class="ml-1 text-sm" :class="isExpiredClass('text')">345人</p>
             </div>
 
             <!-- 百分比 -->
             <div class="flex items-center gap-3 mt-1">
                 <UMeter
                     :value="progressMeter"
-                    :ui="{ meter: { color: 'text-Primary-500-Primary', background: 'bg-Primary-50' } }"
+                    :ui="{ meter: { color: isExpiredClass('meter'), background: isExpiredClass('meter') } }"
                 />
-                <span class="text-Primary-500-Primary font-medium text-xs">{{ progressMeter }}%</span>
+                <span class="font-medium text-xs" :class="isExpiredClass('meter')">{{ progressMeter }}%</span>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
+const { isEditMode, isExpired } = defineProps({
+    isEditMode: {
+        type: Boolean,
+        default: false,
+    },
+    isExpired: {
+        type: Boolean,
+        default: false,
+    },
+});
+
 const progressMeter = ref(300);
+
+function isExpiredClass(type) {
+    if (isExpired) {
+        switch (type) {
+            case "text":
+            case "price":
+            case "meter":
+                return "text-Neutral-500-Primary";
+            default:
+                break;
+        }
+    } else {
+        switch (type) {
+            case "text":
+                return "text-Neutral-700";
+            case "price":
+                return "text-Neutral-800";
+            case "meter":
+                return "text-Primary-500-Primary";
+            default:
+                break;
+        }
+    }
+}
 
 const tags = ref([
     { name: "促銷", color: "primary", type: "text" },

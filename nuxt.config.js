@@ -69,7 +69,7 @@ export default defineNuxtConfig({
         },
     },
     build: {
-        transpile: ["@vuepic/vue-datepicker"],
+        transpile: ["@vuepic/vue-datepicker", "vue-toastification"],
     },
     modules: [
         "@pinia/nuxt",
@@ -103,7 +103,7 @@ export default defineNuxtConfig({
     typescript: {
         typeCheck: false,
     },
-    css: ["~/assets/css/main.css", "~/assets/css/transition.css"],
+    css: ["~/assets/css/main.css"],
     postcss: {
         plugins: {
             tailwindcss: {},

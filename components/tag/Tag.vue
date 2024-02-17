@@ -16,6 +16,7 @@
         {{ tag.name }}
     </div>
 </template>
+
 <script setup>
 const { tag } = defineProps({
     tag: Object,
@@ -39,4 +40,5 @@ function showClass(type) {
     }
 }
 </script>
+
 <style scope></style>
