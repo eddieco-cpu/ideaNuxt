@@ -139,6 +139,8 @@
 </template>
 
 <script setup>
+import Icon from "assets/images/";
+
 const proposalSortType = ["新到舊", "舊到新", "優先成功專案", "優先失敗專案"];
 const proposalSortTypeSelected = ref(proposalSortType[0]);
 
@@ -156,11 +158,11 @@ const memberInfo = ref({
 const proposalOption = [
     {
         name: "提案編輯",
-        imgUrl: "/_nuxt/assets/images/icon/edit-icon.svg",
+        imgUrl: Icon.edit,
     },
     {
         name: "團隊共編設定",
-        imgUrl: "/_nuxt/assets/images/icon/users-active-icon.svg",
+        imgUrl: Icon.users,
     },
 ];
 

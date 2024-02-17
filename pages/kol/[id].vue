@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            class="h-[240px] md:h-[110px] bg-no-repeat bg-cover bg-[url('/_nuxt/assets/images/kol/banner.png')] md:bg-[url('/_nuxt/assets/images/kol/banner-web.png')]"
+            class="h-[240px] md:h-[110px] bg-no-repeat bg-cover bg-[url('assets/images/kol/banner.png')] md:bg-[url('assets/images/kol/banner-web.png')]"
         ></div>
 
         <div class="max-w-80 md:max-w-[1086px] -mt-[80px] mx-auto md:grid md:grid-cols-12 md:gap-x-6 md:mt-10">

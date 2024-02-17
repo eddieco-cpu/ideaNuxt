@@ -58,17 +58,19 @@
 </template>
 
 <script setup>
+import Icon from "assets/images/";
+
 const orderSortType = ["全部", "已成立", "備貨中", "出貨中", "已完成", "取消"];
 const orderSortTypeSelected = ref(orderSortType[0]);
 
 const orderOption = [
     {
         name: "募資訂單",
-        imgUrl: "/_nuxt/assets/images/icon/rocket-active-icon.svg",
+        imgUrl: Icon.rocketOrderActive,
     },
     {
         name: "團購訂單",
-        imgUrl: "/_nuxt/assets/images/icon/users-active-icon.svg",
+        imgUrl: Icon.users,
     },
 ];
 const orderTypeSelected = ref(null);

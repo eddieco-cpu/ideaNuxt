@@ -11,7 +11,7 @@
                     />
 
                     <div
-                        class="absolute bg-Primary-500-Primary bottom-0 right-2 w-8 h-8 rounded-full bg-no-repeat bg-center bg-[length:16px] bg-[url('/_nuxt/assets/images/icon/camera.svg')]"
+                        class="absolute bg-Primary-500-Primary bottom-0 right-2 w-8 h-8 rounded-full bg-no-repeat bg-center bg-[length:16px] bg-[url('assets/images/icon/camera.svg')]"
                     ></div>
                 </div>
 
