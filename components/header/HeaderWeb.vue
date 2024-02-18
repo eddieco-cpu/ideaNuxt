@@ -45,10 +45,10 @@
                 </div>
             </div>
 
-            <!-- 會員註冊 -->
+            <!-- 會員未登入 -->
             <button
                 class="bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover"
-                v-if="true"
+                v-if="!store.isLogin"
                 @click="openModal"
             >
                 <img src="~assets/images/header/user-purple.svg" class="block w-[18px] h-[18px]" />
@@ -61,7 +61,11 @@
                 class="member-center relative bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover group"
                 v-else
             >
-                <img :src="helperPicture()" alt="memberPic" class="block rounded-full w-[18px] h-[18px] object-cover" />
+                <img
+                    :src="store.userInfo.image"
+                    alt="memberPic"
+                    class="block rounded-full w-[18px] h-[18px] object-cover"
+                />
 
                 <span class="font-normal"> 會員中心 </span>
 
@@ -79,9 +83,10 @@
                     </ul>
 
                     <button
-                        class="bg-white border border-Primary-50 px-4 py-2 rounded-lg text-sm text-Primary-400-Hover w-[80px]"
+                        class="bg-white border border-Primary-50 px-4 py-2 rounded-lg text-sm text-Primary-400-Hover w-[80px] mt-2"
+                        @click="logout"
                     >
-                        <span class="text-Primary-400-Hover" @click="logout"> 登出 </span>
+                        <span class="text-Primary-400-Hover"> 登出 </span>
                     </button>
                 </div>
             </button>
@@ -90,6 +95,10 @@
 </template>
 
 <script setup>
+import { useAuthStore } from "@/stores/auth";
+
+const store = useAuthStore();
+
 const emit = defineEmits(["openModal"]);
 
 const navLink = [
@@ -138,7 +147,11 @@ function openModal() {
     emit("openModal", "login");
 }
 
-function logout() {}
+async function logout() {
+    store.isLogin = false;
+    store.userInfo = {};
+    await navigateTo("/");
+}
 </script>
 
 <style scoped></style>

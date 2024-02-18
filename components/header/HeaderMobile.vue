@@ -33,10 +33,10 @@
             :class="{ '-translate-x-full': hideSideNav }"
         >
             <div class="auth py-4 px-7 flex items-center bg-Primary-500-Primary">
-                <!-- 會員登入 -->
+                <!-- 會員未登入 -->
                 <button
                     class="rounded-lg bg-Primary-500-Primary border border-Primary-200 text-white px-3 py-1.5 text-sm flex gap-x-1 items-center justify-center"
-                    v-if="false"
+                    v-if="!store.isLogin"
                     @click="openModal"
                 >
                     <img src="~assets/images/header/user.svg" />
@@ -51,7 +51,7 @@
                         @click="goToPage('/member/information')"
                     >
                         <img
-                            :src="helperPicture()"
+                            :src="store.userInfo.image"
                             alt="memberPic"
                             class="block rounded-full w-[18px] h-[18px] object-cover"
                         />
@@ -59,7 +59,7 @@
                         <span class="font-normal"> 會員中心 </span>
                     </button>
 
-                    <button class="underline text-white text-sm ml-3">登出</button>
+                    <button class="underline text-white text-sm ml-3" @click="logout">登出</button>
                 </div>
 
                 <img
@@ -139,6 +139,10 @@
 </template>
 
 <script setup>
+import { useAuthStore } from "@/stores/auth";
+
+const store = useAuthStore();
+
 const navItems = [
     {
         label: "分類",
@@ -209,6 +213,12 @@ function goToPage(link) {
 function openModal() {
     hideSideNav.value = true;
     emit("openModal", "login");
+}
+
+async function logout() {
+    store.isLogin = false;
+    store.userInfo = {};
+    await navigateTo("/");
 }
 </script>
 

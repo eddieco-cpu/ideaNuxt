@@ -43,7 +43,13 @@
 </template>
 
 <script setup>
+import { useAuthStore } from "@/stores/auth";
+import { useToast } from "vue-toastification";
 import { loginSchema } from "~/validation";
+import { POST } from "~/utils/helperFetchData.js";
+
+const toast = useToast();
+const store = useAuthStore();
 
 const { modelValue } = defineProps(["modelValue"]);
 const emit = defineEmits(["update:modelValue"]);
@@ -53,30 +59,25 @@ function hideModal(value = "") {
 }
 
 const state = reactive({
-    phone: undefined,
-    password: undefined,
+    phone: "kminchelle",
+    password: "0lelplR",
 });
 
 async function onSubmit(event) {
-    console.log(event.data);
+    const { phone, password } = event.data;
 
-    const data = await $fetch("https://dummyjson.com/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            username: "kminchelle",
-            password: "0lelplR",
-        }),
-    });
+    const payload = { username: phone, password: password };
 
-    const curruntUser = await $fetch("https://dummyjson.com/auth/me", {
-        method: "GET",
-        headers: {
-            Authorization: `Bearer ${data.token}`,
-        },
-    });
+    const data = await POST("https://dummyjson.com/auth/login", payload);
 
-    console.log("data", data, "curruntUser", curruntUser);
+    if (!!data) {
+        toast.success("登入成功");
+
+        store.isLogin = true;
+        store.userInfo = data;
+
+        hideModal();
+    }
 }
 </script>
 
