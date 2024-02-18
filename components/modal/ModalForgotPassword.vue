@@ -28,7 +28,10 @@
                 </UButtonGroup>
             </UFormGroup>
 
-            <button class="w-full bg-Primary-500-Primary block p-2 rounded-lg text-white mb-3 mt-12 text-sm">
+            <button
+                class="w-full bg-Primary-500-Primary block p-2 rounded-lg text-white mb-3 mt-12 text-sm"
+                @click="submit"
+            >
                 只剩一步
             </button>
         </ModalContainer>
@@ -42,6 +45,8 @@ const emit = defineEmits(["update:modelValue"]);
 function hideModal(value = "") {
     emit("update:modelValue", value);
 }
+
+function submit() {}
 </script>
 
 <style scoped lang="scss"></style>

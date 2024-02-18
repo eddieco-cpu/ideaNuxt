@@ -63,7 +63,10 @@
                     回上一頁
                 </p>
 
-                <button class="w-full bg-Primary-500-Primary block p-2 rounded-lg text-white mb-3 text-sm">
+                <button
+                    class="w-full bg-Primary-500-Primary block p-2 rounded-lg text-white mb-3 text-sm"
+                    @click="register"
+                >
                     恭喜你，完成註冊！
                 </button>
             </div>
@@ -80,6 +83,8 @@ const registerStep = ref(1);
 function registerStepHandler(step) {
     registerStep.value = step;
 }
+
+function register() {}
 
 function hideModal() {
     emit("update:modelValue", "");

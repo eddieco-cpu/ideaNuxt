@@ -31,7 +31,9 @@
                 >
             </div>
 
-            <button class="w-full bg-Primary-500-Primary block p-2 rounded-lg text-white m-3 text-sm">登入</button>
+            <button class="w-full bg-Primary-500-Primary block p-2 rounded-lg text-white m-3 text-sm" @click="login">
+                登入
+            </button>
         </ModalContainer>
     </Transition>
 </template>
@@ -42,6 +44,26 @@ const emit = defineEmits(["update:modelValue"]);
 
 function hideModal(value = "") {
     emit("update:modelValue", value);
+}
+
+async function login() {
+    const data = await $fetch("https://dummyjson.com/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            username: "kminchelle",
+            password: "0lelplR",
+        }),
+    });
+
+    const curruntUser = await $fetch("https://dummyjson.com/auth/me", {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${data.token}`,
+        },
+    });
+
+    console.log("data", data, "curruntUser", curruntUser);
 }
 </script>
 
