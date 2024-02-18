@@ -9,13 +9,7 @@
             <div class="flex flex-col gap-y-3 md:max-w-[434px]">
                 <UFormGroup label="個人網址名稱" name="siteName" help="此網址為您在本站的個人網址。" required>
                     <UButtonGroup size="sm" orientation="horizontal" class="shadow-none w-full">
-                        <UInput
-                            color="white"
-                            variant="none"
-                            placeholder="請輸入網址"
-                            class="border border-Neutral-400-Hover rounded-lg rounded-r-none flex-1"
-                            v-model="memberInfo.siteName"
-                        >
+                        <UInput placeholder="請輸入網址" class="rounded-r-none flex-1" v-model="memberInfo.siteName">
                         </UInput>
 
                         <div
@@ -37,10 +31,7 @@
 
                 <UFormGroup label="Facebook 網址" name="facebook" class="mt-9">
                     <UInput
-                        color="white"
-                        variant="none"
                         placeholder="請輸入網址"
-                        class="border border-Neutral-400-Hover rounded-md"
                         trailingIcon="i-heroicons-cog-6-tooth"
                         v-model="memberInfo.facebookSite"
                     />
@@ -48,10 +39,7 @@
 
                 <UFormGroup label="Instagram網址" name="instagram" class="mt-9">
                     <UInput
-                        color="white"
-                        variant="none"
                         placeholder="請輸入網址"
-                        class="border border-Neutral-400-Hover rounded-md"
                         trailingIcon="i-heroicons-cog-6-tooth"
                         v-model="memberInfo.instagramSite"
                     />
@@ -59,10 +47,7 @@
 
                 <UFormGroup label="YouTube網址" name="youtube" class="mt-9">
                     <UInput
-                        color="white"
-                        variant="none"
                         placeholder="請輸入網址"
-                        class="border border-Neutral-400-Hover rounded-md"
                         trailingIcon="i-heroicons-cog-6-tooth"
                         v-model="memberInfo.youtubeSite"
                     />
@@ -70,10 +55,7 @@
 
                 <UFormGroup label="個人/官方網站網址" name="officialSite" class="mt-9">
                     <UInput
-                        color="white"
-                        variant="none"
                         placeholder="請輸入網址"
-                        class="border border-Neutral-400-Hover rounded-md"
                         trailingIcon="i-heroicons-cog-6-tooth"
                         v-model="memberInfo.officialSite"
                     />

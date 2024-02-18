@@ -6,14 +6,7 @@
             <div class="p-3 mt-6 rounded-lg bg-white">
                 <div class="flex flex-col gap-y-6 md:max-w-[275px]">
                     <UFormGroup label="目前密碼" name="password">
-                        <UInput
-                            type="password"
-                            color="white"
-                            variant="none"
-                            placeholder="ex: A2345678"
-                            class="border border-Neutral-400-Hover rounded-md"
-                            v-model="editPassword.password"
-                        >
+                        <UInput type="password" placeholder="ex: A2345678" v-model="editPassword.password">
                             <template #leading>
                                 <img src="~assets/images/icon/lock-icon.svg" alt="lock-icon" />
                             </template>
@@ -24,14 +17,7 @@
                         <template #hint>
                             <span class="text-xs text-black/[0.45]">（長度至少為8個字元且含大寫字母）</span>
                         </template>
-                        <UInput
-                            type="password"
-                            color="white"
-                            variant="none"
-                            placeholder="ex: A2345678"
-                            class="border border-Neutral-400-Hover rounded-md"
-                            v-model="editPassword.newPassword"
-                        >
+                        <UInput type="password" placeholder="ex: A2345678" v-model="editPassword.newPassword">
                             <template #leading>
                                 <img src="~assets/images/icon/lock-icon.svg" alt="lock-icon" />
                             </template>
@@ -39,14 +25,7 @@
                     </UFormGroup>
 
                     <UFormGroup label="請再輸入新密碼" name="confirmPassword" required>
-                        <UInput
-                            type="password"
-                            color="white"
-                            variant="none"
-                            placeholder="ex: A2345678"
-                            class="border border-Neutral-400-Hover rounded-md"
-                            v-model="editPassword.confirmPassword"
-                        >
+                        <UInput type="password" placeholder="ex: A2345678" v-model="editPassword.confirmPassword">
                             <template #leading>
                                 <img src="~assets/images/icon/lock-icon.svg" alt="lock-icon" />
                             </template>

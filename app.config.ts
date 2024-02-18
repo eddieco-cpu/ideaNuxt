@@ -6,5 +6,12 @@ export default defineAppConfig({
             label: { required: `before:content-['*'] before:mx-0.5 before:text-red-500 after:content-['']` },
         },
         checkbox: { help: "text-xs mt-2 text-black/[0.45]" },
+        input: {
+            color: {
+                white: {
+                    outline: "shadow-none bg-white   ring-Neutral-400-Hover  focus:ring-Primary-400-Hover ",
+                },
+            },
+        },
     },
 });

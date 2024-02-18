@@ -5,10 +5,7 @@
             <div class="md:max-w-[434px] flex flex-col gap-y-3">
                 <UFormGroup label="暱稱" name="nickName" help="使用平台時，大家會看到您的基本暱稱。">
                     <UInput
-                        color="white"
-                        variant="none"
                         placeholder="凍齡教主小美"
-                        class="border border-Neutral-400-Hover rounded-md"
                         v-model="memberInfo.nickName"
                     />
                 </UFormGroup>
@@ -20,10 +17,7 @@
                     required
                 >
                     <UInput
-                        color="white"
-                        variant="none"
                         placeholder="王小美"
-                        class="border border-Neutral-400-Hover rounded-md"
                         v-model="memberInfo.name"
                     />
                 </UFormGroup>
@@ -35,20 +29,14 @@
                     required
                 >
                     <UInput
-                        color="white"
-                        variant="none"
                         placeholder="0902123123"
-                        class="border border-Neutral-400-Hover rounded-md"
                         v-model="memberInfo.phone"
                     />
                 </UFormGroup>
 
                 <UFormGroup label="電子信箱" name="email" required>
                     <UInput
-                        color="white"
-                        variant="none"
                         placeholder="0902123123"
-                        class="border border-Neutral-400-Hover rounded-md"
                         v-model="memberInfo.phone"
                     />
                 </UFormGroup>

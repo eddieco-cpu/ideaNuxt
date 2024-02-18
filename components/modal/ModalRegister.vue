@@ -11,11 +11,7 @@
                 <p class="self-start mt-7 mb-2 text-sm text-opacity-85">手機號碼</p>
 
                 <UFormGroup class="w-full mb-6">
-                    <UInput
-                        variant="none"
-                        placeholder="輸入手機號碼"
-                        class="rounded-lg border border-Neutral-400-Hover"
-                    >
+                    <UInput placeholder="輸入手機號碼">
                         <template #leading>
                             <img src="~assets/images/icon/phone-icon.svg" alt="phone-icon" />
                         </template>
@@ -26,11 +22,7 @@
 
                 <UButtonGroup orientation="horizontal" class="self-start flex w-full shadow-none">
                     <UFormGroup>
-                        <UInput
-                            variant="none"
-                            placeholder="ex: 0912345678"
-                            class="border border-Neutral-400-Hover rounded-lg mr-1 w-40 md:w-60"
-                        />
+                        <UInput placeholder="ex: 0912345678" class="mr-1 w-40 md:w-60" />
                     </UFormGroup>
 
                     <button
@@ -55,12 +47,7 @@
                     <span class="text-xs text-neutral-500">（長度至少為8個字元且含大寫字母）</span>
                 </p>
 
-                <UInput
-                    variant="none"
-                    type="password"
-                    placeholder="ex: A2345678"
-                    class="w-full mb-6 rounded-lg border border-Neutral-400-Hover"
-                >
+                <UInput type="password" placeholder="ex: A2345678" class="w-full mb-6">
                     <template #leading>
                         <img src="~assets/images/icon/lock-icon.svg" alt="phone-icon" />
                     </template>
@@ -68,12 +55,7 @@
 
                 <p class="self-start mb-2 text-sm text-opacity-85">請再輸入密碼</p>
 
-                <UInput
-                    variant="none"
-                    type="password"
-                    placeholder="ex: A2345678"
-                    class="w-full mb-6 rounded-lg border border-Neutral-400-Hover"
-                >
+                <UInput type="password" placeholder="ex: A2345678" class="w-full mb-6">
                     <template #leading>
                         <img src="~assets/images/icon/lock-icon.svg" alt="phone-icon" />
                     </template>

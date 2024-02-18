@@ -3,43 +3,19 @@
         <h2 class="font-medium text-black/[0.85] mb-5">地址 1</h2>
         <div class="flex flex-col gap-y-3">
             <UFormGroup label="收件人" name="receiver" help="請填寫您個人真實姓名，才能確實收到包裹。">
-                <UInput
-                    color="white"
-                    variant="none"
-                    placeholder="王小美"
-                    class="border border-Neutral-400-Hover rounded-md"
-                    v-model="memberInfo.nickName"
-                />
+                <UInput placeholder="王小美" v-model="memberInfo.nickName" />
             </UFormGroup>
 
             <UFormGroup label="收件人手機" name="receiverPhone" help="用於聯絡到貨通知使用。" required>
-                <UInput
-                    color="white"
-                    variant="none"
-                    placeholder="王小美"
-                    class="border border-Neutral-400-Hover rounded-md"
-                    v-model="memberInfo.nickName"
-                />
+                <UInput placeholder="王小美" v-model="memberInfo.nickName" />
             </UFormGroup>
 
             <UFormGroup label="收件人電子信箱" name="receiverEmail" help="用於聯絡到貨通知使用。" required>
-                <UInput
-                    color="white"
-                    variant="none"
-                    placeholder="王小美"
-                    class="border border-Neutral-400-Hover rounded-md"
-                    v-model="memberInfo.nickName"
-                />
+                <UInput placeholder="王小美" v-model="memberInfo.nickName" />
             </UFormGroup>
 
             <UFormGroup label="收件人地址" name="receiverAddress" help="如使用宅配到府得以直接帶入該地址。" required>
-                <UInput
-                    color="white"
-                    variant="none"
-                    placeholder="王小美"
-                    class="border border-Neutral-400-Hover rounded-md"
-                    v-model="memberInfo.nickName"
-                />
+                <UInput placeholder="王小美" v-model="memberInfo.nickName" />
             </UFormGroup>
 
             <!-- 儲存更新 -->

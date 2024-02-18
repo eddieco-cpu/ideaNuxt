@@ -65,10 +65,7 @@
                     <div class="pb-6 pt-[10px] flex items-end gap-x-3 md:flex-1">
                         <UFormGroup label="邀請成員電子信箱" name="groupMemberEmail" class="flex-1">
                             <UInput
-                                color="white"
-                                variant="none"
                                 placeholder="idea2gether @gmail.com"
-                                class="border border-Neutral-400-Hover rounded-md"
                                 v-model="memberInfo.groupMemberEmail"
                             />
                         </UFormGroup>

@@ -2,7 +2,7 @@
     <Transition name="modal">
         <ModalContainer :text="'會員登入'" @hideModal="hideModal" v-if="modelValue === 'login'">
             <UFormGroup class="w-full mb-6">
-                <UInput variant="none" placeholder="輸入手機號碼" class="rounded-lg border border-Neutral-400-Hover">
+                <UInput placeholder="輸入手機號碼">
                     <template #leading>
                         <img src="~assets/images/icon/phone-icon.svg" alt="phone-icon" />
                     </template>
@@ -10,12 +10,7 @@
             </UFormGroup>
 
             <UFormGroup class="w-full mb-6">
-                <UInput
-                    type="password"
-                    variant="none"
-                    placeholder="輸入密碼"
-                    class="rounded-lg border border-Neutral-400-Hover"
-                >
+                <UInput type="password" placeholder="輸入密碼">
                     <template #leading>
                         <img src="~assets/images/icon/lock-icon.svg" alt="lock-icon" />
                     </template>

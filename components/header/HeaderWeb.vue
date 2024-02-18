@@ -21,7 +21,7 @@
                     <UInput
                         variant="none"
                         placeholder="找點子、找團購"
-                        class="border border-Neutral-100 bg-Neutral-100 rounded-l-md mr-1"
+                        class="bg-Neutral-100 rounded-l-md mr-1"
                         size="lg"
                     />
 
@@ -48,7 +48,7 @@
             <!-- 會員註冊 -->
             <button
                 class="bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover"
-                v-if="false"
+                v-if="true"
                 @click="openModal"
             >
                 <img src="~assets/images/header/user-purple.svg" class="block w-[18px] h-[18px]" />
