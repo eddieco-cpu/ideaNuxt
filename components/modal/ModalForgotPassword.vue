@@ -6,7 +6,7 @@
             @hideModal="hideModal"
             v-if="modelValue === 'forgotPassword'"
         >
-            <UFormGroup label="手機號碼" name="phone" class="w-full mb-6 mt-7">
+            <UFormGroup label="手機號碼" name="phone" class="w-full mb-6">
                 <UInput placeholder="輸入手機號碼：">
                     <template #leading>
                         <img src="~assets/images/icon/phone-icon.svg" alt="phone-icon" />

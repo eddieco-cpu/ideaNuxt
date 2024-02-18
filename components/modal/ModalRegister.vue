@@ -8,7 +8,7 @@
         >
             <!-- 註冊第一步 -->
             <div class="w-full" v-if="registerStep === 1">
-                <UFormGroup label="手機號碼" name="phone" class="w-full mb-6 mt-7">
+                <UFormGroup label="手機號碼" name="phone" class="w-full mb-6">
                     <UInput placeholder="輸入手機號碼：">
                         <template #leading>
                             <img src="~assets/images/icon/phone-icon.svg" alt="phone-icon" />
@@ -40,7 +40,7 @@
 
             <!-- 註冊第二步 -->
             <div class="w-full" v-if="registerStep === 2">
-                <p class="self-start mt-7 mb-2 text-sm text-opacity-85">
+                <p class="self-start mb-2 text-sm text-opacity-85">
                     密碼
                     <span class="text-xs text-neutral-500">（長度至少為8個字元且含大寫字母）</span>
                 </p>

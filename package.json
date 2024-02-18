@@ -36,6 +36,7 @@
     "normalize.css": "^8.0.1",
     "nuxt-lazy-load": "^3.0.4",
     "nuxt-swiper": "^1.2.2",
-    "vue-toastification": "^2.0.0-rc.5"
+    "vue-toastification": "^2.0.0-rc.5",
+    "zod": "^3.22.4"
   }
 }
