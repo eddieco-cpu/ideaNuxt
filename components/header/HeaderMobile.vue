@@ -48,6 +48,7 @@
                 <div class="flex" v-else>
                     <button
                         class="rounded-lg bg-Primary-500-Primary border border-Primary-200 text-white px-3 py-1.5 text-sm flex gap-x-1 items-center justify-center"
+                        @click="goToPage('/member/information')"
                     >
                         <img
                             :src="helperPicture()"

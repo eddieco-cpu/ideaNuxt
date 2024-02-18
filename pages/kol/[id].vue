@@ -43,14 +43,7 @@
                 </div>
 
                 <!-- 收藏團購主 -->
-                <div class="bg-Primary-100 flex items-center gap-x-1 rounded-lg bg-Primary-50 py-2 px-4">
-                    <div>
-                        <img src="~assets/images/icon/heart-icon-active-purple.svg" alt="heart" v-show="true" />
-                        <img src="~assets/images/icon/heart-icon-purple.svg" alt="heart" v-show="false" />
-                    </div>
-
-                    <h3 class="text-sm text-Primary-400-Hover">收藏團購主</h3>
-                </div>
+                <TagHeart :isAddKol="true" :isFavorite="true" />
 
                 <!-- 社群軟體 -->
                 <Media />

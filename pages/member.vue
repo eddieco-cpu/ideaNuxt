@@ -10,9 +10,11 @@
                         class="block rounded-full w-[120px] mx-auto"
                     />
 
-                    <div
-                        class="absolute bg-Primary-500-Primary bottom-0 right-2 w-8 h-8 rounded-full bg-no-repeat bg-center bg-[length:16px] bg-[url('assets/images/icon/camera.svg')]"
-                    ></div>
+                    <label
+                        class="absolute bg-Primary-500-Primary bottom-0 right-2 w-8 h-8 rounded-full bg-no-repeat bg-center bg-[length:16px] bg-[url('assets/images/icon/camera.svg')] cursor-pointer"
+                    >
+                        <input type="file" accept="image/*" @change="changeAvatar" hidden />
+                    </label>
                 </div>
 
                 <p class="text-lg text-center font-medium mt-3">Hi, 09*****123</p>
@@ -24,7 +26,7 @@
                 class="member-nav px-6 flex flex-nowrap gap-x-8 overflow-x-auto md:flex-col md:gap-y-2 md:items-center"
             >
                 <nuxt-link
-                    v-for="(item, index) in memberList"
+                    v-for="(item, index) in memberNavList"
                     :key="index"
                     :to="item.link"
                     class="flex gap-x-3 py-3 flex-shrink-0 items-center border-b-2 border-white md:py-2 md:px-8 md:border-none"
@@ -47,7 +49,7 @@ import Icon from "assets/images/";
 
 const memberNav = ref(null);
 
-const memberList = ref([
+const memberNavList = ref([
     {
         name: "基本資料",
         imgUrl: Icon.userInfo,
@@ -85,6 +87,12 @@ const memberList = ref([
         link: "/member/proposal",
     },
 ]);
+
+function changeAvatar(e) {
+    if (!!e.target.files[0]) {
+        // 換頭照
+    }
+}
 
 function memberTypeChoose(index) {
     memberNav.value.scrollTo({
