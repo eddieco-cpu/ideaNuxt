@@ -1,7 +1,7 @@
 <template>
     <Transition name="modal">
         <ModalContainer :text="'會員登入'" @hideModal="hideModal" v-if="modelValue === 'login'">
-            <UFormGroup class="w-full mb-6">
+            <UFormGroup class="w-full mt-7 mb-6">
                 <UInput placeholder="輸入手機號碼">
                     <template #leading>
                         <img src="~assets/images/icon/phone-icon.svg" alt="phone-icon" />

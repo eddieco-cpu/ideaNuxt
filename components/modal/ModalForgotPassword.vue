@@ -6,31 +6,27 @@
             @hideModal="hideModal"
             v-if="modelValue === 'forgotPassword'"
         >
-            <p class="self-start mt-7 mb-2 text-sm text-opacity-85">手機號碼</p>
-
-            <UFormGroup class="w-full mb-6">
-                <UInput placeholder="輸入手機號碼">
+            <UFormGroup label="手機號碼" name="phone" class="w-full mb-6 mt-7">
+                <UInput placeholder="輸入手機號碼：">
                     <template #leading>
                         <img src="~assets/images/icon/phone-icon.svg" alt="phone-icon" />
                     </template>
                 </UInput>
             </UFormGroup>
 
-            <p class="self-start mb-2 text-sm text-opacity-85">驗證碼：</p>
+            <UFormGroup label="驗證碼：" name="validateCode" class="w-full">
+                <UButtonGroup orientation="horizontal" class="self-start flex shadow-none">
+                    <UFormGroup class="w-3/5">
+                        <UInput placeholder="ex: 0912345678" class="mr-1" />
+                    </UFormGroup>
 
-            <UButtonGroup orientation="horizontal" class="self-start flex w-full shadow-none">
-                <UFormGroup>
-                    <UInput placeholder="ex: 0912345678" class="mr-1 w-40 md:w-60" />
-                </UFormGroup>
-
-                <UButton
-                    color="black"
-                    variant="ghost"
-                    class="border border-Primary-500-Primary hover:opacity-70 transition duration-500 rounded-lg flex-1 justify-center bg-Primary-500-Primary text-sm text-white"
-                >
-                    發送驗證碼
-                </UButton>
-            </UButtonGroup>
+                    <button
+                        class="hover:opacity-70 transition duration-500 rounded-lg flex-1 px-4 py-1 justify-center bg-Primary-500-Primary text-sm text-white"
+                    >
+                        發送驗證碼
+                    </button>
+                </UButtonGroup>
+            </UFormGroup>
 
             <button class="w-full bg-Primary-500-Primary block p-2 rounded-lg text-white mb-3 mt-12 text-sm">
                 只剩一步

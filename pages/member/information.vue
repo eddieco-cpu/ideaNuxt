@@ -4,10 +4,7 @@
         <div class="p-3 md:p-6 rounded-lg bg-white">
             <div class="md:max-w-[434px] flex flex-col gap-y-3">
                 <UFormGroup label="暱稱" name="nickName" help="使用平台時，大家會看到您的基本暱稱。">
-                    <UInput
-                        placeholder="凍齡教主小美"
-                        v-model="memberInfo.nickName"
-                    />
+                    <UInput placeholder="凍齡教主小美" v-model="memberInfo.nickName" />
                 </UFormGroup>
 
                 <UFormGroup
@@ -16,10 +13,7 @@
                     help="請填寫您個人真實姓名，此為提案、身分驗證或寄送商品時使用。"
                     required
                 >
-                    <UInput
-                        placeholder="王小美"
-                        v-model="memberInfo.name"
-                    />
+                    <UInput placeholder="王小美" v-model="memberInfo.name" />
                 </UFormGroup>
 
                 <UFormGroup
@@ -28,17 +22,11 @@
                     help="手機已驗證成功。若您需修改手機，請聯繫官方客服中心。"
                     required
                 >
-                    <UInput
-                        placeholder="0902123123"
-                        v-model="memberInfo.phone"
-                    />
+                    <UInput placeholder="0902123123" v-model="memberInfo.phone" />
                 </UFormGroup>
 
                 <UFormGroup label="電子信箱" name="email" required>
-                    <UInput
-                        placeholder="0902123123"
-                        v-model="memberInfo.phone"
-                    />
+                    <UInput placeholder="0902123123" v-model="memberInfo.email" />
                 </UFormGroup>
 
                 <!-- 出生日 -->
