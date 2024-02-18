@@ -8,6 +8,7 @@ export default defineAppConfig({
         },
         checkbox: { help: "text-xs mt-2 text-black/[0.45]" },
         input: {
+            base: "disabled:bg-Neutral-200",
             color: {
                 white: {
                     outline: "shadow-none bg-white   ring-Neutral-400-Hover  focus:ring-Primary-400-Hover ",

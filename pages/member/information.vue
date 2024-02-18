@@ -22,7 +22,7 @@
                     help="手機已驗證成功。若您需修改手機，請聯繫官方客服中心。"
                     required
                 >
-                    <UInput placeholder="0902123123" v-model="memberInfo.phone" />
+                    <UInput placeholder="0902123123" v-model="memberInfo.phone" disabled />
                 </UFormGroup>
 
                 <UFormGroup label="電子信箱" name="email" required>
