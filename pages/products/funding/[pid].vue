@@ -1,26 +1,30 @@
 <template>
-    <section>
+    <section class="max-w-[1090px] mx-auto max-xl:px-6 max-xl:py-4 ring-1 max-xl:ring-orange-400">
         <!--  -->
-        <section class="w-[1090px] mx-auto">
+        <section class="pt-12 pb-5">
             <UBreadcrumb
                 divider="/"
                 :links="[{ label: 'Home', to: '/' }, { label: 'Navigation' }, { label: 'Breadcrumb' }]"
+                :ui="{
+                    active: 'text-black font-bold',
+                    inactive: 'text-Neutral-600-Dark-Primary font-normal',
+                }"
             />
         </section>
-        <section class="w-[1090px] mx-auto grid grid-rows-1 grid-cols-[auto_auto] gap-6 mb-7">
+
+        <!--  -->
+        <section
+            class="grid grid-rows-1 grid-cols-[auto_auto] gap-6 mb-7 max-xl:grid-rows-[auto_auto] max-xl:grid-cols-1"
+        >
             <!-- slider -->
-            <section class="w-[626px] aspect-[313/200] rounded-lg py-1">
-                <picture class="block w-full overflow-hidden aspect-[285/182] rounded max-md:aspect-[304/186]">
-                    <img
-                        :src="helperPicture()"
-                        alt="product"
-                        class="block w-full h-full group-hover:scale-110 object-cover transition-transform duration-350 ease-in-out"
-                    />
-                </picture>
+            <section
+                class="w-[626px] h-[408px] aspect-[313/204] rounded-lg py-1 max-xl:w-full max-xl:aspect-auto max-xl:py-0"
+            >
+                <ProductsSlider />
             </section>
 
             <!-- product details -->
-            <article class="w-[436px] ring-1">
+            <article class="w-[436px] ring-1 max-xl:w-auto">
                 <div class="mb-6">
                     <b class="inline-block rounded px-2 py-1 bg-Status-Color-Danger-500-Primary text-white font-light"
                         >促銷</b
@@ -70,7 +74,9 @@
                     </div>
                 </div>
 
-                <div class="flex justify-between items-center">
+                <div
+                    class="flex justify-between items-center max-xl:fixed max-xl:bottom-0 max-xl:left-0 max-xl:w-full max-xl:bg-white max-xl:px-4 max-xl:py-2"
+                >
                     <!--  -->
                     <button
                         class="w-12 h-12 rounded-lg ring-2 ring-Neutral-500-Primary flex justify-center items-center"
@@ -85,7 +91,7 @@
         </section>
 
         <!--  -->
-        <section class="w-[1090px] mx-auto bg-white mb-4 rounded-lg sticky top-[80px]">
+        <section class="bg-white mb-4 rounded-lg sticky top-[80px]">
             <div class="w-80 px-6">
                 <UiHorizontalNav
                     :nav-items="navItems"
@@ -96,7 +102,7 @@
         </section>
 
         <!--  -->
-        <section class="w-[1090px] mx-auto grid grid-rows-1 grid-cols-[627fr_436fr] gap-6">
+        <section class="grid grid-rows-1 grid-cols-[627fr_436fr] gap-6 max-xl:grid-cols-1 max-xl:grid-rows-[auto_auto]">
             <!--  -->
             <section>
                 <template v-if="activeNavItemId === 'a'">
@@ -127,10 +133,13 @@
                         <picture class="block w-full mb-4">
                             <img :src="helperPicture()" alt="" class="block w-full" />
                         </picture>
+                        <ProductsAccordionTypeA />
                     </article>
                 </template>
                 <template v-if="activeNavItemId === 'b'">
-                    <article class="bg-white p-6 rounded-lg"></article>
+                    <article class="bg-white p-6 rounded-lg">
+                        <ProductsAccordionTypeB />
+                    </article>
                 </template>
                 <template v-if="activeNavItemId === 'c'">
                     <article class="bg-white p-6 rounded-lg">

@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-[300px] relative mb-8" :style="`--x: 100; --t: ${slides.length}`">
+    <div class="min-h-[300px] relative mb-8 home" :style="`--x: 100; --t: ${slides.length}`">
         <Swiper
             :modules="[SwiperAutoplay, SwiperPagination, SwiperNavigation]"
             :slides-per-view="'auto'"
@@ -17,7 +17,7 @@
         >
             <SwiperSlide v-for="(slide, idx) in slides" :key="idx">
                 <div class="relative block w-[630px] aspect-[63/30] rounded-lg overflow-hidden">
-                    <picture class="overflow-hidden w-full h-full">
+                    <picture class="block overflow-hidden w-full h-full">
                         <img :src="slide.photo" alt="product" class="block w-full h-full object-cover" />
                     </picture>
                     <div class="py-4 px-6 absolute z-[2] bottom-0 left-0 w-full bg-[rgba(0,0,0,0.3)] text-white">
@@ -85,21 +85,21 @@ const pagination = {
 </script>
 
 <style>
-.swiper-slide {
+.home .swiper-slide {
     width: auto;
     margin: 0 8px;
 }
-.swiper-slide:not(.swiper-slide-active) {
+.home .swiper-slide:not(.swiper-slide-active) {
     opacity: 0.6;
 }
-.main-slide__pagnation {
+.home .main-slide__pagnation {
     width: auto;
     height: 4px;
     transform: translate(0, 10px) !important;
     /* outline: 1px solid red; */
     margin: 0 auto;
 }
-.swiper-pagination-bullet {
+.home .swiper-pagination-bullet {
     /* outline: 1px solid green; */
 
     width: 36px;
@@ -109,11 +109,11 @@ const pagination = {
     cursor: pointer;
     /* opacity: 0; */
 }
-.swiper-pagination-bullet-active-main {
+.home .swiper-pagination-bullet-active-main {
     opacity: 1;
     background-color: #ccbff6;
 }
-.swiper-pagination-bullet-active {
+.home .swiper-pagination-bullet-active {
     width: 48px;
     background-color: #917fdd;
 }
