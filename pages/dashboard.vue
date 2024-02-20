@@ -1,6 +1,22 @@
 <template>
-    <div class="md:flex md:gap-x-7 md:max-w-[1082px] md:mx-auto md:pt-8">
-        <!--  -->
+    <section class="max-w-[1082px] mx-auto p-3 mt-8 bg-white max-md:max-w-[100%-24px]">
+        <div class="flex justify-between items-center">
+            <div class="flex justify-start items-center">
+                <picture class="block w-24 h-16 rounded-lg overflow-hidden">
+                    <img :src="helperPicture()" alt="" class="block w-full h-full object-cover" />
+                </picture>
+                <article class="ml-2">
+                    <p class="text-Primary-500-Primary flex justify-start items-center text-sm">
+                        <span class="px-2 py-1 bg-Primary-100 rounded mr-3">群眾集資</span>
+                        <span>#C00001</span>
+                    </p>
+                    <p class="">聲震宇宙領域，虛擬現實音效耳罩，嵌入式通訊系統，危機中的最佳音樂夥伴</p>
+                </article>
+            </div>
+            <UiButton class="max-w-[156px]">提交送審</UiButton>
+        </div>
+    </section>
+    <div class="md:flex md:gap-x-7 md:max-w-[1082px] md:mx-auto md:pt-10">
         <!--  -->
         <div class="bg-white md:max-w-[256px]">
             <!-- 導航列 -->
