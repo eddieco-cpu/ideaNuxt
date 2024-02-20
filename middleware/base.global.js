@@ -1,3 +1,9 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-    console.log("to", to);
+    if (to.name === "member") {
+        return navigateTo("/member/information");
+    }
+
+    if (to.name === "category") {
+        return navigateTo("/category/technology-ai");
+    }
 });

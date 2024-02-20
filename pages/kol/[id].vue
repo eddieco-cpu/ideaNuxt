@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            class="h-[240px] md:h-[110px] bg-no-repeat bg-cover bg-[url('/_nuxt/assets/images/kol/banner.png')] md:bg-[url('/_nuxt/assets/images/kol/banner-web.png')]"
+            class="h-[240px] md:h-[110px] bg-no-repeat bg-cover bg-[url('assets/images/kol/banner.png')] md:bg-[url('assets/images/kol/banner-web.png')]"
         ></div>
 
         <div class="max-w-80 md:max-w-[1086px] -mt-[80px] mx-auto md:grid md:grid-cols-12 md:gap-x-6 md:mt-10">
@@ -43,14 +43,7 @@
                 </div>
 
                 <!-- 收藏團購主 -->
-                <div class="bg-Primary-100 flex items-center gap-x-1 rounded-lg bg-Primary-50 py-2 px-4">
-                    <div>
-                        <img src="~assets/images/icon/heart-icon-active-purple.svg" alt="heart" v-show="true" />
-                        <img src="~assets/images/icon/heart-icon-purple.svg" alt="heart" v-show="false" />
-                    </div>
-
-                    <h3 class="text-sm text-Primary-400-Hover">收藏團購主</h3>
-                </div>
+                <TagHeart :isAddKol="true" :isFavorite="true" />
 
                 <!-- 社群軟體 -->
                 <Media />
@@ -80,6 +73,13 @@
                         <!-- 卡片 -->
                         <CardGroupBuying v-for="(item, index) in 10" :key="index" />
                     </div>
+
+                    <UiPagination
+                        class="mt-6"
+                        :currentPage="currentPage"
+                        :totalPages="totalPages"
+                        @updateCurrentPage="updateCurrentPage"
+                    />
                 </div>
 
                 <!-- 即將開團 -->
@@ -105,6 +105,13 @@
                         <!-- 卡片 -->
                         <CardComingBuying v-for="(item, index) in 6" :key="index" />
                     </div>
+
+                    <UiPagination
+                        class="mt-6"
+                        :currentPage="currentPage"
+                        :totalPages="totalPages"
+                        @updateCurrentPage="updateCurrentPage"
+                    />
                 </div>
 
                 <!-- 開團紀錄 -->
@@ -130,6 +137,13 @@
                         <!-- 卡片 -->
                         <CardGroupBuying v-for="(item, index) in 6" :key="index" :isExpired="true" />
                     </div>
+
+                    <UiPagination
+                        class="mt-6"
+                        :currentPage="currentPage"
+                        :totalPages="totalPages"
+                        @updateCurrentPage="updateCurrentPage"
+                    />
                 </div>
 
                 <div class="pt-14 md:mt-9" v-else>
@@ -145,6 +159,12 @@
 const sort = ["新到舊", "舊到新", "開團數", "活耀度"];
 const sortComing = ["新到舊", "舊到新", "開團數", "活耀度"];
 const sortHistory = ["新到舊", "舊到新", "開團數", "活耀度"];
+
+const currentPage = ref(1);
+const totalPages = ref(20);
+const updateCurrentPage = (newPage) => {
+    currentPage.value = newPage;
+};
 
 const sortSelected = ref(sort[0]);
 const sortComingSelected = ref(sortComing[0]);

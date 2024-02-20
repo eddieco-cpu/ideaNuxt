@@ -1,67 +1,96 @@
 <template>
-    <div
-        class="w-full rounded-lg shadow-card bg-white pb-2 md:pb-0 cursor-pointer relative max-w-[322px] max-h-[320px] md:max-w-[318px] md:max-h-[308px]"
-    >
+    <div class="w-full rounded-lg shadow-card bg-white pb-2 cursor-pointer relative group">
         <!-- 標籤 -->
         <div class="flex items-center gap-x-2 absolute top-2 left-2">
-            <div class="text-xs font-medium bg-Status-Color-Danger-500-Primary text-white px-2 py-1 rounded-md">
-                促銷
-            </div>
-
-            <div class="text-xs font-medium bg-Status-Color-Success-400-Hover text-white px-2 py-1 rounded-md">
-                免運
-            </div>
-
-            <div class="text-xs font-medium bg-Primary-500-Primary text-white px-2 py-1 rounded-md">獨家</div>
+            <Tag v-for="(tag, index) in tags" :key="index" :tag="tag" />
         </div>
 
         <!-- 愛心 -->
         <div class="absolute top-2 right-2">
-            <img src="~assets/images/icon/heart-icon.svg" alt="favorite" v-show="false" />
-            <img src="~assets/images/icon/heart-active-icon.svg" alt="favorite" v-show="true" />
+            <TagHeart :isEditMode="isEditMode" />
         </div>
 
         <!-- 主圖 -->
         <img
             :src="helperPicture()"
             alt="product"
-            class="rounded-lg w-[322px] h-[194px] md:w-[318px] md:h-[182px] object-cover"
+            class="rounded w-[322px] h-[194px] md:w-[318px] md:h-[182px] object-cover"
         />
 
-        <div class="w-72 mx-auto">
+        <div class="px-4">
             <!-- 文字 -->
-            <p class="text-sm font-medium mt-3 mb-5">
+            <p class="text-sm font-medium mt-3 mb-5 line-clamp-2 group-hover:underline">
                 All Day水潤機 | 突破日夜保濕侷限，填滿保養空窗期，創造24小時保養時區！
             </p>
 
             <div class="flex items-center">
                 <!-- 價格 -->
-                <p class="text-Neutral-800 font-medium">$ 544,980</p>
+                <p class="font-medium" :class="isExpiredClass('price')">$ 544,980</p>
 
                 <!-- 日期 -->
                 <img src="~assets/images/icon/clock-icon.svg" alt="clock" width="12" class="ml-auto" />
-                <p class="ml-1 text-Neutral-700 text-sm">19日</p>
+                <p class="ml-1 text-sm" :class="isExpiredClass('text')">{{ isExpired ? "已結束" : "19日" }}</p>
 
                 <!-- 人數 -->
-                <img src="~assets/images/icon/user-icon.svg" alt="clock" width="12" class="ml-3" />
-                <p class="ml-1 text-Neutral-700 text-sm">345人</p>
+                <img src="~assets/images/icon/user-icon.svg" alt="user" width="12" class="ml-3" />
+                <p class="ml-1 text-sm" :class="isExpiredClass('text')">345人</p>
             </div>
 
             <!-- 百分比 -->
             <div class="flex items-center gap-3 mt-1">
                 <UMeter
                     :value="progressMeter"
-                    :ui="{ meter: { color: 'text-Primary-500-Primary', background: 'bg-Primary-50' } }"
-                    color="violet"
+                    :ui="{ meter: { color: isExpiredClass('meter'), background: isExpiredClass('meter') } }"
                 />
-                <span class="text-Primary-500-Primary font-medium text-xs">{{ progressMeter }}%</span>
+                <span class="font-medium text-xs" :class="isExpiredClass('meter')">{{ progressMeter }}%</span>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
+const { isEditMode, isExpired } = defineProps({
+    isEditMode: {
+        type: Boolean,
+        default: false,
+    },
+    isExpired: {
+        type: Boolean,
+        default: false,
+    },
+});
+
 const progressMeter = ref(300);
+
+function isExpiredClass(type) {
+    if (isExpired) {
+        switch (type) {
+            case "text":
+            case "price":
+            case "meter":
+                return "text-Neutral-500-Primary";
+            default:
+                break;
+        }
+    } else {
+        switch (type) {
+            case "text":
+                return "text-Neutral-700";
+            case "price":
+                return "text-Neutral-800";
+            case "meter":
+                return "text-Primary-500-Primary";
+            default:
+                break;
+        }
+    }
+}
+
+const tags = ref([
+    { name: "促銷", color: "primary", type: "text" },
+    { name: "免運", color: "danger", type: "text" },
+    { name: "獨家", color: "success", type: "text" },
+]);
 </script>
 
 <style scoped></style>

@@ -1,6 +1,6 @@
 <template>
     <header class="py-4 fixed top-0 w-full z-50 border border-b-neutral-100 shadow bg-white">
-        <div class="px-12 flex gap-8 items-center justify-between max-w-7xl mx-auto">
+        <div class="flex items-center justify-between max-w-[1200px] mx-auto">
             <!-- logo -->
             <div class="logo cursor-pointer">
                 <NuxtLink to="/">
@@ -10,17 +10,8 @@
 
             <!-- 導覽列 -->
             <ul class="flex gap-10 text-Primary-600-Dark-Primary font-medium text-sm">
-                <li>
-                    <NuxtLink to="/category">群眾集資</NuxtLink>
-                </li>
-                <li>
-                    <NuxtLink to="/category">好評團購</NuxtLink>
-                </li>
-                <li>
-                    <NuxtLink to="/kol">團主推薦</NuxtLink>
-                </li>
-                <li>
-                    <NuxtLink to="/category">好物分享</NuxtLink>
+                <li v-for="(item, index) in navLink" :key="index">
+                    <NuxtLink :to="item.link">{{ item.name }}</NuxtLink>
                 </li>
             </ul>
 
@@ -30,7 +21,7 @@
                     <UInput
                         variant="none"
                         placeholder="找點子、找團購"
-                        class="border border-Neutral-100 bg-Neutral-100 rounded-l-md mr-1"
+                        class="bg-Neutral-100 rounded-l-md mr-1"
                         size="lg"
                     />
 
@@ -54,40 +45,112 @@
                 </div>
             </div>
 
-            <!-- 會員登入 -->
-            <!-- <UButton
-                color="white"
-                variant="ghost"
-                class="rounded-lg bg-Primary-50 hover:bg-opacity-30 border border-Primary-50 hover:border-Primary-50 transition duration-500 text-Primary-400-Hover px-3 py-1.5 text-sm"
+            <!-- 會員未登入 -->
+            <button
+                class="bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover"
+                v-if="!store.isLogin"
                 @click="openModal"
             >
-                <template #leading>
-                    <img src="~assets/images/header/user-purple.svg" class="text-Primary-400-Hover" />
-                </template>
+                <img src="~assets/images/header/user-purple.svg" class="block w-[18px] h-[18px]" />
 
                 <span class="font-normal"> 登入 /註冊 </span>
-            </UButton> -->
+            </button>
 
-            <!-- 會員登入 -->
-            <UButton
-                color="white"
-                variant="ghost"
-                class="rounded-lg bg-Primary-50 hover:bg-opacity-30 border border-Primary-50 hover:border-Primary-50 transition duration-500 text-Primary-400-Hover px-3 py-1.5 text-sm"
+            <!-- 會員已登入 -->
+            <button
+                class="member-center relative bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover group"
+                v-else
             >
-                <template #leading>
-                    <img src="~assets/images/header/user-purple.svg" class="text-Primary-400-Hover" />
-                </template>
-                <NuxtLink to="/member">會員</NuxtLink>
-            </UButton>
+                <img
+                    :src="store.userInfo.image"
+                    alt="memberPic"
+                    class="block rounded-full w-[18px] h-[18px] object-cover"
+                />
+
+                <span class="font-normal"> 會員中心 </span>
+
+                <div class="absolute top-full left-0 w-full bg-white rounded-lg py-1 shadow hidden group-hover:block">
+                    <ul
+                        class="flex flex-col items-center [&>*:nth-child(4)]:border-t-Neutral-200 [&>*:nth-child(4)]:border-t"
+                    >
+                        <li
+                            class="text-black hover:bg-Primary-50 w-full"
+                            v-for="(item, index) in memberCenterLink"
+                            :key="index"
+                        >
+                            <nuxt-link class="block w-full py-2" :to="item.link">{{ item.name }}</nuxt-link>
+                        </li>
+                    </ul>
+
+                    <button
+                        class="bg-white border border-Primary-50 px-4 py-2 rounded-lg text-sm text-Primary-400-Hover w-[80px] mt-2"
+                        @click="logout"
+                    >
+                        <span class="text-Primary-400-Hover"> 登出 </span>
+                    </button>
+                </div>
+            </button>
         </div>
     </header>
 </template>
 
 <script setup>
+import { useAuthStore } from "@/stores/auth";
+
+const store = useAuthStore();
+
 const emit = defineEmits(["openModal"]);
+
+const navLink = [
+    {
+        name: "群眾集資",
+        link: "/category/technology-ai?type=fundraise",
+    },
+    {
+        name: "好評團購",
+        link: "/category/technology-ai?type=groupbuying",
+    },
+    {
+        name: "團主推薦",
+        link: "/kol",
+    },
+    {
+        name: "好物分享",
+        link: "/category",
+    },
+];
+
+const memberCenterLink = [
+    {
+        name: "基本資料",
+        link: "/member/information",
+    },
+    {
+        name: "我的追蹤",
+        link: "/member/follow",
+    },
+    {
+        name: "贊助紀錄",
+        link: "/",
+    },
+    {
+        name: "提案管理",
+        link: "/member/proposal",
+    },
+    {
+        name: "團隊設定",
+        link: "/member/proposal",
+    },
+];
 
 function openModal() {
     emit("openModal", "login");
+}
+
+async function logout() {
+    store.isLogin = false;
+    store.userInfo = {};
+    await navigateTo("/");
 }
 </script>
 

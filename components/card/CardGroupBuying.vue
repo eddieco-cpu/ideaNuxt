@@ -1,24 +1,13 @@
 <template>
-    <div
-        class="w-full rounded-lg shadow-card bg-white cursor-pointer relative max-w-[316px] max-h-[146px] md:max-w-[232px] md:max-h-[322px]"
-    >
+    <div class="w-full rounded-lg shadow-card bg-white cursor-pointer relative group">
         <!-- 標籤 -->
-        <div class="flex flex-col items-center gap-y-2 absolute top-2 left-2" v-if="!isExpired">
-            <div class="text-xs font-medium bg-Status-Color-Danger-500-Primary text-white px-2 py-1 rounded-md">
-                促銷
-            </div>
-
-            <div class="text-xs font-medium bg-Status-Color-Success-400-Hover text-white px-2 py-1 rounded-md">
-                免運
-            </div>
-
-            <div class="text-xs font-medium bg-Primary-500-Primary text-white px-2 py-1 rounded-md">獨家</div>
+        <div class="flex flex-col items-start gap-y-2 absolute top-2 left-2" v-if="!isExpired">
+            <Tag v-for="(tag, index) in tags" :key="index" :tag="tag" />
         </div>
 
         <!-- 愛心 -->
         <div class="absolute top-2 right-[175px] md:top-2 md:right-2">
-            <img src="~assets/images/icon/heart-icon.svg" alt="favorite" v-show="true" />
-            <img src="~assets/images/icon/heart-active-icon.svg" alt="favorite" v-show="false" />
+            <TagHeart />
         </div>
 
         <div class="flex gap-x-3 md:flex-col">
@@ -26,7 +15,7 @@
             <img
                 :src="helperPicture()"
                 alt="product"
-                class="rounded-lg w-[146px] h-[146px] md:w-[234px] md:h-[234px] object-cover"
+                class="rounded w-[146px] h-[146px] md:w-full md:h-[234px] object-cover"
             />
             <!-- 文字 -->
             <div
@@ -48,8 +37,8 @@
                                 },
                             }"
                         />
-                        <span class="text-xs md:text-base font-medium text-Neutral-700 text-ellipsis md:text-white"
-                            >小雯媽咪愛漂亮</span
+                        <span class="text-xs md:text-base font-medium text-Neutral-700 line-clamp-2 md:text-white"
+                            >小雯媽咪愛漂亮小雯媽咪愛漂亮小雯媽咪愛漂亮小雯媽咪愛漂亮小雯媽咪愛漂亮</span
                         >
                     </div>
 
@@ -63,7 +52,7 @@
 
                 <!-- 敘述 -->
                 <div>
-                    <p class="line-clamp-2 text-Neutral-900 text-sm font-medium">
+                    <p class="line-clamp-2 text-Neutral-900 text-sm font-medium group-hover:underline">
                         小雯媽咪 x 最舒適的被子推薦❤️十月被、冬月被被子推薦❤️十月被、冬月被冬月
                     </p>
                 </div>
@@ -83,6 +72,12 @@ const { isExpired } = defineProps({
         default: false,
     },
 });
+
+const tags = ref([
+    { name: "促銷", color: "primary", type: "text" },
+    { name: "免運", color: "danger", type: "text" },
+    { name: "19日", color: "success", type: "time" },
+]);
 </script>
 
 <style scoped></style>

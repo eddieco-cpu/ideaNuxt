@@ -32,46 +32,77 @@
             class="w-64 fixed left-0 top-0 h-full bg-white overflow-x-auto transition duration-500 transform z-50"
             :class="{ '-translate-x-full': hideSideNav }"
         >
-            <div class="auth py-4 px-7 flex justify-between items-center bg-Primary-500-Primary">
-                <UButton
-                    color="white"
-                    variant="ghost"
-                    class="rounded-lg bg-Primary-500-Primary hover:bg-opacity-30 border border-Primary-200 hover:border-Primary-500-Primary transition duration-500 text-white px-3 py-1.5 text-sm flex items-center justify-center"
+            <div class="auth py-4 px-7 flex items-center bg-Primary-500-Primary">
+                <!-- 會員未登入 -->
+                <button
+                    class="rounded-lg bg-Primary-500-Primary border border-Primary-200 text-white px-3 py-1.5 text-sm flex gap-x-1 items-center justify-center"
+                    v-if="!store.isLogin"
                     @click="openModal"
                 >
-                    <template #leading>
-                        <img src="~assets/images/header/user.svg" />
-                    </template>
+                    <img src="~assets/images/header/user.svg" />
+
                     <span class="font-normal"> 登入 /註冊 </span>
-                </UButton>
+                </button>
 
-                <UButton color="white" variant="ghost" class="text-white underline hover:bg-opacity-0">
-                    <span class="font-normal"> 登出 </span>
-                </UButton>
+                <!-- 會員已登入 -->
+                <div class="flex" v-else>
+                    <button
+                        class="rounded-lg bg-Primary-500-Primary border border-Primary-200 text-white px-3 py-1.5 text-sm flex gap-x-1 items-center justify-center"
+                        @click="goToPage('/member/information')"
+                    >
+                        <img
+                            :src="store.userInfo.image"
+                            alt="memberPic"
+                            class="block rounded-full w-[18px] h-[18px] object-cover"
+                        />
 
-                <img src="~assets/images/header/arrow-left.svg" alt="arrow-left" @click="hideSideNav = true" />
+                        <span class="font-normal"> 會員中心 </span>
+                    </button>
+
+                    <button class="underline text-white text-sm ml-3" @click="logout">登出</button>
+                </div>
+
+                <img
+                    src="~assets/images/header/arrow-left.svg"
+                    alt="arrow-left"
+                    class="ml-auto"
+                    @click="hideSideNav = true"
+                />
             </div>
 
             <UAccordion
-                :items="items"
+                :items="navItems"
                 color="black"
                 size="xl"
                 open-icon="i-heroicons-plus"
                 close-icon="i-heroicons-minus"
+                :ui="{
+                    item: { padding: 'p-0' },
+                }"
                 class="text-Primary-600-Dark-Primary px-7"
             >
                 <template #category="{ item }">
                     <ul class="text-left bg-Primary-50 py-3 px-5 text-Neutral-900">
-                        <li v-for="(list, index) in item.lists" :key="index" class="mb-5 last:mb-0">
-                            <p>{{ list }}</p>
+                        <li
+                            v-for="(list, index) in item.lists"
+                            :key="index"
+                            class="mb-5 last:mb-0 cursor-pointer"
+                            @click="goToPage(list.link)"
+                        >
+                            <p>{{ list.name }}</p>
                         </li>
                     </ul>
                 </template>
 
                 <template #proposal="{ item }">
                     <ul class="text-left bg-Primary-50 py-3 px-5 text-Neutral-900">
-                        <li v-for="(list, index) in item.lists" :key="index" class="mb-5 last:mb-0">
-                            <p>{{ list }}</p>
+                        <li
+                            v-for="(list, index) in item.lists"
+                            :key="index"
+                            class="mb-5 last:mb-0 cursor-pointer"
+                            @click="goToPage(list.link)"
+                        >
+                            <p>{{ list.name }}</p>
                         </li>
                     </ul>
                 </template>
@@ -81,7 +112,8 @@
                         color="white"
                         variant="ghost"
                         :ui="{ rounded: 'rounded-none' }"
-                        class="text-Primary-600-Dark-Primary disabled:opacity-100 text-base justify-between p-0 pt-6"
+                        class="text-Primary-600-Dark-Primary disabled:opacity-100 text-base justify-between p-0 pt-4 pb-2"
+                        @click="goToPage(item.link)"
                     >
                         <span class="truncate">{{ item.label }}</span>
 
@@ -107,53 +139,61 @@
 </template>
 
 <script setup>
-const items = [
+import { useAuthStore } from "@/stores/auth";
+
+const store = useAuthStore();
+
+const navItems = [
     {
         label: "分類",
         slot: "category",
         showOpenIcon: true,
         lists: [
-            "科技AI",
-            "時尚流行",
-            "書籍出版",
-            "設計藝術",
-            "遊戲動漫",
-            "保健食品",
-            "課程教育",
-            "攝影圖像",
-            "表演/門票",
-            "服務/公益",
+            { name: "科技AI", link: "/category/technology-ai" },
+            { name: "時尚流行", link: "/category/fashion" },
+            { name: "書籍出版", link: "/category/books" },
+            { name: "設計藝術", link: "/category/design" },
+            { name: "遊戲動漫", link: "/category/gaming" },
+            { name: "保健食品", link: "/category/health" },
+            { name: "課程教育", link: "/category/education" },
+            { name: "攝影圖像", link: "/category/photography" },
+            { name: "表演/門票", link: "/category/tickets" },
+            { name: "服務/公益", link: "/category/welfare" },
         ],
     },
     {
         label: "群眾集資",
+        link: "/category/technology-ai?type=fundraise",
         showOpenIcon: false,
-        disabled: true,
     },
     {
         label: "好評團購",
+        link: "/category/technology-ai?type=groupbuying",
         showOpenIcon: false,
-        disabled: true,
     },
     {
         label: "團主推薦",
+        link: "/kol",
         showOpenIcon: false,
-        disabled: true,
     },
     {
         label: "好物分享",
+        link: "/category",
         showOpenIcon: false,
-        disabled: true,
     },
     {
         label: "關於我們",
         slot: "proposal",
         showOpenIcon: true,
-        lists: ["關於我們", "聯絡我們", "隱私權政策"],
+        lists: [
+            { name: "關於我們", link: "/" },
+            { name: "聯絡我們", link: "/" },
+            { name: "隱私權政策", link: "/" },
+        ],
     },
     {
         label: "提案",
-        disabled: true,
+        link: "/member/proposal",
         showOpenIcon: false,
     },
 ];
@@ -162,9 +202,23 @@ const emit = defineEmits(["openModal"]);
 
 const hideSideNav = ref(true);
 
+function goToPage(link) {
+    if (link) {
+        hideSideNav.value = true;
+
+        navigateTo(link);
+    }
+}
+
 function openModal() {
     hideSideNav.value = true;
     emit("openModal", "login");
+}
+
+async function logout() {
+    store.isLogin = false;
+    store.userInfo = {};
+    await navigateTo("/");
 }
 </script>
 
