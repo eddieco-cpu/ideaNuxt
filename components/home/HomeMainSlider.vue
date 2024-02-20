@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-[300px] relative mb-8" :style="`--x: 100; --t: ${slides.length}`">
+    <div class="min-h-[300px] relative mb-8 home" :style="`--x: 100; --t: ${slides.length}`">
         <Swiper
             :modules="[SwiperAutoplay, SwiperPagination, SwiperNavigation]"
             :slides-per-view="'auto'"
@@ -17,7 +17,7 @@
         >
             <SwiperSlide v-for="(slide, idx) in slides" :key="idx">
                 <div class="relative block w-[630px] aspect-[63/30] rounded-lg overflow-hidden">
-                    <picture class="overflow-hidden w-full h-full">
+                    <picture class="block overflow-hidden w-full h-full">
                         <img :src="slide.photo" alt="product" class="block w-full h-full object-cover" />
                     </picture>
                     <div class="py-4 px-6 absolute z-[2] bottom-0 left-0 w-full bg-[rgba(0,0,0,0.3)] text-white">
@@ -26,7 +26,8 @@
                                 class="inline-block font-normal text-sm text-center bg-Secondary-500-Primary rounded px-2 py-1 mr-2"
                                 >限時團購</span
                             >
-                            {{ slide.provider }}
+                            <!-- {{ slide.provider }} -->
+                            {{ useState(slide.photo + idx, () => helperLorem(5, 10)).value }}
                         </p>
                         <p class="font-normal text-xl">{{ slide.title }}</p>
                     </div>
@@ -45,7 +46,7 @@
             <UIcon name="i-heroicons-chevron-right" class="text-Primary-500-Primary text-sm" />
         </div>
 
-        <div class="main-slide__pagnation" stlye="overflow: auto">
+        <div class="main-slide__pagnation">
             <!-- <li class="main-slide__pagnation--page"></li> -->
         </div>
     </div>
@@ -59,12 +60,13 @@
 //         default: () => [],
 //     },
 // });
+
 const slides = ref(
     Array.from({ length: 10 }, () => {
         return {
             photo: helperPicture(),
             provider: "觸把結值取受想",
-            title: "假父雙十近英底死概宗久消原防找行終早板二。",
+            title: useState("x", () => helperLorem(20, 30)).value,
         };
     }),
 );
@@ -73,55 +75,46 @@ const slides = ref(
 const pagination = {
     el: ".main-slide__pagnation",
     clickable: true,
-    // bulletClass: "swiper-pagination-bullet",
-    // renderBullet: function (index, className) {
-    //     return `<li class="${className}" data-index="${index}">${index}</li>`;
-    // },
-    // dynamicBullets: true,
-    // dynamicMainBullets: 4,
+    bulletClass: "swiper-pagination-bullet",
+    renderBullet: function (index, className) {
+        return `<li class="${className}" data-index="${index}"></li>`;
+    },
+    dynamicBullets: true,
+    dynamicMainBullets: 4,
 };
 </script>
 
 <style>
-.swiper-slide {
+.home .swiper-slide {
     width: auto;
     margin: 0 8px;
 }
-.swiper-slide:not(.swiper-slide-active) {
+.home .swiper-slide:not(.swiper-slide-active) {
     opacity: 0.6;
 }
-.main-slide__pagnation {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    transform: translateY(10px);
+.home .main-slide__pagnation {
+    width: auto;
+    height: 4px;
+    transform: translate(0, 10px) !important;
     /* outline: 1px solid red; */
     margin: 0 auto;
 }
-/* .swiper-pagination-bullet {
+.home .swiper-pagination-bullet {
+    /* outline: 1px solid green; */
+
     width: 36px;
-    height: 36px;
+    height: 100%;
     background-color: #ccbff6;
     border-radius: 50px;
     cursor: pointer;
-    outline: 1px solid green;
-    display: block;
-    display: none;
+    /* opacity: 0; */
 }
-.swiper-pagination-bullet-active,
-.swiper-pagination-bullet-active-main {
+.home .swiper-pagination-bullet-active-main {
+    opacity: 1;
+    background-color: #ccbff6;
+}
+.home .swiper-pagination-bullet-active {
     width: 48px;
     background-color: #917fdd;
-    display: block;
 }
-
-.swiper-pagination-bullet-active + * {
-    display: block;
-} */
-
-/* .swiper-pagination-bullet:not(.swiper-pagination-bullet-active):nth-child(1),
-.swiper-pagination-bullet:not(.swiper-pagination-bullet-active):nth-child(2) {
-    display: block;
-} */
 </style>

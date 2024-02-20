@@ -2,32 +2,21 @@
     <UAccordion :items="items">
         <template #default="{ item, index, open }">
             <UButton
-                class="bg-Primary-50 hover:bg-Primary-100 active:bg-Primary-100 mb-4 py-[10px]"
-                :class="open && 'ring-Primary-100 ring-2'"
+                class="mb-4 py-4 border-b border-gray-200 dark:border-gray-700 w-full bg-white rounded-none text-black hover:bg-gray-50 active:bg-gray-100"
             >
-                <!-- <template #leading> 最前方 icon 
-                    <div
-                        class="w-6 h-6 rounded-full bg-primary-500 dark:bg-primary-400 flex items-center justify-center -my-1"
-                    >
-                        <UIcon :name="item.icon" class="w-4 h-4 text-white dark:text-gray-900" />
-                    </div>
-                </template> -->
-
-                <span class="truncate text-Primary-500-Primary text-base font-medium"
-                    >Q{{ index + 1 }}. {{ " " + item.label }}</span
-                >
-
-                <template #trailing>
-                    <UIcon
-                        name="i-heroicons-chevron-right-20-solid"
-                        class="w-6 h-6 ms-auto transform transition-transform duration-200 text-Primary-500-Primary"
-                        :class="[open && 'rotate-90']"
-                    />
-                </template>
+                <span class="truncat text-base font-medium min-w-[68px] mr-2">{{ item.label }}</span>
+                <span class="truncat text-lg font-bold">{{ open ? "＋" : "－" }}</span>
             </UButton>
         </template>
         <template #item="{ item }">
-            <p class="text-sm mb-2 mx-3 mt-[-6px]" v-for="(content, i) in item.content" :key="i" v-html="content"></p>
+            <ul class="pl-6">
+                <li
+                    class="text-sm mb-3 mx-3 mt-[-6px] list-outside list-disc"
+                    v-for="(content, i) in item.content"
+                    :key="i"
+                    v-html="content"
+                ></li>
+            </ul>
         </template>
     </UAccordion>
 </template>
@@ -46,8 +35,15 @@ const props = defineProps({
                 ],
             },
             {
-                label: "Basics",
-                defaultOpen: true,
+                label: "Contributing",
+                content: [
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.",
+                ],
+            },
+            {
+                label: "Community Guidelines",
                 content: [
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.",
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.",
