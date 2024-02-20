@@ -124,9 +124,11 @@ watch(
         if (!!query?.type) {
             typeSelected.value = type.value.find((item) => item.query === query.type);
 
-            window.scrollTo({
-                top: 0,
-            });
+            if (process.client) {
+                window.scrollTo({
+                    top: 0,
+                });
+            }
         }
     },
     { immediate: true },

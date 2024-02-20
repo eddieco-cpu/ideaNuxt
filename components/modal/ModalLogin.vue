@@ -1,7 +1,7 @@
 <template>
     <Transition name="modal">
         <ModalContainer :text="'會員登入'" @hideModal="hideModal" v-if="modelValue === 'login'">
-            <UForm :schema="loginSchema" :state="state" class="w-full" @submit="onSubmit">
+            <UForm :state="state" class="w-full" @submit="onSubmit">
                 <UFormGroup name="phone" class="mb-6">
                     <UInput v-model="state.phone" placeholder="輸入手機號碼">
                         <template #leading>
@@ -45,7 +45,7 @@
 <script setup>
 import { useAuthStore } from "@/stores/auth";
 import { useToast } from "vue-toastification";
-import { loginSchema } from "~/validation";
+
 import { POST } from "~/utils/helperFetchData.js";
 
 const toast = useToast();
