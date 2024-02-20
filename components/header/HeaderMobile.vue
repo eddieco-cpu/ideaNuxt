@@ -1,17 +1,44 @@
 <template>
     <header class="px-1.5 fixed top-0 w-full z-50 bg-white">
-        <div class="py-4 px-2.5 flex justify-between">
+        <div class="py-2 px-2.5 flex justify-between items-center min-h-[52px]">
             <div class="w-16" @click="hideSideNav = !hideSideNav">
                 <img src="~assets/images/header/menu.svg" alt="menu" />
             </div>
 
-            <div class="logo">
+            <div class="logo" v-show="!isShowSearchContent">
                 <img src="~assets/images/header/logo.png" alt="logo" width="160" />
             </div>
 
+            <UButtonGroup size="sm" orientation="horizontal" class="shadow-none" v-show="isShowSearchContent">
+                <UInput
+                    ref="searchInput"
+                    variant="none"
+                    placeholder="找點子、找團購"
+                    class="bg-Neutral-100 rounded-l-md mr-1"
+                />
+
+                <HeaderSearch @openModal="openModal" v-if="isShowSearchContent" :isMobile="true" />
+
+                <UButton
+                    color="gray"
+                    variant="ghost"
+                    class="bg-Neutral-100 hover:bg-opacity-30 border border-Neutral-100 hover:border-Neutral-100 transition duration-500 text-Primary-400-Hover px-3 py-1.5"
+                >
+                    <template #leading>
+                        <img src="~assets/images/header/search.svg" />
+                    </template>
+                </UButton>
+            </UButtonGroup>
+
             <div class="search-area">
                 <div class="search flex">
-                    <img src="~assets/images/header/search-purple.svg" class="mr-5" alt="search" />
+                    <img
+                        src="~assets/images/header/search-purple.svg"
+                        class="mr-5"
+                        alt="search"
+                        @click="showSearchContent"
+                        v-show="!isShowSearchContent"
+                    />
                     <img src="~assets/images/header/shoppingCart.svg" alt="shoppingCart" />
                 </div>
             </div>
@@ -37,7 +64,7 @@
                 <button
                     class="rounded-lg bg-Primary-500-Primary border border-Primary-200 text-white px-3 py-1.5 text-sm flex gap-x-1 items-center justify-center"
                     v-if="!store.isLogin"
-                    @click="openModal"
+                    @click="openModal('login')"
                 >
                     <img src="~assets/images/header/user.svg" />
 
@@ -143,6 +170,9 @@ import { useAuthStore } from "@/stores/auth";
 
 const store = useAuthStore();
 
+const searchInput = ref(null);
+const isShowSearchContent = ref(false);
+
 const navItems = [
     {
         label: "分類",
@@ -210,9 +240,18 @@ function goToPage(link) {
     }
 }
 
-function openModal() {
+function openModal(type) {
+    isShowSearchContent.value = false;
+
     hideSideNav.value = true;
-    emit("openModal", "login");
+
+    emit("openModal", type);
+}
+
+async function showSearchContent() {
+    isShowSearchContent.value = true;
+    await nextTick();
+    searchInput.value.input.focus();
 }
 
 async function logout() {

@@ -14,6 +14,7 @@
     <ModalRegister v-model="showModal" />
     <ModalLogin v-model="showModal" />
     <ModalForgotPassword v-model="showModal" />
+    <ModalSearch v-model="showModal" />
 </template>
 
 <script setup>
