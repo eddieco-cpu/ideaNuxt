@@ -87,7 +87,7 @@
             />
         </div>
 
-        <MemberBeLeader v-show="memberInfo.register" />
+        <MemberBeLeader v-show="memberInfo.register" :name="memberInfo.name" />
     </div>
 </template>
 

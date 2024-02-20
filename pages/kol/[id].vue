@@ -22,7 +22,7 @@
                 </p>
 
                 <div
-                    class="rounded-lg flex items-center justify-between w-[276px] p-3 px-4 bg-Primary-50 border border-Primary-200 bg-Primary-100"
+                    class="rounded-lg flex items-center justify-between w-[276px] p-3 px-4 border border-Primary-200 bg-Primary-50"
                 >
                     <div class="flex flex-col items-center justify-center pr-4">
                         <h3 class="text-Neutral-900 text-sm">好物開團</h3>
