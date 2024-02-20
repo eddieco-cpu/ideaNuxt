@@ -2,7 +2,12 @@
     <div>
         <h1 class="text-xl mb-3">基本資料</h1>
         <div class="p-3 md:p-6 rounded-lg bg-white">
-            <div class="md:max-w-[434px] flex flex-col gap-y-3">
+            <UForm
+                :schema="memberInformationSchema"
+                :state="memberInfo"
+                class="md:max-w-[434px] flex flex-col gap-y-3"
+                @submit="onSubmit"
+            >
                 <UFormGroup label="暱稱" name="nickName" help="使用平台時，大家會看到您的基本暱稱。">
                     <UInput placeholder="凍齡教主小美" v-model="memberInfo.nickName" />
                 </UFormGroup>
@@ -64,9 +69,11 @@
 
                 <!-- 儲存更新 -->
                 <div class="mt-3">
-                    <button class="bg-Primary-500-Primary text-white px-4 py-1 rounded-lg text-sm">儲存更新</button>
+                    <button type="submit" class="bg-Primary-500-Primary text-white px-4 py-1 rounded-lg text-sm">
+                        儲存更新
+                    </button>
                 </div>
-            </div>
+            </UForm>
         </div>
 
         <!-- 是否註冊開團達人 -->
@@ -87,20 +94,16 @@
 <script setup>
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "assets/css/datepicker.css";
+import { memberInformationSchema } from "~/validation";
 import { zhTW } from "date-fns/locale";
 
 const memberInfo = ref({
-    nickName: "",
-    name: "",
-    phone: "",
-    email: "",
-    birthDay: "",
+    nickName: undefined,
+    name: undefined,
+    phone: undefined,
+    email: undefined,
+    birthDay: undefined,
     sex: "0",
-    siteName: "https://www.idea2gether.com/",
-    facebookSite: "https://www.facebookSite.com/",
-    instagramSite: "https://www.InstagramSite.com/",
-    youtubeSite: "https://www.youtubeSite.com/",
-    officialSite: "https://www.officialSite.com/",
     notification: true,
     subscription: true,
     register: false,
@@ -120,6 +123,10 @@ const sexOptions = [
         label: "不便透漏",
     },
 ];
+
+function onSubmit(event) {
+    console.log(event.data);
+}
 </script>
 
 <style scoped>

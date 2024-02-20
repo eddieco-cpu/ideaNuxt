@@ -14,6 +14,9 @@ export default defineAppConfig({
                     outline: "shadow-none bg-white   ring-Neutral-400-Hover  focus:ring-Primary-400-Hover ",
                 },
             },
+            default: {
+                size: "lg",
+            },
         },
     },
 });
