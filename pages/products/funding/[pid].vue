@@ -1,5 +1,5 @@
 <template>
-    <section class="max-w-[1090px] mx-auto max-xl:px-6 max-xl:py-4 ring-1 max-xl:ring-orange-400">
+    <section class="max-w-[1090px] mx-auto max-xl:px-6 max-xl:py-4 ring-1 max-xl:ring-orange-400 max-md:px-0">
         <!--  -->
         <section class="pt-12 pb-5">
             <UBreadcrumb
@@ -14,11 +14,11 @@
 
         <!--  -->
         <section
-            class="grid grid-rows-1 grid-cols-[auto_auto] gap-6 mb-7 max-xl:grid-rows-[auto_auto] max-xl:grid-cols-1"
+            class="grid grid-rows-1 grid-cols-[auto_auto] gap-6 mb-7 max-xl:grid-rows-[auto_auto] max-xl:grid-cols-1 max-md:px-6"
         >
             <!-- slider -->
             <section
-                class="w-[626px] h-[408px] aspect-[313/204] rounded-lg py-1 max-xl:w-full max-xl:aspect-auto max-xl:py-0"
+                class="w-[626px] h-[408px] aspect-[313/204] rounded-lg py-1 max-xl:w-full max-xl:aspect-auto max-xl:py-0 max-md:h-auto max-md:aspect-auto"
             >
                 <ProductsSlider />
             </section>
@@ -58,11 +58,11 @@
                     <span class="text-Primary-500-Primary font-medium text-xs">{{ progressMeter }}%</span>
                 </div>
 
-                <div class="flex justify-between items-center mb-6">
+                <div class="flex justify-between items-center mb-6 max-md:block">
                     <p class="text-xs text-Neutral-600-Dark-Primary">
                         募資時間 <span>2022/06/16</span> - <span>2022/07/27</span>
                     </p>
-                    <div class="inline-flex justify-between items-center">
+                    <div class="inline-flex justify-between items-center max-md:mt-2">
                         <p class="mr-3 ring-1 ring-Primary-200 rounded flex justify-center items-center p-1">
                             <img src="~assets/images/icon/clock-icon.svg" alt="clock" width="12" />
                             <span class="ml-1 text-Primary-600-Dark-Primary text-sm">19日</span>
@@ -75,7 +75,7 @@
                 </div>
 
                 <div
-                    class="flex justify-between items-center max-xl:fixed max-xl:bottom-0 max-xl:left-0 max-xl:w-full max-xl:bg-white max-xl:px-4 max-xl:py-2"
+                    class="flex justify-between items-center max-xl:fixed max-xl:bottom-0 max-xl:left-0 max-xl:w-full max-xl:bg-white max-xl:px-4 max-xl:py-2 max-md:gap-x-3"
                 >
                     <!--  -->
                     <button
@@ -85,13 +85,13 @@
                     </button>
 
                     <!-- @click="() => $router.push('/products/funding/1')" -->
-                    <UiButton class="min-w-[370px] min-h-12"> 立即贊助 </UiButton>
+                    <UiButton class="min-w-[370px] min-h-12 max-md:min-w-40 max-md:flex-grow"> 立即贊助 </UiButton>
                 </div>
             </article>
         </section>
 
         <!--  -->
-        <section class="bg-white mb-4 rounded-lg sticky top-[80px]">
+        <section class="bg-white mb-4 rounded-lg sticky top-[76px] max-md:top-[51px]">
             <div class="w-80 px-6">
                 <UiHorizontalNav
                     :nav-items="navItems"

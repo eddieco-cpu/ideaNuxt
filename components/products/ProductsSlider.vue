@@ -1,38 +1,41 @@
 <template>
-    <div class="h-full w-full relative max-xl:h-auto max-xl:ring-2 max-xl:ring-orange-400">
+    <div class="h-full w-full relative max-xl:h-auto">
+        <!--  -->
         <Swiper
             :modules="[SwiperAutoplay, SwiperPagination, SwiperNavigation]"
             :slides-per-view="'auto'"
             :centered-slides="true"
-            :autoplay="{
-                delay: 5000,
-                disableOnInteraction: false,
-            }"
             :loop="true"
             :navigation="{
                 nextEl: '.main-slide__btn-next',
                 prevEl: '.main-slide__btn-pre',
             }"
+            :autoplay="{
+                delay: 5000,
+                disableOnInteraction: false,
+            }"
             :pagination="pagination"
         >
             <SwiperSlide v-for="(slide, idx) in slides" :key="idx">
                 <div
-                    class="relative block w-[626px] h-[400px] aspect-[313/200] rounded-lg overflow-hidden max-xl:aspect-auto"
+                    class="relative block w-[626px] h-[400px] aspect-[313/200] rounded-lg overflow-hidden max-xl:aspect-auto max-md:aspect-[323/206] max-md:w-full max-md:h-auto"
                 >
-                    <picture class="block overflow-hidden w-full h-full">
+                    <picture
+                        class="block overflow-hidden w-full h-full max-md:w-auto max-md:h-auto max-md:absolute max-md:top-0 max-md:left-0 max-md:right-0 max-md:bottom-0"
+                    >
                         <img :src="slide.photo" alt="product" class="block w-full h-full object-cover" />
                     </picture>
                 </div>
             </SwiperSlide>
         </Swiper>
         <div
-            class="main-slide__btn-pre w-6 h-6 bg-white rounded-[50px] border-2 border-Primary-200 flex justify-center items-center cursor-pointer absolute m-auto bottom-2 right-0 left-0 z-[2] translate-x-[-280px]"
+            class="main-slide__btn-pre w-6 h-6 bg-white rounded-[50px] border-2 border-Primary-200 flex justify-center items-center cursor-pointer absolute m-auto bottom-2 right-0 left-0 z-[2] translate-x-[-280px] max-xl:bottom-11 max-xl:translate-x-0 max-xl:right-auto max-xl:left-3"
         >
             <UIcon name="i-heroicons-chevron-left" class="text-Primary-500-Primary text-sm" />
         </div>
 
         <div
-            class="main-slide__btn-next w-6 h-6 bg-white rounded-[50px] border-2 border-Primary-200 flex justify-center items-center cursor-pointer absolute m-auto bottom-2 right-0 left-0 z-[2] translate-x-[280px]"
+            class="main-slide__btn-next w-6 h-6 bg-white rounded-[50px] border-2 border-Primary-200 flex justify-center items-center cursor-pointer absolute m-auto bottom-2 right-0 left-0 z-[2] translate-x-[280px] max-xl:bottom-11 max-xl:translate-x-0 max-xl:right-3 max-xl:left-auto"
         >
             <UIcon name="i-heroicons-chevron-right" class="text-Primary-500-Primary text-sm" />
         </div>
@@ -70,6 +73,13 @@ const pagination = {
 .swiper-slide {
     width: auto;
     margin: 0 8px;
+}
+
+@media screen and (max-width: 768px) {
+    .swiper-slide {
+        width: 100%;
+        margin: 0;
+    }
 }
 .swiper-slide:not(.swiper-slide-active) {
     opacity: 0.6;
