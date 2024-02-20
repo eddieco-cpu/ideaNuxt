@@ -55,6 +55,7 @@ export default {
                 "Status-Color-Danger-600-Dark-Primary": "#C93926",
                 "Status-Color-Danger-400-Hover": "#EE845E",
                 "Dust-Red-1": "#FFF1F0",
+                "Dust-Red-5": "#FF4D4F",
                 "Dust-Red-6": "#F5222D",
             },
             fontFamily: {
