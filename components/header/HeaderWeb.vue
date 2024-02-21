@@ -25,7 +25,9 @@
                         @click="openModal('search')"
                     />
 
-                    <HeaderSearch @openModal="openModal" v-if="isShowSearchContent" />
+                    <transition name="modal">
+                        <HeaderSearch @openModal="openModal" v-if="isShowSearchContent" />
+                    </transition>
 
                     <UButton
                         color="gray"
