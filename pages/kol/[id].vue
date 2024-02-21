@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            class="h-[240px] md:h-[110px] bg-no-repeat bg-cover bg-[url('assets/images/kol/banner.png')] md:bg-[url('assets/images/kol/banner-web.png')]"
+            class="h-[240px] md:h-[40px] bg-no-repeat bg-cover bg-[url('assets/images/kol/banner.png')] md:bg-[url('assets/images/kol/banner-web.png')]"
         ></div>
 
         <div class="max-w-80 md:max-w-[1086px] -mt-[80px] mx-auto md:grid md:grid-cols-12 md:gap-x-6 md:mt-10">
@@ -80,6 +80,41 @@
                         :totalPages="totalPages"
                         @updateCurrentPage="updateCurrentPage"
                     />
+                </div>
+
+                <!-- 影音快播 -->
+                <div v-if="true" class="overflow-x-auto none-scrollbar">
+                    <div class="flex gap-4 items-center justify-between mt-8 mb-4 md:mt-0">
+                        <h1 class="text-black text-xl font-medium">點子影音快播</h1>
+
+                        <div class="flex gap-x-3 items-center">
+                            <button
+                                class="w-8 h-8 rounded-full bg-white flex justify-center items-center border border-Primary-100"
+                            >
+                                <img src="~assets/images/icon/left-arrow-icon.svg" alt="left-arrow" />
+                            </button>
+
+                            <button
+                                class="w-8 h-8 rounded-full bg-white flex justify-center items-center border border-Primary-100"
+                            >
+                                <img src="~assets/images/icon/right-arrow-icon.svg" alt="right-arrow" />
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto flex gap-x-4 flex-nowrap relative">
+                        <div
+                            class="bg-black rounded-[10px] w-[180px] h-[256px] flex-shrink-0"
+                            v-for="(item, index) in 10"
+                            :key="index"
+                        >
+                            <img
+                                src="~assets/images/icon/play-video-icon.svg"
+                                alt="play"
+                                class="absolute top-3 left-3"
+                            />
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 即將開團 -->
@@ -171,6 +206,4 @@ const sortComingSelected = ref(sortComing[0]);
 const sortHistorySelected = ref(sortHistory[0]);
 </script>
 
-<style scoped>
-/* Your CSS styles go here */
-</style>
+<style scoped></style>

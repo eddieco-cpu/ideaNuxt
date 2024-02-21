@@ -10,3 +10,7 @@ body {
     font-family: "Noto Sans TC";
     background-color: #f7f8fc;
 }
+
+.none-scrollbar::-webkit-scrollbar {
+    display: none;
+}

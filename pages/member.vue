@@ -19,7 +19,7 @@
             <!-- 導航列 -->
             <nav
                 ref="memberNav"
-                class="member-nav px-6 flex flex-nowrap gap-x-8 overflow-x-auto md:flex-col md:gap-y-2 md:items-center"
+                class="none-scrollbar px-6 flex flex-nowrap gap-x-8 overflow-x-auto md:flex-col md:gap-y-2 md:items-center"
             >
                 <nuxt-link
                     v-for="(item, index) in memberNavList"
@@ -102,10 +102,6 @@ function memberTypeChoose(index) {
 </script>
 
 <style scoped>
-.member-nav::-webkit-scrollbar {
-    display: none;
-}
-
 .router-link-active {
     border-radius: 8px;
     background-color: #e5defa;
