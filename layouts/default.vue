@@ -14,11 +14,9 @@
     <ModalRegister v-model="showModal" />
     <ModalLogin v-model="showModal" />
     <ModalForgotPassword v-model="showModal" />
-    <ModalSearch v-model="showModal" />
 </template>
 
 <script setup>
-import { useBaseStore } from "@/stores/base";
 import { HeaderMobile, HeaderWeb } from "#components";
 const showModal = ref("");
 
@@ -35,17 +33,9 @@ function checkWindowWidth() {
     }
 }
 
-function openModal(modalName = "") {
+function openModal(modalName = "close") {
     showModal.value = modalName;
 }
-
-// const baseStore = useBaseStore();
-// const { getPageUrl } = baseStore;
-
-// useHead({
-//   meta: [{ name: "og:url", content: getPageUrl() }],
-//   link: [{ rel: "canonical", href: getPageUrl() }],
-// });
 
 onMounted(() => {
     checkWindowWidth();
