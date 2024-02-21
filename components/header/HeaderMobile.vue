@@ -225,7 +225,7 @@ const navItems = [
     },
     {
         label: "提案",
-        link: "/member/proposal",
+        link: "/proposal",
         showOpenIcon: false,
     },
 ];

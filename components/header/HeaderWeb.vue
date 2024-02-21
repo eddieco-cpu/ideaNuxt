@@ -149,11 +149,11 @@ const memberCenterLink = [
     },
     {
         name: "提案管理",
-        link: "/member/proposal",
+        link: "/member/proposal/edit",
     },
     {
         name: "團隊設定",
-        link: "/member/proposal",
+        link: "/member/proposal/group-edit",
     },
 ];
 

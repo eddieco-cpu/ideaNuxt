@@ -106,7 +106,7 @@ function memberTypeChoose(index) {
     display: none;
 }
 
-.router-link-exact-active {
+.router-link-active {
     border-radius: 8px;
     background-color: #e5defa;
     color: #6b56ca;
@@ -116,16 +116,16 @@ img.active {
     display: none;
 }
 
-.router-link-exact-active img.default {
+.router-link-active img.default {
     display: none;
 }
 
-.router-link-exact-active img.active {
+.router-link-active img.active {
     display: block;
 }
 
 @media screen and (width < 768px) {
-    .router-link-exact-active {
+    .router-link-active {
         border-radius: 8px;
         background-color: transparent;
         color: #6b56ca;
