@@ -10,10 +10,10 @@
                     class="max-w-[1200px] mx-auto py-3"
                 >
                     <NuxtLink
-                        to="/"
+                        :to="item.link"
                         style="'outline: 1px solid orange'"
                         class="block whitespace-nowrap text-sm font-medium text-Neutral-900 hover:text-Primary-400-Hover active:text-Primary-600-Dark-Primary mx-6 transition-colors duration-200 ease-in-out"
-                        >{{ item }}</NuxtLink
+                        >{{ item.name }}</NuxtLink
                     >
                 </UCarousel>
             </div>
@@ -154,22 +154,20 @@
 const currentPage = ref(10);
 const totalPages = ref(20);
 const updateCurrentPage = (newPage) => {
-    console.log("newPage", newPage);
     currentPage.value = newPage;
 };
 
 const category = [
-    "科技AI",
-    "時尚流行",
-    "3C家電",
-    "書籍出版",
-    "設計藝術",
-    "遊戲動漫",
-    "保健食品",
-    "課程教育",
-    "攝影圖像",
-    "表演/門票",
-    "服務/公益",
+    { name: "科技AI", link: "/category/technology-ai" },
+    { name: "時尚流行", link: "/category/fashion" },
+    { name: "書籍出版", link: "/category/books" },
+    { name: "設計藝術", link: "/category/design" },
+    { name: "遊戲動漫", link: "/category/gaming" },
+    { name: "保健食品", link: "/category/health" },
+    { name: "課程教育", link: "/category/education" },
+    { name: "攝影圖像", link: "/category/photography" },
+    { name: "表演/門票", link: "/category/tickets" },
+    { name: "服務/公益", link: "/category/welfare" },
 ];
 const newIdeas = [{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }];
 const newIdeasTypes = reactive({

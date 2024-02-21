@@ -6,7 +6,9 @@
             </div>
 
             <div class="logo" v-show="!isShowSearchContent">
-                <img src="~assets/images/header/logo.png" alt="logo" width="160" />
+                <NuxtLink to="/">
+                    <img src="~assets/images/header/logo.png" alt="logo" width="160" />
+                </NuxtLink>
             </div>
 
             <UButtonGroup size="sm" orientation="horizontal" class="shadow-none" v-show="isShowSearchContent">
