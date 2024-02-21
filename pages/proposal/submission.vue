@@ -20,6 +20,14 @@
             >
                 <UInput v-model="userName" class="max-w-[400px]" :id="'userName'" />
             </UiInputDev>
+            <UFormGroup
+                label="真實姓名/公司名稱"
+                name="userName"
+                required
+                help="募資專案發起代表人，必須使用真實姓名或公司名義申請募資專案，為求雙方合作權益，本平台暫不接受匿名或使用他人名義的提案。"
+            >
+                <UInput v-model="userName" class="max-w-[400px]" :id="'userName'" />
+            </UFormGroup>
             <UiInputDev
                 name="電子信箱"
                 id="mail"
