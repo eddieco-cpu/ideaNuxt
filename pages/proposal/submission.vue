@@ -136,7 +136,8 @@
                 :isRequired="true"
                 class="mb-3"
             >
-                <UInput class="max-w-[400px]" />
+                <!-- <UInput class="max-w-[400px]" /> -->
+                <ModalDropImg />
             </UiInputDev>
 
             <UiInputDev name="專案說明審核" id="n" :isRequired="true" class="mb-3">
