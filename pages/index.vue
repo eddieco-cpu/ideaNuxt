@@ -11,7 +11,6 @@
                 >
                     <NuxtLink
                         to="/"
-                        style="'outline: 1px solid orange'"
                         class="block whitespace-nowrap text-sm font-medium text-Neutral-900 hover:text-Primary-400-Hover active:text-Primary-600-Dark-Primary mx-6 transition-colors duration-200 ease-in-out"
                         >{{ item }}</NuxtLink
                     >
@@ -21,7 +20,7 @@
             <!--  -->
             <section class="bg-[rgb(247,248,252)] py-[1px]">
                 <!--  -->
-                <div class="my-10">
+                <div class="my-10 max-md:my-9">
                     <HomeMainSlider :slides="slides" />
                 </div>
 
@@ -135,17 +134,97 @@
                         v-slot="{ item }"
                         :items="videoList"
                         :ui="{ item: 'snap-start' }"
-                        class="max-w-[1200px] mx-auto py-3 mb-10"
+                        class="max-w-[1200px] mx-auto py-3"
                     >
                         <div class="mr-5 w-[183px] aspect-[183/256] rounded-[10px] overflow-hidden">
                             <img :src="helperPicture()" class="block w-full h-full object-cover" />
                         </div>
                     </UCarousel>
-
-                    <!--  -->
-                    <UiTitle>網紅推薦！限時開團中</UiTitle>
                 </UiContainer>
             </section>
+
+            <!--  -->
+            <section class="bg-[rgb(247,248,252)] py-[1px] pb-20">
+                <UiContainer class="relative max-md:pb-5 max-md:mb-10">
+                    <!--  -->
+                    <div
+                        class="text-right mb-[-36px] max-md:absolute max-md:bottom-0 max-md:left-0 max-md:w-full max-md:text-center"
+                    >
+                        <UiButton
+                            type="secondary"
+                            class="max-w-[120px] !text-sm max-md:max-w-auto max-md:min-w-[calc(100%-48px)]"
+                            >查看更多團購</UiButton
+                        >
+                    </div>
+                    <!--  -->
+                    <UiTitle>網紅推薦！限時開團中</UiTitle>
+                    <div
+                        class="grid grid-cols-3 grid-rows-2 gap-5 max-xl:grid-cols-2 max-xl:grid-rows-3 max-md:grid-cols-1 max-md:grid-rows-[auto_auto_auto_auto_auto_auto]"
+                    >
+                        <CardFlashBuying type="ttb" />
+                        <CardFlashBuying type="ttb" />
+                        <CardFlashBuying />
+                        <CardFlashBuying />
+                        <CardFlashBuying />
+                        <CardFlashBuying />
+                    </div>
+                </UiContainer>
+            </section>
+
+            <!-- -->
+            <section class="bg-white py-[1px] h-[385px] flex justify-center items-center max-xl:h-auto">
+                <section class="w-[1200px] mx-auto flex justify-between items-center max-xl:flex-col">
+                    <article class="max-w-[344px] pt-10 pb-10">
+                        <p class="text-2xl font-bold font-roboto text-Secondary-400-Hover mb-4">TOP PICKS</p>
+                        <p class="text-4xl font-bold mb-4">熱購名人排行榜</p>
+
+                        <p class="text-sm font-normal mb-4">
+                            快來瞧瞧，探索每日最新的排行榜！這些不僅是最新最熱門，更是大家一致推崇的選擇。立即尋找那些引領潮流、散發獨特魅力的絕佳商品！
+                        </p>
+                        <nuxt-link class="text-Secondary-400-Hover underline text-sm" to="/kol">查看所有人</nuxt-link>
+                    </article>
+                    <div
+                        class="w-[752px] h-[446px] flex justify-between flex-wrap content-between max-xl:mb-12 max-md:w-full max-md:h-auto overflow-x-scroll max-md:flex-nowrap max-md:justify-start max-md:gap-x-3 max-md:items-center top-picks-nav max-md:px-4"
+                    >
+                        <CardKolRank />
+                        <CardKolRank />
+                        <CardKolRank />
+                        <CardKolRank />
+                        <CardKolRank />
+                        <CardKolRank />
+                    </div>
+                </section>
+            </section>
+
+            <section class="bg-[rgb(247,248,252)] pt-[120px] pb-1">
+                <UiContainer class="relative max-md:pb-5 max-md:mb-10">
+                    <!--  -->
+                    <div
+                        class="text-right mb-[-36px] max-md:absolute max-md:bottom-0 max-md:left-0 max-md:w-full max-md:text-center"
+                    >
+                        <UiButton
+                            type="secondary"
+                            class="max-w-[120px] !text-sm max-md:max-w-auto max-md:min-w-[calc(100%-48px)]"
+                            >查看更多團購</UiButton
+                        >
+                    </div>
+                    <!--  -->
+                    <UiTitle>即將開團</UiTitle>
+                    <div
+                        class="mx-auto flex justify-between items-center gap-x-5 max-lg:max-w-[calc(100%-48px)] max-lg:flex-col max-lg:justify-center max-lg:gap-y-4 max-md:max-w-full"
+                    >
+                        <CardGroupBuyingHome />
+                        <CardGroupBuyingHome />
+                        <CardGroupBuyingHome />
+                        <CardGroupBuyingHome />
+                    </div>
+                </UiContainer>
+            </section>
+
+            <!--  -->
+            <!-- <hr />
+            <CardGroupBuying />
+            <hr /> -->
         </div>
     </section>
 </template>
@@ -194,3 +273,9 @@ onBeforeMount(async () => {
     slides.value = sliderDatas;
 });
 </script>
+
+<style>
+.top-picks-nav::-webkit-scrollbar {
+    display: none;
+}
+</style>
