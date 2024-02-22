@@ -29,3 +29,14 @@
 .card-leave-to {
     opacity: 0;
 }
+
+/* video */
+.video-enter-active,
+.video-leave-active {
+    transition: opacity 0.2s ease;
+}
+
+.video-enter-from,
+.video-leave-to {
+    opacity: 0;
+}

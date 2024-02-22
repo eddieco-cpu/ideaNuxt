@@ -90,31 +90,38 @@
                         <div class="flex gap-x-3 items-center">
                             <button
                                 class="w-8 h-8 rounded-full bg-white flex justify-center items-center border border-Primary-100"
+                                @click="scrollVideoNav(-1)"
                             >
                                 <img src="~assets/images/icon/left-arrow-icon.svg" alt="left-arrow" />
                             </button>
 
                             <button
                                 class="w-8 h-8 rounded-full bg-white flex justify-center items-center border border-Primary-100"
+                                @click="scrollVideoNav(1)"
                             >
                                 <img src="~assets/images/icon/right-arrow-icon.svg" alt="right-arrow" />
                             </button>
                         </div>
                     </div>
 
-                    <div class="overflow-x-auto flex gap-x-4 flex-nowrap relative">
-                        <div
-                            class="bg-black rounded-[10px] w-[180px] h-[256px] flex-shrink-0"
-                            v-for="(item, index) in 10"
+                    <div ref="videoNav" class="overflow-x-auto flex gap-x-4 flex-nowrap relative none-scrollbar">
+                        <CardVideoThumbnail
+                            v-for="(item, index) in videoPlayList"
+                            :thumbnail="item.thumbnail"
+                            :text="item.text"
                             :key="index"
-                        >
-                            <img
-                                src="~assets/images/icon/play-video-icon.svg"
-                                alt="play"
-                                class="absolute top-3 left-3"
-                            />
-                        </div>
+                            @click="openVideo(index)"
+                        />
                     </div>
+
+                    <transition name="modal">
+                        <UtilVideo
+                            :videoPlayList="videoPlayList"
+                            :videoIndex="videoIndex"
+                            @closeVideo="closeVideo"
+                            v-if="isOpenVideo"
+                        />
+                    </transition>
                 </div>
 
                 <!-- 即將開團 -->
@@ -192,18 +199,67 @@
 
 <script setup>
 const sort = ["新到舊", "舊到新", "開團數", "活耀度"];
+const sortSelected = ref(sort[0]);
+
 const sortComing = ["新到舊", "舊到新", "開團數", "活耀度"];
+const sortComingSelected = ref(sortComing[0]);
+
 const sortHistory = ["新到舊", "舊到新", "開團數", "活耀度"];
+const sortHistorySelected = ref(sortHistory[0]);
+
+const scrollNavIndex = ref(0);
+const isOpenVideo = ref(false);
+
+const videoNav = ref(null);
+const videoPlayList = ref([
+    { source: "/1.mp4", thumbnail: "/1.jpg", text: "影片1 x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/2.mp4", thumbnail: "/2.jpg", text: "影片2  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/3.mp4", thumbnail: "/3.jpg", text: "影片3  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/1.mp4", thumbnail: "/1.jpg", text: "影片4 x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/2.mp4", thumbnail: "/2.jpg", text: "影片5  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/3.mp4", thumbnail: "/3.jpg", text: "影片6  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/1.mp4", thumbnail: "/1.jpg", text: "影片7 x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/2.mp4", thumbnail: "/2.jpg", text: "影片8  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+]);
+
+const videoIndex = ref(0);
+
+function scrollVideoNav(index) {
+    scrollNavIndex.value += index;
+
+    const cardNumberShows = 4; // 有多少個完整的卡片顯示
+    const videoArrNumber = videoPlayList.value.length;
+    const maxScrollTimes = Math.floor(videoArrNumber / cardNumberShows); // 卷軸可以按幾次
+
+    if (scrollNavIndex.value > maxScrollTimes) {
+        scrollNavIndex.value = 0;
+    }
+
+    if (scrollNavIndex.value < 0) {
+        scrollNavIndex.value = videoArrNumber;
+    }
+
+    videoNav.value.scrollTo({
+        left: 195 * (cardNumberShows - 1) * scrollNavIndex.value,
+        behavior: "smooth",
+    });
+}
+
+function openVideo(index) {
+    isOpenVideo.value = true;
+
+    videoIndex.value = index;
+}
+
+function closeVideo() {
+    isOpenVideo.value = false;
+}
 
 const currentPage = ref(1);
 const totalPages = ref(20);
 const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
 };
-
-const sortSelected = ref(sort[0]);
-const sortComingSelected = ref(sortComing[0]);
-const sortHistorySelected = ref(sortHistory[0]);
 </script>
 
 <style scoped></style>

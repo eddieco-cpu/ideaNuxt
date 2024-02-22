@@ -5,7 +5,7 @@
         >
             <!-- 團主排名卡片 -->
             <div
-                class=".none-scrollbar px-6 md:max-w-[1200px] md:gap-y-4 md:mx-auto flex flex-nowrap md:grid md:grid-cols-3 gap-x-3 overflow-x-auto overscroll-x-none transform translate-y-[12.5rem]"
+                class="none-scrollbar px-6 md:max-w-[1200px] md:gap-y-4 md:mx-auto flex flex-nowrap md:grid md:grid-cols-3 gap-x-3 overflow-x-auto overscroll-x-none transform translate-y-[12.5rem]"
             >
                 <CardKolRank v-for="(item, index) in 6" :key="index" />
             </div>
