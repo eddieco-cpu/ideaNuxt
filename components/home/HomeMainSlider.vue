@@ -1,47 +1,55 @@
 <template>
-    <div class="min-h-[300px] relative mb-8 home" :style="`--x: 100; --t: ${slides.length}`">
+    <div class="min-h-[300px] relative mb-8 home max-md:min-h-[213px]">
         <Swiper
             :modules="[SwiperAutoplay, SwiperPagination, SwiperNavigation]"
             :slides-per-view="'auto'"
             :centered-slides="true"
-            :autoplay="{
-                delay: 3000,
-                disableOnInteraction: false,
-            }"
             :loop="true"
             :navigation="{
                 nextEl: '.main-slide__btn-next',
                 prevEl: '.main-slide__btn-pre',
             }"
+            :autoplay="{
+                delay: 3000,
+                disableOnInteraction: false,
+            }"
             :pagination="pagination"
         >
             <SwiperSlide v-for="(slide, idx) in slides" :key="idx">
-                <div class="relative block w-[630px] aspect-[63/30] rounded-lg overflow-hidden">
+                <div
+                    class="relative block w-[630px] aspect-[63/30] rounded-lg overflow-hidden max-md:w-[324px] max-md:aspect-[324/200]"
+                >
                     <picture class="block overflow-hidden w-full h-full">
                         <img :src="slide.photo" alt="product" class="block w-full h-full object-cover" />
                     </picture>
-                    <div class="py-4 px-6 absolute z-[2] bottom-0 left-0 w-full bg-[rgba(0,0,0,0.3)] text-white">
-                        <p class="font-medium text-base mb-4 flex justify-start items-center">
+                    <div
+                        class="py-4 px-6 absolute z-[2] bottom-0 left-0 w-full bg-[rgba(0,0,0,0.3)] text-white max-md:py-2 max-md:px-3"
+                    >
+                        <p
+                            class="font-medium text-base mb-4 flex justify-start items-center max-md:text-xs max-md:mb-3"
+                        >
                             <span
-                                class="inline-block font-normal text-sm text-center bg-Secondary-500-Primary rounded px-2 py-1 mr-2"
+                                class="inline-block font-normal text-sm text-center bg-Secondary-500-Primary rounded px-2 py-1 mr-2 max-md:text-xs"
                                 >限時團購</span
                             >
                             <!-- {{ slide.provider }} -->
                             {{ useState(slide.photo + idx, () => helperLorem(5, 10)).value }}
                         </p>
-                        <p class="font-normal text-xl">{{ slide.title }}</p>
+                        <p class="font-normal text-xl line-clamp-2 max-md:text-xs max-md:line-clamp-1">
+                            {{ slide.title }}
+                        </p>
                     </div>
                 </div>
             </SwiperSlide>
         </Swiper>
         <div
-            class="main-slide__btn-pre w-8 h-8 bg-white rounded-[50px] ring-2 ring-Primary-200 flex justify-center items-center cursor-pointer absolute m-auto top-0 bottom-0 right-0 left-0 z-[2] translate-x-[-370px]"
+            class="main-slide__btn-pre w-8 h-8 bg-white rounded-[50px] ring-2 ring-Primary-200 flex justify-center items-center cursor-pointer absolute m-auto top-0 bottom-0 right-0 left-0 z-[2] translate-x-[-370px] max-md:hidden"
         >
             <UIcon name="i-heroicons-chevron-left" class="text-Primary-500-Primary text-sm" />
         </div>
 
         <div
-            class="main-slide__btn-next w-8 h-8 bg-white rounded-[50px] ring-2 ring-Primary-200 flex justify-center items-center cursor-pointer absolute m-auto top-0 bottom-0 right-0 left-0 z-[2] translate-x-[370px]"
+            class="main-slide__btn-next w-8 h-8 bg-white rounded-[50px] ring-2 ring-Primary-200 flex justify-center items-center cursor-pointer absolute m-auto top-0 bottom-0 right-0 left-0 z-[2] translate-x-[370px] max-md:hidden"
         >
             <UIcon name="i-heroicons-chevron-right" class="text-Primary-500-Primary text-sm" />
         </div>
@@ -116,5 +124,14 @@ const pagination = {
 .home .swiper-pagination-bullet-active {
     width: 48px;
     background-color: #917fdd;
+}
+@media screen and (max-width: 768px) {
+    .home .swiper-pagination-bullet {
+        width: 16px;
+        height: 3px;
+    }
+    .home .swiper-pagination-bullet-active {
+        width: 24px;
+    }
 }
 </style>
