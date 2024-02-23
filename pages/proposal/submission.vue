@@ -1,8 +1,21 @@
 <template>
-    <section>
-        <div class="pt-14 pb-1 bg-Primary-400-Hover mb-20">
-            <h1 class="text-center font-bold text-white text-4xl">提案必須資料</h1>
-        </div>
+    <section
+        class="banner ring-1 relative z-[-1] overflow-hidden mb-[-5%] 2xl:aspect-[144/23] max-2xl:aspect-[144/26] max-xl:mb-0 max-lg:aspect-[144/30] max-md:aspect-[375/127]"
+        bg-Primary-400-Hover
+    >
+        <h1
+            class="block text-center font-bold text-white text-4xl h-10 mx-auto my-auto absolute z-[2] top-0 left-0 right-0 bottom-0 translate-y-[-185%] max-2xl:translate-y-[-175%] max-xl:translate-y-[-80%] max-md:scale-[0.55]"
+        >
+            提案必須資料
+        </h1>
+        <img
+            class="block w-full h-full object-cover absolute z-[1] bottom-0 left-0 max-md:hidden"
+            src="~assets/images/proposal/banner_w.svg"
+        />
+        <img
+            class="block w-full h-full object-cover absolute z-[1] bottom-0 left-0 md:hidden"
+            src="~assets/images/proposal/banner_m.svg"
+        />
     </section>
 
     <!--  -->
@@ -11,41 +24,36 @@
             <SubmissionDes :title="descriptionDatas[0].title" :context="descriptionDatas[0].context"></SubmissionDes>
         </template>
         <template #form>
-            <UiInputDev
-                name="真實姓名/公司名稱"
-                id="userName"
-                :isRequired="true"
-                notes="募資專案發起代表人，必須使用真實姓名或公司名義申請募資專案，為求雙方合作權益，本平台暫不接受匿名或使用他人名義的提案。"
-                class="mb-3"
-            >
-                <UInput v-model="userName" class="max-w-[400px]" :id="'userName'" />
-            </UiInputDev>
             <UFormGroup
                 label="真實姓名/公司名稱"
                 name="userName"
                 required
                 help="募資專案發起代表人，必須使用真實姓名或公司名義申請募資專案，為求雙方合作權益，本平台暫不接受匿名或使用他人名義的提案。"
+                class="mb-3"
             >
                 <UInput v-model="userName" class="max-w-[400px]" :id="'userName'" />
             </UFormGroup>
-            <UiInputDev
-                name="電子信箱"
-                id="mail"
-                :isRequired="true"
-                notes="後續聯繫與合作事宜，將以此信箱通知，請再次確認信箱是否正確且能順利收信，否則將無法聯繫到您。"
+
+            <UFormGroup
+                label="電子信箱"
+                name="mail"
+                required
+                help="後續聯繫與合作事宜，將以此信箱通知，請再次確認信箱是否正確且能順利收信，否則將無法聯繫到您。"
                 class="mb-3"
             >
                 <UInput class="max-w-[400px]" :id="'mail'" />
-            </UiInputDev>
-            <UiInputDev
-                name="聯絡電話"
+            </UFormGroup>
+
+            <UFormGroup
+                label="聯絡電話"
                 id="phone"
-                :isRequired="true"
-                :isDisabled="true"
-                notes="手機已驗證成功。若需修改手機，請聯繫客服中心。"
+                required
+                disabled
+                help="手機已驗證成功。若需修改手機，請聯繫客服中心。"
+                class="mb-3"
             >
                 <UInput class="max-w-[276px]" :id="'phone'" disabled />
-            </UiInputDev>
+            </UFormGroup>
         </template>
     </SubmissionLayout>
 
@@ -60,9 +68,10 @@
                     <UTextarea
                         :id="'projectName'"
                         placeholder="本次募資專案之名稱/品名，文字數量最多以 40字為限。"
-                        :rows="1"
+                        :rows="screenWidth <= 768 ? 2 : 1"
                         resize
                         class="w-full"
+                        size="lg"
                     />
                     <p class="text-sm text-right text-Neutral-500-Primary"><span>0</span> / <span>40</span></p>
                 </div>
@@ -73,9 +82,10 @@
                     <UTextarea
                         :id="'projectDes'"
                         placeholder=" 請您簡短的以  90字，快速的介紹本次計畫，將顯示於募資頁商品右側。"
-                        :rows="2"
+                        :rows="screenWidth <= 768 ? 3 : 2"
                         resize
                         class="w-full"
+                        size="lg"
                     />
                     <p class="text-sm text-right text-Neutral-500-Primary"><span>0</span> / <span>90</span></p>
                 </div>
@@ -88,7 +98,15 @@
                 :isRequired="true"
                 class="mb-3"
             >
-                <UInput class="max-w-[400px]" :id="'doller'" />
+                <UInput class="max-w-[400px] pl-[20px]" :id="'doller'">
+                    <template #leading>
+                        <div
+                            class="flex justify-center items-center h-full px-3 bg-gray-50 relative left-[-14px] border-[1.5px] border-[rgb(221,222,224)] rounded-s-md"
+                        >
+                            NT$
+                        </div>
+                    </template>
+                </UInput>
             </UiInputDev>
 
             <UiInputDev name="專案分類" notes="請選擇適合您本次計畫的商品分類/屬性。" :isRequired="false" class="mb-3">
@@ -114,8 +132,12 @@
                 :isRequired="true"
                 class="mb-3"
             >
-                <div class="w-64">
+                <div class="max-w-64 relative">
                     <VueDatePicker v-model="startDate" />
+                    <UIcon
+                        name="i-heroicons-calendar"
+                        class="block w-4 h-4 text-Neutral-500-Primary my-auto absolute top-0 right-2 bottom-0 pointer-events-none"
+                    />
                 </div>
             </UiInputDev>
 
@@ -125,8 +147,12 @@
                 :isRequired="true"
                 class="mb-3"
             >
-                <div class="w-64">
+                <div class="max-w-64 relative">
                     <VueDatePicker v-model="endDate" />
+                    <UIcon
+                        name="i-heroicons-calendar"
+                        class="block w-4 h-4 text-Neutral-500-Primary my-auto absolute top-0 right-2 bottom-0 pointer-events-none"
+                    />
                 </div>
             </UiInputDev>
 
@@ -145,9 +171,10 @@
                     <UTextarea
                         :id="'n'"
                         placeholder=" 請您提供關於本次專案的故事與內容介紹，例如為什麼大家應該支持你的計畫，提案者必須提供足夠的資訊才有辦法審核計畫，如無法評估計畫的真實性、可行性，計畫就會無法上架，請特別注意唷！"
-                        :rows="3"
+                        :rows="screenWidth <= 768 ? 4 : 3"
                         resize
                         class="w-full"
+                        size="lg"
                     />
                     <p class="text-sm text-right text-Neutral-500-Primary"><span>0</span> / <span>300</span></p>
                 </div>
@@ -210,11 +237,11 @@
             <SubmissionDes
                 :title="descriptionDatas[3].title"
                 :context="descriptionDatas[3].context"
-                class="opacity-0"
+                class="opacity-0 max-md:h-0 max-md:overflow-hidden"
             ></SubmissionDes>
         </template>
         <template #form>
-            <div>
+            <div class="max-md:text-center">
                 <UiButton class="max-w-[90px] mr-2" @click="doSubmit">送出提案</UiButton>
                 <UiButton class="max-w-[62px]" type="secondary">取消</UiButton>
             </div>
@@ -227,6 +254,15 @@ import { descriptionDatas } from "@/assets/others/submission/data";
 
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "/public/css/vue-datepicker.css";
+
+const screenWidth = ref(800);
+
+onMounted(() => {
+    screenWidth.value = window.innerWidth;
+    // window.addEventListener("resize", () => {
+    //     screenWidth.value = window.innerWidth;
+    // });
+});
 
 const userName = ref("");
 
@@ -276,6 +312,9 @@ function doSubmit() {
 }
 </script>
 <style scoped>
+/* .banner {
+    background-image: linear-gradient(to bottom, #917fdd 50%, transparent 50%);
+} */
 .scroll-container::-webkit-scrollbar {
     width: 4px;
     height: 4px;
