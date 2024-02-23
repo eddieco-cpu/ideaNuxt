@@ -3,7 +3,7 @@
         <ModalContainer
             :text="'忘記密碼'"
             :subTitle="'為了確保是您本人，將會寄送驗證碼到您的手機，驗證碼有效時限為10分鐘。'"
-            @hideModal="hideModal"
+            @openModal="openModal('close')"
             v-if="modelValue === 'forgotPassword'"
         >
             <UFormGroup label="手機號碼" name="phone" class="w-full mb-6">
@@ -42,7 +42,7 @@
 const { modelValue } = defineProps(["modelValue"]);
 const emit = defineEmits(["update:modelValue"]);
 
-function hideModal(value = "") {
+function openModal(value = "") {
     emit("update:modelValue", value);
 }
 

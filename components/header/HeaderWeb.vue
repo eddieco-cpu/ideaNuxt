@@ -17,13 +17,17 @@
 
             <!-- 搜尋欄 -->
             <div class="search flex">
-                <UButtonGroup size="lg" orientation="horizontal" class="shadow-none">
+                <UButtonGroup size="lg" orientation="horizontal" class="shadow-none relative">
                     <UInput
                         variant="none"
                         placeholder="找點子、找團購"
                         class="bg-Neutral-100 rounded-l-md mr-1"
-                        size="lg"
+                        @click="openModal('search')"
                     />
+
+                    <transition name="modal">
+                        <HeaderSearch @openModal="openModal" v-if="isShowSearchContent" />
+                    </transition>
 
                     <UButton
                         color="gray"
@@ -41,7 +45,15 @@
             <div>
                 <div class="flex">
                     <img src="~assets\images\header\heart.svg" alt="heart" class="mr-5 cursor-pointer" />
-                    <img src="~assets/images/header/shoppingCart.svg" alt="shoppingCart" class="cursor-pointer" />
+
+                    <div class="relative">
+                        <img src="~assets/images/header/shoppingCart.svg" alt="shoppingCart" class="cursor-pointer" />
+
+                        <div
+                            class="absolute -right-1 -top-1 bg-Dust-Red-5 rounded-full w-[7.5px] h-[7.5px]"
+                            v-if="true"
+                        ></div>
+                    </div>
                 </div>
             </div>
 
@@ -49,7 +61,7 @@
             <button
                 class="bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover"
                 v-if="!store.isLogin"
-                @click="openModal"
+                @click="openModal('login')"
             >
                 <img src="~assets/images/header/user-purple.svg" class="block w-[18px] h-[18px]" />
 
@@ -101,6 +113,8 @@ const store = useAuthStore();
 
 const emit = defineEmits(["openModal"]);
 
+const isShowSearchContent = ref(false);
+
 const navLink = [
     {
         name: "群眾集資",
@@ -135,16 +149,22 @@ const memberCenterLink = [
     },
     {
         name: "提案管理",
-        link: "/member/proposal",
+        link: "/member/proposal/edit",
     },
     {
         name: "團隊設定",
-        link: "/member/proposal",
+        link: "/member/proposal/group-edit",
     },
 ];
 
-function openModal() {
-    emit("openModal", "login");
+function openModal(type = "") {
+    if (type === "search") {
+        isShowSearchContent.value = true;
+    } else {
+        isShowSearchContent.value = false;
+    }
+
+    emit("openModal", type);
 }
 
 async function logout() {

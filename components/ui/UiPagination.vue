@@ -6,7 +6,7 @@
             class="block w-8 h-8 flex justify-center items-center text-xs scale-50 mr-2"
             :class="
                 currentPage <= 1
-                    ? 'text-gray-300 cursor-none'
+                    ? 'text-gray-300 cursor-not-allowed'
                     : 'text-black cursor-pointer hover:text-Primary-400-Hover active:text-Primary-200'
             "
             @click="changePage(currentPage - 1)"
@@ -28,7 +28,7 @@
             class="block w-8 h-8 flex justify-center items-center text-xs scale-50"
             :class="
                 currentPage >= totalPages
-                    ? 'text-gray-300 cursor-none'
+                    ? 'text-gray-300 cursor-not-allowed'
                     : 'text-black cursor-pointer hover:text-Primary-400-Hover active:text-Primary-200'
             "
             @click="changePage(currentPage + 1)"

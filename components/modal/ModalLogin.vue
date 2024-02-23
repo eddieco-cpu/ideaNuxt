@@ -1,6 +1,6 @@
 <template>
     <Transition name="modal">
-        <ModalContainer :text="'會員登入'" @hideModal="hideModal" v-if="modelValue === 'login'">
+        <ModalContainer :text="'會員登入'" @openModal="openModal('close')" v-if="modelValue === 'login'">
             <UForm :state="state" class="w-full" @submit="onSubmit">
                 <UFormGroup name="phone" class="mb-6">
                     <UInput v-model="state.phone" placeholder="輸入手機號碼">
@@ -20,13 +20,13 @@
                 <div class="mt-6 flex items-center justify-between w-full">
                     <span
                         class="text-sm text-Primary-600-Dark-Primary underline cursor-pointer"
-                        @click="hideModal('register')"
+                        @click="openModal('register')"
                         >尚未有帳號，點此註冊
                     </span>
 
                     <span
                         class="text-sm text-Primary-600-Dark-Primary underline cursor-pointer"
-                        @click="hideModal('forgotPassword')"
+                        @click="openModal('forgotPassword')"
                         >忘記密碼</span
                     >
                 </div>
@@ -54,7 +54,7 @@ const store = useAuthStore();
 const { modelValue } = defineProps(["modelValue"]);
 const emit = defineEmits(["update:modelValue"]);
 
-function hideModal(value = "") {
+function openModal(value = "") {
     emit("update:modelValue", value);
 }
 
@@ -76,7 +76,7 @@ async function onSubmit(event) {
         store.isLogin = true;
         store.userInfo = data;
 
-        hideModal();
+        openModal("close");
     }
 }
 </script>

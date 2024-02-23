@@ -5,7 +5,7 @@
                 src="~assets/images/icon/close-icon.svg"
                 alt=""
                 class="bg-Neutral-400-Hover rounded-3xl absolute right-4 top-4 cursor-pointer"
-                @click="hideModal"
+                @click="openModal('close')"
             />
 
             <div class="flex flex-col items-center justify-center">
@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-const emit = defineEmits(["hideModal"]);
+const emit = defineEmits(["openModal"]);
 
 const { text, subTitle } = defineProps({
     text: {
@@ -42,8 +42,8 @@ const { text, subTitle } = defineProps({
     },
 });
 
-function hideModal() {
-    emit("hideModal");
+function openModal(type) {
+    emit("openModal", type);
 }
 </script>
 

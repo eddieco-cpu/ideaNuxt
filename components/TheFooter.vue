@@ -42,7 +42,7 @@
                             class="mr-4"
                             :class="i === socialLinks.length - 1 ? ' mr-0' : ''"
                         >
-                            <img :src="socialLink.iconUrl" :alt="socialLink.name" />
+                            <img :src="socialLink.iconUrl" :alt="socialLink.name" class="w-[32px] h-[32px]" />
                         </a>
                     </template>
                 </nav>
@@ -63,9 +63,9 @@ const footerLinks = reactive([
     {
         name: "來逛逛",
         links: [
-            { name: "創意集資", url: "/" },
-            { name: "好評團購", url: "/" },
-            { name: "團主推薦", url: "/" },
+            { name: "創意集資", url: "/category/technology-ai?type=fundraise" },
+            { name: "好評團購", url: "/category/technology-ai?type=groupbuying" },
+            { name: "團主推薦", url: "/kol" },
             { name: "好物分享", url: "/" },
         ],
     },
@@ -79,7 +79,7 @@ const footerLinks = reactive([
     },
     {
         name: "商務洽談",
-        links: [{ name: "提案", url: "/" }],
+        links: [{ name: "提案", url: "/proposal" }],
     },
 ]);
 const socialLinks = reactive([
