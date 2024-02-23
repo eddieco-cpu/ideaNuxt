@@ -24,16 +24,33 @@
                 ref="dashboardNav"
                 class="dashboard-nav flex flex-nowrap gap-x-8 overflow-x-auto max-md:px-3 md:px-0 md:flex-col md:gap-y-2 md:rounded-lg md:overflow-hidden md:w-[256px] ring-1"
             >
-                <nuxt-link
-                    v-for="(item, index) in dashboardNavList"
-                    :key="index"
-                    :to="item.link"
-                    class="flex gap-x-3 flex-shrink-0 items-center border-b-2 border-white max-md:py-3 md:py-4 md:px-6 md:border-none"
-                    @click="memberTypeChoose(index)"
-                >
-                    <UIcon :name="`${item.imgUrl}`" />
-                    <span>{{ item.name }}</span>
-                </nuxt-link>
+                <template v-for="(item, index) in dashboardNavList" :key="item.id">
+                    <template v-if="item.id === '/details'">
+                        <nuxt-link
+                            :to="item.link"
+                            class="flex gap-x-3 flex-shrink-0 items-center border-b-2 border-white max-md:py-3 md:py-4 md:px-6 md:border-none"
+                            :class="
+                                $route.path.startsWith('/dashboard/details')
+                                    ? 'router-link-exact-active pointer-events-none'
+                                    : ''
+                            "
+                            @click="memberTypeChoose(index)"
+                        >
+                            <UIcon :name="`${item.imgUrl}`" />
+                            <span>{{ item.name }}</span>
+                        </nuxt-link>
+                    </template>
+                    <template v-else>
+                        <nuxt-link
+                            :to="item.link"
+                            class="flex gap-x-3 flex-shrink-0 items-center border-b-2 border-white max-md:py-3 md:py-4 md:px-6 md:border-none"
+                            @click="memberTypeChoose(index)"
+                        >
+                            <UIcon :name="`${item.imgUrl}`" />
+                            <span>{{ item.name }}</span>
+                        </nuxt-link>
+                    </template>
+                </template>
             </nav>
         </div>
 
@@ -52,46 +69,52 @@ const dashboardNav = ref(null);
 
 const dashboardNavList = ref([
     {
+        id: "/",
         name: "數據總覽",
         imgUrl: "i-heroicons-rectangle-group",
         link: "/dashboard/",
     },
+    // {
+    //     name: "專案基本內容",
+    //     imgUrl: "i-heroicons-pencil-square",
+    //     link: "/dashboard/basic",
+    // },
     {
-        name: "專案基本內容",
-        imgUrl: "i-heroicons-pencil-square",
-        link: "/dashboard/basic",
-    },
-    {
+        id: "/details",
         name: "編輯商品詳情",
         imgUrl: "i-heroicons-rocket-launch",
-        link: "/dashboard/product",
+        link: "/dashboard/details/basic",
     },
+    // {
+    //     name: "編輯方案",
+    //     imgUrl: "i-heroicons-shopping-bag",
+    //     link: "/dashboard/proposal",
+    // },
+    // {
+    //     name: "常見問與答",
+    //     imgUrl: "i-heroicons-megaphone",
+    //     link: "/dashboard/faq",
+    // },
     {
-        name: "編輯方案",
-        imgUrl: "i-heroicons-shopping-bag",
-        link: "/dashboard/proposal",
-    },
-    {
-        name: "常見問與答",
-        imgUrl: "i-heroicons-megaphone",
-        link: "/dashboard/faq",
-    },
-    {
+        id: "/progress",
         name: "募資進度更新",
         imgUrl: "i-heroicons-newspaper",
         link: "/dashboard/progress",
     },
     {
+        id: "/orders",
         name: "訂單總覽",
         imgUrl: "i-heroicons-shopping-cart",
         link: "/dashboard/orders",
     },
     {
+        id: "/proposer",
         name: "提案人資料",
         imgUrl: "i-heroicons-home-modern",
         link: "/dashboard/proposer",
     },
     {
+        id: "/payment",
         name: "金流帳號設定",
         imgUrl: "i-heroicons-credit-card",
         link: "/dashboard/payment",

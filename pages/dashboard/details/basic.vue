@@ -5,3 +5,5 @@
         <hr />
     </div>
 </template>
+
+<script setup></script>
