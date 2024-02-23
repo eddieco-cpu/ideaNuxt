@@ -30,7 +30,7 @@
         </div>
 
         <!-- 導航列顯示內容 -->
-        <NuxtPage class="mx-auto md:col-span-9 md:max-w-full md:flex-1 ring-1" />
+        <NuxtPage class="mx-auto md:max-w-full md:flex-1 ring-1 bg-white rounded-lg p-6 min-h-96" />
     </div>
 </template>
 

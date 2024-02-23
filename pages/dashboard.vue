@@ -16,13 +16,13 @@
             <UiButton class="max-w-[156px]">提交送審</UiButton>
         </div>
     </section>
-    <div class="md:flex md:gap-x-7 md:max-w-[1082px] md:mx-auto md:pt-10">
+    <div class="md:flex md:gap-x-7 md:max-w-[1082px] md:mx-auto md:pt-10 max-md:bg-white">
         <!--  -->
-        <div class="bg-white md:max-w-[256px]">
+        <div class="md:max-w-[256px]">
             <!-- 導航列 -->
             <nav
                 ref="dashboardNav"
-                class="dashboard-nav flex flex-nowrap gap-x-8 overflow-x-auto max-md:px-3 md:px-0 md:flex-col md:gap-y-2 md:rounded-lg md:overflow-hidden md:w-[256px] ring-1"
+                class="dashboard-nav flex flex-nowrap gap-x-8 overflow-x-auto bg-white max-md:px-3 md:px-0 md:flex-col md:gap-y-2 md:rounded-lg md:overflow-hidden md:w-[256px] ring-1"
             >
                 <template v-for="(item, index) in dashboardNavList" :key="item.id">
                     <template v-if="item.id === '/details'">
