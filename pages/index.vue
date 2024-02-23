@@ -2,20 +2,17 @@
     <section>
         <div class="bg-white overflow-hidden">
             <!--  -->
-            <div class="text-center mx-auto max-lg:hidden">
-                <UCarousel
-                    v-slot="{ item }"
-                    :items="category"
-                    :ui="{ item: 'snap-start' }"
-                    class="max-w-[1200px] mx-auto py-3"
-                >
+            <div class="w-screen bg-white absolute top-[74px]">
+                <div class="max-md:hidden flex justify-evenly max-w-[1200px] mx-auto py-3">
                     <NuxtLink
+                        v-for="(item, index) in category"
+                        :key="index"
                         :to="item.link"
                         style="'outline: 1px solid orange'"
                         class="block whitespace-nowrap text-sm font-medium text-Neutral-900 hover:text-Primary-400-Hover active:text-Primary-600-Dark-Primary mx-6 transition-colors duration-200 ease-in-out"
                         >{{ item.name }}</NuxtLink
                     >
-                </UCarousel>
+                </div>
             </div>
 
             <!--  -->
@@ -31,14 +28,11 @@
                     <!--  -->
                     <div class="text-right mb-[-30px] max-md:mt-[-44px] max-md:mb-4">
                         <NuxtLink
-                            to="/"
+                            to="/category/technology-ai?type=fundraise"
                             class="inline-flex justify-center items-center px-4 py-1 text-sm font-light group text-Primary-500-Primary relative z-[2] max-md:translate-x-4"
                         >
                             <b class="block translate-y-[-1px] mr-1 font-light">找更多點子</b>
-                            <UIcon
-                                name="i-heroicons-arrow-right-circle"
-                                class="block w-4 h-4 group-hover:animate-ping"
-                            />
+                            <UIcon name="i-heroicons-arrow-right-circle" class="block w-4 h-4" />
                         </NuxtLink>
                     </div>
 
@@ -67,11 +61,12 @@
                     <UCarousel
                         v-slot="{ item }"
                         :items="newIdeas"
-                        :ui="{ item: 'snap-start' }"
-                        class="max-w-[1200px] mx-auto mb-10 max-md:w-[calc(100%+48px)] max-md:ml-[-24px] max-md:pl-4"
-                        :class="false && 'ring-1 ring-blue-200 max-md:ring-orange-400'"
+                        :ui="{
+                            item: 'snap-start basis-[304px] md:basis-[calc((100%-80px)/4)]',
+                            container: 'gap-x-3 md:gap-x-5',
+                        }"
                     >
-                        <CardFundraiseHome :key="item.id" />
+                        <CardFundraise :key="item.id" />
                     </UCarousel>
                 </UiContainer>
 
@@ -85,10 +80,7 @@
                             class="inline-flex justify-center items-center px-4 py-1 text-sm font-light group text-Primary-500-Primary relative z-[2] max-md:translate-x-4"
                         >
                             <b class="block translate-y-[-1px] mr-1 font-light">找更多點子</b>
-                            <UIcon
-                                name="i-heroicons-arrow-right-circle"
-                                class="block w-4 h-4 group-hover:animate-ping"
-                            />
+                            <UIcon name="i-heroicons-arrow-right-circle" class="block w-4 h-4" />
                         </NuxtLink>
                     </div>
 
@@ -96,28 +88,29 @@
                     <UCarousel
                         v-slot="{ item }"
                         :items="newIdeas"
-                        :ui="{ item: 'snap-start' }"
-                        class="max-w-[1200px] mx-auto mb-10 max-md:w-[calc(100%+48px)] max-md:ml-[-24px] max-md:pl-4"
-                        :class="false && 'ring-1 ring-blue-200 max-md:ring-orange-400'"
+                        :ui="{
+                            item: 'snap-start basis-[304px] md:basis-[calc((100%-80px)/4)]',
+                            container: 'gap-x-3 md:gap-x-5',
+                        }"
                     >
-                        <CardFundraiseHome :key="item.id" />
+                        <CardFundraise :key="item.id" />
                     </UCarousel>
                 </UiContainer>
 
-                <div class="mx-auto mb-10 w-[1200px] h-[100px] max-md:w-[324px] max-md:h-24">
-                    <img :src="helperPicture()" alt="" class="block w-full h-full object-cover" />
-                </div>
+                <div
+                    class="mx-auto mb-10 w-[1200px] h-[100px] max-md:w-[324px] max-md:h-24 bg-[url('assets/images/home/banner.png')] md:bg-[url('assets/images/home/banner-web.png')]"
+                ></div>
             </section>
 
             <!--  -->
             <section class="bg-[#f4f4f4] py-[1px]">
                 <UiContainer>
                     <UiTitle>最後集資倒數</UiTitle>
-                    <div
-                        class="flex justify-start flex-wrap content-start w-[calc(100%+4px)] ml-[-2px] max-xl:w-[calc(301*3px)] max-xl:mx-auto max-lg:w-[calc(301*2px)] max-md:w-[calc(301*1px)]"
-                    >
-                        <CardFundraiseHome v-for="(item, i) in 8" class="mb-4" />
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 md:gap-x-5 gap-y-4">
+                        <CardFundraise v-for="(item, i) in 8" class="mb-4" />
                     </div>
+
                     <UiPagination
                         :currentPage="currentPage"
                         :totalPages="totalPages"
@@ -132,16 +125,26 @@
                     <!--  -->
                     <UiTitle>點子開箱！影音快播</UiTitle>
                     <UCarousel
-                        v-slot="{ item }"
-                        :items="videoList"
-                        :ui="{ item: 'snap-start' }"
+                        v-slot="{ item, index }"
+                        :items="videoPlayList"
+                        :ui="{
+                            item: 'snap-start basis-[180px] md:basis-[calc((100%-100px)/6)]',
+                            container: 'gap-x-3 md:gap-x-5',
+                        }"
                         class="max-w-[1200px] mx-auto py-3"
                     >
-                        <div class="mr-5 w-[183px] aspect-[183/256] rounded-[10px] overflow-hidden">
-                            <img :src="helperPicture()" class="block w-full h-full object-cover" />
-                        </div>
+                        <CardVideoThumbnail :thumbnail="item.thumbnail" :text="item.text" @click="openVideo(index)" />
                     </UCarousel>
                 </UiContainer>
+
+                <transition name="modal">
+                    <UtilVideo
+                        :videoPlayList="videoPlayList"
+                        :videoIndex="videoIndex"
+                        @closeVideo="closeVideo"
+                        v-if="isOpenVideo"
+                    />
+                </transition>
             </section>
 
             <!--  -->
@@ -154,27 +157,24 @@
                         <UiButton
                             type="secondary"
                             class="max-w-[120px] !text-sm max-md:max-w-auto max-md:min-w-[calc(100%-48px)]"
-                            >查看更多團購</UiButton
                         >
+                            <NuxtLink to="/category/technology-ai?type=groupbuying">查看更多團購</NuxtLink>
+                        </UiButton>
                     </div>
                     <!--  -->
                     <UiTitle>網紅推薦！限時開團中</UiTitle>
-                    <div
-                        class="grid grid-cols-3 grid-rows-2 gap-5 max-xl:grid-cols-2 max-xl:grid-rows-3 max-md:grid-cols-1 max-md:grid-rows-[auto_auto_auto_auto_auto_auto]"
-                    >
-                        <CardFlashBuying type="ttb" />
-                        <CardFlashBuying type="ttb" />
-                        <CardFlashBuying />
-                        <CardFlashBuying />
-                        <CardFlashBuying />
-                        <CardFlashBuying />
+
+                    <div class="grid grid-cols-1 gap-y-4 md:grid-cols-4 md:gap-x-5">
+                        <CardGroupBuying v-for="(item, index) in 8" :key="index" />
                     </div>
                 </UiContainer>
             </section>
 
             <!-- -->
-            <section class="bg-white py-[1px] h-[385px] flex justify-center items-center max-xl:h-auto">
-                <section class="w-[1200px] mx-auto flex justify-between items-center max-xl:flex-col">
+            <section class="bg-white md:h-[385px]">
+                <section
+                    class="mx-auto flex justify-center items-center max-xl:flex-col md:transform md:-translate-y-[30px]"
+                >
                     <article class="max-w-[344px] pt-10 pb-10">
                         <p class="text-2xl font-bold font-roboto text-Secondary-400-Hover mb-4">TOP PICKS</p>
                         <p class="text-4xl font-bold mb-4">熱購名人排行榜</p>
@@ -184,20 +184,16 @@
                         </p>
                         <nuxt-link class="text-Secondary-400-Hover underline text-sm" to="/kol">查看所有人</nuxt-link>
                     </article>
+
                     <div
-                        class="w-[752px] h-[446px] flex justify-between flex-wrap content-between max-xl:mb-12 max-md:w-full max-md:h-auto overflow-x-scroll max-md:flex-nowrap max-md:justify-start max-md:gap-x-3 max-md:items-center top-picks-nav max-md:px-4"
+                        class="w-[752px] h-[446px] flex justify-between flex-wrap content-between max-xl:mb-12 max-md:w-full max-md:h-auto overflow-x-scroll max-md:flex-nowrap max-md:justify-start max-md:gap-x-3 max-md:items-center none-scrollbar max-md:px-4"
                     >
-                        <CardKolRank />
-                        <CardKolRank />
-                        <CardKolRank />
-                        <CardKolRank />
-                        <CardKolRank />
-                        <CardKolRank />
+                        <CardKolRank v-for="(item, index) in 6" :key="index" />
                     </div>
                 </section>
             </section>
 
-            <section class="bg-[rgb(247,248,252)] pt-[120px] pb-1">
+            <section class="bg-[rgb(247,248,252)] pt-9 md:pt-[120px] pb-1">
                 <UiContainer class="relative max-md:pb-5 max-md:mb-10">
                     <!--  -->
                     <div
@@ -206,26 +202,18 @@
                         <UiButton
                             type="secondary"
                             class="max-w-[120px] !text-sm max-md:max-w-auto max-md:min-w-[calc(100%-48px)]"
-                            >查看更多團購</UiButton
                         >
+                            <NuxtLink to="/category/technology-ai?type=groupbuying">查看更多團購</NuxtLink>
+                        </UiButton>
                     </div>
                     <!--  -->
                     <UiTitle>即將開團</UiTitle>
-                    <div
-                        class="mx-auto flex justify-between items-center gap-x-5 max-lg:max-w-[calc(100%-48px)] max-lg:flex-col max-lg:justify-center max-lg:gap-y-4 max-md:max-w-full"
-                    >
-                        <CardGroupBuyingHome />
-                        <CardGroupBuyingHome />
-                        <CardGroupBuyingHome />
-                        <CardGroupBuyingHome />
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-y-4 md:gap-x-5">
+                        <CardGroupBuying v-for="(item, index) in 4" :key="index" />
                     </div>
                 </UiContainer>
             </section>
-
-            <!--  -->
-            <!-- <hr />
-            <CardGroupBuying />
-            <hr /> -->
         </div>
     </section>
 </template>
@@ -236,6 +224,8 @@ const totalPages = ref(20);
 const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
 };
+
+const slides = ref([]);
 
 const category = [
     { name: "科技AI", link: "/category/technology-ai" },
@@ -249,6 +239,7 @@ const category = [
     { name: "表演/門票", link: "/category/tickets" },
     { name: "服務/公益", link: "/category/welfare" },
 ];
+
 const newIdeas = [{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }];
 const newIdeasTypes = reactive({
     typeActive: "1",
@@ -262,9 +253,29 @@ const newIdeasTypes = reactive({
     ],
 });
 
-const videoList = [{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }, { id: "5" }, { id: "6" }];
+const isOpenVideo = ref(false);
+const videoIndex = ref(0);
 
-const slides = ref([]);
+function openVideo(index) {
+    isOpenVideo.value = true;
+
+    videoIndex.value = index;
+}
+
+function closeVideo() {
+    isOpenVideo.value = false;
+}
+
+const videoPlayList = ref([
+    { source: "/1.mp4", thumbnail: "/1.jpg", text: "影片1 x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/2.mp4", thumbnail: "/2.jpg", text: "影片2  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/3.mp4", thumbnail: "/3.jpg", text: "影片3  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/1.mp4", thumbnail: "/1.jpg", text: "影片4 x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/2.mp4", thumbnail: "/2.jpg", text: "影片5  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/3.mp4", thumbnail: "/3.jpg", text: "影片6  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/1.mp4", thumbnail: "/1.jpg", text: "影片7 x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/2.mp4", thumbnail: "/2.jpg", text: "影片8  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+]);
 
 onBeforeMount(async () => {
     const response = await fetch("/api/sliderDatas");
@@ -273,8 +284,4 @@ onBeforeMount(async () => {
 });
 </script>
 
-<style>
-.top-picks-nav::-webkit-scrollbar {
-    display: none;
-}
-</style>
+<style scoped></style>
