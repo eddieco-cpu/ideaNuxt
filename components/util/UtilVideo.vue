@@ -1,15 +1,15 @@
 <template>
-    <div class="fixed top-0 left-0 z-[3] w-screen bg-black/[0.7] h-screen flex items-center justify-center">
+    <div class="fixed top-0 left-0 z-50 md:z-[3] w-screen bg-black/[0.7] h-screen flex items-center justify-center">
         <div
-            class="relative w-[375px] h-[79%] rounded-[16px] overflow-hidden"
+            class="relative w-screen h-screen md:w-[375px] md:h-[79%] md:rounded-[16px] overflow-hidden"
             @mouseover="hoverEffect('in')"
             @mousemove="hoverEffect('in')"
             @mouseleave="hoverEffect('out')"
+            @touchstart="hoverEffect('touch')"
         >
             <video
                 ref="videoPlayer"
                 class="video-js vjs-default-skin"
-                vjs-big-play-centered
                 controls
                 :src="source"
                 @pause="onpause"
@@ -17,7 +17,7 @@
             ></video>
 
             <transition name="video">
-                <div v-if="hover">
+                <div v-show="hover">
                     <UIcon
                         name="i-heroicons-speaker-wave"
                         class="absolute top-5 left-6 text-white w-7 text-3xl cursor-pointer"
@@ -49,16 +49,29 @@
                         class="absolute top-6 right-6 text-white w-7 cursor-pointer"
                         @click="closeVideo"
                     />
+
+                    <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2">
+                        <CardVideoProduct :isFundRaising="true" />
+                    </div>
+
+                    <div class="block">
+                        <img
+                            src="~assets/images/icon/play-video-icon.svg"
+                            alt="play video"
+                            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer size-28"
+                            v-show="videoStatus.isPause"
+                            @click="playVideo($event, 'play')"
+                        />
+
+                        <UIcon
+                            name="i-heroicons-pause-circle"
+                            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer size-28 rounded-full text-white/[0.85]"
+                            v-show="!videoStatus.isPause"
+                            @click="playVideo($event, 'pause')"
+                        />
+                    </div>
                 </div>
             </transition>
-
-            <img
-                src="~assets/images/icon/play-video-icon.svg"
-                alt="play video"
-                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer size-28"
-                v-show="videoStatus.isPause"
-                @click="playVideo"
-            />
         </div>
     </div>
 </template>
@@ -135,8 +148,14 @@ function onplaying() {
     videoStatus.value.isPause = false;
 }
 
-function playVideo() {
-    myPlayer.value.play();
+function playVideo(e, status) {
+    e.stopPropagation();
+
+    if (status === "play") {
+        myPlayer.value.play();
+    } else if (status === "pause") {
+        myPlayer.value.pause();
+    }
 }
 
 function closeVideo() {
@@ -148,6 +167,10 @@ function hoverEffect(type) {
 
     if (type === "in") {
         hover.value = true;
+    }
+
+    if (type === "touch") {
+        hover.value = !hover.value;
     }
 
     hoverEffectTimer = setTimeout(() => {
