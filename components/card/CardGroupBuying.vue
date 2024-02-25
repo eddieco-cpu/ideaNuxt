@@ -5,18 +5,20 @@
             <Tag v-for="(tag, index) in tags" :key="index" :tag="tag" />
         </div>
 
-        <!-- 愛心 -->
-        <div class="absolute top-2 right-[175px] md:top-2 md:right-2">
-            <TagHeart />
-        </div>
-
         <div class="flex gap-x-3 md:flex-col">
             <!-- 主圖 -->
-            <img
-                :src="helperPicture()"
-                alt="product"
-                class="rounded w-[146px] h-[146px] md:w-full md:h-[234px] object-cover"
-            />
+            <div class="relative">
+                <img
+                    :src="helperPicture()"
+                    alt="product"
+                    class="rounded w-[146px] h-[146px] md:w-full md:h-[234px] object-cover"
+                />
+                <!-- 愛心 -->
+                <div class="absolute top-2 right-2">
+                    <TagHeart />
+                </div>
+            </div>
+
             <!-- 文字 -->
             <div
                 class="relative py-2 pr-2 flex flex-col items-start justify-evenly gap-y-3 flex-1 md:px-3 md:pt-3 md:gap-y-2"

@@ -173,7 +173,7 @@
             <!-- -->
             <section class="bg-white md:h-[385px]">
                 <section
-                    class="mx-auto flex justify-center items-center max-xl:flex-col md:transform md:-translate-y-[30px]"
+                    class="mx-auto flex justify-center items-center max-md:flex-col md:transform md:-translate-y-[30px]"
                 >
                     <article class="max-w-[344px] pt-10 pb-10">
                         <p class="text-2xl font-bold font-roboto text-Secondary-400-Hover mb-4">TOP PICKS</p>
@@ -186,7 +186,7 @@
                     </article>
 
                     <div
-                        class="w-[752px] h-[446px] flex justify-between flex-wrap content-between max-xl:mb-12 max-md:w-full max-md:h-auto overflow-x-scroll max-md:flex-nowrap max-md:justify-start max-md:gap-x-3 max-md:items-center none-scrollbar max-md:px-4"
+                        class="w-[752px] h-[446px] flex justify-between flex-wrap content-between max-md:mb-12 max-md:w-full max-md:h-auto overflow-x-scroll max-md:flex-nowrap max-md:justify-start max-md:gap-x-3 max-md:items-center none-scrollbar max-md:px-4"
                     >
                         <CardKolRank v-for="(item, index) in 6" :key="index" />
                     </div>

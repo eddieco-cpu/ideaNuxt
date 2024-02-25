@@ -5,17 +5,15 @@
             <Tag v-for="(tag, index) in tags" :key="index" :tag="tag" />
         </div>
 
-        <!-- 愛心 -->
-        <div class="absolute top-2 right-2">
-            <TagHeart :isEditMode="isEditMode" />
-        </div>
-
         <!-- 主圖 -->
-        <img
-            :src="helperPicture()"
-            alt="product"
-            class="rounded w-[322px] h-[194px] md:w-[318px] md:h-[182px] object-cover"
-        />
+        <div class="relative">
+            <img :src="helperPicture()" alt="product" class="rounded w-full h-[194px] md:h-[182px] object-cover" />
+
+            <!-- 愛心 -->
+            <div class="absolute top-2 right-2">
+                <TagHeart :isEditMode="isEditMode" />
+            </div>
+        </div>
 
         <div class="px-4">
             <!-- 文字 -->
