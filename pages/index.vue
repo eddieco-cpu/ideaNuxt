@@ -1,8 +1,8 @@
 <template>
-    <section>
+    <section class="section">
         <div class="bg-white overflow-hidden">
             <!--  -->
-            <div class="w-screen bg-white absolute top-[74px]">
+            <div class="w-screen bg-white fixed top-[74px] z-30 header-links">
                 <div class="max-md:hidden flex justify-evenly max-w-[1200px] mx-auto py-3">
                     <NuxtLink
                         v-for="(item, index) in category"
@@ -277,10 +277,30 @@ const videoPlayList = ref([
     { source: "/2.mp4", thumbnail: "/2.jpg", text: "影片8  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
 ]);
 
-onBeforeMount(async () => {
+async function getSliderDatas() {
     const response = await fetch("/api/sliderDatas");
     const { sliderDatas } = await response.json();
     slides.value = sliderDatas;
+}
+getSliderDatas();
+
+let oldScrollY = 0;
+function scrollDirection() {
+    document.querySelector(".header-links").style.transition = "top 0.5s";
+    if (oldScrollY < window.scrollY) {
+        document.querySelector(".header-links").style.top = "0px";
+    } else {
+        document.querySelector(".header-links").style.top = "74px";
+    }
+    oldScrollY = window.scrollY;
+}
+
+onMounted(() => {
+    window.addEventListener("scroll", scrollDirection);
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener("scroll", scrollDirection);
 });
 </script>
 
