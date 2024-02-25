@@ -17,13 +17,17 @@
 
             <!-- 搜尋欄 -->
             <div class="search flex">
-                <UButtonGroup size="lg" orientation="horizontal" class="shadow-none">
+                <UButtonGroup size="lg" orientation="horizontal" class="shadow-none relative">
                     <UInput
                         variant="none"
                         placeholder="找點子、找團購"
-                        class="border border-Neutral-100 bg-Neutral-100 rounded-l-md mr-1"
-                        size="lg"
+                        class="bg-Neutral-100 rounded-l-md mr-1"
+                        @click="openModal('search')"
                     />
+
+                    <transition name="modal">
+                        <HeaderSearch @openModal="openModal" v-if="isShowSearchContent" />
+                    </transition>
 
                     <UButton
                         color="gray"
@@ -41,15 +45,23 @@
             <div>
                 <div class="flex">
                     <img src="~assets\images\header\heart.svg" alt="heart" class="mr-5 cursor-pointer" />
-                    <img src="~assets/images/header/shoppingCart.svg" alt="shoppingCart" class="cursor-pointer" />
+
+                    <div class="relative">
+                        <img src="~assets/images/header/shoppingCart.svg" alt="shoppingCart" class="cursor-pointer" />
+
+                        <div
+                            class="absolute -right-1 -top-1 bg-Dust-Red-5 rounded-full w-[7.5px] h-[7.5px]"
+                            v-if="true"
+                        ></div>
+                    </div>
                 </div>
             </div>
 
-            <!-- 會員註冊 -->
+            <!-- 會員未登入 -->
             <button
                 class="bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover"
-                v-if="false"
-                @click="openModal"
+                v-if="!store.isLogin"
+                @click="openModal('login')"
             >
                 <img src="~assets/images/header/user-purple.svg" class="block w-[18px] h-[18px]" />
 
@@ -61,7 +73,11 @@
                 class="member-center relative bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover group"
                 v-else
             >
-                <img :src="helperPicture()" alt="memberPic" class="block rounded-full w-[18px] h-[18px] object-cover" />
+                <img
+                    :src="store.userInfo.image"
+                    alt="memberPic"
+                    class="block rounded-full w-[18px] h-[18px] object-cover"
+                />
 
                 <span class="font-normal"> 會員中心 </span>
 
@@ -79,9 +95,10 @@
                     </ul>
 
                     <button
-                        class="bg-white border border-Primary-50 px-4 py-2 rounded-lg text-sm text-Primary-400-Hover w-[80px]"
+                        class="bg-white border border-Primary-50 px-4 py-2 rounded-lg text-sm text-Primary-400-Hover w-[80px] mt-2"
+                        @click="logout"
                     >
-                        <span class="text-Primary-400-Hover" @click="logout"> 登出 </span>
+                        <span class="text-Primary-400-Hover"> 登出 </span>
                     </button>
                 </div>
             </button>
@@ -90,7 +107,13 @@
 </template>
 
 <script setup>
+import { useAuthStore } from "@/stores/auth";
+
+const store = useAuthStore();
+
 const emit = defineEmits(["openModal"]);
+
+const isShowSearchContent = ref(false);
 
 const navLink = [
     {
@@ -126,19 +149,29 @@ const memberCenterLink = [
     },
     {
         name: "提案管理",
-        link: "/member/proposal",
+        link: "/member/proposal/edit",
     },
     {
         name: "團隊設定",
-        link: "/member/proposal",
+        link: "/member/proposal/group-edit",
     },
 ];
 
-function openModal() {
-    emit("openModal", "login");
+function openModal(type = "") {
+    if (type === "search") {
+        isShowSearchContent.value = true;
+    } else {
+        isShowSearchContent.value = false;
+    }
+
+    emit("openModal", type);
 }
 
-function logout() {}
+async function logout() {
+    store.isLogin = false;
+    store.userInfo = {};
+    await navigateTo("/");
+}
 </script>
 
 <style scoped></style>

@@ -3,6 +3,7 @@
         {{ status }}
     </div>
 </template>
+
 <script setup>
 const { status } = defineProps({
     status: String,
@@ -27,4 +28,5 @@ function showClass(status) {
     }
 }
 </script>
+
 <style scope></style>

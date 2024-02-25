@@ -4,11 +4,6 @@ const host = process.env.NUXT_PUBLIC_HOST;
 const port = process.env.NUXT_PUBLIC_PORT;
 const baseUrl = process.env.NODE_ENV === "development" ? `http://${host}:${port}` : ``;
 
-const apiBase = "";
-// process.env.NODE_ENV === "development"
-//   ? `http://localhost:${process.env.PORT}${firstPath}/api-gete`
-//   : `${host}${firstPath}`;
-
 export default defineNuxtConfig({
     devtools: { enabled: true },
     app: {
@@ -29,32 +24,6 @@ export default defineNuxtConfig({
                     content: "idea2gether",
                 },
             ],
-            // script: [
-            //   {
-            //     src: `${baseUrl}js/gtm.js`,
-            //     tagPosition: "head",
-            //   },
-            // ],
-            // noscript: [
-            //   {
-            //     children: `
-            //       <img data-not-lazy src="" />
-            //     `,
-            //     tagPosition: "bodyOpen",
-            //   },
-            //   {
-            //     children: `
-            //     <iframe
-            //       data-not-lazy
-            //       src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}"
-            //       height="0"
-            //       width="0"
-            //       style="display: none; visibility: hidden"
-            //     ></iframe>
-            //     `,
-            //     tagPosition: "bodyOpen",
-            //   },
-            // ],
         },
         pageTransition: { name: "page", mode: "out-in" },
     },
@@ -69,21 +38,12 @@ export default defineNuxtConfig({
         },
     },
     build: {
-        transpile: ["@vuepic/vue-datepicker"],
+        transpile: ["@vuepic/vue-datepicker", "vue-toastification"],
     },
     modules: [
         "@pinia/nuxt",
         "nuxt-swiper",
         "@nuxt/ui",
-        // [
-        //   "nuxt-lazy-load",
-        //   {
-        //     defaultImage:
-        //       process.env.NODE_ENV === "development"
-        //         ? "/images/udn_loading.png"
-        //         : "/ndapp/udnimage/images/udn_loading.png",
-        //   },
-        // ],
         [
             "@nuxtjs/google-fonts",
             {
@@ -103,7 +63,7 @@ export default defineNuxtConfig({
     typescript: {
         typeCheck: false,
     },
-    css: ["~/assets/css/main.css", "~/assets/css/transition.css"],
+    css: ["~/assets/css/main.css"],
     postcss: {
         plugins: {
             tailwindcss: {},
@@ -113,20 +73,4 @@ export default defineNuxtConfig({
     colorMode: {
         preference: "light",
     },
-    // vite: {
-    //   css: {
-    //     preprocessorOptions: {
-    //       sass: {
-    //         additionalData: `
-    //           @import "@/assets/css/base.sass"
-    //         `,
-    //       },
-    //     },
-    //   },
-    // },
-    // nitro: {
-    //   devProxy: {
-    //     ...devProxyManager(),
-    //   },
-    // },
 });

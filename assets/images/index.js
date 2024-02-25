@@ -1,3 +1,4 @@
+// icon
 import userInfo from "assets/images/icon/user-info-icon.svg";
 import userInfoActive from "assets/images/icon/user-info-active-icon.svg";
 import home from "assets/images/icon/home-icon.svg";
@@ -10,6 +11,16 @@ import heart from "assets/images/icon/heart-small-icon.svg";
 import heartActive from "assets/images/icon/heart-small-active-icon.svg";
 import rocket from "assets/images/icon/rocket-icon.svg";
 import rocketActive from "assets/images/icon/rocket-small-active-icon.svg";
+import camera from "assets/images/icon/camera.svg";
+import users from "assets/images/icon/users-active-icon.svg";
+import rocketOrderActive from "assets/images/icon/rocket-active-icon.svg";
+import edit from "assets/images/icon/edit-icon.svg";
+
+// auth
+// header
+// kol
+// proposal
+// status
 
 export default {
     userInfo,
@@ -24,4 +35,8 @@ export default {
     heartActive,
     rocket,
     rocketActive,
+    camera,
+    users,
+    rocketOrderActive,
+    edit,
 };

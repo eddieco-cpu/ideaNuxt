@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            class="h-[240px] md:h-[110px] bg-no-repeat bg-cover bg-[url('/_nuxt/assets/images/kol/banner.png')] md:bg-[url('/_nuxt/assets/images/kol/banner-web.png')]"
+            class="h-[240px] md:h-[40px] bg-no-repeat bg-cover bg-[url('assets/images/kol/banner.png')] md:bg-[url('assets/images/kol/banner-web.png')]"
         ></div>
 
         <div class="max-w-80 md:max-w-[1086px] -mt-[80px] mx-auto md:grid md:grid-cols-12 md:gap-x-6 md:mt-10">
@@ -22,7 +22,7 @@
                 </p>
 
                 <div
-                    class="rounded-lg flex items-center justify-between w-[276px] p-3 px-4 bg-Primary-50 border border-Primary-200 bg-Primary-100"
+                    class="rounded-lg flex items-center justify-between w-[276px] p-3 px-4 border border-Primary-200 bg-Primary-50"
                 >
                     <div class="flex flex-col items-center justify-center pr-4">
                         <h3 class="text-Neutral-900 text-sm">好物開團</h3>
@@ -43,14 +43,7 @@
                 </div>
 
                 <!-- 收藏團購主 -->
-                <div class="bg-Primary-100 flex items-center gap-x-1 rounded-lg bg-Primary-50 py-2 px-4">
-                    <div>
-                        <img src="~assets/images/icon/heart-icon-active-purple.svg" alt="heart" v-show="true" />
-                        <img src="~assets/images/icon/heart-icon-purple.svg" alt="heart" v-show="false" />
-                    </div>
-
-                    <h3 class="text-sm text-Primary-400-Hover">收藏團購主</h3>
-                </div>
+                <TagHeart :isAddKol="true" :isFavorite="true" />
 
                 <!-- 社群軟體 -->
                 <Media />
@@ -87,6 +80,48 @@
                         :totalPages="totalPages"
                         @updateCurrentPage="updateCurrentPage"
                     />
+                </div>
+
+                <!-- 影音快播 -->
+                <div v-if="true" class="overflow-x-auto none-scrollbar">
+                    <div class="flex gap-4 items-center justify-between mt-8 mb-4 md:mt-0">
+                        <h1 class="text-black text-xl font-medium">點子影音快播</h1>
+
+                        <div class="flex gap-x-3 items-center">
+                            <button
+                                class="w-8 h-8 rounded-full bg-white flex justify-center items-center border border-Primary-100"
+                                @click="scrollVideoNav(-1)"
+                            >
+                                <img src="~assets/images/icon/left-arrow-icon.svg" alt="left-arrow" />
+                            </button>
+
+                            <button
+                                class="w-8 h-8 rounded-full bg-white flex justify-center items-center border border-Primary-100"
+                                @click="scrollVideoNav(1)"
+                            >
+                                <img src="~assets/images/icon/right-arrow-icon.svg" alt="right-arrow" />
+                            </button>
+                        </div>
+                    </div>
+
+                    <div ref="videoNav" class="overflow-x-auto flex gap-x-4 flex-nowrap relative none-scrollbar">
+                        <CardVideoThumbnail
+                            v-for="(item, index) in videoPlayList"
+                            :thumbnail="item.thumbnail"
+                            :text="item.text"
+                            :key="index"
+                            @click="openVideo(index)"
+                        />
+                    </div>
+
+                    <transition name="modal">
+                        <UtilVideo
+                            :videoPlayList="videoPlayList"
+                            :videoIndex="videoIndex"
+                            @closeVideo="closeVideo"
+                            v-if="isOpenVideo"
+                        />
+                    </transition>
                 </div>
 
                 <!-- 即將開團 -->
@@ -164,20 +199,67 @@
 
 <script setup>
 const sort = ["新到舊", "舊到新", "開團數", "活耀度"];
+const sortSelected = ref(sort[0]);
+
 const sortComing = ["新到舊", "舊到新", "開團數", "活耀度"];
+const sortComingSelected = ref(sortComing[0]);
+
 const sortHistory = ["新到舊", "舊到新", "開團數", "活耀度"];
+const sortHistorySelected = ref(sortHistory[0]);
+
+const scrollNavIndex = ref(0);
+const isOpenVideo = ref(false);
+
+const videoNav = ref(null);
+const videoPlayList = ref([
+    { source: "/1.mp4", thumbnail: "/1.jpg", text: "影片1 x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/2.mp4", thumbnail: "/2.jpg", text: "影片2  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/3.mp4", thumbnail: "/3.jpg", text: "影片3  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/1.mp4", thumbnail: "/1.jpg", text: "影片4 x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/2.mp4", thumbnail: "/2.jpg", text: "影片5  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/3.mp4", thumbnail: "/3.jpg", text: "影片6  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/1.mp4", thumbnail: "/1.jpg", text: "影片7 x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+    { source: "/2.mp4", thumbnail: "/2.jpg", text: "影片8  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
+]);
+
+const videoIndex = ref(0);
+
+function scrollVideoNav(index) {
+    scrollNavIndex.value += index;
+
+    const cardNumberShows = 4; // 有多少個完整的卡片顯示
+    const videoArrNumber = videoPlayList.value.length;
+    const maxScrollTimes = Math.floor(videoArrNumber / cardNumberShows); // 卷軸可以按幾次
+
+    if (scrollNavIndex.value > maxScrollTimes) {
+        scrollNavIndex.value = 0;
+    }
+
+    if (scrollNavIndex.value < 0) {
+        scrollNavIndex.value = videoArrNumber;
+    }
+
+    videoNav.value.scrollTo({
+        left: 195 * (cardNumberShows - 1) * scrollNavIndex.value,
+        behavior: "smooth",
+    });
+}
+
+function openVideo(index) {
+    isOpenVideo.value = true;
+
+    videoIndex.value = index;
+}
+
+function closeVideo() {
+    isOpenVideo.value = false;
+}
 
 const currentPage = ref(1);
 const totalPages = ref(20);
 const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
 };
-
-const sortSelected = ref(sort[0]);
-const sortComingSelected = ref(sortComing[0]);
-const sortHistorySelected = ref(sortHistory[0]);
 </script>
 
-<style scoped>
-/* Your CSS styles go here */
-</style>
+<style scoped></style>

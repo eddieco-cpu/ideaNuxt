@@ -2,7 +2,7 @@
     <UAccordion :items="items">
         <template #default="{ item, index, open }">
             <UButton
-                class="bg-Primary-50 hover:bg-Primary-100 active:bg-Primary-100 mb-4 py-[10px]"
+                class="bg-Primary-50 hover:bg-Primary-100 active:bg-Primary-100 mb-4 py-[10px] items-start"
                 :class="open && 'ring-Primary-100 ring-2'"
             >
                 <!-- <template #leading> 最前方 icon 
@@ -13,14 +13,16 @@
                     </div>
                 </template> -->
 
-                <span class="truncate text-Primary-500-Primary text-base font-medium"
-                    >Q{{ index + 1 }}. {{ " " + item.label }}</span
-                >
+                <template #leading>
+                    <div class="text-Primary-500-Primary text-base font-medium">Q{{ index + 1 }}.</div>
+                </template>
+
+                <span class="text-Primary-500-Primary text-base font-medium text-left"> {{ " " + item.label }}</span>
 
                 <template #trailing>
                     <UIcon
                         name="i-heroicons-chevron-right-20-solid"
-                        class="w-6 h-6 ms-auto transform transition-transform duration-200 text-Primary-500-Primary"
+                        class="w-6 h-6 ms-auto transform transition-transform duration-200 text-Primary-500-Primary flex-shrink-0"
                         :class="[open && 'rotate-90']"
                     />
                 </template>
@@ -38,6 +40,15 @@ const props = defineProps({
         default: () => [
             {
                 label: "Getting Started",
+                defaultOpen: true,
+                content: [
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.",
+                ],
+            },
+            {
+                label: "Basics",
                 defaultOpen: true,
                 content: [
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.",

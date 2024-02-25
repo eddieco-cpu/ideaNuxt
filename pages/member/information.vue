@@ -2,15 +2,14 @@
     <div>
         <h1 class="text-xl mb-3">基本資料</h1>
         <div class="p-3 md:p-6 rounded-lg bg-white">
-            <div class="md:max-w-[434px] flex flex-col gap-y-3">
+            <UForm
+                :schema="memberInformationSchema"
+                :state="memberInfo"
+                class="md:max-w-[434px] flex flex-col gap-y-3"
+                @submit="onSubmit"
+            >
                 <UFormGroup label="暱稱" name="nickName" help="使用平台時，大家會看到您的基本暱稱。">
-                    <UInput
-                        color="white"
-                        variant="none"
-                        placeholder="凍齡教主小美"
-                        class="border border-Neutral-400-Hover rounded-md"
-                        v-model="memberInfo.nickName"
-                    />
+                    <UInput placeholder="凍齡教主小美" v-model="memberInfo.nickName" />
                 </UFormGroup>
 
                 <UFormGroup
@@ -19,13 +18,7 @@
                     help="請填寫您個人真實姓名，此為提案、身分驗證或寄送商品時使用。"
                     required
                 >
-                    <UInput
-                        color="white"
-                        variant="none"
-                        placeholder="王小美"
-                        class="border border-Neutral-400-Hover rounded-md"
-                        v-model="memberInfo.name"
-                    />
+                    <UInput placeholder="王小美" v-model="memberInfo.name" />
                 </UFormGroup>
 
                 <UFormGroup
@@ -34,23 +27,11 @@
                     help="手機已驗證成功。若您需修改手機，請聯繫官方客服中心。"
                     required
                 >
-                    <UInput
-                        color="white"
-                        variant="none"
-                        placeholder="0902123123"
-                        class="border border-Neutral-400-Hover rounded-md"
-                        v-model="memberInfo.phone"
-                    />
+                    <UInput placeholder="0902123123" v-model="memberInfo.phone" disabled />
                 </UFormGroup>
 
                 <UFormGroup label="電子信箱" name="email" required>
-                    <UInput
-                        color="white"
-                        variant="none"
-                        placeholder="0902123123"
-                        class="border border-Neutral-400-Hover rounded-md"
-                        v-model="memberInfo.phone"
-                    />
+                    <UInput placeholder="0902123123" v-model="memberInfo.email" />
                 </UFormGroup>
 
                 <!-- 出生日 -->
@@ -88,9 +69,11 @@
 
                 <!-- 儲存更新 -->
                 <div class="mt-3">
-                    <button class="bg-Primary-500-Primary text-white px-4 py-1 rounded-lg text-sm">儲存更新</button>
+                    <button type="submit" class="bg-Primary-500-Primary text-white px-4 py-1 rounded-lg text-sm">
+                        儲存更新
+                    </button>
                 </div>
-            </div>
+            </UForm>
         </div>
 
         <!-- 是否註冊開團達人 -->
@@ -104,27 +87,23 @@
             />
         </div>
 
-        <MemberBeLeader v-show="memberInfo.register" />
+        <MemberBeLeader v-show="memberInfo.register" :name="memberInfo.name" />
     </div>
 </template>
 
 <script setup>
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "assets/css/datepicker.css";
+import { memberInformationSchema } from "~/validation";
 import { zhTW } from "date-fns/locale";
 
 const memberInfo = ref({
-    nickName: "",
-    name: "",
-    phone: "",
-    email: "",
-    birthDay: "",
+    nickName: undefined,
+    name: undefined,
+    phone: undefined,
+    email: undefined,
+    birthDay: undefined,
     sex: "0",
-    siteName: "https://www.idea2gether.com/",
-    facebookSite: "https://www.facebookSite.com/",
-    instagramSite: "https://www.InstagramSite.com/",
-    youtubeSite: "https://www.youtubeSite.com/",
-    officialSite: "https://www.officialSite.com/",
     notification: true,
     subscription: true,
     register: false,
@@ -144,6 +123,10 @@ const sexOptions = [
         label: "不便透漏",
     },
 ];
+
+function onSubmit(event) {
+    console.log(event.data);
+}
 </script>
 
 <style scoped>

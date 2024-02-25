@@ -1,5 +1,5 @@
 <template>
-    <article>
+    <article :class="class">
         <h3 class="text-xl font-medium mb-2">{{ title }}</h3>
         <p class="text-sm text-Neutral-600-Dark-Primary font-normal" v-html="context"></p>
     </article>
