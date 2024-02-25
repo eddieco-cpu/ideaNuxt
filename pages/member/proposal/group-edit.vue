@@ -25,7 +25,7 @@
                 <button class="bg-Primary-500-Primary text-white px-4 py-1 rounded-lg text-sm md:mb-6">加入</button>
             </div>
 
-            <div class="pt-[10px] border-t border-t-Neutral-200">
+            <div class="pt-[10px] md:border-t border-t-Neutral-200">
                 <div class="flex items-center gap-x-1 mt-[10px]">
                     <img :src="helperPicture()" alt="orderPic" class="block rounded-full w-10 h-10 object-cover" />
 
