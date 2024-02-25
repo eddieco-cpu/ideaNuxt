@@ -3,7 +3,7 @@
         <div>
             <h1 class="text-xl mb-3">修改密碼</h1>
 
-            <div class="p-3 mt-6 rounded-lg bg-white">
+            <div class="p-6 mt-6 rounded-lg bg-white">
                 <UForm
                     :schema="setPasswordSchema"
                     :state="editPassword"
