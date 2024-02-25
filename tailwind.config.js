@@ -37,6 +37,7 @@ export default {
                 "Primary-600-Dark-Primary": "#513FAD",
                 "Neutral-100": "#F8F8F8",
                 "Neutral-200": "#F4F4F4",
+                "Neutral-bg": "#F7F8FC",
                 "Neutral-400-Hover": "#DDDEE0",
                 "Neutral-500-Primary": "#BBBEC2",
                 "Neutral-600-Dark-Primary": "#787C85",
@@ -55,6 +56,7 @@ export default {
                 "Status-Color-Danger-600-Dark-Primary": "#C93926",
                 "Status-Color-Danger-400-Hover": "#EE845E",
                 "Dust-Red-1": "#FFF1F0",
+                "Dust-Red-5": "#FF4D4F",
                 "Dust-Red-6": "#F5222D",
             },
             fontFamily: {

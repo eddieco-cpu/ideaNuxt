@@ -3,7 +3,7 @@
         <ModalContainer
             :text="title"
             :subTitle="'為了確保是您本人，將會寄送驗證碼到您的手機，驗證碼有效時限為10分鐘。'"
-            @hideModal="hideModal"
+            @openModal="openModal('close')"
             v-if="modelValue === 'register'"
         >
             <!-- 註冊第一步 -->
@@ -86,7 +86,7 @@ function registerStepHandler(step) {
 
 function register() {}
 
-function hideModal() {
+function openModal() {
     emit("update:modelValue", "");
 }
 

@@ -19,7 +19,7 @@
             <!-- 導航列 -->
             <nav
                 ref="memberNav"
-                class="member-nav px-6 flex flex-nowrap gap-x-8 overflow-x-auto md:flex-col md:gap-y-2 md:items-center"
+                class="none-scrollbar px-6 flex flex-nowrap gap-x-8 overflow-x-auto md:flex-col md:gap-y-2 md:items-center"
             >
                 <nuxt-link
                     v-for="(item, index) in memberNavList"
@@ -102,11 +102,7 @@ function memberTypeChoose(index) {
 </script>
 
 <style scoped>
-.member-nav::-webkit-scrollbar {
-    display: none;
-}
-
-.router-link-exact-active {
+.router-link-active {
     border-radius: 8px;
     background-color: #e5defa;
     color: #6b56ca;
@@ -116,16 +112,16 @@ img.active {
     display: none;
 }
 
-.router-link-exact-active img.default {
+.router-link-active img.default {
     display: none;
 }
 
-.router-link-exact-active img.active {
+.router-link-active img.active {
     display: block;
 }
 
 @media screen and (width < 768px) {
-    .router-link-exact-active {
+    .router-link-active {
         border-radius: 8px;
         background-color: transparent;
         color: #6b56ca;
