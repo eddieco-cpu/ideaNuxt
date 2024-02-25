@@ -18,7 +18,7 @@
             <!--  -->
             <section class="bg-[rgb(247,248,252)] py-[1px]">
                 <!--  -->
-                <div class="my-10 max-md:my-9">
+                <div class="my-10 max-md:my-9 md:mt-24">
                     <HomeMainSlider :slides="slides" />
                 </div>
 
@@ -266,6 +266,10 @@ function closeVideo() {
     isOpenVideo.value = false;
 }
 
+onMounted(() => {
+    console.log("process.env.NODE_ENV：", process.env.NODE_ENV);
+});
+
 const videoPlayList = ref([
     { source: "/1.mp4", thumbnail: "/1.jpg", text: "影片1 x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
     { source: "/2.mp4", thumbnail: "/2.jpg", text: "影片2  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
@@ -278,7 +282,8 @@ const videoPlayList = ref([
 ]);
 
 async function getSliderDatas() {
-    const response = await fetch("/api/sliderDatas");
+    const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:3001" : "https://idea-nuxt.vercel.app/";
+    const response = await fetch(`${baseUrl}/api/sliderDatas`);
     const { sliderDatas } = await response.json();
     slides.value = sliderDatas;
 }

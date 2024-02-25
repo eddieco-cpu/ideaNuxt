@@ -59,6 +59,8 @@
 
 <script setup>
 //
+import Icon from "assets/images/";
+//
 const footerLinks = reactive([
     {
         name: "來逛逛",
@@ -83,9 +85,9 @@ const footerLinks = reactive([
     },
 ]);
 const socialLinks = reactive([
-    { name: "facebook", iconUrl: "/_nuxt/assets/images/icon/fb-icon.svg", url: "https://www.facebook.com" },
-    { name: "instagram", iconUrl: "/_nuxt/assets/images/icon/ig-icon.svg", url: "https://www.instagram.com" },
-    { name: "line", iconUrl: "/_nuxt/assets/images/icon/line-icon.svg", url: "https://www.line.com" },
-    { name: "youtube", iconUrl: "/_nuxt/assets/images/icon/youtube-icon.svg", url: "https://www.youtube.com" },
+    { name: "facebook", iconUrl: Icon.facebook, url: "https://www.facebook.com" },
+    { name: "instagram", iconUrl: Icon.instagram, url: "https://www.instagram.com" },
+    { name: "line", iconUrl: Icon.line, url: "https://www.line.com" },
+    { name: "youtube", iconUrl: Icon.youtube, url: "https://www.youtube.com" },
 ]);
 </script>
