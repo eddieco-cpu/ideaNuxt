@@ -6,12 +6,16 @@
                 :key="item.id"
                 @click="changeNav(item.id)"
                 class="text-center py-3 cursor-pointer"
-                :class="` w-[${100 / navItems.length}%]` + (activeIndex === index ? ' text-Primary-500-Primary' : '')"
+                :class="
+                    `${navItemClass} w-[${100 / navItems.length}%]` +
+                    (activeIndex === index ? ' text-Primary-500-Primary' : '')
+                "
                 :style="{ width: `${100 / navItems.length}%` }"
                 v-html="item.html"
             ></li>
             <div
                 class="absolute bottom-[-2px] h-[2px] scale-x-90 bg-Primary-500-Primary transition-all duration-350 ease-in-out"
+                :class="underlineClass"
                 :style="underlineStyle"
             ></div>
         </ul>
@@ -20,6 +24,14 @@
 <script setup>
 //
 const props = defineProps({
+    underlineClass: {
+        type: String,
+        default: "",
+    },
+    navItemClass: {
+        type: String,
+        default: "",
+    },
     navItems: {
         type: Array,
         default: () => [
