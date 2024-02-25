@@ -18,6 +18,13 @@ import edit from "assets/images/icon/edit-icon.svg";
 
 // auth
 // header
+
+// footer
+import facebook from "assets/images/icon/fb-icon.svg";
+import instagram from "assets/images/icon/ig-icon.svg";
+import youtube from "assets/images/icon/youtube-icon.svg";
+import line from "assets/images/icon/line-icon.svg";
+
 // kol
 // proposal
 // status
@@ -39,4 +46,8 @@ export default {
     users,
     rocketOrderActive,
     edit,
+    facebook,
+    instagram,
+    youtube,
+    line,
 };
