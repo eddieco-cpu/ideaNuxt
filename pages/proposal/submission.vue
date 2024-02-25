@@ -63,7 +63,7 @@
             <SubmissionDes :title="descriptionDatas[1].title" :context="descriptionDatas[1].context"></SubmissionDes>
         </template>
         <template #form>
-            <UiInputDev name="專案名稱" id="projectName" :isRequired="true" class="mb-3">
+            <UFormGroup label="專案名稱" id="projectName" required class="mb-3">
                 <div>
                     <UTextarea
                         :id="'projectName'"
@@ -75,9 +75,9 @@
                     />
                     <p class="text-sm text-right text-Neutral-500-Primary"><span>0</span> / <span>40</span></p>
                 </div>
-            </UiInputDev>
+            </UFormGroup>
 
-            <UiInputDev name="專案簡介" id="projectDes" :isRequired="true" class="mb-3">
+            <UFormGroup label="專案簡介" id="projectDes" required class="mb-3">
                 <div>
                     <UTextarea
                         :id="'projectDes'"
@@ -89,27 +89,27 @@
                     />
                     <p class="text-sm text-right text-Neutral-500-Primary"><span>0</span> / <span>90</span></p>
                 </div>
-            </UiInputDev>
+            </UFormGroup>
 
-            <UiInputDev
-                name="專案達成目標"
-                notes="根據您本次的專案內容，規劃及估算本次預計達成目標。"
+            <UFormGroup
+                label="專案達成目標"
+                help="根據您本次的專案內容，規劃及估算本次預計達成目標。"
                 id="doller"
-                :isRequired="true"
+                required
                 class="mb-3"
             >
-                <UInput class="max-w-[400px] pl-[20px]" :id="'doller'">
+                <UInput class="max-w-[400px]" type="number" inputClass="!pl-[55px]">
                     <template #leading>
                         <div
-                            class="flex justify-center items-center h-full px-3 bg-gray-50 relative left-[-14px] border-[1.5px] border-[rgb(221,222,224)] rounded-s-md"
+                            class="flex justify-center items-center h-full px-2 bg-gray-50 relative left-[-14px] border-[1px] border-[rgb(221,222,224)] rounded-s-md"
                         >
                             NT$
                         </div>
                     </template>
                 </UInput>
-            </UiInputDev>
+            </UFormGroup>
 
-            <UiInputDev name="專案分類" notes="請選擇適合您本次計畫的商品分類/屬性。" :isRequired="false" class="mb-3">
+            <UFormGroup label="專案分類" help="請選擇適合您本次計畫的商品分類/屬性。" class="mb-3">
                 <div class="flex justify-start items-center">
                     <UDropdown v-model:open="open" :items="dropdownItems" :popper="{ placement: 'bottom-start' }">
                         <UButton
@@ -124,12 +124,12 @@
                         />
                     </UDropdown>
                 </div>
-            </UiInputDev>
+            </UFormGroup>
 
-            <UiInputDev
-                name="預計開始時間"
-                notes="您預計開始本次專案的時間，本站將會為你安排審核順序。請至少需要約七個工作天以上審核你的提案。"
-                :isRequired="true"
+            <UFormGroup
+                label="預計開始時間"
+                help="您預計開始本次專案的時間，本站將會為你安排審核順序。請至少需要約七個工作天以上審核你的提案。"
+                required
                 class="mb-3"
             >
                 <div class="max-w-64 relative">
@@ -139,12 +139,12 @@
                         class="block w-4 h-4 text-Neutral-500-Primary my-auto absolute top-0 right-2 bottom-0 pointer-events-none"
                     />
                 </div>
-            </UiInputDev>
+            </UFormGroup>
 
-            <UiInputDev
-                name="預計結束時間"
-                notes="根據經驗，建議募資專案應在45-60天內執行完畢，成效最佳。"
-                :isRequired="true"
+            <UFormGroup
+                label="預計結束時間"
+                help="根據經驗，建議募資專案應在45-60天內執行完畢，成效最佳。"
+                required
                 class="mb-3"
             >
                 <div class="max-w-64 relative">
@@ -154,19 +154,18 @@
                         class="block w-4 h-4 text-Neutral-500-Primary my-auto absolute top-0 right-2 bottom-0 pointer-events-none"
                     />
                 </div>
-            </UiInputDev>
+            </UFormGroup>
 
-            <UiInputDev
-                name="封面照片"
-                notes="請上傳檔案小於 500kb 的圖片，尺寸必須為 1252 x 800 像素 ，至多5張，封面圖片可在專案上線前再另行編輯修改。"
-                :isRequired="true"
+            <UFormGroup
+                label="封面照片"
+                help="請上傳檔案小於 500kb 的圖片，尺寸必須為 1252 x 800 像素 ，至多5張，封面圖片可在專案上線前再另行編輯修改。"
+                required
                 class="mb-3"
             >
-                <!-- <UInput class="max-w-[400px]" /> -->
                 <ModalDropImg />
-            </UiInputDev>
+            </UFormGroup>
 
-            <UiInputDev name="專案說明審核" id="n" :isRequired="true" class="mb-3">
+            <UFormGroup label="專案說明審核" required class="mb-3">
                 <div>
                     <UTextarea
                         :id="'n'"
@@ -178,7 +177,7 @@
                     />
                     <p class="text-sm text-right text-Neutral-500-Primary"><span>0</span> / <span>300</span></p>
                 </div>
-            </UiInputDev>
+            </UFormGroup>
         </template>
     </SubmissionLayout>
 
@@ -188,9 +187,112 @@
             <SubmissionDes :title="descriptionDatas[2].title" :context="descriptionDatas[2].context"></SubmissionDes>
         </template>
         <template #form>
-            <UiInputDev name="相關網頁" notes="" :isRequired="true">
-                <UInput class="max-w-[400px]" />
-            </UiInputDev>
+            <!-- plus-circle / minus-circle -->
+            <UFormGroup label="相關網頁" required class="mb-3">
+                <UInput placeholder="https://web.com" />
+            </UFormGroup>
+
+            <!-- ig -->
+            <UFormGroup
+                @click="!igSwitcher ? (igSwitcher = !igSwitcher) : ''"
+                class="mb-3 relative"
+                :class="
+                    igSwitcher ? '' : ' !inline-block px-4 py-2 pl-8 ring-1 ring-Primary-100 rounded-lg cursor-pointer'
+                "
+                :ui="igSwitcher ? {} : { label: { base: `text-Primary-500-Primary` } }"
+            >
+                <template #label>
+                    <p @click="!igSwitcher ? (igSwitcher = !igSwitcher) : ''" :class="igSwitcher ? ' pb-1' : ''">
+                        <UIcon
+                            name="i-heroicons-plus-circle"
+                            class="block w-4 h-4 text-base text-Primary-500-Primary absolute m-auto top-0 bottom-0 left-3"
+                            :class="igSwitcher ? 'hidden' : ' cursor-pointer'"
+                        />
+                        <span :class="igSwitcher ? '' : 'cursor-pointer'">instagram</span>
+                        <span :class="igSwitcher ? '' : ' hidden'">{{ " " }}網址</span>
+                    </p>
+                </template>
+                <UInput placeholder="https://instagram.com/account-name" :class="igSwitcher ? '' : 'hidden'" />
+                <UIcon
+                    name="i-heroicons-minus-circle"
+                    @click="
+                        (e) => {
+                            e.stopPropagation();
+                            igSwitcher = false;
+                        }
+                    "
+                    v-if="igSwitcher"
+                    class="block w-4 h-4 text-base text-Neutral-500-Primary absolute z-[2] bottom-3 right-3 cursor-pointer hover:text-Neutral-600-Dark-Primary active:text-Primary-400-Hover"
+                />
+            </UFormGroup>
+
+            <!-- fb -->
+            <UFormGroup
+                @click="!fbSwitcher ? (fbSwitcher = !fbSwitcher) : ''"
+                class="mb-3 relative"
+                :class="
+                    fbSwitcher ? '' : ' !inline-block px-4 py-2 pl-8 ring-1 ring-Primary-100 rounded-lg cursor-pointer'
+                "
+                :ui="fbSwitcher ? {} : { label: { base: `text-Primary-500-Primary` } }"
+            >
+                <template #label>
+                    <p @click="!fbSwitcher ? (fbSwitcher = !fbSwitcher) : ''" :class="fbSwitcher ? ' pb-1' : ''">
+                        <UIcon
+                            name="i-heroicons-plus-circle"
+                            class="block w-4 h-4 text-base text-Primary-500-Primary absolute m-auto top-0 bottom-0 left-3"
+                            :class="fbSwitcher ? 'hidden' : ' cursor-pointer'"
+                        />
+                        <span :class="fbSwitcher ? '' : 'cursor-pointer'">Facebook</span>
+                        <span :class="fbSwitcher ? '' : ' hidden'">{{ " " }}網址</span>
+                    </p>
+                </template>
+                <UInput placeholder="https://facebook.com/account-name" :class="fbSwitcher ? '' : 'hidden'" />
+                <UIcon
+                    name="i-heroicons-minus-circle"
+                    @click="
+                        (e) => {
+                            e.stopPropagation();
+                            fbSwitcher = false;
+                        }
+                    "
+                    v-if="fbSwitcher"
+                    class="block w-4 h-4 text-base text-Neutral-500-Primary absolute z-[2] bottom-3 right-3 cursor-pointer hover:text-Neutral-600-Dark-Primary active:text-Primary-400-Hover"
+                />
+            </UFormGroup>
+
+            <!-- yt -->
+            <UFormGroup
+                @click="!ytSwitcher ? (ytSwitcher = !ytSwitcher) : ''"
+                class="mb-3 relative"
+                :class="
+                    ytSwitcher ? '' : ' !inline-block px-4 py-2 pl-8 ring-1 ring-Primary-100 rounded-lg cursor-pointer'
+                "
+                :ui="ytSwitcher ? {} : { label: { base: `text-Primary-500-Primary` } }"
+            >
+                <template #label>
+                    <p @click="!ytSwitcher ? (ytSwitcher = !ytSwitcher) : ''" :class="ytSwitcher ? ' pb-1' : ''">
+                        <UIcon
+                            name="i-heroicons-plus-circle"
+                            class="block w-4 h-4 text-base text-Primary-500-Primary absolute m-auto top-0 bottom-0 left-3"
+                            :class="ytSwitcher ? 'hidden' : ' cursor-pointer'"
+                        />
+                        <span :class="ytSwitcher ? '' : 'cursor-pointer'">Youtube/Vimeo</span>
+                        <span :class="ytSwitcher ? '' : ' hidden'">{{ " " }}網址</span>
+                    </p>
+                </template>
+                <UInput placeholder="https://youtube.com/account-name" :class="ytSwitcher ? '' : 'hidden'" />
+                <UIcon
+                    name="i-heroicons-minus-circle"
+                    @click="
+                        (e) => {
+                            e.stopPropagation();
+                            ytSwitcher = false;
+                        }
+                    "
+                    v-if="ytSwitcher"
+                    class="block w-4 h-4 text-base text-Neutral-500-Primary absolute z-[2] bottom-3 right-3 cursor-pointer hover:text-Neutral-600-Dark-Primary active:text-Primary-400-Hover"
+                />
+            </UFormGroup>
         </template>
     </SubmissionLayout>
 
@@ -253,7 +355,7 @@ import { descriptionDatas } from "@/assets/others/submission/data";
 //import { descriptionDatas } from "@/data/submission/data";
 
 import VueDatePicker from "@vuepic/vue-datepicker";
-import "/public/css/vue-datepicker.css";
+//import "/public/css/vue-datepicker.css";
 
 const screenWidth = ref(800);
 
@@ -263,6 +365,10 @@ onMounted(() => {
     //     screenWidth.value = window.innerWidth;
     // });
 });
+
+const igSwitcher = ref(false);
+const ytSwitcher = ref(false);
+const fbSwitcher = ref(false);
 
 const userName = ref("");
 
