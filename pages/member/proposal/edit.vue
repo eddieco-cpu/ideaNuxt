@@ -21,7 +21,7 @@
         </div>
 
         <div class="md:grid md:grid-cols-3 md:gap-5">
-            <CardFundraise v-for="(item, index) in 20" :key="index" :isEditMode="true" />
+            <CardFundraise v-for="(item, index) in fundingRaiseList" :key="index" v-bind="item" :isEditMode="true" />
         </div>
 
         <UiPagination
@@ -42,6 +42,18 @@ const totalPages = ref(20);
 const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
 };
+
+const fundingRaiseList = ref([]);
+
+getFundingRaiseList();
+
+async function getFundingRaiseList() {
+    const data = await GET("/api/fundingRaise");
+
+    if (!!data) {
+        fundingRaiseList.value = data;
+    }
+}
 
 function goBack() {
     navigateTo("/member/proposal");

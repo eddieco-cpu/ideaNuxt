@@ -1,9 +1,9 @@
 <template>
     <div>
         <!-- 排序 -->
-        <template v-if="true">
+        <template v-if="!isEmptyData">
             <div class="flex justify-between gap-4 items-center mt-8 mb-4 md:mt-0">
-                <h1 class="text-black text-xl font-medium">書籍出版</h1>
+                <h1 class="text-black text-xl font-medium">時尚流行</h1>
 
                 <USelectMenu
                     variant="none"
@@ -66,8 +66,19 @@ const updateCurrentPage = (newPage) => {
 const sort = ["最新", "最熱門", "價格高", "價格低"];
 const sortSelected = ref(sort[0]);
 
+getGroupBuyingList();
+getFundingRaiseList();
+
 const showCard = computed(() => {
     return route.query.type || "fundraise";
+});
+
+const isEmptyData = computed(() => {
+    if (route.query.type === "groupbuying") {
+        return groupBuyingList.value.length === 0;
+    } else {
+        return fundingRaiseList.value.length === 0;
+    }
 });
 
 const showCardClass = computed(() => {
@@ -81,14 +92,21 @@ const showCardClass = computed(() => {
     }
 });
 
-async function getFundingRaise() {
+async function getFundingRaiseList() {
     const data = await GET("/api/fundingRaise");
 
     if (!!data) {
         fundingRaiseList.value = data;
     }
 }
-getFundingRaise();
+
+async function getGroupBuyingList() {
+    const data = await GET("/api/groupBuying");
+
+    if (!!data) {
+        groupBuyingList.value = data;
+    }
+}
 </script>
 
 <style scoped>

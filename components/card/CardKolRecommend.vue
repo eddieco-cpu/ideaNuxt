@@ -5,7 +5,7 @@
 
         <!-- 愛心 -->
         <div class="absolute top-2 right-2">
-            <TagHeart />
+            <TagHeart :isFavorite="isFavorite" />
         </div>
 
         <!-- 名稱 -->
@@ -23,6 +23,10 @@
 const { index, id, name } = defineProps({
     index: {
         type: Number,
+    },
+    isFavorite: {
+        type: Boolean,
+        default: false,
     },
     id: {
         type: Number,

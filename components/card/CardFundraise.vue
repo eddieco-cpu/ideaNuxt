@@ -11,7 +11,7 @@
 
             <!-- 愛心 -->
             <div class="absolute top-2 right-2">
-                <TagHeart :isEditMode="isEditMode" />
+                <TagHeart :isEditMode="isEditMode" :isFavorite="isFavorite" />
             </div>
         </div>
 
@@ -53,6 +53,10 @@ const { isEditMode, isExpired, id } = defineProps({
         default: false,
     },
     isExpired: {
+        type: Boolean,
+        default: false,
+    },
+    isFavorite: {
         type: Boolean,
         default: false,
     },
