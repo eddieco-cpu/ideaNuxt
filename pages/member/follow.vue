@@ -52,7 +52,30 @@
                 </div>
 
                 <div class="grid gap-[10px]" :class="showCardClass">
-                    <component :is="showCard" v-for="(item, index) in 6" :key="index" />
+                    <CardFundraise
+                        v-for="(item, index) in fundingRaiseList"
+                        :key="index"
+                        v-if="followTypeSelected === '集資專案'"
+                        v-bind="item"
+                    />
+                    <CardGroupBuying
+                        v-for="(item, index) in groupBuyingList"
+                        :key="index"
+                        v-if="followTypeSelected === '好評團購'"
+                        v-bind="item"
+                    />
+                    <CardKolRecommend
+                        v-for="(item, index) in kolList"
+                        :key="index"
+                        v-if="followTypeSelected === '名人與團主'"
+                        v-bind="item"
+                    />
+                    <CardComingBuying
+                        v-for="(item, index) in comingBuyingList"
+                        :key="index"
+                        v-if="followTypeSelected === '好文部落格'"
+                        v-bind="item"
+                    />
                 </div>
 
                 <UiPagination
@@ -90,22 +113,17 @@ const sortTypeSelected = ref(sortType[0]);
 const followType = ["集資專案", "好評團購", "名人與團主", "好文部落格"];
 const followTypeSelected = ref(followType[0]);
 
-const underLine = ref(null);
+const kolList = ref([]);
+const comingBuyingList = ref([]);
+const fundingRaiseList = ref([]);
+const groupBuyingList = ref([]);
 
-const showCard = computed(() => {
-    switch (followTypeSelected.value) {
-        case "集資專案":
-            return CardFundraise;
-        case "好評團購":
-            return CardGroupBuying;
-        case "名人與團主":
-            return CardKolRecommend;
-        case "好文部落格":
-            return CardComingBuying;
-        default:
-            return CardFundraise;
-    }
-});
+getKol();
+getFundingRaiseList();
+getGroupBuyingList();
+getComingBuyingList();
+
+const underLine = ref(null);
 
 const showCardClass = computed(() => {
     switch (followTypeSelected.value) {
@@ -130,6 +148,38 @@ function switchFollowType(e, name) {
     underLine.value.style.left = `${e.target.offsetLeft}px`;
 
     followTypeSelected.value = name;
+}
+
+async function getKol() {
+    const data = await GET("/api/kol");
+
+    if (!!data) {
+        kolList.value = data.sort((a, b) => a.index - b.index).slice(0, 6);
+    }
+}
+
+async function getComingBuyingList() {
+    const data = await GET("/api/comingBuying");
+
+    if (!!data) {
+        comingBuyingList.value = data;
+    }
+}
+
+async function getFundingRaiseList() {
+    const data = await GET("/api/fundingRaise");
+
+    if (!!data) {
+        fundingRaiseList.value = data;
+    }
+}
+
+async function getGroupBuyingList() {
+    const data = await GET("/api/groupBuying");
+
+    if (!!data) {
+        groupBuyingList.value = data;
+    }
 }
 </script>
 

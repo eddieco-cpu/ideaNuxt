@@ -60,13 +60,13 @@
                     <!--  -->
                     <UCarousel
                         v-slot="{ item }"
-                        :items="newIdeas"
+                        :items="fundingRaiseList"
                         :ui="{
                             item: 'snap-start basis-[304px] md:basis-[calc((100%-80px)/4)]',
                             container: 'gap-x-3 md:gap-x-5',
                         }"
                     >
-                        <CardFundraise :key="item.id" />
+                        <CardFundraise :key="item.id" v-bind="item" />
                     </UCarousel>
                 </UiContainer>
 
@@ -87,13 +87,13 @@
                     <!--  -->
                     <UCarousel
                         v-slot="{ item }"
-                        :items="newIdeas"
+                        :items="fundingRaiseList"
                         :ui="{
                             item: 'snap-start basis-[304px] md:basis-[calc((100%-80px)/4)]',
                             container: 'gap-x-3 md:gap-x-5',
                         }"
                     >
-                        <CardFundraise :key="item.id" />
+                        <CardFundraise :key="item.id" v-bind="item" />
                     </UCarousel>
                 </UiContainer>
 
@@ -108,7 +108,7 @@
                     <UiTitle>最後集資倒數</UiTitle>
 
                     <div class="grid grid-cols-1 md:grid-cols-4 md:gap-x-5 gap-y-4">
-                        <CardFundraise v-for="(item, i) in 8" class="mb-4" />
+                        <CardFundraise v-for="(item, i) in fundingRaiseList" v-bind="item" class="mb-4" />
                     </div>
 
                     <UiPagination
@@ -165,7 +165,7 @@
                     <UiTitle>網紅推薦！限時開團中</UiTitle>
 
                     <div class="grid grid-cols-1 gap-y-4 md:grid-cols-4 md:gap-x-5">
-                        <CardGroupBuying v-for="(item, index) in 8" :key="index" />
+                        <CardGroupBuying v-for="(item, index) in groupBuyingList" :key="index" v-bind="item" />
                     </div>
                 </UiContainer>
             </section>
@@ -188,7 +188,7 @@
                     <div
                         class="w-[752px] h-[446px] flex justify-between flex-wrap content-between max-md:mb-12 max-md:w-full max-md:h-auto overflow-x-scroll max-md:flex-nowrap max-md:justify-start max-md:gap-x-3 max-md:items-center none-scrollbar max-md:px-4"
                     >
-                        <CardKolRank v-for="(item, index) in 6" :key="index" />
+                        <CardKolRank v-for="(item, index) in kolList" :key="index" v-bind="item" />
                     </div>
                 </section>
             </section>
@@ -210,7 +210,7 @@
                     <UiTitle>即將開團</UiTitle>
 
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-y-4 md:gap-x-5">
-                        <CardGroupBuying v-for="(item, index) in 4" :key="index" />
+                        <CardGroupBuying v-for="(item, index) in groupBuyingList" :key="index" v-bind="item" />
                     </div>
                 </UiContainer>
             </section>
@@ -225,22 +225,24 @@ const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
 };
 
+const videoPlayList = ref([]);
+const kolList = ref([]);
+const fundingRaiseList = ref([]);
+const groupBuyingList = ref([]);
 const slides = ref([]);
-
 const category = [
-    { name: "科技AI", link: "/category/technology-ai" },
-    { name: "時尚流行", link: "/category/fashion" },
-    { name: "書籍出版", link: "/category/books" },
-    { name: "設計藝術", link: "/category/design" },
-    { name: "遊戲動漫", link: "/category/gaming" },
-    { name: "保健食品", link: "/category/health" },
-    { name: "課程教育", link: "/category/education" },
-    { name: "攝影圖像", link: "/category/photography" },
-    { name: "表演/門票", link: "/category/tickets" },
-    { name: "服務/公益", link: "/category/welfare" },
+    { name: "科技AI", link: "/category/technology-ai?type=fundraise" },
+    { name: "時尚流行", link: "/category/fashion?type=fundraise" },
+    { name: "3C家電", link: "/category/appliance?type=fundraise" },
+    { name: "書籍出版", link: "/category/books?type=fundraise" },
+    { name: "設計藝術", link: "/category/design?type=fundraise" },
+    { name: "遊戲動漫", link: "/category/gaming?type=fundraise" },
+    { name: "保健食品", link: "/category/health?type=fundraise" },
+    { name: "課程教育", link: "/category/education?type=fundraise" },
+    { name: "攝影圖像", link: "/category/photography?type=fundraise" },
+    { name: "表演/門票", link: "/category/tickets?type=fundraise" },
+    { name: "服務/公益", link: "/category/welfare?type=fundraise" },
 ];
-
-const newIdeas = [{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }];
 const newIdeasTypes = reactive({
     typeActive: "1",
     types: [
@@ -256,30 +258,11 @@ const newIdeasTypes = reactive({
 const isOpenVideo = ref(false);
 const videoIndex = ref(0);
 
-function openVideo(index) {
-    isOpenVideo.value = true;
-
-    videoIndex.value = index;
-}
-
-function closeVideo() {
-    isOpenVideo.value = false;
-}
-
-onMounted(() => {
-    console.log("process.env.NODE_ENV：", process.env.NODE_ENV);
-});
-
-const videoPlayList = ref([
-    { source: "/1.mp4", thumbnail: "/1.jpg", text: "影片1 x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
-    { source: "/2.mp4", thumbnail: "/2.jpg", text: "影片2  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
-    { source: "/3.mp4", thumbnail: "/3.jpg", text: "影片3  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
-    { source: "/1.mp4", thumbnail: "/1.jpg", text: "影片4 x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
-    { source: "/2.mp4", thumbnail: "/2.jpg", text: "影片5  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
-    { source: "/3.mp4", thumbnail: "/3.jpg", text: "影片6  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
-    { source: "/1.mp4", thumbnail: "/1.jpg", text: "影片7 x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
-    { source: "/2.mp4", thumbnail: "/2.jpg", text: "影片8  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
-]);
+getSliderDatas();
+getKol();
+getFundingRaiseList();
+getGroupBuyingList();
+getVideoList();
 
 async function getSliderDatas() {
     const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:3001" : "https://idea-nuxt.vercel.app/";
@@ -287,7 +270,15 @@ async function getSliderDatas() {
     const { sliderDatas } = await response.json();
     slides.value = sliderDatas;
 }
-getSliderDatas();
+
+function openVideo(index) {
+    isOpenVideo.value = true;
+    videoIndex.value = index;
+}
+
+function closeVideo() {
+    isOpenVideo.value = false;
+}
 
 let oldScrollY = 0;
 function scrollDirection() {
@@ -298,6 +289,38 @@ function scrollDirection() {
         document.querySelector(".header-links").style.top = "74px";
     }
     oldScrollY = window.scrollY;
+}
+
+async function getKol() {
+    const data = await GET("/api/kol");
+
+    if (!!data) {
+        kolList.value = data.sort((a, b) => a.index - b.index).slice(0, 6);
+    }
+}
+
+async function getFundingRaiseList() {
+    const data = await GET("/api/fundingRaise");
+
+    if (!!data) {
+        fundingRaiseList.value = data;
+    }
+}
+
+async function getGroupBuyingList() {
+    const data = await GET("/api/groupBuying");
+
+    if (!!data) {
+        groupBuyingList.value = data;
+    }
+}
+
+async function getVideoList() {
+    const data = await GET("/api/video");
+
+    if (!!data) {
+        videoPlayList.value = data;
+    }
 }
 
 onMounted(() => {
