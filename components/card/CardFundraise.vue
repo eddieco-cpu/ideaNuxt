@@ -1,7 +1,7 @@
 <template>
     <div class="w-full rounded-lg shadow-card bg-white pb-2 cursor-pointer relative group" @click="goProductDetailPage">
         <!-- 標籤 -->
-        <div class="flex items-center gap-x-2 absolute top-2 left-2 z-10">
+        <div class="flex items-center gap-x-2 absolute top-2 left-2 z-[2]">
             <Tag v-for="(tag, index) in tags" :key="index" :tag="tag" />
         </div>
 
