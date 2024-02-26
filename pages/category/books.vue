@@ -21,7 +21,18 @@
 
             <div class="grid grid-cols-1 gap-y-4 md:gap-5" :class="showCardClass">
                 <!-- 卡片 -->
-                <component :is="showCard" v-for="(item, index) in 12" :key="index" />
+                <CardFundraise
+                    v-for="(item, index) in fundingRaiseList"
+                    :key="index"
+                    v-bind="item"
+                    v-if="showCard === 'fundraise'"
+                />
+                <CardGroupBuying
+                    v-for="(item, index) in groupBuyingList"
+                    :key="index"
+                    v-bind="item"
+                    v-if="showCard === 'groupbuying'"
+                />
             </div>
 
             <UiPagination
@@ -43,6 +54,9 @@
 import { CardGroupBuying, CardFundraise } from "#components";
 const route = useRoute();
 
+const fundingRaiseList = ref([]);
+const groupBuyingList = ref([]);
+
 const currentPage = ref(1);
 const totalPages = ref(20);
 const updateCurrentPage = (newPage) => {
@@ -53,14 +67,7 @@ const sort = ["最新", "最熱門", "價格高", "價格低"];
 const sortSelected = ref(sort[0]);
 
 const showCard = computed(() => {
-    switch (route.query.type) {
-        case "fundraise":
-            return CardFundraise;
-        case "groupbuying":
-            return CardGroupBuying;
-        default:
-            return CardFundraise;
-    }
+    return route.query.type || "fundraise";
 });
 
 const showCardClass = computed(() => {
@@ -73,6 +80,15 @@ const showCardClass = computed(() => {
             return "md:grid-cols-3";
     }
 });
+
+async function getFundingRaise() {
+    const data = await GET("/api/fundingRaise");
+
+    if (!!data) {
+        fundingRaiseList.value = data;
+    }
+}
+getFundingRaise();
 </script>
 
 <style scoped>

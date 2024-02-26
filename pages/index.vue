@@ -60,13 +60,13 @@
                     <!--  -->
                     <UCarousel
                         v-slot="{ item }"
-                        :items="newIdeas"
+                        :items="fundingRaiseList"
                         :ui="{
                             item: 'snap-start basis-[304px] md:basis-[calc((100%-80px)/4)]',
                             container: 'gap-x-3 md:gap-x-5',
                         }"
                     >
-                        <CardFundraise :key="item.id" />
+                        <CardFundraise :key="item.id" v-bind="item" />
                     </UCarousel>
                 </UiContainer>
 
@@ -87,13 +87,13 @@
                     <!--  -->
                     <UCarousel
                         v-slot="{ item }"
-                        :items="newIdeas"
+                        :items="fundingRaiseList"
                         :ui="{
                             item: 'snap-start basis-[304px] md:basis-[calc((100%-80px)/4)]',
                             container: 'gap-x-3 md:gap-x-5',
                         }"
                     >
-                        <CardFundraise :key="item.id" />
+                        <CardFundraise :key="item.id" v-bind="item" />
                     </UCarousel>
                 </UiContainer>
 
@@ -108,7 +108,7 @@
                     <UiTitle>最後集資倒數</UiTitle>
 
                     <div class="grid grid-cols-1 md:grid-cols-4 md:gap-x-5 gap-y-4">
-                        <CardFundraise v-for="(item, i) in 8" class="mb-4" />
+                        <CardFundraise v-for="(item, i) in fundingRaiseList" v-bind="item" class="mb-4" />
                     </div>
 
                     <UiPagination
@@ -188,7 +188,7 @@
                     <div
                         class="w-[752px] h-[446px] flex justify-between flex-wrap content-between max-md:mb-12 max-md:w-full max-md:h-auto overflow-x-scroll max-md:flex-nowrap max-md:justify-start max-md:gap-x-3 max-md:items-center none-scrollbar max-md:px-4"
                     >
-                        <CardKolRank v-for="(item, index) in 6" :key="index" />
+                        <CardKolRank v-for="(item, index) in kolList" :key="index" v-bind="item" />
                     </div>
                 </section>
             </section>
@@ -225,6 +225,9 @@ const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
 };
 
+const kolList = ref([]);
+const fundingRaiseList = ref([]);
+
 const slides = ref([]);
 
 const category = [
@@ -240,7 +243,6 @@ const category = [
     { name: "服務/公益", link: "/category/welfare" },
 ];
 
-const newIdeas = [{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }];
 const newIdeasTypes = reactive({
     typeActive: "1",
     types: [
@@ -265,10 +267,6 @@ function openVideo(index) {
 function closeVideo() {
     isOpenVideo.value = false;
 }
-
-onMounted(() => {
-    console.log("process.env.NODE_ENV：", process.env.NODE_ENV);
-});
 
 const videoPlayList = ref([
     { source: "/1.mp4", thumbnail: "/1.jpg", text: "影片1 x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
@@ -299,6 +297,24 @@ function scrollDirection() {
     }
     oldScrollY = window.scrollY;
 }
+
+async function getKol() {
+    const data = await GET("/api/kol");
+
+    if (!!data) {
+        kolList.value = data.sort((a, b) => a.index - b.index).slice(0, 6);
+    }
+}
+getKol();
+
+async function getFundingRaise() {
+    const data = await GET("/api/fundingRaise");
+
+    if (!!data) {
+        fundingRaiseList.value = data;
+    }
+}
+getFundingRaise();
 
 onMounted(() => {
     window.addEventListener("scroll", scrollDirection);
