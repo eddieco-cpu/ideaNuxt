@@ -13,7 +13,7 @@ const props = defineProps({
     contentObj: {
         type: Object,
         default: () => ({
-            label: "累積集資金額",
+            label: "累積集資金額X",
             amount: "$ 0",
             description: "目標金額 $ 1,000,000",
         }),
