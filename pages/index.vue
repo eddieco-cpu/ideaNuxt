@@ -265,10 +265,10 @@ getGroupBuyingList();
 getVideoList();
 
 async function getSliderDatas() {
-    const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:3001" : "https://idea-nuxt.vercel.app/";
-    const response = await fetch(`${baseUrl}/api/sliderDatas`);
-    const { sliderDatas } = await response.json();
-    slides.value = sliderDatas;
+    const data = await GET(`/api/sliderDatas`);
+    if (!!data) {
+        slides.value = data.sliderDatas;
+    }
 }
 
 function openVideo(index) {
