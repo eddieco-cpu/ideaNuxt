@@ -82,7 +82,7 @@
                     <div class="flex justify-between items-center gap-x-2 bg-white mb-2 p-3 rounded-lg w-full">
                         <div class="flex justify-start items-center gap-x-3">
                             <picture class="block w-[110px] aspect-[1/1] overflow-hidden rounded-lg flex-shrink-0">
-                                <img :src="helperPicture()" classs="block w-full h-full object-cover" />
+                                <img :src="helperPicture()" class="block w-full h-full object-cover" />
                             </picture>
                             <div>
                                 <p class="text-xs text-gray-400 mb-1">本次開團主</p>
