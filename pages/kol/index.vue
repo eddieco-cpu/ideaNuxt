@@ -7,7 +7,7 @@
             <div
                 class="none-scrollbar px-6 md:max-w-[1200px] md:gap-y-4 md:mx-auto flex flex-nowrap md:grid md:grid-cols-3 gap-x-3 overflow-x-auto overscroll-x-none transform translate-y-[12.5rem]"
             >
-                <CardKolRank v-for="(item, index) in 6" :key="index" />
+                <CardKolRank v-for="(item, index) in kolRank" :key="index" v-bind="item" />
             </div>
         </div>
 
@@ -29,7 +29,7 @@
             <div class="flex justify-between items-end mt-10 mb-4">
                 <div class="flex items-end">
                     <h2 class="text-xl font-medium">精選團主</h2>
-                    <span class="text-Primary-500-Primary text-xs ml-2">共128位</span>
+                    <span class="text-Primary-500-Primary text-xs ml-2">共{{ kolList.length }}位</span>
                 </div>
 
                 <USelectMenu
@@ -48,7 +48,7 @@
 
             <!-- 精選團主卡片 -->
             <div class="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-5">
-                <CardKolRecommend v-for="(item, index) in 8" :key="index" @click="goToPage(index)" />
+                <CardKolRecommend v-for="(item, index) in kolList" :key="index" v-bind="item" />
             </div>
 
             <UiPagination
@@ -62,8 +62,11 @@
 </template>
 
 <script setup>
+import { GET } from "~/utils/helperFetchData.js";
+
 const sort = ["新到舊", "舊到新", "開團數", "活耀度"];
 const sortSelected = ref(sort[0]);
+const kolList = ref([]);
 
 const currentPage = ref(1);
 const totalPages = ref(20);
@@ -71,9 +74,18 @@ const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
 };
 
-function goToPage(index) {
-    navigateTo(`/kol/${index}`);
+async function getKol() {
+    const data = await GET("/api/kol");
+
+    if (!!data) {
+        kolList.value = data;
+    }
 }
+getKol();
+
+const kolRank = computed(() => {
+    return kolList.value.sort((a, b) => a.index - b.index).slice(0, 6);
+});
 </script>
 
 <style scoped></style>

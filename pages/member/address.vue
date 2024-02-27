@@ -85,7 +85,6 @@ function onAbort(payload) {
     if (payload.title === "刪除") {
         addressInfo.value = addressInfo.value.filter((item) => item.index !== payload.index);
     }
-    console.log("payload.index", payload.index);
     tempAddress.value = null;
 }
 
@@ -113,7 +112,6 @@ function onSubmit(data, isEditmode) {
         // 是否設預設
         setDefaultAddress(index - 1);
     }
-    console.log("addressInfo", addressInfo.value);
     tempAddress.value = null;
 }
 </script>

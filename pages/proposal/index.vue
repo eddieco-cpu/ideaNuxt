@@ -20,7 +20,9 @@
                         idea2gether <br class="md:hidden" />
                         全台首創募資平台＋團購型網站
                     </h2>
-                    <UiButton class="max-md:w-[147px] max-md:text-sm">我要提案</UiButton>
+                    <UiButton class="max-md:w-[147px] max-md:text-sm"
+                        ><NuxtLink to="/proposal/submission">我要提案</NuxtLink></UiButton
+                    >
                 </div>
                 <div
                     class="block w-[930px] h-[930px] rounded-[50%] absolute top-[-200%] right-[-100%] z-[-1]"

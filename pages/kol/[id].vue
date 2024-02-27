@@ -71,7 +71,7 @@
 
                     <div class="grid grid-cols-1 gap-y-4 md:gap-5 md:grid-cols-3">
                         <!-- 卡片 -->
-                        <CardGroupBuying v-for="(item, index) in 10" :key="index" />
+                        <CardGroupBuying v-for="(item, index) in groupBuyingList" :key="index" v-bind="item" />
                     </div>
 
                     <UiPagination
@@ -145,7 +145,7 @@
 
                     <div class="grid grid-cols-1 gap-y-4 md:gap-5 md:grid-cols-2">
                         <!-- 卡片 -->
-                        <CardComingBuying v-for="(item, index) in 6" :key="index" />
+                        <CardComingBuying v-for="(item, index) in comingBuyingList" :key="index" v-bind="item" />
                     </div>
 
                     <UiPagination
@@ -177,7 +177,12 @@
 
                     <div class="grid grid-cols-1 gap-y-4 md:gap-5 md:grid-cols-3">
                         <!-- 卡片 -->
-                        <CardGroupBuying v-for="(item, index) in 6" :key="index" :isExpired="true" />
+                        <CardGroupBuying
+                            v-for="(item, index) in groupBuyingList"
+                            :key="index"
+                            :isExpired="true"
+                            v-bind="item"
+                        />
                     </div>
 
                     <UiPagination
@@ -207,22 +212,20 @@ const sortComingSelected = ref(sortComing[0]);
 const sortHistory = ["新到舊", "舊到新", "開團數", "活耀度"];
 const sortHistorySelected = ref(sortHistory[0]);
 
+const groupBuyingList = ref([]);
+const comingBuyingList = ref([]);
+const videoPlayList = ref([]);
+
 const scrollNavIndex = ref(0);
 const isOpenVideo = ref(false);
 
 const videoNav = ref(null);
-const videoPlayList = ref([
-    { source: "/1.mp4", thumbnail: "/1.jpg", text: "影片1 x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
-    { source: "/2.mp4", thumbnail: "/2.jpg", text: "影片2  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
-    { source: "/3.mp4", thumbnail: "/3.jpg", text: "影片3  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
-    { source: "/1.mp4", thumbnail: "/1.jpg", text: "影片4 x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
-    { source: "/2.mp4", thumbnail: "/2.jpg", text: "影片5  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
-    { source: "/3.mp4", thumbnail: "/3.jpg", text: "影片6  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
-    { source: "/1.mp4", thumbnail: "/1.jpg", text: "影片7 x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
-    { source: "/2.mp4", thumbnail: "/2.jpg", text: "影片8  x 【小灶堂】花雕祖傳秘製滷五花，新年特惠組，限時搶購" },
-]);
 
 const videoIndex = ref(0);
+
+getGroupBuyingList();
+getComingBuyingList();
+getVideoList();
 
 function scrollVideoNav(index) {
     scrollNavIndex.value += index;
@@ -253,6 +256,30 @@ function openVideo(index) {
 
 function closeVideo() {
     isOpenVideo.value = false;
+}
+
+async function getGroupBuyingList() {
+    const data = await GET("/api/groupBuying");
+
+    if (!!data) {
+        groupBuyingList.value = data;
+    }
+}
+
+async function getComingBuyingList() {
+    const data = await GET("/api/comingBuying");
+
+    if (!!data) {
+        comingBuyingList.value = data;
+    }
+}
+
+async function getVideoList() {
+    const data = await GET("/api/video");
+
+    if (!!data) {
+        videoPlayList.value = data;
+    }
 }
 
 const currentPage = ref(1);

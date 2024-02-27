@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 排序 -->
-        <template v-if="true">
+        <template v-if="!isEmptyData">
             <div class="flex justify-between gap-4 items-center mt-8 mb-4 md:mt-0">
                 <h1 class="text-black text-xl font-medium">3C家電</h1>
 
@@ -21,7 +21,18 @@
 
             <div class="grid grid-cols-1 gap-y-4 md:gap-5" :class="showCardClass">
                 <!-- 卡片 -->
-                <component :is="showCard" v-for="(item, index) in 12" :key="index" />
+                <CardFundraise
+                    v-for="(item, index) in fundingRaiseList"
+                    :key="index"
+                    v-bind="item"
+                    v-if="showCard === 'fundraise'"
+                />
+                <CardGroupBuying
+                    v-for="(item, index) in groupBuyingList"
+                    :key="index"
+                    v-bind="item"
+                    v-if="showCard === 'groupbuying'"
+                />
             </div>
 
             <UiPagination
@@ -43,6 +54,9 @@
 import { CardGroupBuying, CardFundraise } from "#components";
 const route = useRoute();
 
+const fundingRaiseList = ref([]);
+const groupBuyingList = ref([]);
+
 const currentPage = ref(1);
 const totalPages = ref(20);
 const updateCurrentPage = (newPage) => {
@@ -52,14 +66,18 @@ const updateCurrentPage = (newPage) => {
 const sort = ["最新", "最熱門", "價格高", "價格低"];
 const sortSelected = ref(sort[0]);
 
+getGroupBuyingList();
+getFundingRaiseList();
+
 const showCard = computed(() => {
-    switch (route.query.type) {
-        case "fundraise":
-            return CardFundraise;
-        case "groupbuying":
-            return CardGroupBuying;
-        default:
-            return CardFundraise;
+    return route.query.type || "fundraise";
+});
+
+const isEmptyData = computed(() => {
+    if (route.query.type === "groupbuying") {
+        return groupBuyingList.value.length === 0;
+    } else {
+        return fundingRaiseList.value.length === 0;
     }
 });
 
@@ -73,6 +91,22 @@ const showCardClass = computed(() => {
             return "md:grid-cols-3";
     }
 });
+
+async function getFundingRaiseList() {
+    const data = await GET("/api/fundingRaise");
+
+    if (!!data) {
+        fundingRaiseList.value = data;
+    }
+}
+
+async function getGroupBuyingList() {
+    const data = await GET("/api/groupBuying");
+
+    if (!!data) {
+        groupBuyingList.value = data;
+    }
+}
 </script>
 
 <style scoped>

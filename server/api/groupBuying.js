@@ -1,0 +1,88 @@
+export default defineEventHandler((event) => {
+    return [
+        {
+            id: 1,
+            image: helperPicture(),
+            avatar: helperPicture(),
+            isFavorite: true,
+            name: "小雯媽咪",
+            text: helperLorem(),
+            price: [1200, 3280],
+            tags: [
+                { name: "促銷", color: "primary", type: "text" },
+                { name: "免運", color: "danger", type: "text" },
+                { name: "19日", color: "success", type: "time" },
+            ],
+        },
+        {
+            id: 2,
+            image: helperPicture(),
+            avatar: helperPicture(),
+            isFavorite: false,
+            name: "Donna C. Newman",
+            text: helperLorem(),
+            price: [3000, 5280],
+            tags: [
+                { name: "促銷", color: "primary", type: "text" },
+                { name: "免運", color: "danger", type: "text" },
+                { name: "獨家", color: "success", type: "text" },
+            ],
+        },
+        {
+            id: 3,
+            image: helperPicture(),
+            avatar: helperPicture(),
+            isFavorite: false,
+            name: "Yong D. Ashley",
+            text: helperLorem(),
+            price: [10, 92],
+            tags: [
+                { name: "促銷", color: "primary", type: "text" },
+                { name: "免運", color: "danger", type: "text" },
+                { name: "獨家", color: "success", type: "text" },
+            ],
+        },
+        {
+            id: 4,
+            image: helperPicture(),
+            avatar: helperPicture(),
+            isFavorite: true,
+            name: "毛利 禎子",
+            text: helperLorem(),
+            price: [3000, 5280],
+            tags: [
+                { name: "促銷", color: "primary", type: "text" },
+                { name: "免運", color: "danger", type: "text" },
+                { name: "獨家", color: "success", type: "text" },
+            ],
+        },
+        {
+            id: 5,
+            image: helperPicture(),
+            avatar: helperPicture(),
+            isFavorite: true,
+            name: "矢吹 葵",
+            text: helperLorem(),
+            price: [15000, 42280],
+            tags: [
+                { name: "促銷", color: "primary", type: "text" },
+                { name: "免運", color: "danger", type: "text" },
+                { name: "獨家", color: "success", type: "text" },
+            ],
+        },
+        {
+            id: 6,
+            image: helperPicture(),
+            avatar: helperPicture(),
+            isFavorite: false,
+            name: "柿島 拓海",
+            text: helperLorem(),
+            price: [3000, 5280],
+            tags: [
+                { name: "促銷", color: "primary", type: "text" },
+                { name: "免運", color: "danger", type: "text" },
+                { name: "2日", color: "success", type: "time" },
+            ],
+        },
+    ];
+});

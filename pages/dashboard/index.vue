@@ -50,7 +50,7 @@
             </div>
         </section>
         <section>
-            <UiTitle> 最新訂單 </UiTitle>
+            <UiTitle> 最新訂單X </UiTitle>
         </section>
     </section>
 </template>
