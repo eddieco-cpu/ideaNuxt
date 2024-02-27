@@ -3,7 +3,7 @@
         <section class="py-[1px] mb-10 max-md:mb-0">
             <!--  -->
             <div
-                class="mt-[182px] mb-[216px] max-w-[760px] mx-auto relative max-md:mt-[70px] max-md:mb-[88px] max-md:px-9 ring-1"
+                class="mt-[182px] mb-[216px] max-w-[760px] mx-auto relative max-md:mt-[70px] max-md:mb-[88px] max-md:px-9"
             >
                 <h1 class="text-[40px] leading-relaxed font-bold text-center max-md:text-[32px]">
                     將您的 <b class="text-Secondary-500-Primary">好創意</b><b class="max-md:hidden">，</b
@@ -25,71 +25,51 @@
                     >
                 </div>
                 <div
-                    class="block w-[930px] h-[930px] rounded-[50%] absolute top-[-200%] right-[-100%] z-[-1]"
-                    :style="circleBg"
-                ></div>
+                    class="block w-[930px] h-[930px] rounded-[50%] absolute top-[-200%] right-[-100%] z-[-1] max-md:w-[352px] max-md:h-[352px] max-md:top-[-55%] max-md:right-[-40%]"
+                >
+                    <img src="~assets/images/proposal/c_1-1.png" class="max-md:hidden" />
+                    <img src="~assets/images/proposal/mc_1-1.png" class="md:hidden" />
+                </div>
                 <div
-                    class="block w-[704px] h-[704px] rounded-[50%] absolute top-[-70px] left-[-83%] z-[-1]"
-                    :style="circleBg"
-                ></div>
+                    class="block w-[704px] h-[704px] rounded-[50%] absolute top-[-70px] left-[-83%] z-[-1] max-md:w-[264px] max-md:h-[264px] max-md:top-auto max-md:bottom-[-35%] max-md:left-[-35%]"
+                >
+                    <img src="~assets/images/proposal/c_1-2.png" class="max-md:hidden" />
+                    <img src="~assets/images/proposal/mc_1-2.png" class="md:hidden" />
+                </div>
             </div>
 
             <!--  -->
             <UiContainer>
-                <div class="flex justify-between items-start h-[671px] max-xl:h-auto">
+                <div class="flex justify-between items-start h-[671px] relative max-xl:h-auto">
                     <div
-                        class="w-[590px] h-full overflow-hidden flex flex-col justify-center items-center ring-1 max-xl:w-full"
+                        class="w-[590px] h-full overflow-hidden flex flex-col justify-center items-center max-xl:w-full"
                     >
                         <ProposalIntroCard
-                            :dataObj="{
-                                note: '關於團隊',
-                                title: 'About Team',
-                                content: `愛上大數據是間專業服務品牌的「整合顧問團隊」。<br />
-縮短您創業0到1的學習時間與延伸的資源耗損，我們服務超過數百家品牌與企業，整合所擅長的通路、倉儲、物流、媒體、行銷等全方位資源， 讓品牌端更能專注於開發與塑造自我的價值。`,
-                                photo: 'intro_1.png',
-                            }"
+                            v-for="(intro, i) in proposalIntros"
+                            :key="i"
+                            :dataObj="intro"
                             class="my-5 max-md:my-3"
-                            :class="'gradient-to-t'"
-                        />
-                        <ProposalIntroCard
-                            :dataObj="{
-                                note: '創辦理念',
-                                title: 'Mission Statement',
-                                content: `臺灣寶島人才濟濟，不乏有創意的點子、品質優秀新商品與研發團隊，但總難遇到合適的執行團隊與合作夥伴，對於新創意更是一大壓力與損耗。我們希望藉由自己十多年來的品牌操作經驗與服務精神，跨領域的服務更多品牌與全新的idea，執行並且實現您創意的無限可能，讓您的好創意變成一門好的生意。`,
-                                photo: 'intro_2.png',
+                            :class="{
+                                'gradient-to-t': i === 0,
+                                'gradient-to-b': i === 2,
                             }"
-                            class="my-5 max-md:my-3"
-                        />
-                        <ProposalIntroCard
-                            :dataObj="{
-                                note: '網紅推薦',
-                                title: 'Influencer Pick',
-                                content: `我們相信，好的創意以及商品被實現上市後，更需要有好的媒體與渠道分享，才能夠達到共利共享的精神，大數據擁有近千位以上的空姐、網紅、KOL/KOC的名單與合作經驗，加上熱愛商品與分享的團媽、主購等資源，搭配專業的自媒體行銷團隊宣傳曝光，一直以來，我們協助許多品牌再造轉型，皆端出相當漂亮的成績單。`,
-                                photo: 'intro_3.png',
-                            }"
-                            class="my-5 max-md:my-3"
-                            :class="'gradient-to-b'"
                         />
                     </div>
-                    <div class="w-[590px] ring-1 max-xl:hidden">
-                        <ProposalIntroCard
-                            :dataObj="{
-                                note: '關於團隊',
-                                title: 'About Team',
-                                content: `愛上大數據是間專業服務品牌的「整合顧問團隊」。<br />
-縮短您創業0到1的學習時間與延伸的資源耗損，我們服務超過數百家品牌與企業，整合所擅長的通路、倉儲、物流、媒體、行銷等全方位資源， 讓品牌端更能專注於開發與塑造自我的價值。`,
-                                photo: 'intro_1.png',
-                            }"
-                            class="mb-10"
-                        />
-                        <ProposalIntroCard
-                            :dataObj="{
-                                note: '網紅推薦',
-                                title: 'Influencer Pick',
-                                content: `我們相信，好的創意以及商品被實現上市後，更需要有好的媒體與渠道分享，才能夠達到共利共享的精神，大數據擁有近千位以上的空姐、網紅、KOL/KOC的名單與合作經驗，加上熱愛商品與分享的團媽、主購等資源，搭配專業的自媒體行銷團隊宣傳曝光，一直以來，我們協助許多品牌再造轉型，皆端出相當漂亮的成績單。`,
-                                photo: 'intro_3.png',
-                            }"
-                        />
+                    <div class="w-[590px] max-xl:hidden">
+                        <template v-for="(intro, i) in proposalIntros" :key="i">
+                            <ProposalIntroCard
+                                v-if="i !== 1"
+                                :dataObj="intro"
+                                :class="{
+                                    'mb-10': i === 0,
+                                }"
+                            />
+                        </template>
+                    </div>
+                    <div
+                        class="block w-[600px] h-[600px] m-auto rounded-[50%] absolute top-[-10%] left-0 right-0 z-[-1] max-md:hidden"
+                    >
+                        <img src="~assets/images/proposal/c_1-3.svg" class="opacity-50" />
                     </div>
                 </div>
             </UiContainer>
@@ -118,7 +98,7 @@
         </section>
         <section class="py-20">
             <section
-                class="py-14 flex justify-center items-center mb-20 relative max-md:flex-col max-md:pt-0 max-md:pb-16 max-md:mb-[120px] ring-1"
+                class="py-14 flex justify-center items-center mb-20 relative max-md:flex-col max-md:pt-0 max-md:pb-16 max-md:mb-[120px]"
             >
                 <div class="w-72 text-left max-md:w-[200px]">
                     <h2 class="text-3xl text-Primary-500-Primary font-bold text-left mb-6 max-md:text-xl">
@@ -133,32 +113,36 @@
                 <div
                     v-for="(type, t) in proposalTypes"
                     :key="t"
-                    class="p-12 w-[306px] h-[290px] ml-14 rounded-[48px] bg-white relative overflow-hidden shadow-card max-md:mx-auto max-md:rounded-3xl max-md:p-6 max-md:w-[calc(100%-48px)] max-md:h-auto"
+                    class="square-card relative w-[306px] h-[290px] ml-14 relative max-md:mx-auto max-md:w-[calc(100%-48px)] max-md:h-auto"
                     :class="t === 0 ? 'max-md:mb-6' : ''"
                 >
-                    <UIcon
-                        :name="type.icon"
-                        class="text-Primary-50 text-8xl font-black absolute top-[-16px] right-[-12px] scale-110"
-                    ></UIcon>
-                    <h3 class="text-2xl font-bold text-Primary-500-Primary mb-6">{{ type.title }}</h3>
-                    <ul>
-                        <li
-                            v-for="(item, i) in type.lists"
-                            :key="i"
-                            class="flex items-center mb-4"
-                            :class="i === type.lists.length - 1 ? 'max-md:mb-0' : ''"
-                        >
-                            <UIcon name="i-heroicons-light-bulb" class="text-Primary-500-Primary text-base"></UIcon>
-                            <span class="text-Primary-500-Primary text-base">{{ " " + item }}</span>
-                        </li>
-                    </ul>
+                    <div
+                        class="rounded-[48px] relative bg-white p-12 overflow-hidden shadow-card max-md:p-6 max-md:rounded-3xl"
+                    >
+                        <UIcon
+                            :name="type.icon"
+                            class="text-Primary-50 text-8xl font-black absolute top-[-16px] right-[-12px] scale-110"
+                        ></UIcon>
+                        <h3 class="text-2xl font-bold text-Primary-500-Primary mb-6">{{ type.title }}</h3>
+                        <ul>
+                            <li
+                                v-for="(item, i) in type.lists"
+                                :key="i"
+                                class="flex items-center mb-4"
+                                :class="i === type.lists.length - 1 ? 'max-md:mb-0' : ''"
+                            >
+                                <UIcon name="i-heroicons-light-bulb" class="text-Primary-500-Primary text-base"></UIcon>
+                                <span class="text-Primary-500-Primary text-base">{{ " " + item }}</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </section>
-            <section class="w-[966px] ring-1 mx-auto max-md:w-full">
+            <section class="w-[966px] mx-auto max-md:w-full">
                 <h2 class="text-3xl text-Primary-500-Primary font-bold text-center mb-10 max-md:text-xl max-md:mb-6">
                     募資提案常見問題
                 </h2>
-                <div class="bg-white rounded-3xl px-[60px] py-5 max-md:rounded-none max-md:px-6">
+                <div class="bg-white rounded-3xl px-[60px] py-5 max-md:rounded-none max-md:px-6 relative">
                     <UiHorizontalNav
                         :nav-items="navItems"
                         :activeNavItemId="activeNavItemId"
@@ -171,6 +155,18 @@
                             <UiAccordion :items="content.datas" v-show="content.id === activeNavItemId" />
                         </template>
                     </section>
+
+                    <!-- bg -->
+                    <div
+                        class="block w-[704px] h-[704px] rounded-[50%] absolute top-[-24%] right-[-40%] z-[-1] max-md:w-[200px] max-md:h-[200px] max-md:top-[-25%] max-md:right-[-20%]"
+                    >
+                        <img src="~assets/images/proposal/c_1-2.png" class="opacity-50" />
+                    </div>
+                    <div
+                        class="block w-[520px] h-[520px] rounded-[50%] absolute top-[-35%] left-[-40%] z-[-1] max-md:w-[200px] max-md:h-[200px] max-md:top-[-15%] max-md:left-[-18%]"
+                    >
+                        <img src="~assets/images/proposal/c_3-2.png" class="opacity-80" />
+                    </div>
                 </div>
             </section>
         </section>
@@ -178,8 +174,30 @@
 </template>
 
 <script setup>
+import Icon from "assets/images/";
 import { navItemIds, navItemContents } from "@/assets/others/proposal/data";
-//import { navItemIds, navItemContents } from "@/data/proposal/data";
+
+const proposalIntros = [
+    {
+        note: "關於團隊",
+        title: "About Team",
+        content: `愛上大數據是間專業服務品牌的「整合顧問團隊」。<br />
+縮短您創業0到1的學習時間與延伸的資源耗損，我們服務超過數百家品牌與企業，整合所擅長的通路、倉儲、物流、媒體、行銷等全方位資源， 讓品牌端更能專注於開發與塑造自我的價值。`,
+        photo: Icon.intro_1,
+    },
+    {
+        note: "創辦理念",
+        title: "Mission Statement",
+        content: `臺灣寶島人才濟濟，不乏有創意的點子、品質優秀新商品與研發團隊，但總難遇到合適的執行團隊與合作夥伴，對於新創意更是一大壓力與損耗。我們希望藉由自己十多年來的品牌操作經驗與服務精神，跨領域的服務更多品牌與全新的idea，執行並且實現您創意的無限可能，讓您的好創意變成一門好的生意。`,
+        photo: Icon.intro_2,
+    },
+    {
+        note: "網紅推薦",
+        title: "Influencer Pick",
+        content: `我們相信，好的創意以及商品被實現上市後，更需要有好的媒體與渠道分享，才能夠達到共利共享的精神，大數據擁有近千位以上的空姐、網紅、KOL/KOC的名單與合作經驗，加上熱愛商品與分享的團媽、主購等資源，搭配專業的自媒體行銷團隊宣傳曝光，一直以來，我們協助許多品牌再造轉型，皆端出相當漂亮的成績單。`,
+        photo: Icon.intro_3,
+    },
+];
 
 const navItems = [
     {
@@ -229,94 +247,26 @@ const proposalTypes = [
         icon: "i-heroicons-newspaper",
     },
 ];
-
-const circleBg = `
-    background-image: radial-gradient(
-            rgba(204, 138, 251, 0.6) 0%,
-            rgba(204, 138, 251, 0.6) 20%,
-
-            rgba(204, 138, 251, 0.5) 20%,
-            rgba(204, 138, 251, 0.5) 30%,
-
-            rgba(204, 138, 251, 0.4) 30%,
-            rgba(204, 138, 251, 0.4) 40%,
-
-            rgba(204, 138, 251, 0.3) 40%,
-            rgba(204, 138, 251, 0.3) 50%,
-
-            rgba(204, 138, 251, 0.2) 50%,
-            rgba(204, 138, 251, 0.2) 60%,
-
-            rgba(204, 138, 251, 0.1) 60%,
-            rgba(204, 138, 251, 0.1) 70%,
-
-            rgba(204, 138, 251, 0.05) 70%,
-            rgba(204, 138, 251, 0.05) 80%,
-
-            rgba(204, 138, 251, 0.025) 80%,
-            rgba(204, 138, 251, 0.025) 90%,
-
-            rgba(204, 138, 251, 0.015) 90%,
-            rgba(204, 138, 251, 0.015) 100%
-        )
-    `;
 </script>
 
-<style scoped lang="scss">
-.x-block {
-    position: relative;
+<style scoped>
+.square-card::after {
+    content: "";
+    position: absolute;
+    display: block;
+    top: 0;
+    right: 0;
+    transform: translate(40%, -40%);
+    width: 176px;
+    height: 176px;
+    background-image: url("assets/images/proposal/c_2-1.png");
+    background-position: center;
+    background-size: contain;
+    z-index: -1;
+    opacity: 0.15;
 
-    &::before {
-        content: "";
-        display: block;
-        width: 930px;
-        height: 930px;
-        border-radius: 50%;
-
-        position: absolute;
-        top: -200%;
-        right: -100%;
-        z-index: -1;
-
-        // box-shadow:
-        //     0 0 0 10px rgba(204, 138, 251, calc(0.5 - 0.05)),
-        //     0 0 0 calc(10px * 2) rgba(204, 138, 251, calc(0.5 - 0.05 * 2)),
-        //     0 0 0 calc(10px * 3) rgba(204, 138, 251, calc(0.5 - 0.05 * 3)),
-        //     0 0 0 calc(10px * 4) rgba(204, 138, 251, calc(0.5 - 0.05 * 4)),
-        //     0 0 0 calc(10px * 5) rgba(204, 138, 251, calc(0.5 - 0.05 * 5)),
-        //     0 0 0 calc(10px * 6) rgba(204, 138, 251, calc(0.5 - 0.05 * 6)),
-        //     0 0 0 calc(10px * 7) rgba(204, 138, 251, calc(0.5 - 0.05 * 7)),
-        //     0 0 0 calc(10px * 8) rgba(204, 138, 251, calc(0.5 - 0.05 * 7)),
-        //     0 0 0 calc(10px * 9) rgba(204, 138, 251, calc(0.5 - 0.05 * 7));
-
-        background-image: radial-gradient(
-            rgba(204, 138, 251, 0.6) 0%,
-            rgba(204, 138, 251, 0.6) 20%,
-
-            rgba(204, 138, 251, 0.5) 20%,
-            rgba(204, 138, 251, 0.5) 30%,
-
-            rgba(204, 138, 251, 0.4) 30%,
-            rgba(204, 138, 251, 0.4) 40%,
-
-            rgba(204, 138, 251, 0.3) 40%,
-            rgba(204, 138, 251, 0.3) 50%,
-
-            rgba(204, 138, 251, 0.2) 50%,
-            rgba(204, 138, 251, 0.2) 60%,
-
-            rgba(204, 138, 251, 0.1) 60%,
-            rgba(204, 138, 251, 0.1) 70%,
-
-            rgba(204, 138, 251, 0.05) 70%,
-            rgba(204, 138, 251, 0.05) 80%,
-
-            rgba(204, 138, 251, 0.025) 80%,
-            rgba(204, 138, 251, 0.025) 90%,
-
-            rgba(204, 138, 251, 0.015) 90%,
-            rgba(204, 138, 251, 0.015) 100%
-        );
+    @media (max-width: 768px) {
+        display: none;
     }
 }
 </style>

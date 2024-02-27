@@ -42,3 +42,8 @@ export const leaderInformationSchema = z.object({
     siteName: z.string(commonErrorMessage).min(1, "必填"),
     selfDescription: z.string(commonErrorMessage).min(1, "必填"),
 });
+
+export const submissionSchema = z.object({
+    name: z.string(commonErrorMessage).min(1, "必填"),
+    email: z.string(commonErrorMessage).regex(emailRegex, "請輸入有效電子信箱").min(1, "必填"),
+});
