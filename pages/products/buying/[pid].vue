@@ -23,7 +23,7 @@
 
             <!--  -->
             <div
-                class="hidden max-xl:flex justify-between items-center max-xl:fixed max-xl:bottom-0 max-xl:left-0 max-xl:w-full max-xl:bg-white max-xl:px-4 max-xl:py-2 max-md:gap-x-3"
+                class="hidden max-xl:flex justify-between items-center max-xl:fixed max-xl:z-10 max-xl:bottom-0 max-xl:left-0 max-xl:w-full max-xl:bg-white max-xl:px-4 max-xl:py-2 max-md:gap-x-3"
             >
                 <!--  -->
                 <button class="w-12 h-12 rounded-lg ring-2 ring-Neutral-500-Primary flex justify-center items-center">
