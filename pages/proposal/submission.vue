@@ -1,7 +1,7 @@
 <template>
     <div>
         <section
-            class="banner ring-1 relative z-[-1] overflow-hidden mb-[-5%] 2xl:aspect-[144/23] max-2xl:aspect-[144/26] max-xl:mb-0 max-lg:aspect-[144/30] max-md:aspect-[375/127]"
+            class="banner relative z-[-1] overflow-hidden mb-[-5%] 2xl:aspect-[144/23] max-2xl:aspect-[144/26] max-xl:mb-0 max-lg:aspect-[144/30] max-md:aspect-[375/127]"
         >
             <h1
                 class="block text-center font-bold text-white text-4xl h-10 mx-auto my-auto absolute z-[2] top-0 left-0 right-0 bottom-0 translate-y-[-185%] max-2xl:translate-y-[-175%] max-xl:translate-y-[-80%] max-md:scale-[0.55]"
@@ -228,7 +228,7 @@
                 <template #form>
                     <!-- plus-circle / minus-circle -->
                     <UFormGroup label="相關網頁" required class="mb-3">
-                        <UInput placeholder="https://web.com" />
+                        <UInput placeholder="https://web.com" v-model="submissionData.website.related" />
                     </UFormGroup>
 
                     <div class="flex justify-start content-center items-center flex-wrap gap-x-2">
@@ -260,6 +260,7 @@
                             <UInput
                                 placeholder="https://instagram.com/account-name"
                                 :class="igSwitcher ? '' : 'hidden'"
+                                v-model="submissionData.website.ig"
                             />
                             <UIcon
                                 name="i-heroicons-minus-circle"
@@ -302,6 +303,7 @@
                             <UInput
                                 placeholder="https://facebook.com/account-name"
                                 :class="fbSwitcher ? '' : 'hidden'"
+                                v-model="submissionData.website.fb"
                             />
                             <UIcon
                                 name="i-heroicons-minus-circle"
@@ -344,6 +346,7 @@
                             <UInput
                                 placeholder="https://youtube.com/account-name"
                                 :class="ytSwitcher ? '' : 'hidden'"
+                                v-model="submissionData.website.yt"
                             />
                             <UIcon
                                 name="i-heroicons-minus-circle"
@@ -391,9 +394,14 @@
                         </article>
                     </div>
                     <div class="mb-2">
-                        <UCheckbox v-model="agree.contract" name="contract" label="同意提案契約書" class="mb-3" />
                         <UCheckbox
-                            v-model="agree.understand"
+                            v-model="submissionData.agree.contract"
+                            name="contract"
+                            label="同意提案契約書"
+                            class="mb-3"
+                        />
+                        <UCheckbox
+                            v-model="submissionData.agree.understand"
                             name="understand"
                             label="提案人 (及法定代理人) 均已充分了解且同意合作條款之權利義務"
                         />
@@ -445,6 +453,12 @@ const submissionData = reactive({
         contract: false,
         understand: false,
     },
+    website: {
+        related: "",
+        ig: "",
+        fb: "",
+        yt: "",
+    },
 });
 const imgData = ref(); //imgData.value.files
 
@@ -487,12 +501,6 @@ const dropdownItems = [
 const open = ref(false);
 defineShortcuts({
     o: () => (open.value = !open.value),
-});
-
-//
-const agree = reactive({
-    contract: false,
-    understand: false,
 });
 
 //

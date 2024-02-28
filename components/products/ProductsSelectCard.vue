@@ -1,5 +1,5 @@
 <template>
-    <li class="ring-1 rounded-lg overflow-hidden bg-white">
+    <li class="rounded-lg overflow-hidden bg-white">
         <picture class="block w-full aspect-[1/1] rounded-lg overflow-hidden">
             <img :src="helperPicture()" class="block w-full h-full object-cover" />
         </picture>
