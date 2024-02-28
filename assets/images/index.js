@@ -27,6 +27,10 @@ import line from "assets/images/icon/line-icon.svg";
 
 // kol
 // proposal
+import intro_1 from "assets/images/proposal/intro_1.png";
+import intro_2 from "assets/images/proposal/intro_2.png";
+import intro_3 from "assets/images/proposal/intro_3.png";
+
 // status
 
 export default {
@@ -50,4 +54,7 @@ export default {
     instagram,
     youtube,
     line,
+    intro_1,
+    intro_2,
+    intro_3,
 };

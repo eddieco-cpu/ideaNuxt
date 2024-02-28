@@ -1,6 +1,7 @@
 <template>
     <div class="min-h-[300px] relative mb-8 home max-md:min-h-[213px]">
         <Swiper
+            v-if="slides.length > 0"
             :modules="[SwiperAutoplay, SwiperPagination, SwiperNavigation]"
             :slides-per-view="'auto'"
             :centered-slides="true"
@@ -32,8 +33,8 @@
                                 class="inline-block font-normal text-sm text-center bg-Secondary-500-Primary rounded px-2 py-1 mr-2 max-md:text-xs"
                                 >限時團購</span
                             >
-                            <!-- {{ slide.provider }} -->
-                            {{ useState(slide.photo + idx, () => helperLorem(5, 10)).value }}
+                            {{ slide.provider }}
+                            <!-- {{ useState(slide.photo + idx, () => helperLorem(5, 10)).value }} -->
                         </p>
                         <p class="font-normal text-xl line-clamp-2 max-md:text-xs max-md:line-clamp-1">
                             {{ slide.title }}
@@ -62,22 +63,12 @@
 
 <script setup>
 //
-// const props = defineProps({
-//     slides: {
-//         type: Array,
-//         default: () => [],
-//     },
-// });
-
-const slides = ref(
-    Array.from({ length: 10 }, () => {
-        return {
-            photo: helperPicture(),
-            provider: "觸把結值取受想",
-            title: useState("x", () => helperLorem(20, 30)).value,
-        };
-    }),
-);
+const props = defineProps({
+    slides: {
+        type: Array,
+        default: () => [],
+    },
+});
 
 //
 const pagination = {
