@@ -1,4 +1,3 @@
-import type { Html } from '#build/components';
 <!-- 子組件 -->
 <template>
     <section
@@ -12,7 +11,7 @@ import type { Html } from '#build/components';
                     {{ dataObj.title }}
                 </p>
             </div>
-            <img :src="'/_nuxt/assets/images/proposal/' + dataObj.photo" class="block h-[94px] max-md:h-[73px]" />
+            <img :src="dataObj.photo" class="block h-[94px] max-md:h-[73px]" />
         </div>
         <p class="text-2xl leading-tight font-bold text-Primary-500-Primary md:hidden max-md:mb-4">
             {{ dataObj.title }}

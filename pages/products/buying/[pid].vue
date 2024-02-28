@@ -3,7 +3,7 @@
         <picture class="block h-36 w-auto relative z-[-1] banner_photo">
             <img :src="helperPicture()" alt="" class="block w-full h-full object-cover" />
         </picture>
-        <section class="max-w-[1090px] mx-auto max-xl:px-6 max-xl:py-4 ring-1 max-xl:ring-orange-400 max-md:px-0">
+        <section class="max-w-[1090px] mx-auto max-xl:px-6 max-xl:py-4 max-md:px-0">
             <!--  -->
             <section class="pt-8 pb-8 mt-[-140px] max-md:px-6">
                 <UBreadcrumb
@@ -23,7 +23,7 @@
 
             <!--  -->
             <div
-                class="hidden max-xl:flex justify-between items-center max-xl:fixed max-xl:bottom-0 max-xl:left-0 max-xl:w-full max-xl:bg-white max-xl:px-4 max-xl:py-2 max-md:gap-x-3"
+                class="hidden max-xl:flex justify-between items-center max-xl:fixed max-xl:z-10 max-xl:bottom-0 max-xl:left-0 max-xl:w-full max-xl:bg-white max-xl:px-4 max-xl:py-2 max-md:gap-x-3"
             >
                 <!--  -->
                 <button class="w-12 h-12 rounded-lg ring-2 ring-Neutral-500-Primary flex justify-center items-center">
@@ -77,12 +77,12 @@
                 </section>
 
                 <!-- art -->
-                <article class="w-[436px] ring-1 flex flex-col justify-center items-center max-xl:w-auto">
+                <article class="w-[436px] flex flex-col justify-center items-center max-xl:w-auto">
                     <!-- avater -->
                     <div class="flex justify-between items-center gap-x-2 bg-white mb-2 p-3 rounded-lg w-full">
                         <div class="flex justify-start items-center gap-x-3">
                             <picture class="block w-[110px] aspect-[1/1] overflow-hidden rounded-lg flex-shrink-0">
-                                <img :src="helperPicture()" classs="block w-full h-full object-cover" />
+                                <img :src="helperPicture()" class="block w-full h-full object-cover" />
                             </picture>
                             <div>
                                 <p class="text-xs text-gray-400 mb-1">本次開團主</p>
@@ -137,7 +137,7 @@
             </section>
 
             <!--  -->
-            <section class="bg-white mb-4 rounded-lg sticky top-[76px] max-md:top-[51px]">
+            <section class="bg-white mb-4 rounded-lg sticky top-[74px] max-md:top-[51px]">
                 <div class="w-80 px-6">
                     <UiHorizontalNav
                         :nav-items="navItems"
@@ -198,7 +198,7 @@
                 <!--  -->
                 <section class="max-md:mx-6">
                     <UiTitle class="!mb-5">本團推薦商品</UiTitle>
-                    <ul class="ring-1 grid grid-cols-2 gap-x-[14px] gap-y-[28px]">
+                    <ul class="grid grid-cols-2 gap-x-[14px] gap-y-[28px]">
                         <ProductsSelectCard
                             v-for="(select, i) in recommendationSelects"
                             :key="select.id"

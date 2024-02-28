@@ -1,5 +1,5 @@
 <template>
-    <section class="max-w-[1090px] mx-auto max-xl:px-6 max-xl:py-4 ring-1 max-xl:ring-orange-400 max-md:px-0">
+    <section class="max-w-[1090px] mx-auto max-xl:px-6 max-xl:py-4 max-md:px-0">
         <!--  -->
         <section class="pt-12 pb-5">
             <UBreadcrumb
@@ -24,7 +24,7 @@
             </section>
 
             <!-- product details -->
-            <article class="w-[436px] ring-1 max-xl:w-auto">
+            <article class="w-[436px] max-xl:w-auto">
                 <div class="mb-6">
                     <b class="inline-block rounded px-2 py-1 bg-Status-Color-Danger-500-Primary text-white font-light"
                         >促銷</b
@@ -75,7 +75,7 @@
                 </div>
 
                 <div
-                    class="flex justify-between items-center max-xl:fixed max-xl:bottom-0 max-xl:left-0 max-xl:w-full max-xl:bg-white max-xl:px-4 max-xl:py-2 max-md:gap-x-3"
+                    class="flex justify-between items-center max-xl:fixed max-xl:z-10 max-xl:bottom-0 max-xl:left-0 max-xl:w-full max-xl:bg-white max-xl:px-4 max-xl:py-2 max-md:gap-x-3"
                 >
                     <!--  -->
                     <button
@@ -91,7 +91,7 @@
         </section>
 
         <!--  -->
-        <section class="bg-white mb-4 rounded-lg sticky top-[76px] max-md:top-[51px]">
+        <section class="bg-white mb-4 rounded-lg sticky top-[74px] z-[2] max-md:top-[51px]">
             <div class="w-80 px-6">
                 <UiHorizontalNav
                     :nav-items="navItems"
@@ -104,7 +104,20 @@
         <!--  -->
         <section class="grid grid-rows-1 grid-cols-[627fr_436fr] gap-6 max-xl:grid-cols-1 max-xl:grid-rows-[auto_auto]">
             <!--  -->
-            <section>
+            <section
+                class="relative"
+                :class="lockMaxHeightInMobile ? 'max-md:max-h-[700px] overflow-hidden' : 'max-md:max-h-[auto]'"
+            >
+                <!--  -->
+                <div
+                    class="md:hidden flex flex-col-reverse absolute bottom-0 left-0 z-[2] w-full pb-8 pt-32 px-20 bg-gradient-to-t from-white to-transparent"
+                    :class="lockMaxHeightInMobile ? '' : ' hidden'"
+                >
+                    <UiButton class="max-md:w-full" type="secondary" @click="lockMaxHeightInMobile = false"
+                        >查看完整說明</UiButton
+                    >
+                </div>
+
                 <template v-if="activeNavItemId === 'a'">
                     <article class="bg-white p-6 rounded-lg">
                         <h1 class="text-[28px] leading-snug font-medium mb-4">
@@ -150,52 +163,75 @@
 
             <!--  -->
             <ul>
-                <li
-                    v-for="(faq, i) in ['a', 'b', 'c']"
-                    :key="i"
-                    class="bg-white p-6 rounded-lg ring-2 ring-Primary-100 mb-5"
+                <template
+                    v-for="(faq, i) in [
+                        { id: 'Q1', content: 'A1', soldOut: false },
+                        { id: 'Q2', content: 'A2', soldOut: false },
+                        { id: 'Q3', content: 'A3', soldOut: false },
+                        { id: 'Q4', content: 'A4', soldOut: true },
+                    ]"
+                    :key="faq.id"
                 >
-                    <picture class="block w-full mb-4">
-                        <img :src="helperPicture()" alt="" class="block w-full" />
-                    </picture>
-                    <div class="flex justify-start items-center mb-3">
-                        <p class="inline-block px-[6px] py-1 rounded text-xs text-white bg-Primary-400-Hover mr-2">
-                            已支持36人
+                    <li
+                        class="bg-white p-6 rounded-lg ring-2 ring-Primary-100 mb-5 relative"
+                        :class="faq.soldOut ? 'opacity-50' : 'opacity-100'"
+                    >
+                        <!--  -->
+                        <p
+                            :class="
+                                faq.soldOut
+                                    ? 'm-auto inline-flex justify-center items-center absolute top-0 left-0 right-0 bottom-0 text-white bg-gray-500 rounded text-xl w-40 h-9'
+                                    : ' hidden'
+                            "
+                        >
+                            - 方案已售完 -
                         </p>
-                        <p class="inline-block px-[6px] py-1 rounded text-xs text-white bg-Primary-400-Hover">
-                            剩餘50組
+
+                        <!--  -->
+                        <picture class="block w-full mb-4">
+                            <img :src="helperPicture()" alt="" class="block w-full" />
+                        </picture>
+                        <div class="flex justify-start items-center mb-3">
+                            <p class="inline-block px-[6px] py-1 rounded text-xs text-white bg-Primary-400-Hover mr-2">
+                                已支持36人
+                            </p>
+                            <p class="inline-block px-[6px] py-1 rounded text-xs text-white bg-Primary-400-Hover">
+                                剩餘50組
+                            </p>
+                        </div>
+                        <h3 class="text-base font-medium mb-1">VIP超早鳥限定｜全套桌曆＋年曆</h3>
+                        <p class="text-Status-Color-Danger-500-Primary text-xl font-medium mb-2">
+                            NT$10,000
+                            <span class="text-xs font-normal opacity-80 line-through">定價 $15,000</span>
+                            <span class="text-xs font-normal opacity-80">，限省 $5,000</span>
                         </p>
-                    </div>
-                    <h3 class="text-base font-medium mb-1">VIP超早鳥限定｜全套桌曆＋年曆</h3>
-                    <p class="text-Status-Color-Danger-500-Primary text-xl font-medium mb-2">
-                        NT$10,000
-                        <span class="text-xs font-normal opacity-80 line-through">定價 $15,000</span>
-                        <span class="text-xs font-normal opacity-80">，限省 $5,000</span>
-                    </p>
-                    <div class="h-[1px] bg-gray-300 mb-2"></div>
-                    <div class="mb-4">
-                        <p class="text-xs font-medium text-gray-700 leading-5">商品內容：</p>
-                        <ul class="text-xs font-medium text-gray-700 leading-5 list-disc pl-8">
-                            <li>Tripology 22 吋行李箱 x1</li>
-                            <li>專用防塵保護套 x1</li>
-                        </ul>
-                    </div>
-                    <div class="mb-2">
-                        <p class="text-xs font-medium text-gray-700 leading-5">商品規格：</p>
-                        <ul class="text-xs font-medium text-gray-700 leading-5 list-disc pl-8">
-                            <li>淨重 4.5 kg</li>
-                            <li>尺寸 39 x 25 x 59cm</li>
-                        </ul>
-                    </div>
-                    <div class="h-[1px] bg-gray-300 mb-2"></div>
-                    <p></p>
-                </li>
+                        <div class="h-[1px] bg-gray-300 mb-2"></div>
+                        <div class="mb-4">
+                            <p class="text-xs font-medium text-gray-700 leading-5">商品內容：</p>
+                            <ul class="text-xs font-medium text-gray-700 leading-5 list-disc pl-8">
+                                <li>Tripology 22 吋行李箱 x1</li>
+                                <li>專用防塵保護套 x1</li>
+                            </ul>
+                        </div>
+                        <div class="mb-2">
+                            <p class="text-xs font-medium text-gray-700 leading-5">商品規格：</p>
+                            <ul class="text-xs font-medium text-gray-700 leading-5 list-disc pl-8">
+                                <li>淨重 4.5 kg</li>
+                                <li>尺寸 39 x 25 x 59cm</li>
+                            </ul>
+                        </div>
+                        <div class="h-[1px] bg-gray-300 mb-2"></div>
+                        <p></p>
+                    </li>
+                </template>
             </ul>
         </section>
     </section>
 </template>
 
 <script setup>
+const lockMaxHeightInMobile = ref(true);
+
 const progressMeter = 300;
 
 const navItems = [

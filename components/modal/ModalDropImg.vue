@@ -16,9 +16,9 @@ const { getRootProps, getInputProps, isDragActive, ...rest } = useDropzone({
 });
 
 function onDrop(acceptedFiles, rejectReasons) {
-    console.log("onDrop");
-    console.log(acceptedFiles);
-    console.log(rejectReasons);
+    // console.log("onDrop");
+    // console.log(acceptedFiles);
+    // console.log(rejectReasons);
 
     // 计算还可以添加的图片数量
     const remainingSlots = maxFilesLength - state.files.length;
@@ -97,6 +97,11 @@ const uploadImages = async () => {
     }
     */
 };
+
+// export files to parent component
+defineExpose({
+    files: state.files,
+});
 </script>
 
 <template>
