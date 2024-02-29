@@ -164,8 +164,13 @@
                     <!--  -->
                     <UiTitle>網紅推薦！限時開團中</UiTitle>
 
-                    <div class="grid grid-cols-1 gap-y-4 md:grid-cols-4 md:gap-x-5">
-                        <CardGroupBuying v-for="(item, index) in groupBuyingList" :key="index" v-bind="item" />
+                    <div class="grid grid-cols-1 gap-y-4 md:grid-cols-3 md:gap-x-5">
+                        <CardGroupBuying
+                            v-for="(item, index) in groupBuyingList"
+                            :key="index"
+                            v-bind="item"
+                            :isMainPictureShowLeft="true"
+                        />
                     </div>
                 </UiContainer>
             </section>

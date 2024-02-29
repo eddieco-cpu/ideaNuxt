@@ -5,13 +5,18 @@
             <Tag v-for="(tag, index) in tags" :key="index" :tag="tag" />
         </div>
 
-        <div class="flex gap-x-3 md:flex-col">
+        <div class="flex gap-x-3" :class="[`${isMainPictureShowLeft ? 'max-md:flex-col' : 'md:flex-col'}`]">
             <!-- 主圖 -->
             <div class="relative">
                 <img
                     :src="image"
                     alt="product"
-                    class="rounded w-[146px] h-[146px] md:w-full md:h-[234px] object-cover"
+                    class="rounded w-[146px] h-[146px] object-cover"
+                    :class="[
+                        `${isMainPictureShowLeft ? 'max-md:flex-col' : 'md:flex-col'}`,
+                        `${isMainPictureShowLeft ? 'max-md:w-full' : 'md:w-full'}`,
+                        `${isMainPictureShowLeft ? 'max-md:h-[234px]' : 'md:h-[234px]'}`,
+                    ]"
                 />
                 <!-- 愛心 -->
                 <div class="absolute top-2 right-2">
@@ -21,31 +26,61 @@
 
             <!-- 文字 -->
             <div
-                class="relative py-2 pr-2 flex flex-col items-start justify-evenly gap-y-3 flex-1 md:px-3 md:pt-3 md:gap-y-2"
+                class="relative py-2 pr-2 flex flex-col items-start justify-evenly gap-y-3 flex-1"
+                :class="[
+                    `${isMainPictureShowLeft ? 'max-md:px-3' : 'md:px-3'}`,
+                    `${isMainPictureShowLeft ? 'max-md:pt-3' : 'md:pt-3'}`,
+                    `${isMainPictureShowLeft ? 'max-md:gap-y-2' : 'md:gap-y-2'}`,
+                ]"
             >
                 <!-- 團主名稱 -->
                 <div
-                    class="rounded-b-lg flex items-center gap-x-1 md:absolute md:-top-[48px] md:left-0 md:w-full md:h-[48px] md:bg-[#1E253399] md:bg-opacity-60"
+                    class="rounded-b-lg flex items-center gap-x-1"
+                    :class="[
+                        `${isMainPictureShowLeft ? 'max-md:absolute' : 'md:absolute'}`,
+                        `${isMainPictureShowLeft ? 'max-md:-top-[48px]' : 'md:-top-[48px]'}`,
+                        `${isMainPictureShowLeft ? 'max-md:left-0' : 'md:left-0'}`,
+                        `${isMainPictureShowLeft ? 'max-md:w-full' : 'md:w-full'}`,
+                        `${isMainPictureShowLeft ? 'max-md:h-[48px]' : 'md:h-[48px]'}`,
+                        `${isMainPictureShowLeft ? 'max-md:bg-[#1E253399]' : 'md:bg-[#1E253399]'}`,
+                        `${isMainPictureShowLeft ? 'max-md:bg-opacity-60' : 'md:bg-opacity-60'}`,
+                    ]"
                 >
                     <div class="flex items-center gap-x-1 h-full w-full" v-if="!isExpired">
                         <UAvatar
                             :src="avatar"
                             alt="user"
                             size="xl"
-                            class="md:ml-3 md:transform md:-translate-y-3"
+                            :class="[
+                                `${isMainPictureShowLeft ? 'max-md:ml-3' : 'md:ml-3'}`,
+                                `${isMainPictureShowLeft ? 'max-md:transform' : 'md:transform'}`,
+                                `${isMainPictureShowLeft ? 'max-md:-translate-y-3' : 'md:-translate-y-3'}`,
+                            ]"
                             :ui="{
                                 size: {
-                                    xl: 'w-[36px] h-[36px] md:w-[60px] md:h-[60px]',
+                                    xl: `size-[36px] 
+                                    ${isMainPictureShowLeft ? 'max-md:size-[60px]' : 'md:size-[60px]'}`,
                                 },
                             }"
                         />
-                        <span class="text-xs md:text-base font-medium text-Neutral-700 line-clamp-2 md:text-white">{{
-                            name
-                        }}</span>
+                        <span
+                            class="text-xs font-medium text-Neutral-700 line-clamp-2"
+                            :class="[
+                                `${isMainPictureShowLeft ? 'max-md:text-base' : 'md:text-base'}`,
+                                `${isMainPictureShowLeft ? 'max-md:text-white' : 'md:text-white'}`,
+                            ]"
+                            >{{ name }}</span
+                        >
                     </div>
 
                     <div
-                        class="text-Neutral-700 text-xs font-medium md:text-white md:inline-block md:mx-auto md:text-base"
+                        class="text-Neutral-700 text-xs font-medium"
+                        :class="[
+                            `${isMainPictureShowLeft ? 'max-md:text-white' : 'md:text-white'}`,
+                            `${isMainPictureShowLeft ? 'max-md:inline-block' : 'md:inline-block'}`,
+                            `${isMainPictureShowLeft ? 'max-md:mx-auto' : 'md:mx-auto'}`,
+                            `${isMainPictureShowLeft ? 'max-md:text-base' : 'md:text-base'}`,
+                        ]"
                         v-else
                     >
                         已結束
@@ -75,9 +110,13 @@ const { isExpired, id } = defineProps({
         type: Boolean,
         default: false,
     },
-    isFavorite: {
+    isMainPictureShowLeft: {
         type: Boolean,
         default: false,
+    },
+    isFavorite: {
+        type: Boolean,
+        default: true,
     },
     id: {
         type: Number,
