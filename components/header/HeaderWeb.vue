@@ -133,6 +133,10 @@ const navLink = [
         name: "好物分享",
         link: "/category",
     },
+    {
+        name: "提案",
+        link: "/proposal",
+    },
 ];
 
 const memberCenterLink = [
