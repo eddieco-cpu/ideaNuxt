@@ -25,6 +25,7 @@
                 <div class="flex gap-4 items-center justify-between mt-8 mb-4 md:mt-0">
                     <h1 class="text-black text-xl font-medium gap-x-2 hidden md:block">
                         {{ followTypeSelected }}
+                        <span class="text-base text-Neutral-600-Dark-Primary ml-4">共{{ showCardTotalNumber }}個</span>
                     </h1>
 
                     <USelectMenu
@@ -51,7 +52,7 @@
                     </USelectMenu>
                 </div>
 
-                <div class="grid gap-[10px]" :class="showCardClass">
+                <div class="grid gap-[10px] bg-white p-3 md:p-6 rounded-lg" :class="showCardClass">
                     <CardFundraise
                         v-for="(item, index) in fundingRaiseList"
                         :key="index"
@@ -121,9 +122,24 @@ const groupBuyingList = ref([]);
 getKol();
 getFundingRaiseList();
 getGroupBuyingList();
-getComingBuyingList();
+getBlogList();
 
 const underLine = ref(null);
+
+const showCardTotalNumber = computed(() => {
+    switch (followTypeSelected.value) {
+        case "集資專案":
+            return fundingRaiseList.value.length;
+        case "好評團購":
+            return groupBuyingList.value.length;
+        case "名人與團主":
+            return kolList.value.length;
+        case "好文部落格":
+            return comingBuyingList.value.length;
+        default:
+            return 0;
+    }
+});
 
 const showCardClass = computed(() => {
     switch (followTypeSelected.value) {
@@ -158,7 +174,7 @@ async function getKol() {
     }
 }
 
-async function getComingBuyingList() {
+async function getBlogList() {
     const data = await GET("/api/comingBuying");
 
     if (!!data) {
