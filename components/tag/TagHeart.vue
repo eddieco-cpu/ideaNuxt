@@ -16,7 +16,9 @@
             <img src="~assets/images/icon/heart-icon-purple.svg" alt="heart" v-show="!addKolFavorite" />
             <img src="~assets/images/icon/heart-icon-active-purple.svg" alt="heart" v-show="addKolFavorite" />
 
-            <h3 class="text-sm text-Primary-400-Hover">收藏團購主</h3>
+            <h3 class="text-sm" :class="[addKolFavorite ? 'text-Primary-600-Dark-Primary' : 'text-Primary-400-Hover']">
+                收藏團購主
+            </h3>
         </div>
     </div>
 
