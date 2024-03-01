@@ -102,14 +102,15 @@
         </section>
 
         <!--  -->
-        <section class="grid grid-rows-1 grid-cols-[627fr_436fr] gap-6 max-xl:grid-cols-1 max-xl:grid-rows-[auto_auto]">
-            <!--  -->
+        <section class="grid grid-cols-[627fr_436fr] gap-6 max-xl:grid-cols-1 grid-rows-[auto_auto]">
+            <!-- sticky mt-auto bottom-0 -->
             <section
-                class="relative"
-                :class="lockMaxHeightInMobile ? 'max-md:max-h-[700px] overflow-hidden' : 'max-md:max-h-[auto]'"
+                class="max-xl:relative xl:sticky xl:mt-auto bottom-0 xl:min-h-[calc(100vh-48px-75px)]"
+                :class="lockMaxHeightInMobile ? `max-md:max-h-[${maxHeight}px] overflow-hidden` : 'max-md:max-h-[auto]'"
             >
                 <!--  -->
                 <div
+                    v-if="activeNavItemId === 'a' && articleRefHeight > maxHeight"
                     class="md:hidden flex flex-col-reverse absolute bottom-0 left-0 z-[2] w-full pb-8 pt-32 px-20 bg-gradient-to-t from-white to-transparent"
                     :class="lockMaxHeightInMobile ? '' : ' hidden'"
                 >
@@ -119,7 +120,7 @@
                 </div>
 
                 <template v-if="activeNavItemId === 'a'">
-                    <article class="bg-white p-6 rounded-lg">
+                    <article class="bg-white p-6 rounded-lg" ref="articleRef">
                         <h1 class="text-[28px] leading-snug font-medium mb-4">
                             {{ useState("a", () => helperLorem(20, 40)).value }}
                         </h1>
@@ -146,6 +147,14 @@
                         <picture class="block w-full mb-4">
                             <img :src="helperPicture()" alt="" class="block w-full" />
                         </picture>
+
+                        <picture class="block w-full mb-4">
+                            <img :src="helperPicture()" alt="" class="block w-full" />
+                        </picture>
+
+                        <picture class="block w-full mb-4">
+                            <img :src="helperPicture()" alt="" class="block w-full" />
+                        </picture>
                         <ProductsAccordionTypeA />
                     </article>
                 </template>
@@ -161,14 +170,15 @@
                 </template>
             </section>
 
-            <!--  -->
-            <ul>
+            <!-- sticky mt-auto bottom-0 -->
+            <ul class="xl:sticky xl:mt-auto bottom-0 xl:min-h-[calc(100vh-48px-75px)] max-md:px-6">
                 <template
                     v-for="(faq, i) in [
                         { id: 'Q1', content: 'A1', soldOut: false },
                         { id: 'Q2', content: 'A2', soldOut: false },
-                        { id: 'Q3', content: 'A3', soldOut: false },
+                        { id: 'Q3', content: 'A3', soldOut: true },
                         { id: 'Q4', content: 'A4', soldOut: true },
+                        // { id: 'Q5', content: 'A5', soldOut: true },
                     ]"
                     :key="faq.id"
                 >
@@ -180,7 +190,7 @@
                         <p
                             :class="
                                 faq.soldOut
-                                    ? 'm-auto inline-flex justify-center items-center absolute top-0 left-0 right-0 bottom-0 text-white bg-gray-500 rounded text-xl w-40 h-9'
+                                    ? 'm-auto inline-flex justify-center items-center absolute top-0 left-0 right-0 bottom-0 text-white bg-gray-500 rounded text-xl w-40 h-9 z-[1]'
                                     : ' hidden'
                             "
                         >
@@ -188,8 +198,8 @@
                         </p>
 
                         <!--  -->
-                        <picture class="block w-full mb-4">
-                            <img :src="helperPicture()" alt="" class="block w-full" />
+                        <picture class="block w-full mb-4 aspect-[396/142] max-md:aspect-[283/100]">
+                            <img :src="helperPicture()" alt="" class="block w-full h-full object-cover" />
                         </picture>
                         <div class="flex justify-start items-center mb-3">
                             <p class="inline-block px-[6px] py-1 rounded text-xs text-white bg-Primary-400-Hover mr-2">
@@ -231,6 +241,16 @@
 
 <script setup>
 const lockMaxHeightInMobile = ref(true);
+const maxHeight = ref(700);
+const articleRef = ref(null);
+const articleRefHeight = ref(0);
+
+onMounted(() => {
+    if (articleRef.value) {
+        //console.log("articleRef 高度:", articleRef.value.offsetHeight);
+        articleRefHeight.value = articleRef.value.offsetHeight;
+    }
+});
 
 const progressMeter = 300;
 

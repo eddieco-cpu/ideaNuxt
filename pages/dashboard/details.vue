@@ -30,7 +30,10 @@
         </div>
 
         <!-- 導航列顯示內容 -->
-        <NuxtPage class="mx-auto md:max-w-full md:flex-1 ring-1 bg-white rounded-lg p-6 min-h-96" />
+        <NuxtPage
+            class="mx-auto md:max-w-full ring-1 min-h-96"
+            :class="$route.fullPath.includes('basic') ? 'bg-white p-6 rounded-lg' : 'bg-transparent '"
+        />
     </div>
 </template>
 
@@ -40,6 +43,12 @@
 
 // const store = useAuthStore();
 
+//
+const route = useRoute();
+const fullPaths = route.fullPath.split("/").filter((el) => el);
+console.log("fullPaths", fullPaths);
+
+//
 const detailsNavSwitcher = ref(false);
 
 const detailsNav = ref(null);
