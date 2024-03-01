@@ -30,12 +30,12 @@
                     <UInput placeholder="0902123123" v-model="memberInfo.phone" disabled />
                 </UFormGroup>
 
-                <UFormGroup label="電子信箱" name="email" required>
+                <UFormGroup label="電子信箱" name="email" help="請填寫您個人真實信箱，便於通知使用。" required>
                     <UInput placeholder="0902123123" v-model="memberInfo.email" />
                 </UFormGroup>
 
                 <!-- 出生日 -->
-                <UFormGroup label="出生日" name="birth" class="mt-9">
+                <UFormGroup label="出生日" name="birth">
                     <VueDatePicker
                         position="left"
                         auto-apply
@@ -54,7 +54,7 @@
                     legend="性別"
                     :options="sexOptions"
                     :ui="{ legend: 'mb-2' }"
-                    class="radio mt-9"
+                    class="radio"
                 />
 
                 <div class="mt-9 mb-2">

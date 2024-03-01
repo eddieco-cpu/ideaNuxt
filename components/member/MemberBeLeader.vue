@@ -24,7 +24,7 @@
                     </UButtonGroup>
                 </UFormGroup>
 
-                <UFormGroup label="個人自介" name="selfDescription" required>
+                <UFormGroup label="自我介紹" name="selfDescription" required>
                     <UTextarea
                         resize
                         placeholder="請用簡短一段描述，介紹您自己，也可以形容您的精采生活，與對商品的熱愛，讓大家更認識你/妳吧！"
@@ -40,7 +40,7 @@
                     />
                 </UFormGroup>
 
-                <UFormGroup label="Instagram網址" name="instagram" class="mt-9">
+                <UFormGroup label="Instagram網址" name="instagram">
                     <UInput
                         placeholder="請輸入網址"
                         trailingIcon="i-heroicons-cog-6-tooth"
@@ -48,7 +48,7 @@
                     />
                 </UFormGroup>
 
-                <UFormGroup label="YouTube網址" name="youtube" class="mt-9">
+                <UFormGroup label="YouTube網址" name="youtube">
                     <UInput
                         placeholder="請輸入網址"
                         trailingIcon="i-heroicons-cog-6-tooth"
@@ -56,7 +56,7 @@
                     />
                 </UFormGroup>
 
-                <UFormGroup label="個人/官方網站網址" name="officialSite" class="mt-9">
+                <UFormGroup label="個人/官方網站網址" name="officialSite">
                     <UInput
                         placeholder="請輸入網址"
                         trailingIcon="i-heroicons-cog-6-tooth"
