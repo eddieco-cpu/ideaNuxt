@@ -48,7 +48,7 @@ export default defineEventHandler((event) => {
         avatar: helperPicture(),
         isFavorite: Math.floor(Math.random() * i) % 2 === 0,
         name: fakeNames[i],
-        text: helperLorem(),
+        text: helperLorem(50, 80),
         price: [Math.floor(Math.random() * 2000) + 2000, Math.floor(Math.random() * 6000) + 6000],
         tags: [
             { name: "促銷", color: "primary", type: "text" },
