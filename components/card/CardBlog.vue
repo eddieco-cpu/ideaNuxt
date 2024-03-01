@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full rounded-lg shadow-card bg-white pb-2 md:pb-0 cursor-pointer relative">
+    <div class="w-full rounded-lg shadow-card bg-white pb-2 cursor-pointer relative">
         <!-- 愛心 -->
         <div class="absolute top-2 right-2">
             <TagHeart :isFavorite="isFavorite" />
@@ -11,7 +11,7 @@
         <div class="relative px-2">
             <!-- 團主名稱 -->
             <div
-                class="rounded-b-lg flex items-center gap-x-1 absolute -top-[60px] left-0 w-full h-[48px] bg-[#1E253399] bg-opacity-60"
+                class="rounded-b-lg flex items-center gap-x-1 absolute -top-[48px] left-0 w-full h-[36px] bg-[#1E253399] bg-opacity-60"
             >
                 <UAvatar
                     :src="avatar"

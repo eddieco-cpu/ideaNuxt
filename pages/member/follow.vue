@@ -70,7 +70,7 @@
                         v-if="followTypeSelected === '名人與團主'"
                         v-bind="item"
                     />
-                    <CardComingBuying
+                    <CardBlog
                         v-for="(item, index) in comingBuyingList"
                         :key="index"
                         v-if="followTypeSelected === '好文部落格'"
@@ -99,7 +99,7 @@
 </template>
 
 <script setup>
-import { CardComingBuying, CardFundraise, CardGroupBuying, CardKolRecommend } from "#components";
+import { CardBlog, CardFundraise, CardGroupBuying, CardKolRecommend } from "#components";
 const currentPage = ref(1);
 const totalPages = ref(20);
 
