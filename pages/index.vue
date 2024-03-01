@@ -9,7 +9,7 @@
                         :key="index"
                         :to="item.link"
                         style="'outline: 1px solid orange'"
-                        class="block whitespace-nowrap text-sm font-medium text-Neutral-900 hover:text-Primary-400-Hover active:text-Primary-600-Dark-Primary mx-6 transition-colors duration-200 ease-in-out"
+                        class="block whitespace-nowrap text-sm text-Neutral-900 hover:text-Primary-400-Hover active:text-Primary-600-Dark-Primary mx-6 transition-colors duration-200 ease-in-out"
                         >{{ item.name }}</NuxtLink
                     >
                 </div>
