@@ -71,6 +71,7 @@
             <!-- 會員已登入 -->
             <button
                 class="member-center relative bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover group"
+                @click="goPage"
                 v-else
             >
                 <img
@@ -165,6 +166,10 @@ function openModal(type = "") {
     }
 
     emit("openModal", type);
+}
+
+function goPage() {
+    navigateTo("/member/information");
 }
 
 async function logout() {
