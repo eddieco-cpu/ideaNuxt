@@ -1,7 +1,7 @@
 <template>
     <div class="rounded-lg bg-white border p-6">
         <div class="flex pb-[10px] border-b border-Neutral-100 font-medium">
-            <p class="text-Secondary-400-Hover" v-show="defaultAddress">預設 -</p>
+            <p class="text-Secondary-400-Hover" v-show="defaultAddress">預設 -&nbsp;</p>
             <p class="text-black/[0.85]">地址{{ index }}</p>
 
             <div class="ml-auto flex gap-x-6">

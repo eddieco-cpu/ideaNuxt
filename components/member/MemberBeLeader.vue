@@ -5,7 +5,7 @@
             此區資訊會出現在您的個人頁面內，您可以透過個人自介、官方網站、社群連結等媒體，讓更多人認識您，同時也歡迎您分享更多商品資訊、創作、影音，紀錄您的精采生活！
         </p>
 
-        <div class="p-6 mt-6 rounded-lg bg-white flex justify-between">
+        <div class="p-6 mt-6 rounded-lg bg-white flex justify-between gap-x-10">
             <UForm
                 :schema="leaderInformationSchema"
                 :state="leaderInfo"
@@ -24,7 +24,7 @@
                     </UButtonGroup>
                 </UFormGroup>
 
-                <UFormGroup label="個人自介" name="selfDescription" required>
+                <UFormGroup label="自我介紹" name="selfDescription" required>
                     <UTextarea
                         resize
                         placeholder="請用簡短一段描述，介紹您自己，也可以形容您的精采生活，與對商品的熱愛，讓大家更認識你/妳吧！"
@@ -40,7 +40,7 @@
                     />
                 </UFormGroup>
 
-                <UFormGroup label="Instagram網址" name="instagram" class="mt-9">
+                <UFormGroup label="Instagram網址" name="instagram">
                     <UInput
                         placeholder="請輸入網址"
                         trailingIcon="i-heroicons-cog-6-tooth"
@@ -48,7 +48,7 @@
                     />
                 </UFormGroup>
 
-                <UFormGroup label="YouTube網址" name="youtube" class="mt-9">
+                <UFormGroup label="YouTube網址" name="youtube">
                     <UInput
                         placeholder="請輸入網址"
                         trailingIcon="i-heroicons-cog-6-tooth"
@@ -56,7 +56,7 @@
                     />
                 </UFormGroup>
 
-                <UFormGroup label="個人/官方網站網址" name="officialSite" class="mt-9">
+                <UFormGroup label="個人/官方網站網址" name="officialSite">
                     <UInput
                         placeholder="請輸入網址"
                         trailingIcon="i-heroicons-cog-6-tooth"

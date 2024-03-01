@@ -1,7 +1,7 @@
 <template>
     <header class="px-1.5 fixed top-0 w-full z-50 bg-white">
         <div class="py-2 px-2.5 flex justify-between items-center min-h-[52px]">
-            <div class="w-16" @click="hideSideNav = !hideSideNav">
+            <div :class="{ 'w-16': !isShowSearchContent }" @click="hideSideNav = !hideSideNav">
                 <img src="~assets/images/header/menu.svg" alt="menu" />
             </div>
 

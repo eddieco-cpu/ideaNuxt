@@ -17,13 +17,15 @@
 
         <div class="px-4">
             <!-- 文字 -->
-            <p class="text-sm font-medium mt-3 mb-5 line-clamp-2 group-hover:underline">
+            <p class="text-sm font-medium my-3 line-clamp-2 group-hover:underline">
                 {{ text }}
             </p>
 
             <div class="flex items-center">
                 <!-- 價格 -->
-                <p class="font-medium" :class="isExpiredClass('price')">$ {{ helpMoneyComma(price) }}</p>
+                <p class="font-medium text-Primary-500-Primary" :class="isExpiredClass('price')">
+                    $ {{ helpMoneyComma(price) }}
+                </p>
 
                 <!-- 日期 -->
                 <img src="~assets/images/icon/clock-icon.svg" alt="clock" width="12" class="ml-auto" />

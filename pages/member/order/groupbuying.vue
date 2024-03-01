@@ -23,7 +23,7 @@
             <!-- 桌機版篩選 -->
             <div class="hidden md:flex">
                 <div
-                    class="text-sm py-2 px-4 cursor-pointer"
+                    class="text-sm py-2 px-4 cursor-pointer bg-white"
                     :class="showClass(item)"
                     v-for="(item, index) in orderSortType"
                     :key="index"

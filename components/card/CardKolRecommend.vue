@@ -10,7 +10,7 @@
 
         <!-- 名稱 -->
         <div
-            class="rounded-b-[20px] px-3 flex items-center justify-center gap-x-2 absolute bottom-0 left-0 w-full h-[48px] bg-[#1E253399] bg-opacity-60"
+            class="rounded-b-[20px] px-3 flex items-center justify-center gap-x-2 absolute bottom-0 left-0 w-full h-[48px] bg-gradient-to-t from-black to-transparent"
         >
             <span class="text-sm text-white line-clamp-2 w-[100px] group-hover:underline flex-1">{{ name }}</span>
 

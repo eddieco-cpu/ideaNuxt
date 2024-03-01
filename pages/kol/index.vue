@@ -28,8 +28,8 @@
             <!-- 排序 -->
             <div class="flex justify-between items-end mt-10 mb-4">
                 <div class="flex items-end">
-                    <h2 class="text-xl font-medium">精選團主</h2>
-                    <span class="text-Primary-500-Primary text-xs ml-2">共{{ kolList.length }}位</span>
+                    <h2 class="text-xl font-medium leading-none">精選團主</h2>
+                    <span class="text-Primary-500-Primary text-xs ml-2 leading-none">共{{ kolList.length }}位</span>
                 </div>
 
                 <USelectMenu

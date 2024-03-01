@@ -145,7 +145,7 @@
 
                     <div class="grid grid-cols-1 gap-y-4 md:gap-5 md:grid-cols-2">
                         <!-- 卡片 -->
-                        <CardComingBuying v-for="(item, index) in comingBuyingList" :key="index" v-bind="item" />
+                        <CardBlog v-for="(item, index) in comingBuyingList" :key="index" v-bind="item" />
                     </div>
 
                     <UiPagination
