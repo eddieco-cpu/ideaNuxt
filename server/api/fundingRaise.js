@@ -9,9 +9,9 @@ export default defineEventHandler((event) => {
         achievementRate: Math.floor(Math.random() * 600),
         price: Math.floor(Math.random() * 50000) + 2000,
         tags: [
-            { name: "促銷", color: "primary", type: "text" },
-            { name: "免運", color: "danger", type: "text" },
-            { name: "獨家", color: "success", type: "text" },
+            { name: "獨家", color: "primary", type: "text" },
+            { name: "促銷", color: "danger", type: "text" },
+            { name: "免運", color: "success", type: "text" },
         ],
     }));
 });
