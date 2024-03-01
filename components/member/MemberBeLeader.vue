@@ -5,7 +5,7 @@
             此區資訊會出現在您的個人頁面內，您可以透過個人自介、官方網站、社群連結等媒體，讓更多人認識您，同時也歡迎您分享更多商品資訊、創作、影音，紀錄您的精采生活！
         </p>
 
-        <div class="p-6 mt-6 rounded-lg bg-white flex justify-between">
+        <div class="p-6 mt-6 rounded-lg bg-white flex justify-between gap-x-10">
             <UForm
                 :schema="leaderInformationSchema"
                 :state="leaderInfo"
