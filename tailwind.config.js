@@ -44,6 +44,7 @@ export default {
                 "Neutral-700": "#4B515C",
                 "Neutral-800": "#29303D",
                 "Neutral-900": "#1E2533",
+                "neutral-third-hint": "#999",
                 "Secondary-50": "#EBF6FE",
                 "Secondary-200": "#9EDCFE",
                 "Secondary-400-Hover": "#4AACFD",
