@@ -44,10 +44,19 @@
             <!-- 購物車 -->
             <div>
                 <div class="flex">
-                    <img src="~assets\images\header\heart.svg" alt="heart" class="mr-5 cursor-pointer" />
+                    <img
+                        src="~assets\images\header\heart.svg"
+                        alt="heart"
+                        class="mr-5 cursor-pointer flex-1 w-[20px]"
+                    />
 
-                    <div class="relative">
-                        <img src="~assets/images/header/shoppingCart.svg" alt="shoppingCart" class="cursor-pointer" />
+                    <div class="relative flex-1 w-[20px]">
+                        <img
+                            src="~assets/images/header/shoppingCart.svg"
+                            alt="shoppingCart"
+                            class="cursor-pointer"
+                            @click="goPage('/cart')"
+                        />
 
                         <div
                             class="absolute -right-1 -top-1 bg-Dust-Red-5 rounded-full w-[7.5px] h-[7.5px]"
@@ -71,7 +80,7 @@
             <!-- 會員已登入 -->
             <button
                 class="member-center relative bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover group"
-                @click="goPage"
+                @click="goPage('/member/information')"
                 v-else
             >
                 <img
@@ -172,8 +181,8 @@ function openModal(type = "") {
     emit("openModal", type);
 }
 
-function goPage() {
-    navigateTo("/member/information");
+function goPage(route) {
+    navigateTo(route);
 }
 
 async function logout() {

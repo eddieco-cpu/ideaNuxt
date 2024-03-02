@@ -96,7 +96,7 @@
                 <!-- 價格 -->
                 <div v-if="!isExpired">
                     <p class="text-Status-Color-Danger-500-Primary font-medium font-roboto">
-                        $ {{ helpMoneyComma(price[0]) }} - $ {{ helpMoneyComma(price[1]) }}
+                        $ {{ helperMoneyComma(price[0]) }} - $ {{ helperMoneyComma(price[1]) }}
                     </p>
                 </div>
             </div>

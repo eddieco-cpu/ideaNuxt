@@ -24,7 +24,7 @@
             <div class="flex items-center">
                 <!-- 價格 -->
                 <p class="font-medium text-Primary-500-Primary" :class="isExpiredClass('price')">
-                    $ {{ helpMoneyComma(price) }}
+                    $ {{ helperMoneyComma(price) }}
                 </p>
 
                 <!-- 日期 -->

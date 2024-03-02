@@ -41,7 +41,7 @@
                         @click="showSearchContent"
                         v-show="!isShowSearchContent"
                     />
-                    <img src="~assets/images/header/shoppingCart.svg" alt="shoppingCart" />
+                    <img src="~assets/images/header/shoppingCart.svg" alt="shoppingCart" @click="goToPage('/cart')" />
                 </div>
             </div>
         </div>
