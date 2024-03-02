@@ -1,11 +1,5 @@
 <template>
     <div>
-        <section class="mb-3">
-            <UiButton class="max-md:w-full md:w-full" type="secondary" @click="toNewProposal"
-                >＋ 新增常見問與答</UiButton
-            >
-        </section>
-
         <article class="border-[1px] border-[Primary-100] rounded-lg bg-white">
             <div>
                 <draggable v-model="faqs" handle=".handle" item-key="id" @end="dragEnd" @start="dragStart">
@@ -36,12 +30,6 @@
                                 <UiAccordion
                                     :items="item ? [{ leading: `Q${index + 1}. `, ...item }] : []"
                                     :class="' md:mb-0'"
-                                />
-                            </div>
-                            <div class="flex-shrink-0 h-8 flex justify-center items-center group cursor-pointer">
-                                <UIcon
-                                    name="i-heroicons-pencil-square"
-                                    class="block w-5 h-5 text-Neutral-500-Primary text-Primary-500-Primary group-hover:text-Primary-400-Hover group-active:text-Primary-200"
                                 />
                             </div>
                         </div>
@@ -106,13 +94,6 @@ function exchangeNext(item, index) {
     //
     faqs.value[index] = faqs.value[index + 1];
     faqs.value[index + 1] = item;
-}
-
-//
-function toNewProposal() {
-    console.log("to new faq");
-    const x = new Date().getTime();
-    navigateTo(`/dashboard/details/faq/${x}`);
 }
 </script>
 <style scoped>
