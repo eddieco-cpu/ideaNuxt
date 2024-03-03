@@ -68,7 +68,7 @@ const faqs = ref([
 
 //
 async function getReviewedFaqData() {
-    const data = await GET(`/api/reviewedFaq`);
+    const data = await GET(`/api/dashboard/details/reviewed/faq`);
     if (!!data) {
         faqs.value = data.faqs.map(({ label, content, id }, i) => ({
             id,

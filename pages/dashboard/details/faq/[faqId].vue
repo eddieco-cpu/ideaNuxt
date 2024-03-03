@@ -3,9 +3,11 @@
         <div class="flex justify-between items-center mb-3">
             <nuxt-link to="/dashboard/details/proposals" class="flex justify-start items-center">
                 <UIcon name="i-heroicons-chevron-left" class="block w-4 h-4 mr-2" />
-                <b class="text-xl font-medium">新增問與答</b>
+                <b class="text-xl font-medium">{{ submissionFaq.id ? "編輯問與答" : "新增問與答" }}</b>
             </nuxt-link>
-            <span class="text-xs text-Neutral-500-Primary">{{ $route.params.faqId }}</span>
+            <span class="text-xs text-Neutral-500-Primary">{{
+                submissionFaq.id ? "最後更新於" + submissionFaq.time : $route.params.faqId
+            }}</span>
         </div>
         <article class="border-[1px] border-[Primary-100] rounded-lg p-6 bg-white">
             <UForm :schema="basicFaqSchema" :state="submissionFaq" @submit="doSubmit">
@@ -47,7 +49,9 @@
 
                 <!--  -->
                 <div class="flex justify-start items-center">
-                    <UiButton type="primary" class="max-md:w-16 md:w-16 mr-2">送出</UiButton>
+                    <UiButton type="primary" class="max-md:w-16 md:w-16 mr-2">
+                        {{ submissionFaq.id ? "儲存" : "送出" }}
+                    </UiButton>
                     <UiButton
                         type="secondary"
                         class="max-md:w-16 md:w-16"
@@ -57,8 +61,9 @@
                                 doCancel();
                             }
                         "
-                        >取消</UiButton
                     >
+                        {{ submissionFaq.id ? "刪除" : "取消" }}
+                    </UiButton>
                 </div>
             </UForm>
         </article>
@@ -66,6 +71,26 @@
 </template>
 <script setup>
 import { basicFaqSchema } from "~/validation";
+
+//
+const submissionFaq = ref({
+    id: "",
+    qus: "",
+    ans: "",
+});
+
+//
+const route = useRoute();
+const faqId = route.params.faqId;
+
+async function getEditedFaqData() {
+    const data = await GET(`/api/dashboard/details/faq/${faqId}`);
+    if (!!data) {
+        console.log("data", data);
+        if (data.faqData) submissionFaq.value = data.faqData;
+    }
+}
+getEditedFaqData();
 
 //
 const qusPlaceholder =
@@ -80,12 +105,6 @@ const ansMaxLength = 200;
 const screenWidth = ref(800);
 onMounted(() => {
     screenWidth.value = window.innerWidth;
-});
-
-//
-const submissionFaq = reactive({
-    qus: "",
-    ans: "",
 });
 
 //
