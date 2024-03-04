@@ -1,8 +1,5 @@
 <template>
-    <div
-        class="w-full rounded-lg overflow-hidden shadow-card bg-white cursor-pointer relative group"
-        @click="goProductDetailPage"
-    >
+    <div class="w-full rounded-lg shadow-card bg-white cursor-pointer relative group" @click="goProductDetailPage">
         <div class="group-hover:shadow-[1px_1px_20px_0px_rgba(0,0,0,0.06)] transition-shadow duration-300">
             <!-- 標籤 -->
             <div class="flex flex-col items-start gap-y-2 absolute top-2 left-2 z-[2]" v-if="!isExpired">
