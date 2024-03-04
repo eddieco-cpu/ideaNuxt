@@ -35,6 +35,7 @@ export default {
                 "Primary-400-Hover": "#917FDD",
                 "Primary-500-Primary": "#6B56CA",
                 "Primary-600-Dark-Primary": "#513FAD",
+                "Neutral-50": "#FAFAFA",
                 "Neutral-100": "#F8F8F8",
                 "Neutral-200": "#F4F4F4",
                 "Neutral-300": "#E8E9E8",
