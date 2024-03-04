@@ -5,7 +5,7 @@
             此區資訊會出現在您的個人頁面內，您可以透過個人自介、官方網站、社群連結等媒體，讓更多人認識您，同時也歡迎您分享更多商品資訊、創作、影音，紀錄您的精采生活！
         </p>
 
-        <div class="p-6 mt-6 rounded-lg bg-white flex justify-between gap-x-10">
+        <div class="p-6 mt-6 rounded-lg bg-white flex justify-between gap-x-8">
             <UForm
                 :schema="leaderInformationSchema"
                 :state="leaderInfo"
@@ -13,21 +13,23 @@
                 @submit="onSubmit"
             >
                 <UFormGroup label="個人網址名稱" name="siteName" help="此網址為您在本站的個人網址。" required>
-                    <UButtonGroup size="sm" orientation="horizontal" class="shadow-none w-full">
-                        <UInput placeholder="請輸入網址" class="rounded-r-none flex-1" v-model="leaderInfo.siteName" />
+                    <UButtonGroup orientation="horizontal" class="shadow-none w-full">
+                        <UInput
+                            placeholder="https://www.idea2gether.com/"
+                            class="flex-1"
+                            disabled
+                            :ui="{ placeholder: 'placeholder-black' }"
+                        />
 
-                        <div
-                            class="rounded-s rounded-r-lg px-3 py-1 text-sm text-black/[0.25] border border-Neutral-400-Hover"
-                        >
-                            users
-                        </div>
+                        <UInput placeholder="請輸入網址" class="w-[20%] md:w-[45%]" v-model="leaderInfo.siteName" />
                     </UButtonGroup>
                 </UFormGroup>
 
                 <UFormGroup label="自我介紹" name="selfDescription" required>
-                    <UTextarea
-                        resize
+                    <UtilTextarea
+                        :resize="true"
                         placeholder="請用簡短一段描述，介紹您自己，也可以形容您的精采生活，與對商品的熱愛，讓大家更認識你/妳吧！"
+                        :max="250"
                         v-model="leaderInfo.selfDescription"
                     />
                 </UFormGroup>
@@ -81,11 +83,11 @@
                         class="absolute -top-[100px] left-2/4 transform -translate-x-1/2 w-[152px] h-[152px] rounded-[48px]"
                     />
 
-                    <h1 class="text-Primary-500-Primary text-xl font-medium text-center">
+                    <h1 class="text-Primary-500-Primary text-xl font-medium text-center break-all">
                         {{ name || "媽媽我想嫁去台南" }}
                     </h1>
 
-                    <p class="text-sm text-Neutral-800">
+                    <p class="text-sm text-Neutral-800 break-all">
                         {{
                             leaderInfo.selfDescription ||
                             "請用簡短一段描述，介紹您自己，也可以形容您的精采生活，與對商品的熱愛，讓大家更認識你/妳吧！"
@@ -126,6 +128,7 @@ import { useAuthStore } from "@/stores/auth";
 import { leaderInformationSchema } from "~/validation";
 
 const store = useAuthStore();
+const number = ref(0);
 
 const { name } = defineProps({
     name: {
@@ -143,6 +146,9 @@ const leaderInfo = ref({
     officialSite: "https://www.officialSite.com/",
 });
 
+function textAreaChange(e) {
+    console.log(e.target.value);
+}
 function onSubmit(event) {
     console.log(event.data);
 }
