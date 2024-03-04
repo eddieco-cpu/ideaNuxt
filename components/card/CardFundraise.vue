@@ -1,17 +1,20 @@
 <template>
-    <div class="w-full rounded-lg shadow-card bg-white cursor-pointer relative group" @click="goProductDetailPage">
-        <div class="pb-2 group-hover:shadow-[1px_1px_20px_0px_rgba(0,0,0,0.06)] transition-shadow duration-200">
+    <div
+        class="w-full rounded-lg overflow-hidden shadow-card bg-white cursor-pointer relative group"
+        @click="goProductDetailPage"
+    >
+        <div class="pb-2 group-hover:shadow-[1px_1px_20px_0px_rgba(0,0,0,0.06)] transition-shadow duration-300">
             <!-- 標籤 -->
             <div class="flex items-center gap-x-2 absolute top-2 left-2 z-[2]">
                 <Tag v-for="(tag, index) in tags" :key="index" :tag="tag" />
             </div>
 
             <!-- 主圖 -->
-            <div class="relative overflow-hidden">
+            <div class="relative overflow-hidden rounded">
                 <img
                     :src="image"
                     alt="product"
-                    class="rounded w-full h-[194px] md:h-[182px] object-cover transition-transform duration-200 group-hover:scale-105"
+                    class="w-full h-[194px] md:h-[182px] object-cover transition-transform duration-300 group-hover:scale-105"
                 />
 
                 <!-- 愛心 -->
