@@ -4,7 +4,7 @@
 
         <slot name="tip" class="pb-3" />
 
-        <div class="pt-3 flex flex-col gap-y-8 border-t border-t-neutral-200">
+        <div class="pt-3 flex flex-col gap-y-8 border-t border-t-Neutral-200">
             <slot />
         </div>
     </div>

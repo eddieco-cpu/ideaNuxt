@@ -1,5 +1,5 @@
 <template>
-    <div class="pt-6 md:flex md:items-start md:gap-6 md:max-w-[1082px] mx-auto">
+    <div>
         <!-- 商品資訊 -->
         <div class="flex flex-col gap-y-6 mx-auto w-full max-w-[324px] md:max-w-[786px]">
             <CartCardContainer title="訂單明細">

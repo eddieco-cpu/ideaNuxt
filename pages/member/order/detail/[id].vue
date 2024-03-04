@@ -47,20 +47,11 @@
             </li>
         </ul>
 
-        <div class="flex flex-col gap-y-3 md:flex-row md:gap-x-3 mb-3">
-            <!-- 訂單資訊 -->
-            <CardOrderInformation />
-
-            <!-- 商品資訊 -->
-            <CardProductInformation />
-        </div>
-
-        <div class="flex flex-col gap-y-3 md:flex-row md:gap-x-3">
-            <!-- 購買人資訊 -->
-            <CardBuyerInformation />
-
-            <!-- 收件人資訊 -->
-            <CardReceiverInformation />
+        <div class="flex flex-col flex-wrap gap-y-3 md:flex-row md:gap-x-3 mb-3">
+            <CardOrderInformation class="w-full md:w-[40%]" />
+            <CardProductInformation class="w-full md:flex-1" />
+            <CardBuyerInformation class="w-full md:w-[calc(50%_-_6px)]" />
+            <CardReceiverInformation class="w-full md:w-[calc(50%_-_6px)]" />
         </div>
     </div>
 </template>

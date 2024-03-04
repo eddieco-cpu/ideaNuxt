@@ -10,7 +10,7 @@ export default defineNuxtConfig({
         head: {
             htmlAttrs: { lang: "zh-TW" },
             charset: "utf-8",
-            viewport: "width=device-width, initial-scale=1",
+            viewport: "width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no",
             title: "idea2gether",
             meta: [
                 { name: "og:type", content: "website" },

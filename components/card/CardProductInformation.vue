@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white rounded-lg p-3 md:flex-1">
+    <div class="bg-white rounded-lg p-3">
         <h1 class="text-black/85 font-medium pb-[10px] border-b border-b-Neutral-200">商品資訊</h1>
         <div class="pt-[10px] flex gap-x-4">
             <img :src="helperPicture()" alt="product" class="size-16 rounded" />

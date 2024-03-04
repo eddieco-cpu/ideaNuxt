@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white rounded-lg p-3 md:min-w-[359px]">
+    <div class="bg-white rounded-lg p-3">
         <h1 class="text-black/85 font-medium pb-[10px] border-b border-b-Neutral-200">購買人資訊</h1>
         <ul class="pt-[10px] flex flex-col gap-y-3">
             <li class="flex items-center gap-x-4">
