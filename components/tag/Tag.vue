@@ -20,11 +20,11 @@
 <script setup>
 const { tag } = defineProps({
     tag: Object,
-    default: {
+    default: () => ({
         name: "",
         color: "primary",
         type: "text",
-    },
+    }),
 });
 
 function showClass(type) {

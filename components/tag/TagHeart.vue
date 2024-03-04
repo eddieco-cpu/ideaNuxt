@@ -23,7 +23,10 @@
     </div>
 
     <!-- 編輯模式 -->
-    <div v-if="isEditMode" class="cursor-pointer">
+    <div
+        v-if="isEditMode"
+        class="cursor-pointer size-[30px] bg-[#392B90]/[0.5] rounded flex items-center justify-center"
+    >
         <img src="~assets/images/icon/edit-gray-icon.svg" alt="edit" @click="editProposal" />
     </div>
 </template>

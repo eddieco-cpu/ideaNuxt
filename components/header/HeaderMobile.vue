@@ -1,7 +1,7 @@
 <template>
     <header class="px-1.5 fixed top-0 w-full z-50 bg-white">
         <div class="py-2 px-2.5 flex justify-between items-center min-h-[52px]">
-            <div :class="{ 'w-16': !isShowSearchContent }" @click="hideSideNav = !hideSideNav">
+            <div :class="{ 'w-16': !isShowSearchContent }" @click="openModal('sideMenu')">
                 <img src="~assets/images/header/menu.svg" alt="menu" />
             </div>
 
@@ -41,7 +41,7 @@
                         @click="showSearchContent"
                         v-show="!isShowSearchContent"
                     />
-                    <img src="~assets/images/header/shoppingCart.svg" alt="shoppingCart" />
+                    <img src="~assets/images/header/shoppingCart.svg" alt="shoppingCart" @click="goToPage('/cart')" />
                 </div>
             </div>
         </div>
@@ -243,9 +243,13 @@ function goToPage(link) {
 }
 
 function openModal(type) {
-    isShowSearchContent.value = false;
+    if (type === "close") {
+        hideSideNav.value = true;
+    } else if (type === "sideMenu") {
+        hideSideNav.value = !hideSideNav.value;
+    }
 
-    hideSideNav.value = true;
+    isShowSearchContent.value = false;
 
     emit("openModal", type);
 }

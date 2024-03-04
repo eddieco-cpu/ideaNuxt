@@ -24,7 +24,11 @@
                 <p class="text-Primary-500-Primary underline text-sm cursor-pointer" v-else>再次訂購</p>
             </div>
 
-            <UIcon name="i-heroicons-chevron-right" class="block w-4 h-4 text-Neutral-500-Primary" />
+            <UIcon
+                name="i-heroicons-chevron-right"
+                class="block w-4 h-4 text-Neutral-500-Primary cursor-pointer"
+                @click="goPage"
+            />
         </div>
 
         <div class="border-t border-Neutral-200 pt-2 mt-2 flex items-center gap-x-1">
@@ -35,6 +39,10 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+function goPage() {
+    navigateTo("/member/order/detail/1");
+}
+</script>
 
 <style lang="scss" scoped></style>

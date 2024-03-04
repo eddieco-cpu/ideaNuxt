@@ -13,9 +13,9 @@
             <div class="pb-6 border-b border-Neutral-300">
                 <h3 class="text-Primary-500-Primary font-medium mb-4">熱門搜尋</h3>
 
-                <div class="flex flex-wrap items-center gap-3">
+                <div class="flex flex-wrap items-center gap-2">
                     <button
-                        class="px-2 py-1 text-Primary-500-Primary bg-Primary-50 rounded"
+                        class="px-2 py-1 text-Primary-500-Primary rounded border border-Primary-100"
                         v-for="(item, index) in hotSearch"
                         :key="index"
                     >
@@ -88,7 +88,7 @@ function openModal(type) {
 
 const showClass = computed(() => {
     if (isMobile) {
-        return "w-full h-lvh bg-Neutral-bg top-[52px]";
+        return "w-full h-lvh bg-Neutral-50 top-[52px]";
     } else {
         return "min-w-[532px] top-[75px] bg-white";
     }
