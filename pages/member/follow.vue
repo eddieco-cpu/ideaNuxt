@@ -5,13 +5,13 @@
                 class="relative max-w-[570px] hidden py-4 font-medium border-b-2 border-Neutral-200 mb-6 md:flex md:justify-between"
             >
                 <li
-                    v-for="(item, index) in followType"
+                    v-for="(item, index) in mapfollowType"
                     :key="index"
                     class="cursor-pointer px-2"
                     :class="showNavClass(item)"
-                    @click="switchFollowType($event, item)"
+                    @click="switchFollowType($event, item.name)"
                 >
-                    {{ item }} ({{ 20 }})
+                    {{ item.name }} ({{ item.number }})
                 </li>
 
                 <!-- 導覽列下底線 -->
@@ -25,7 +25,7 @@
                 <div class="flex gap-4 items-center justify-between mt-8 mb-4 md:mt-0">
                     <h1 class="text-black text-xl font-medium gap-x-2 hidden md:block">
                         {{ followTypeSelected }}
-                        <span class="text-base text-Neutral-600-Dark-Primary ml-4">共{{ showCardTotalNumber }}個</span>
+                        <span class="text-base text-Neutral-600-Dark-Primary ml-4">共{{ cardNumber }}個</span>
                     </h1>
 
                     <USelectMenu
@@ -65,7 +65,7 @@
                         v-if="followTypeSelected === '好評團購'"
                         v-bind="item"
                     />
-                    <CardKolRecommend
+                    <CardKol
                         v-for="(item, index) in kolList"
                         :key="index"
                         v-if="followTypeSelected === '名人與團主'"
@@ -100,7 +100,7 @@
 </template>
 
 <script setup>
-import { CardBlog, CardFundraise, CardGroupBuying, CardKolRecommend } from "#components";
+import { CardBlog, CardFundraise, CardGroupBuying, CardKol } from "#components";
 const currentPage = ref(1);
 const totalPages = ref(20);
 
@@ -126,19 +126,37 @@ getBlogList();
 
 const underLine = ref(null);
 
-const showCardTotalNumber = computed(() => {
-    switch (followTypeSelected.value) {
-        case "集資專案":
-            return fundingRaiseList.value.length;
-        case "好評團購":
-            return groupBuyingList.value.length;
-        case "名人與團主":
-            return kolList.value.length;
-        case "好文部落格":
-            return comingBuyingList.value.length;
-        default:
-            return 0;
-    }
+const mapfollowType = computed(() => {
+    return followType.map((item) => {
+        let obj = {
+            name: item,
+            number: 0,
+        };
+
+        switch (item) {
+            case "集資專案":
+                obj.number = fundingRaiseList.value.length;
+                break;
+            case "好評團購":
+                obj.number = groupBuyingList.value.length;
+                break;
+            case "名人與團主":
+                obj.number = kolList.value.length;
+                break;
+            case "好文部落格":
+                obj.number = comingBuyingList.value.length;
+                break;
+            default:
+                obj.number = 0;
+                break;
+        }
+
+        return obj;
+    });
+});
+
+const cardNumber = computed(() => {
+    return mapfollowType.value.find((item) => item.name === followTypeSelected.value)?.number ?? 0;
 });
 
 const showCardClass = computed(() => {

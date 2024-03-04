@@ -1,5 +1,5 @@
 <template>
-    <div class="relative h-[174px] md:h-[224px] bg-black rounded-[20px] cursor-pointer group" @click="goToPage">
+    <div class="relative pt-[100%] bg-black rounded-[20px] cursor-pointer group" @click="goToPage">
         <!-- 主圖 -->
         <img :src="image" alt="kol" class="rounded-[20px] w-full h-full object-cover absolute top-0 left-0" />
 
