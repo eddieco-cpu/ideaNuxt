@@ -40,3 +40,14 @@
 .video-leave-to {
     opacity: 0;
 }
+
+/* mask */
+.mask-enter-active,
+.mask-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.mask-enter-from,
+.mask-leave-to {
+    opacity: 0;
+}
