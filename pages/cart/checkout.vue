@@ -1,5 +1,6 @@
 <template>
     <div>
+        <CartHeader :step="2" />
         <!-- 商品資訊 -->
         <div class="flex flex-col gap-y-6 mx-auto w-full max-w-[324px] md:max-w-[786px]">
             <CartCardContainer title="訂單明細">
@@ -77,11 +78,12 @@
                 <URadioGroup v-model="payment" :options="paymentOptions" class="payment" />
             </CartCardContainer>
 
-            <CartCardContainer title="訂單備註">
+            <CartCardContainer title="訂單備註" class="pb-8">
                 <UFormGroup name="remark">
-                    <UTextarea
-                        resize
-                        placeholder=" 如有需要，請您簡短的以  90字備註說明，謝謝。"
+                    <UtilTextarea
+                        :resize="true"
+                        placeholder="如有需要，請您簡短的以  90字備註說明，謝謝。"
+                        :max="90"
                         v-model="buyerInforamtion.remark"
                     />
                 </UFormGroup>

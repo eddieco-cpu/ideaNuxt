@@ -14,7 +14,7 @@
                 <p class="text-xl text-Primary-500-Primary font-roboto font-medium text-right py-3">NT$1,620</p>
                 <button
                     class="px-4 py-2 bg-Primary-500-Primary text-center rounded-lg w-full text-white"
-                    @click="goPage('/cart/finished')"
+                    @click="goPage('/cart/checkout')"
                 >
                     去結帳 ({{ 3 }})
                 </button>

@@ -1,6 +1,6 @@
 <template>
     <div class="w-full bg-white p-3 md:p-5 rounded-lg">
-        <h1 class="pb-3">{{ title }}</h1>
+        <h1 class="pb-3 font-medium">{{ title }}</h1>
 
         <slot name="tip" class="pb-3" />
 
