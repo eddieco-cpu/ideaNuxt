@@ -1,27 +1,27 @@
 <template>
     <div
-        class="w-full max-w-[324px] md:max-w-full flex mx-auto h-[56px] md:h-[63px] text-Primary-500-Primary font-medium text-sm md:text-base"
+        class="w-full max-w-[324px] md:max-w-full flex mx-auto h-[56px] md:h-[63px] text-Primary-500-Primary font-medium text-sm"
     >
         <div
-            class="flex-1 bg-no-repeat bg-contain pt-[7px] pl-[20px] md:pt-[6px] md:pl-[30px]"
+            class="flex-1 bg-no-repeat bg-contain pt-[8px] pl-[25px] md:pt-[12px] md:pl-[30px]"
             :class="[step === 1 ? stepOne.first : stepTwo.first]"
         >
             <p>Step 1</p>
-            <p>確認商品</p>
+            <p class="font-normal text-xs">確認商品</p>
         </div>
         <div
-            class="flex-1 bg-no-repeat bg-contain pt-[7px] pl-[20px] md:pt-[6px] md:pl-[30px]"
+            class="flex-1 bg-no-repeat bg-contain pt-[8px] pl-[25px] md:pt-[12px] md:pl-[30px]"
             :class="[step === 1 ? stepOne.second : stepTwo.second]"
         >
             <p>Step 2</p>
-            <p>填寫資料</p>
+            <p class="font-normal text-xs">填寫資料</p>
         </div>
         <div
-            class="flex-1 bg-no-repeat bg-[length:100%_100%] md:bg-contain pt-[7px] pl-[20px] md:pt-[6px] md:pl-[30px]"
+            class="flex-1 bg-no-repeat bg-[length:100%_100%] md:bg-contain pt-[8px] pl-[25px] md:pt-[12px] md:pl-[30px]"
             :class="[step === 1 ? stepOne.third : stepTwo.third]"
         >
             <p>Step 3</p>
-            <p>訂購完成</p>
+            <p class="font-normal text-xs">訂購完成</p>
         </div>
     </div>
 </template>

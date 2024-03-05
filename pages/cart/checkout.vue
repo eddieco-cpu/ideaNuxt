@@ -78,7 +78,7 @@
                 <URadioGroup v-model="payment" :options="paymentOptions" class="payment" />
             </CartCardContainer>
 
-            <CartCardContainer title="訂單備註" class="pb-8">
+            <CartCardContainer title="訂單備註" class="pb-8 md:pb-8">
                 <UFormGroup name="remark">
                     <UtilTextarea
                         :resize="true"
