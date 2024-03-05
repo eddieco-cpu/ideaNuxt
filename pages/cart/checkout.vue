@@ -11,10 +11,12 @@
 
             <CardContainer title="收件人資訊">
                 <template #body>
-                    <URadioGroup v-model="delivery" :options="sexOptions" class="delivery" />
+                    <div class="flex flex-col gap-y-4">
+                        <URadioGroup v-model="buyerInforamtion.delivery" :options="deliveryOptions" class="delivery" />
 
-                    <div class="flex flex-col gap-y-2">
                         <MemberEditAddress
+                            class="border border-Primary-100"
+                            bgColor="bg-Primary-50"
                             v-bind="tempAddress"
                             :isEditmode="isEditmode"
                             @onAbort="onAbort"
@@ -24,14 +26,20 @@
 
                         <CardMemberAddress
                             v-for="(item, index) in addressInfo"
+                            class="border border-Primary-100"
+                            bgColor="bg-Primary-50"
                             :key="index"
                             v-bind="item"
-                            @setDefaultAddress="setDefaultAddress"
-                            @editAddress="editAddress"
-                        />
+                        >
+                            <template #title>
+                                <div class="flex pb-[10px] mb-[10px] border-b border-Primary-100 text-sm">
+                                    <p class="text-black/[0.85]">地址{{ index + 1 }}</p>
+                                </div>
+                            </template>
+                        </CardMemberAddress>
 
                         <button
-                            class="flex gap-x-1 items-center justify-center w-full rounded-lg bg-white border border-Primary-100 py-2"
+                            class="flex gap-x-1 items-center justify-center w-full rounded-lg border border-Primary-100 bg-Primary-50 py-2"
                             @click="editAddress(undefined, false)"
                         >
                             <img src="~assets/images/icon/plus-icon.svg" alt="add" />
@@ -85,7 +93,7 @@
                     </p>
                 </template>
                 <template #body>
-                    <URadioGroup v-model="payment" :options="paymentOptions" class="payment" />
+                    <URadioGroup v-model="buyerInforamtion.payment" :options="paymentOptions" class="payment" />
                 </template>
             </CardContainer>
 
@@ -142,12 +150,45 @@ const inProcessing = ref(false);
 const progress = ref(0);
 const progressTimer = ref(0);
 
+const paymentOptions = [
+    {
+        value: "1",
+        label: "信用卡(3、6期)",
+    },
+    {
+        value: "2",
+        label: "ATM 轉帳",
+    },
+    {
+        value: "3",
+        label: "貨到付款",
+    },
+    {
+        value: "4",
+        label: "LINE Pay",
+    },
+];
+
+const deliveryOptions = [
+    {
+        value: "1",
+        label: "超商取貨",
+    },
+    {
+        value: "2",
+        label: "宅配到府",
+    },
+];
+
 const buyerInforamtion = ref({
     name: "",
     phone: "0911123456",
     invoice: "",
+    payment: "",
+    delivery: "",
     remark: "",
 });
+
 const open = ref(false);
 defineShortcuts({
     o: () => (open.value = !open.value),
@@ -175,10 +216,10 @@ const dropdownItems = [
         },
     ],
 ];
-const delivery = ref();
-const payment = ref();
+
 const tempAddress = ref(null);
 const isEditmode = ref(false);
+
 const addressInfo = ref([
     {
         index: 1,
@@ -197,14 +238,6 @@ const addressInfo = ref([
         address: "台北市信義區",
     },
 ]);
-
-function setDefaultAddress(index) {
-    addressInfo.value = addressInfo.value.map((item, i) => {
-        item.defaultAddress = i === index;
-
-        return { ...item };
-    });
-}
 
 async function editAddress(index, isEdit) {
     tempAddress.value = null;
@@ -256,35 +289,6 @@ function onSubmit(data, isEditmode) {
     }
     tempAddress.value = null;
 }
-const paymentOptions = [
-    {
-        value: "1",
-        label: "信用卡(3、6期)",
-    },
-    {
-        value: "2",
-        label: "ATM 轉帳",
-    },
-    {
-        value: "3",
-        label: "貨到付款",
-    },
-    {
-        value: "4",
-        label: "LINE Pay",
-    },
-];
-
-const sexOptions = [
-    {
-        value: "1",
-        label: "超商取貨",
-    },
-    {
-        value: "2",
-        label: "宅配到府",
-    },
-];
 
 function goFinishedPage() {
     inProcessing.value = true;

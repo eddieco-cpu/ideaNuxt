@@ -1,22 +1,24 @@
 <template>
     <CardContainer>
         <template #title>
-            <div class="flex pb-[10px] mb-[10px] border-b border-Neutral-100 font-medium">
-                <p class="text-Secondary-400-Hover" v-show="defaultAddress">預設 -&nbsp;</p>
-                <p class="text-black/[0.85]">地址{{ index }}</p>
+            <slot name="title">
+                <div class="flex pb-[10px] mb-[10px] border-b border-Neutral-100 font-medium">
+                    <p class="text-Secondary-400-Hover" v-show="defaultAddress">預設 -&nbsp;</p>
+                    <p class="text-black/[0.85]">地址{{ index }}</p>
 
-                <div class="ml-auto flex gap-x-6">
-                    <button
-                        class="underline text-Primary-500-Primary text-sm"
-                        v-show="!defaultAddress"
-                        @click="setDefaultAddress"
-                    >
-                        設為預設地址
-                    </button>
+                    <div class="ml-auto flex gap-x-6">
+                        <button
+                            class="underline text-Primary-500-Primary text-sm"
+                            v-show="!defaultAddress"
+                            @click="setDefaultAddress"
+                        >
+                            設為預設地址
+                        </button>
 
-                    <button class="underline text-Primary-500-Primary text-sm" @click="editAddress">編輯</button>
+                        <button class="underline text-Primary-500-Primary text-sm" @click="editAddress">編輯</button>
+                    </div>
                 </div>
-            </div>
+            </slot>
         </template>
 
         <template #body>

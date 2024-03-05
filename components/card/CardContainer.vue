@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full bg-white p-3 md:p-5 rounded-lg relative">
+    <div class="w-full p-3 md:p-5 rounded-lg relative" :class="bgColor">
         <div class="pb-3" v-if="hasTitle">
             <h1 class="font-medium" v-if="title !== ''">{{ title }}</h1>
             <p class="text-Neutral-600-Dark-Primary text-xs" v-if="subTitle !== ''">{{ subTitle }}</p>
@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-const { title, subTitle } = defineProps({
+const { title, subTitle, bgColor } = defineProps({
     title: {
         type: String,
         default: "",
@@ -41,6 +41,10 @@ const { title, subTitle } = defineProps({
     subTitle: {
         type: String,
         default: "",
+    },
+    bgColor: {
+        type: String,
+        default: "bg-white",
     },
 });
 
