@@ -48,7 +48,7 @@
 
             <!-- 精選團主卡片 -->
             <div class="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-5">
-                <CardKolRecommend v-for="(item, index) in kolList" :key="index" v-bind="item" />
+                <CardKol v-for="(item, index) in kolList" :key="index" v-bind="item" />
             </div>
 
             <UiPagination

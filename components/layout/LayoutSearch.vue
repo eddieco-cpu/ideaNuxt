@@ -1,8 +1,7 @@
 <template>
     <div>
         <div
-            class="modal-container rounded-lg py-8 px-6 md:p-5 max-h-lvh overflow-y-auto absolute left-0 z-[999]"
-            :class="showClass"
+            class="py-8 px-6 overflow-y-auto fixed md:absolute left-0 z-[999] w-screen h-lvh bg-Neutral-50 top-[52px] md:w-full md:min-w-[532px] md:top-[75px] md:h-max md:rounded-lg md:p-5"
         >
             <img
                 src="~assets/images/icon/close-icon.svg"

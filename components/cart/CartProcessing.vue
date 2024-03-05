@@ -9,5 +9,10 @@
 </template>
 
 <script setup>
-const progress = ref(0);
+const props = defineProps({
+    progress: {
+        type: Number,
+        default: 0,
+    },
+});
 </script>

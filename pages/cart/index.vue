@@ -1,24 +1,27 @@
 <template>
     <div>
+        <CartHeader :step="1" />
         <!-- 商品資訊 -->
         <div class="flex flex-col gap-y-6 mx-auto w-full max-w-[324px] md:max-w-[786px]">
-            <CartCardContainer title="訂單明細">
-                <div v-if="true">
-                    <UCarousel
-                        v-slot="{ item, index }"
-                        :items="productList"
-                        :ui="{
-                            item: 'snap-start basis-[128px]',
-                            container: 'gap-x-3',
-                        }"
-                        class="max-w-[1200px]"
-                    >
-                        <img :src="helperPicture()" alt="product" class="rounded-lg w-full h-[81px] object-cover" />
-                    </UCarousel>
-                </div>
-            </CartCardContainer>
+            <CardContainer title="訂單明細">
+                <template #body>
+                    <div>
+                        <UCarousel
+                            v-slot="{ item, index }"
+                            :items="productList"
+                            :ui="{
+                                item: 'snap-start basis-[128px]',
+                                container: 'gap-x-3',
+                            }"
+                            class="max-w-[1200px]"
+                        >
+                            <img :src="helperPicture()" alt="product" class="rounded-lg w-full h-[81px] object-cover" />
+                        </UCarousel>
+                    </div>
+                </template>
+            </CardContainer>
 
-            <CartCardContainer title="結帳商品">
+            <CardContainer title="結帳商品">
                 <template #tip>
                     <div class="flex flex-col gap-y-1 pb-3">
                         <div class="flex items-center gap-x-1">
@@ -40,13 +43,43 @@
                     </div>
                 </template>
 
-                <CardCheckOutProduct v-for="(item, index) in 5" :key="index" />
-            </CartCardContainer>
+                <template #body>
+                    <CardCheckOutProduct v-for="(item, index) in 5" :key="index" />
+                </template>
+            </CardContainer>
         </div>
 
         <!-- 總計 -->
-        <div class="flex-1 md:sticky md:top-[98px]">
-            <CartTotal />
+        <div class="flex-1 fixed w-full bottom-0 md:sticky md:top-[98px]">
+            <div class="max-md:h-screen max-md:flex max-md:items-end max-md:bg-black/50">
+                <CardContainer title="總計">
+                    <template #body>
+                        <div class="flex justify-between text-Neutral-700, text-sm">
+                            <p>2件商品</p>
+                            <p>NT$3,240</p>
+                        </div>
+                        <div class="flex justify-between text-Neutral-700, text-sm">
+                            <p>運費</p>
+                            <p>NT$240</p>
+                        </div>
+                    </template>
+
+                    <template #footer>
+                        <div class="border-t border-t-Neutral-200">
+                            <p class="text-xl text-Primary-500-Primary font-roboto font-medium text-right py-3">
+                                NT$1,620
+                            </p>
+
+                            <button
+                                class="px-4 py-2 bg-Primary-500-Primary text-center rounded-lg w-full text-white"
+                                @click="goCheckoutPage"
+                            >
+                                去結帳 ({{ 3 }})
+                            </button>
+                        </div>
+                    </template>
+                </CardContainer>
+            </div>
         </div>
     </div>
 </template>
@@ -54,7 +87,7 @@
 <script setup>
 const productList = ref(Array.from({ length: 15 }, (num, i) => i));
 
-function goPage(route) {
-    navigateTo(route);
+function goCheckoutPage() {
+    navigateTo("/cart/checkout");
 }
 </script>
