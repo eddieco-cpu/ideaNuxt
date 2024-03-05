@@ -32,6 +32,7 @@ watch(
             circle.value.style.strokeDashoffset = 100 - progress;
         }
     },
+    { immediate: true },
 );
 </script>
 

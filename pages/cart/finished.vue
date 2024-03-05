@@ -1,8 +1,5 @@
 <template>
     <div>
-        <!-- <div class="w-full mt-[96px]">
-            <CartProcessing :progress="progress" />
-        </div> -->
         <div class="flex flex-col gap-y-6 items-center w-full">
             <component :is="showOrderStatus" :orderId="orderStatus.orderId"></component>
 
