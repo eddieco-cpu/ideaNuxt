@@ -8,7 +8,7 @@
             <section class="pt-8 pb-8 mt-[-140px] max-md:px-6 max-md:pt-1 max-md:pb-3">
                 <UBreadcrumb
                     divider="/"
-                    :links="[{ label: 'Home', to: '/' }, { label: 'Navigation' }, { label: 'Breadcrumb' }]"
+                    :links="[{ label: 'Home', to: '/' }, { label: '團主推薦' }, { label: '3C科技' }]"
                     :ui="{
                         active: 'text-white font-normal',
                         inactive: 'text-white font-normal',
@@ -27,9 +27,12 @@
             >
                 <!--  -->
                 <button
-                    class="w-12 h-12 rounded-lg ring-2 ring-Neutral-500-Primary flex justify-center items-center max-xl:w-9 max-xl:h-9"
+                    class="w-12 h-12 rounded-lg ring-1 ring-Neutral-500-Primary flex justify-center items-center max-xl:w-9 max-xl:h-9"
+                    :class="isFavorite ? 'ring-[#FF4D4F]' : 'ring-Neutral-500-Primary'"
+                    @click="setIsFavorite($event, !isFavorite)"
                 >
-                    <UIcon name="i-heroicons-heart" class="text-Neutral-500-Primary text-xl" />
+                    <ProductsHeartActive v-if="isFavorite" />
+                    <ProductsHeartInActive v-else />
                 </button>
 
                 <!-- @click="() => $router.push('/products/funding/1')" -->
@@ -254,6 +257,23 @@
 </template>
 
 <script setup>
+import { useToast } from "vue-toastification";
+const toast = useToast();
+
+const isFavorite = ref(false);
+
+function setIsFavorite(e, status) {
+    e.stopPropagation();
+
+    isFavorite.value = status;
+
+    if (status) {
+        toast.success("已加入購物車");
+    } else {
+        toast.error("已取消加入購物車");
+    }
+}
+
 const lockMaxHeightInMobile = ref(true);
 const maxHeight = 700;
 const articleRef = ref(null);
