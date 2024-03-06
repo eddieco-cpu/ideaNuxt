@@ -1,56 +1,34 @@
 <template>
     <section>
-        <section class="mb-7">
-            <div class="flex gap-x-4 justify-center items-center mb-2 max-lg:flex-wrap">
-                <DashboardIndexCard
-                    :contentObj="{
-                        label: '累積集資金額',
-                        amount: '$ 0',
-                        description: '$ 1,000,000',
-                    }"
-                    type="primary"
-                    class="max-lg:w-full mb-2 flex-grow"
-                />
-                <DashboardIndexCard
-                    :contentObj="{
-                        label: '專案執行時間',
-                        amount: '98 天',
-                        description: '2022/06/16  - 2022/07/27',
-                    }"
-                    type="primary"
-                    class="max-lg:w-full mb-2 flex-grow"
-                />
-            </div>
-            <div class="flex gap-x-4 justify-center items-center max-lg:flex-wrap">
-                <DashboardIndexCard
-                    :contentObj="{
-                        label: '累積訂單數',
-                        amount: '2,234 筆',
-                        description: '本週新增 24 筆，<a>前往出貨</a>',
-                    }"
-                    type="secondary"
-                    class="w-1/3 max-lg:w-full mb-2"
-                />
-                <DashboardIndexCard
-                    :contentObj="{
-                        label: '總贊助人數',
-                        amount: '980 人',
-                    }"
-                    type="secondary"
-                    class="w-1/3 max-lg:flex-grow mb-2"
-                />
-                <DashboardIndexCard
-                    :contentObj="{
-                        label: '平均贊助金額',
-                        amount: '$ 1800',
-                    }"
-                    type="secondary"
-                    class="w-1/3 max-lg:flex-grow mb-2"
-                />
-            </div>
-        </section>
         <section>
-            <UiTitle> 最新訂單 </UiTitle>
+            <UiTitle> 訂單總覽 </UiTitle>
+            <div class="flex justify-between items-center">
+                <div class="flex justify-center items-center gap-x-2">
+                    <UiButton type="secondary" class="max-w-[122px]">
+                        <UIcon name="i-heroicons-document-arrow-down" class="text-Primary-500-Primary text-sm" />
+                        匯出出貨單</UiButton
+                    >
+                    <UiButton type="secondary" class="max-w-[155px]">
+                        <UIcon name="i-heroicons-document-arrow-down" class="text-Primary-500-Primary text-sm" />
+                        匯出贊助人資料</UiButton
+                    >
+                </div>
+
+                <div class="flex justify-center items-center gap-x-2">
+                    <UDropdown v-model:open="open" :items="dropdownItems" :popper="{ placement: 'bottom-start' }">
+                        <UButton
+                            color="white"
+                            :label="dropdownValue || '請選擇'"
+                            class="min-w-[210px]"
+                            :class="dropdownValue ? 'text-Neutral-900-Primary' : 'text-Neutral-500-Primary'"
+                        />
+                        <UIcon
+                            name="i-heroicons-chevron-down-20-solid"
+                            class="text-2xl flex justify-center items-center h-8 ml-[-32px] pointer-events-none"
+                        />
+                    </UDropdown>
+                </div>
+            </div>
             <div>
                 <UTable
                     class="main-table"
@@ -144,6 +122,36 @@ const people = [
         status: "已成立",
     },
 ];
+
+//
+const dropdownValue = ref("");
+const dropdownItems = [
+    [
+        {
+            label: "A category",
+            click: function () {
+                dropdownValue.value = this.label;
+            },
+        },
+        {
+            label: "B category",
+            click: function () {
+                dropdownValue.value = this.label;
+            },
+        },
+        {
+            label: "C category",
+            click: function () {
+                dropdownValue.value = this.label;
+            },
+        },
+    ],
+];
+
+const open = ref(false);
+defineShortcuts({
+    o: () => (open.value = !open.value),
+});
 </script>
 <style scoped>
 /* .main-table {

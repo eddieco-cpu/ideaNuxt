@@ -149,10 +149,10 @@
 
             <!--  -->
             <section
-                class="grid grid-rows-1 grid-cols-[627fr_436fr] gap-6 max-xl:grid-cols-1 max-xl:grid-rows-[auto_auto]"
+                class="grid grid-rows-[auto_auto] grid-cols-[627fr_436fr] gap-6 max-xl:grid-cols-1 max-xl:grid-rows-[auto_auto]"
             >
-                <!--  -->
-                <section>
+                <!-- gird item -->
+                <section class="grid-item-l xl:max-h-[calc(100vh-75px)] xl:py-6 xl:overflow-y-auto">
                     <template v-if="activeNavItemId === 'a'">
                         <article class="bg-white p-6 rounded-lg">
                             <h1 class="text-[28px] leading-snug font-medium mb-4">
@@ -195,8 +195,8 @@
                     </template>
                 </section>
 
-                <!--  -->
-                <section class="max-md:mx-6">
+                <!-- gird item -->
+                <section class="grid-item-r max-md:mx-6 xl:max-h-[calc(100vh-75px)] xl:py-6 xl:overflow-y-auto">
                     <UiTitle class="!mb-5">本團推薦商品</UiTitle>
                     <ul class="grid grid-cols-2 gap-x-[14px] gap-y-[28px]">
                         <ProductsSelectCard
@@ -278,8 +278,20 @@ const recommendationSelects = reactive([
 ]);
 </script>
 
-<style setup>
+<style scoped>
 .banner_photo {
     filter: contrast(50%);
+}
+
+.grid-item-l {
+}
+.grid-item-l::-webkit-scrollbar {
+    display: none;
+}
+
+.grid-item-r {
+}
+.grid-item-r::-webkit-scrollbar {
+    display: none;
 }
 </style>
