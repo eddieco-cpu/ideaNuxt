@@ -80,9 +80,12 @@
                 >
                     <!--  -->
                     <button
-                        class="w-12 h-12 rounded-lg ring-2 ring-Neutral-500-Primary flex justify-center items-center max-xl:w-9 max-xl:h-9"
+                        @click="setIsFavorite($event, !isFavorite)"
+                        class="w-12 h-12 rounded-lg ring-2 ring-Neutral-500-Primary flex justify-center items-center max-xl:w-9 max-xl:h-9 max-xl:ring-1"
+                        :class="isFavorite ? 'ring-[#FF4D4F]' : 'ring-Neutral-500-Primary'"
                     >
-                        <UIcon name="i-heroicons-heart" class="text-Neutral-500-Primary text-4xl max-xl:text-xl" />
+                        <ProductsHeartActive v-if="isFavorite" class="xl:scale-[1.33]" />
+                        <ProductsHeartInActive v-else class="xl:scale-[1.33]" />
                     </button>
 
                     <!-- @click="() => $router.push('/products/funding/1')" -->
@@ -251,6 +254,23 @@
 </template>
 
 <script setup>
+import { useToast } from "vue-toastification";
+const toast = useToast();
+
+const isFavorite = ref(false);
+
+function setIsFavorite(e, status) {
+    e.stopPropagation();
+
+    isFavorite.value = status;
+
+    if (status) {
+        toast.success("已加入購物車");
+    } else {
+        toast.error("已取消加入購物車");
+    }
+}
+
 const lockMaxHeightInMobile = ref(true);
 const maxHeight = ref(700);
 const articleRef = ref(null);

@@ -168,7 +168,9 @@
                             v-for="(item, index) in groupBuyingList"
                             :key="index"
                             v-bind="item"
-                            :isMainPictureShowLeft="index !== 0 && index !== 1 ? false : true"
+                            :isMainPictureShowLeft="
+                                screenWidth > 768 ? true : index === 0 || index === 1 ? true : false
+                            "
                         />
                     </div>
                 </UiContainer>
@@ -218,7 +220,7 @@
                             v-for="(item, index) in groupBuyingList"
                             :key="index"
                             v-bind="item"
-                            :isMainPictureShowLeft="true"
+                            :isMainPictureShowLeft="screenWidth <= 768"
                         />
                     </div>
                 </UiContainer>
@@ -228,11 +230,18 @@
 </template>
 
 <script setup>
+//
 const currentPage = ref(10);
 const totalPages = ref(20);
 const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
 };
+
+//
+const screenWidth = ref(800);
+onMounted(() => {
+    screenWidth.value = window.innerWidth;
+});
 
 const videoPlayList = ref([]);
 const kolList = ref([]);
