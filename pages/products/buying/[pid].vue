@@ -137,7 +137,7 @@
             </section>
 
             <!--  -->
-            <section class="bg-white mb-4 rounded-lg sticky top-[74px] max-md:top-[51px]">
+            <section class="bg-white mb-4 rounded-lg sticky top-[74px] z-[2] max-md:top-[51px]">
                 <div class="w-80 px-6">
                     <UiHorizontalNav
                         :nav-items="navItems"
@@ -149,12 +149,30 @@
 
             <!--  -->
             <section
-                class="grid grid-rows-[auto_auto] grid-cols-[627fr_436fr] gap-6 max-xl:grid-cols-1 max-xl:grid-rows-[auto_auto]"
+                class="grid grid-cols-[627fr_446fr] gap-6 xl:w-[calc(100%+10px)] max-xl:grid-cols-1 grid-rows-[auto_auto]"
             >
                 <!-- gird item -->
-                <section class="grid-item-l xl:max-h-[calc(100vh-75px)] xl:py-6 xl:overflow-y-auto">
+                <section
+                    class="max-xl:relative xl:sticky xl:mt-auto bottom-0 xl:min-h-[calc(100vh-48px-75px)]"
+                    :class="
+                        lockMaxHeightInMobile && activeNavItemId === 'a'
+                            ? `max-md:max-h-[700px] max-md:overflow-hidden`
+                            : 'max-md:max-h-[auto]'
+                    "
+                >
+                    <!--  -->
+                    <div
+                        v-if="activeNavItemId === 'a' && articleRefHeight > maxHeight"
+                        class="md:hidden flex flex-col-reverse absolute bottom-0 left-0 z-[2] w-full pb-8 pt-32 px-20 bg-gradient-to-t from-white to-transparent"
+                        :class="lockMaxHeightInMobile ? '' : ' hidden'"
+                    >
+                        <UiButton class="max-md:w-full" type="secondary" @click="lockMaxHeightInMobile = false"
+                            >查看完整說明</UiButton
+                        >
+                    </div>
+
                     <template v-if="activeNavItemId === 'a'">
-                        <article class="bg-white p-6 rounded-lg">
+                        <article class="bg-white p-6 rounded-lg" ref="articleRef">
                             <h1 class="text-[28px] leading-snug font-medium mb-4">
                                 {{ useState("a", () => helperLorem(20, 40)).value }}
                             </h1>
@@ -181,6 +199,14 @@
                             <picture class="block w-full mb-4">
                                 <img :src="helperPicture()" alt="" class="block w-full" />
                             </picture>
+
+                            <picture class="block w-full mb-4">
+                                <img :src="helperPicture()" alt="" class="block w-full" />
+                            </picture>
+
+                            <picture class="block w-full mb-4">
+                                <img :src="helperPicture()" alt="" class="block w-full" />
+                            </picture>
                         </article>
                     </template>
                     <template v-if="activeNavItemId === 'b'">
@@ -196,9 +222,11 @@
                 </section>
 
                 <!-- gird item -->
-                <section class="grid-item-r max-md:mx-6 xl:max-h-[calc(100vh-75px)] xl:py-6 xl:overflow-y-auto">
+                <section
+                    class="card_group xl:sticky xl:mt-auto bottom-0 xl:h-[calc(100vh-48px-75px)] xl:overflow-y-auto max-md:px-6"
+                >
                     <UiTitle class="!mb-5">本團推薦商品</UiTitle>
-                    <ul class="grid grid-cols-2 gap-x-[14px] gap-y-[28px]">
+                    <ul class="grid grid-cols-2 gap-x-[14px] gap-y-[28px] xl:mr-[5px]">
                         <ProductsSelectCard
                             v-for="(select, i) in recommendationSelects"
                             :key="select.id"
@@ -209,7 +237,7 @@
                     <!--  -->
                     <UiTitle class="!mb-5 mt-8">本團推薦商品</UiTitle>
 
-                    <section class="grid grid-cols-1 gap-y-4">
+                    <section class="grid grid-cols-1 gap-y-4 xl:mr-[5px] xl:mb-4">
                         <ProductsRecommendCard />
                         <ProductsRecommendCard />
                         <ProductsRecommendCard />
@@ -222,6 +250,18 @@
 </template>
 
 <script setup>
+const lockMaxHeightInMobile = ref(true);
+const maxHeight = 700;
+const articleRef = ref(null);
+const articleRefHeight = ref(0);
+
+onMounted(() => {
+    if (articleRef.value) {
+        //console.log("articleRef 高度:", articleRef.value.offsetHeight);
+        articleRefHeight.value = articleRef.value.offsetHeight;
+    }
+});
+
 const progressMeter = 300;
 
 const navItems = [
@@ -279,19 +319,14 @@ const recommendationSelects = reactive([
 </script>
 
 <style scoped>
-.banner_photo {
-    filter: contrast(50%);
+.card_group::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
 }
-
-.grid-item-l {
+.card_group::-webkit-scrollbar-thumb {
+    background-color: #ccc;
 }
-.grid-item-l::-webkit-scrollbar {
-    display: none;
-}
-
-.grid-item-r {
-}
-.grid-item-r::-webkit-scrollbar {
-    display: none;
+.card_group::-webkit-scrollbar-track {
+    background-color: transparent;
 }
 </style>

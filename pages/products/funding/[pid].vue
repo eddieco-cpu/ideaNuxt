@@ -102,11 +102,17 @@
         </section>
 
         <!--  -->
-        <section class="grid grid-cols-[627fr_436fr] gap-6 max-xl:grid-cols-1 grid-rows-[auto_auto]">
+        <section
+            class="grid grid-cols-[627fr_446fr] gap-6 xl:w-[calc(100%+10px)] max-xl:grid-cols-1 grid-rows-[auto_auto]"
+        >
             <!-- sticky mt-auto bottom-0 -->
             <section
                 class="max-xl:relative xl:sticky xl:mt-auto bottom-0 xl:min-h-[calc(100vh-48px-75px)]"
-                :class="lockMaxHeightInMobile ? `max-md:max-h-[${maxHeight}px] overflow-hidden` : 'max-md:max-h-[auto]'"
+                :class="
+                    lockMaxHeightInMobile && activeNavItemId === 'a'
+                        ? `max-md:max-h-[${maxHeight}px] overflow-hidden`
+                        : 'max-md:max-h-[auto]'
+                "
             >
                 <!--  -->
                 <div
@@ -171,7 +177,9 @@
             </section>
 
             <!-- sticky mt-auto bottom-0 -->
-            <ul class="xl:sticky xl:mt-auto bottom-0 xl:min-h-[calc(100vh-48px-75px)] max-md:px-6">
+            <ul
+                class="card_group xl:sticky xl:mt-auto bottom-0 xl:h-[calc(100vh-48px-75px)] xl:overflow-y-auto max-md:px-6"
+            >
                 <template
                     v-for="(faq, i) in [
                         { id: 'Q1', content: 'A1', soldOut: false },
@@ -183,7 +191,7 @@
                     :key="faq.id"
                 >
                     <li
-                        class="bg-white p-6 rounded-lg ring-2 ring-Primary-100 mb-5 relative"
+                        class="bg-white p-6 rounded-lg border-2 border-Primary-100 mb-5 relative xl:mr-[5px]"
                         :class="faq.soldOut ? 'opacity-50' : 'opacity-100'"
                     >
                         <!--  -->
@@ -273,3 +281,16 @@ const updateNavItemId = (id) => {
     activeNavItemId.value = id;
 };
 </script>
+
+<style scoped>
+.card_group::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+.card_group::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+}
+.card_group::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+</style>
