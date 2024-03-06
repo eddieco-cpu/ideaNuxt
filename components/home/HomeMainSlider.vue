@@ -18,16 +18,20 @@
         >
             <SwiperSlide v-for="(slide, idx) in slides" :key="idx">
                 <div
-                    class="relative block w-[630px] aspect-[63/30] rounded-lg overflow-hidden max-md:w-[324px] max-md:aspect-[324/200]"
+                    class="relative block w-[630px] aspect-[63/30] rounded-lg overflow-hidden max-md:w-[324px] max-md:aspect-[324/200] group"
                 >
                     <picture class="block overflow-hidden w-full h-full">
-                        <img :src="slide.photo" alt="product" class="block w-full h-full object-cover" />
+                        <img
+                            :src="slide.photo"
+                            alt="product"
+                            class="block w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
                     </picture>
                     <div
-                        class="py-4 px-6 absolute z-[2] bottom-0 left-0 w-full bg-[rgba(0,0,0,0.3)] text-white max-md:py-2 max-md:px-3"
+                        class="py-4 px-6 absolute z-[2] bottom-0 left-0 w-full bg-[rgba(23,20,56,0.5)] text-white max-md:py-2 max-md:px-3"
                     >
                         <p
-                            class="font-medium text-base mb-4 flex justify-start items-center max-md:text-xs max-md:mb-3"
+                            class="font-medium text-base mb-3 flex justify-start items-center max-md:text-xs max-md:mb-[6px]"
                         >
                             <span
                                 class="inline-block font-normal text-sm text-center bg-Secondary-500-Primary rounded px-2 py-1 mr-2 max-md:text-xs"
@@ -36,7 +40,9 @@
                             {{ slide.provider }}
                             <!-- {{ useState(slide.photo + idx, () => helperLorem(5, 10)).value }} -->
                         </p>
-                        <p class="font-normal text-xl line-clamp-2 max-md:text-xs max-md:line-clamp-1">
+                        <p
+                            class="font-normal text-xl leading-5 line-clamp-2 max-md:text-xs max-md:line-clamp-1 max-md:leading-3"
+                        >
                             {{ slide.title }}
                         </p>
                     </div>
@@ -95,6 +101,8 @@ const pagination = {
     width: auto;
     height: 4px;
     transform: translate(0, 10px) !important;
+    left: 0 !important;
+    background-color: transparent;
     /* outline: 1px solid red; */
     margin: 0 auto;
 }
