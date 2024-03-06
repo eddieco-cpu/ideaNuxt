@@ -18,7 +18,7 @@
             <!-- 導覽列 -->
             <ul class="hidden md:flex gap-10 text-Primary-600-Dark-Primary font-medium text-sm">
                 <li v-for="(item, index) in navLink" :key="index">
-                    <NuxtLink :to="item.link">{{ item.name }}</NuxtLink>
+                    <NuxtLink :to="item.link">{{ item.label }}</NuxtLink>
                 </li>
             </ul>
 
@@ -80,80 +80,19 @@
             </div>
 
             <!-- 會員 -->
-            <div class="hidden md:block">
-                <!-- 會員未登入 -->
-                <button
-                    class="bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover"
-                    v-if="!store.isLogin"
-                    @click="openModal('login')"
-                >
-                    <img src="~assets/images/header/user-purple.svg" class="block w-[18px] h-[18px]" />
-
-                    <span class="font-normal"> 登入 /註冊 </span>
-                </button>
-
-                <!-- 會員已登入 -->
-                <button
-                    class="member-center relative bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover group"
-                    @click="goToPage('/member/information')"
-                    v-else
-                >
-                    <img
-                        :src="store.userInfo.image"
-                        alt="memberPic"
-                        class="block rounded-full w-[18px] h-[18px] object-cover"
-                    />
-
-                    <span class="font-normal"> 會員中心 </span>
-
-                    <div
-                        class="absolute top-full left-0 w-full bg-white rounded-lg py-1 shadow hidden group-hover:block"
-                    >
-                        <ul
-                            class="flex flex-col items-center [&>*:nth-child(4)]:border-t-Neutral-200 [&>*:nth-child(4)]:border-t"
-                        >
-                            <li
-                                class="text-black hover:bg-Primary-50 w-full"
-                                v-for="(item, index) in memberCenterLink"
-                                :key="index"
-                            >
-                                <nuxt-link class="block w-full py-2" :to="item.link">{{ item.name }}</nuxt-link>
-                            </li>
-                        </ul>
-
-                        <button
-                            class="bg-white border border-Primary-50 px-4 py-2 rounded-lg text-sm text-Primary-400-Hover w-[80px] mt-2"
-                            @click="logout"
-                        >
-                            <span class="text-Primary-400-Hover"> 登出 </span>
-                        </button>
-                    </div>
-                </button>
-            </div>
-        </div>
-
-        <!-- 側邊選單 -->
-        <div>
-            <Transition name="mask">
-                <div
-                    class="fixed left-0 top-0 h-full w-full bg-black bg-opacity-50 z-50"
-                    @click="hideSideNav = true"
-                    v-if="!hideSideNav"
-                ></div>
-            </Transition>
-
             <div
-                class="w-64 fixed left-0 top-0 h-full bg-white overflow-x-auto transition duration-500 transform z-50"
-                :class="{ '-translate-x-full': hideSideNav }"
+                class="max-md:fixed left-0 top-0 max-md:w-64 max-md:h-full max-md:bg-white max-md:overflow-x-auto transition-transform max-md:duration-500 max-md:transform max-md:z-50"
+                :class="{ 'max-md:-translate-x-full': hideSideNav }"
             >
-                <div class="auth py-4 px-7 flex items-center bg-Primary-500-Primary">
+                <div class="max-md:py-4 max-md:px-7 max-md:flex max-md:items-center max-md:bg-Primary-500-Primary">
                     <!-- 會員未登入 -->
                     <button
-                        class="rounded-lg bg-Primary-500-Primary border border-Primary-200 text-white px-3 py-1.5 text-sm flex gap-x-1 items-center justify-center"
+                        class="bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover max-md:bg-Primary-500-Primary max-md:border max-md:border-Primary-200 max-md:text-white"
                         v-if="!store.isLogin"
                         @click="openModal('login')"
                     >
-                        <img src="~assets/images/header/user.svg" />
+                        <img src="~assets/images/header/user-purple.svg" class="w-[18px] h-[18px] hidden md:block" />
+                        <img src="~assets/images/header/user.svg" class="block md:hidden" />
 
                         <span class="font-normal"> 登入 /註冊 </span>
                     </button>
@@ -161,7 +100,7 @@
                     <!-- 會員已登入 -->
                     <div class="flex" v-else>
                         <button
-                            class="rounded-lg bg-Primary-500-Primary border border-Primary-200 text-white px-3 py-1.5 text-sm flex gap-x-1 items-center justify-center"
+                            class="relative bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover group max-md:bg-Primary-500-Primary max-md:border max-md:border-Primary-200 max-md:text-white"
                             @click="goToPage('/member/information')"
                         >
                             <img
@@ -171,15 +110,38 @@
                             />
 
                             <span class="font-normal"> 會員中心 </span>
+
+                            <div
+                                class="absolute top-full left-0 w-full bg-white rounded-lg py-1 shadow hidden md:group-hover:block"
+                            >
+                                <ul
+                                    class="flex flex-col items-center [&>*:nth-child(4)]:border-t-Neutral-200 [&>*:nth-child(4)]:border-t"
+                                >
+                                    <li
+                                        class="text-black hover:bg-Primary-50 w-full"
+                                        v-for="(item, index) in memberCenterLink"
+                                        :key="index"
+                                    >
+                                        <nuxt-link class="block w-full py-2" :to="item.link">{{ item.name }}</nuxt-link>
+                                    </li>
+                                </ul>
+
+                                <button
+                                    class="bg-white border border-Primary-50 px-4 py-2 rounded-lg text-sm text-Primary-400-Hover w-[80px] mt-2"
+                                    @click="logout"
+                                >
+                                    <span class="text-Primary-400-Hover"> 登出 </span>
+                                </button>
+                            </div>
                         </button>
 
-                        <button class="underline text-white text-sm ml-3" @click="logout">登出</button>
+                        <button class="underline text-white text-sm ml-3 md:hidden" @click="logout">登出</button>
                     </div>
 
                     <img
                         src="~assets/images/header/arrow-left.svg"
                         alt="arrow-left"
-                        class="ml-auto"
+                        class="ml-auto md:hidden"
                         @click="hideSideNav = true"
                     />
                 </div>
@@ -193,7 +155,7 @@
                     :ui="{
                         item: { padding: 'p-0' },
                     }"
-                    class="text-Primary-600-Dark-Primary px-7"
+                    class="text-Primary-600-Dark-Primary px-7 md:hidden"
                 >
                     <template #category="{ item }">
                         <ul class="text-left bg-Primary-50 py-3 px-5 text-Neutral-900">
@@ -249,6 +211,14 @@
                     </template>
                 </UAccordion>
             </div>
+
+            <Transition name="mask">
+                <div
+                    class="fixed md:hidden left-0 top-0 h-full w-full bg-black bg-opacity-50 z-[49]"
+                    @click="hideSideNav = true"
+                    v-show="!hideSideNav"
+                ></div>
+            </Transition>
         </div>
     </header>
 </template>
@@ -265,23 +235,23 @@ const hideSideNav = ref(true);
 
 const navLink = [
     {
-        name: "群眾集資",
+        label: "群眾集資",
         link: "/category/technology-ai?type=fundraise",
     },
     {
-        name: "好評團購",
+        label: "好評團購",
         link: "/category/technology-ai?type=groupbuying",
     },
     {
-        name: "團主推薦",
+        label: "團主推薦",
         link: "/kol",
     },
     {
-        name: "好物分享",
-        link: "/category",
+        label: "好物分享",
+        link: "/good-thing",
     },
     {
-        name: "提案",
+        label: "提案",
         link: "/proposal",
     },
 ];
@@ -304,26 +274,7 @@ const navAccordionItems = [
             { name: "服務/公益", link: "/category/welfare" },
         ],
     },
-    {
-        label: "群眾集資",
-        link: "/category/technology-ai?type=fundraise",
-        showOpenIcon: false,
-    },
-    {
-        label: "好評團購",
-        link: "/category/technology-ai?type=groupbuying",
-        showOpenIcon: false,
-    },
-    {
-        label: "團主推薦",
-        link: "/kol",
-        showOpenIcon: false,
-    },
-    {
-        label: "好物分享",
-        link: "/category",
-        showOpenIcon: false,
-    },
+    ...navLink.slice(0, 4),
     {
         label: "關於我們",
         slot: "proposal",
@@ -331,14 +282,9 @@ const navAccordionItems = [
         lists: [
             { name: "關於我們", link: "/" },
             { name: "聯絡我們", link: "/" },
-            { name: "隱私權政策", link: "/" },
         ],
     },
-    {
-        label: "提案",
-        link: "/proposal",
-        showOpenIcon: false,
-    },
+    ...navLink.slice(-1),
 ];
 
 const memberCenterLink = [
@@ -387,7 +333,9 @@ function goToPage(link) {
     }
 }
 
-async function logout() {
+async function logout(e) {
+    e.stopPropagation();
+
     store.isLogin = false;
     store.userInfo = {};
     await navigateTo("/");
