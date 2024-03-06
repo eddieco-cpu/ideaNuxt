@@ -1,107 +1,194 @@
 <template>
     <div>
+        <CartHeader :step="2" />
         <!-- 商品資訊 -->
         <div class="flex flex-col gap-y-6 mx-auto w-full max-w-[324px] md:max-w-[786px]">
-            <CartCardContainer title="訂單明細">
-                <CardCheckOutProduct v-for="(item, index) in 5" :key="index" :showButton="false" />
-            </CartCardContainer>
+            <CardContainer title="訂單明細">
+                <template #body>
+                    <CardCheckOutProduct v-for="(item, index) in 5" :key="index" :showButton="false" />
+                </template>
+            </CardContainer>
 
-            <CartCardContainer title="收件人資訊">
-                <URadioGroup v-model="delivery" :options="sexOptions" class="delivery" />
+            <CardContainer title="收件人資訊">
+                <template #body>
+                    <div class="flex flex-col gap-y-4">
+                        <URadioGroup v-model="buyerInforamtion.delivery" :options="deliveryOptions" class="delivery" />
 
-                <div class="flex flex-col gap-y-2">
-                    <MemberEditAddress
-                        v-bind="tempAddress"
-                        :isEditmode="isEditmode"
-                        @onAbort="onAbort"
-                        @onSubmit="onSubmit"
-                        v-if="tempAddress"
-                    />
+                        <MemberEditAddress
+                            class="border border-Primary-100"
+                            bgColor="bg-Primary-50"
+                            v-bind="tempAddress"
+                            :isEditmode="isEditmode"
+                            @onAbort="onAbort"
+                            @onSubmit="onSubmit"
+                            v-if="tempAddress"
+                        />
 
-                    <CardMemberAddress
-                        v-for="(item, index) in addressInfo"
-                        :key="index"
-                        v-bind="item"
-                        @setDefaultAddress="setDefaultAddress"
-                        @editAddress="editAddress"
-                    />
+                        <CardMemberAddress
+                            v-for="(item, index) in addressInfo"
+                            class="border border-Primary-100"
+                            bgColor="bg-Primary-50"
+                            :key="index"
+                            v-bind="item"
+                        >
+                            <template #title>
+                                <div class="flex pb-[10px] mb-[10px] border-b border-Primary-100 text-sm">
+                                    <p class="text-black/[0.85]">地址{{ index + 1 }}</p>
+                                </div>
+                            </template>
+                        </CardMemberAddress>
 
-                    <button
-                        class="flex gap-x-1 items-center justify-center w-full rounded-lg bg-white border border-Primary-100 py-2"
-                        @click="editAddress(undefined, false)"
-                    >
-                        <img src="~assets/images/icon/plus-icon.svg" alt="add" />
-                        <span class="text-Primary-400-Hover text-sm">新增地址</span>
-                    </button>
-                </div>
-            </CartCardContainer>
+                        <button
+                            class="flex gap-x-1 items-center justify-center w-full rounded-lg border border-Primary-100 bg-Primary-50 py-2"
+                            @click="editAddress(undefined, false)"
+                        >
+                            <img src="~assets/images/icon/plus-icon.svg" alt="add" />
+                            <span class="text-Primary-400-Hover text-sm">新增地址</span>
+                        </button>
+                    </div>
+                </template>
+            </CardContainer>
 
-            <CartCardContainer title="訂購人資訊">
-                <div class="grid md:grid-cols-2 gap-3">
-                    <UFormGroup label="訂購人" name="name">
-                        <UInput placeholder="請輸入訂購人" v-model="buyerInforamtion.name" />
-                    </UFormGroup>
+            <CardContainer title="訂購人資訊">
+                <template #body>
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <UFormGroup label="訂購人" name="name">
+                            <UInput placeholder="請輸入訂購人" v-model="buyerInforamtion.name" />
+                        </UFormGroup>
 
-                    <UFormGroup label="訂購人手機" name="phone">
-                        <UInput v-model="buyerInforamtion.phone" disabled />
-                    </UFormGroup>
+                        <UFormGroup label="訂購人手機" name="phone">
+                            <UInput v-model="buyerInforamtion.phone" disabled />
+                        </UFormGroup>
 
-                    <UFormGroup
-                        label="發票種類"
-                        name="invoice"
-                        help="手機載具應輸入共8碼，第1碼應為 / ，後7碼可為數字 0 - 9 、大寫英文 A - Z、半形符號共三種 + - ."
-                    >
-                        <UDropdown v-model:open="open" :items="dropdownItems" :popper="{ placement: 'bottom-start' }">
-                            <UButton
-                                color="white"
-                                :label="dropdownValue || '請選擇'"
-                                class="min-w-[210px]"
-                                :class="dropdownValue ? 'text-Neutral-900-Primary' : 'text-Neutral-500-Primary'"
-                            />
-                            <UIcon
-                                name="i-heroicons-chevron-down-20-solid"
-                                class="text-2xl flex justify-center items-center h-8 ml-[-32px] pointer-events-none"
-                            />
-                        </UDropdown>
-                    </UFormGroup>
-                </div>
-            </CartCardContainer>
+                        <UFormGroup
+                            label="發票種類"
+                            name="invoice"
+                            help="手機載具應輸入共8碼，第1碼應為 / ，後7碼可為數字 0 - 9 、大寫英文 A - Z、半形符號共三種 + - ."
+                        >
+                            <UDropdown
+                                v-model:open="open"
+                                :items="dropdownItems"
+                                :popper="{ placement: 'bottom-start' }"
+                            >
+                                <UButton
+                                    color="white"
+                                    :label="dropdownValue || '請選擇'"
+                                    class="min-w-[210px]"
+                                    :class="dropdownValue ? 'text-Neutral-900-Primary' : 'text-Neutral-500-Primary'"
+                                />
+                                <UIcon
+                                    name="i-heroicons-chevron-down-20-solid"
+                                    class="text-2xl flex justify-center items-center h-8 ml-[-32px] pointer-events-none"
+                                />
+                            </UDropdown>
+                        </UFormGroup>
+                    </div>
+                </template>
+            </CardContainer>
 
-            <CartCardContainer title="付款方式">
+            <CardContainer title="付款方式">
                 <template #tip>
                     <p class="text-Neutral-700 text-xs pb-3">
                         交易全程使用安全加密，信用卡資料將不會儲存於網站，您可以安心使用信用卡付款。
                     </p>
                 </template>
+                <template #body>
+                    <URadioGroup v-model="buyerInforamtion.payment" :options="paymentOptions" class="payment" />
+                </template>
+            </CardContainer>
 
-                <URadioGroup v-model="payment" :options="paymentOptions" class="payment" />
-            </CartCardContainer>
-
-            <CartCardContainer title="訂單備註">
-                <UFormGroup name="remark">
-                    <UTextarea
-                        resize
-                        placeholder=" 如有需要，請您簡短的以  90字備註說明，謝謝。"
-                        v-model="buyerInforamtion.remark"
-                    />
-                </UFormGroup>
-            </CartCardContainer>
+            <CardContainer title="訂單備註" class="pb-8 md:pb-8">
+                <template #body>
+                    <UFormGroup name="remark">
+                        <UtilTextarea
+                            :resize="true"
+                            placeholder="如有需要，請您簡短的以  90字備註說明，謝謝。"
+                            :max="90"
+                            v-model="buyerInforamtion.remark"
+                        />
+                    </UFormGroup>
+                </template>
+            </CardContainer>
         </div>
 
         <!-- 總計 -->
         <div class="flex-1 md:sticky md:top-[98px]">
-            <CartTotal />
+            <CardContainer title="總計">
+                <template #body>
+                    <div class="flex justify-between text-Neutral-700, text-sm">
+                        <p>2件商品</p>
+                        <p>NT$3,240</p>
+                    </div>
+                    <div class="flex justify-between text-Neutral-700, text-sm">
+                        <p>運費</p>
+                        <p>NT$240</p>
+                    </div>
+                </template>
+
+                <template #footer>
+                    <div class="border-t border-t-Neutral-200">
+                        <p class="text-xl text-Primary-500-Primary font-roboto font-medium text-right py-3">NT$1,620</p>
+                        <button
+                            class="px-4 py-2 bg-Primary-500-Primary text-center rounded-lg w-full text-white"
+                            @click="goFinishedPage"
+                        >
+                            去結帳 ({{ 3 }})
+                        </button>
+                    </div>
+                </template>
+            </CardContainer>
+        </div>
+
+        <div class="w-screen h-screen pt-[170px] fixed top-0 left-0 bg-Neutral-bg" v-if="inProcessing">
+            <CartProcessing :progress="progress" />
         </div>
     </div>
 </template>
 
 <script setup>
+const inProcessing = ref(false);
+const progress = ref(0);
+const progressTimer = ref(0);
+
+const paymentOptions = [
+    {
+        value: "1",
+        label: "信用卡(3、6期)",
+    },
+    {
+        value: "2",
+        label: "ATM 轉帳",
+    },
+    {
+        value: "3",
+        label: "貨到付款",
+    },
+    {
+        value: "4",
+        label: "LINE Pay",
+    },
+];
+
+const deliveryOptions = [
+    {
+        value: "1",
+        label: "超商取貨",
+    },
+    {
+        value: "2",
+        label: "宅配到府",
+    },
+];
+
 const buyerInforamtion = ref({
     name: "",
     phone: "0911123456",
     invoice: "",
+    payment: "",
+    delivery: "",
     remark: "",
 });
+
 const open = ref(false);
 defineShortcuts({
     o: () => (open.value = !open.value),
@@ -129,10 +216,10 @@ const dropdownItems = [
         },
     ],
 ];
-const delivery = ref();
-const payment = ref();
+
 const tempAddress = ref(null);
 const isEditmode = ref(false);
+
 const addressInfo = ref([
     {
         index: 1,
@@ -151,14 +238,6 @@ const addressInfo = ref([
         address: "台北市信義區",
     },
 ]);
-
-function setDefaultAddress(index) {
-    addressInfo.value = addressInfo.value.map((item, i) => {
-        item.defaultAddress = i === index;
-
-        return { ...item };
-    });
-}
 
 async function editAddress(index, isEdit) {
     tempAddress.value = null;
@@ -210,35 +289,20 @@ function onSubmit(data, isEditmode) {
     }
     tempAddress.value = null;
 }
-const paymentOptions = [
-    {
-        value: "1",
-        label: "信用卡(3、6期)",
-    },
-    {
-        value: "2",
-        label: "ATM 轉帳",
-    },
-    {
-        value: "3",
-        label: "貨到付款",
-    },
-    {
-        value: "4",
-        label: "LINE Pay",
-    },
-];
 
-const sexOptions = [
-    {
-        value: "1",
-        label: "超商取貨",
-    },
-    {
-        value: "2",
-        label: "宅配到府",
-    },
-];
+function goFinishedPage() {
+    inProcessing.value = true;
+    progressTimer.value = setInterval(() => {
+        progress.value += 10;
+        if (progress.value >= 80) {
+            navigateTo("/cart/finished");
+        }
+    }, 500);
+}
+
+onBeforeUnmount(() => {
+    clearInterval(progressTimer.value);
+});
 </script>
 
 <style scoped>
