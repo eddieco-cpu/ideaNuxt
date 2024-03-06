@@ -8,7 +8,6 @@
                         v-for="(item, index) in category"
                         :key="index"
                         :to="item.link"
-                        style="'outline: 1px solid orange'"
                         class="block whitespace-nowrap text-sm text-Neutral-900 hover:text-Primary-400-Hover active:text-Primary-600-Dark-Primary mx-6 transition-colors duration-200 ease-in-out"
                         >{{ item.name }}</NuxtLink
                     >
@@ -169,7 +168,7 @@
                             v-for="(item, index) in groupBuyingList"
                             :key="index"
                             v-bind="item"
-                            :isMainPictureShowLeft="true"
+                            :isMainPictureShowLeft="index !== 0 && index !== 1 ? false : true"
                         />
                     </div>
                 </UiContainer>
@@ -215,7 +214,12 @@
                     <UiTitle>即將開團</UiTitle>
 
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-y-4 md:gap-x-5">
-                        <CardGroupBuying v-for="(item, index) in groupBuyingList" :key="index" v-bind="item" />
+                        <CardGroupBuying
+                            v-for="(item, index) in groupBuyingList"
+                            :key="index"
+                            v-bind="item"
+                            :isMainPictureShowLeft="true"
+                        />
                     </div>
                 </UiContainer>
             </section>
