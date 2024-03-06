@@ -1,7 +1,5 @@
 <template>
     <div>
-        <h1>Dashboard</h1>
-        <h2 class="text-3xl font-bold underline text-gray-500">progress</h2>
-        <hr />
+        <NuxtPage class="mx-auto md:max-w-full min-h-96" />
     </div>
 </template>
