@@ -51,41 +51,63 @@
 
         <!-- 總計 -->
         <div class="flex-1 fixed w-full bottom-0 md:sticky md:top-[98px]">
-            <div class="max-md:h-screen max-md:flex max-md:items-end max-md:bg-black/50">
-                <CardContainer title="總計">
-                    <template #body>
-                        <div class="flex justify-between text-Neutral-700, text-sm">
+            <transition name="mask">
+                <div class="fixed w-screen h-screen top-0 left-0 bg-black/50 md:hidden" v-show="showTotalDetail"></div>
+            </transition>
+
+            <CardContainer>
+                <template #body>
+                    <div
+                        class="flex flex-col gap-y-3 fixed w-screen -bottom-[150px] left-0 p-3 md:p-0 rounded-lg bg-white md:static md:w-full transition-[bottom] duration-300"
+                        :class="{ 'bottom-[87px]': showTotalDetail }"
+                    >
+                        <h1 class="pb-3 text-black/85 font-medium border-b border-b-Neutral-200">總計</h1>
+                        <div class="flex justify-between text-Neutral-700 text-sm">
                             <p>2件商品</p>
                             <p>NT$3,240</p>
                         </div>
-                        <div class="flex justify-between text-Neutral-700, text-sm">
+                        <div class="flex justify-between text-Neutral-700 text-sm pb-3 border-b border-b-Neutral-200">
                             <p>運費</p>
                             <p>NT$240</p>
                         </div>
-                    </template>
+                    </div>
+                </template>
 
-                    <template #footer>
-                        <div class="border-t border-t-Neutral-200">
-                            <p class="text-xl text-Primary-500-Primary font-roboto font-medium text-right py-3">
+                <template #footer>
+                    <div class="py-2 md:py-0 flex md:block">
+                        <div class="flex-1">
+                            <p class="text-xs pb-1 text-Neutral-600-Dark-Primary md:hidden flex items-center gap-x-1">
+                                共3商品
+                                <UIcon
+                                    name="i-heroicons-chevron-up"
+                                    class="block w-4 h-4 text-Neutral-600-Dark-Primary cursor-pointer transition-transform duration-300"
+                                    :class="{ 'rotate-180': showTotalDetail }"
+                                    @click="showTotalDetail = !showTotalDetail"
+                                />
+                            </p>
+                            <p
+                                class="text-xl text-Neutral-800 md:text-Primary-500-Primary font-roboto font-medium md:text-right md:pb-3"
+                            >
                                 NT$1,620
                             </p>
-
-                            <button
-                                class="px-4 py-2 bg-Primary-500-Primary text-center rounded-lg w-full text-white"
-                                @click="goCheckoutPage"
-                            >
-                                去結帳 ({{ 3 }})
-                            </button>
                         </div>
-                    </template>
-                </CardContainer>
-            </div>
+
+                        <button
+                            class="px-4 py-2 text-sm bg-Primary-500-Primary text-center rounded-lg w-full text-white flex-1"
+                            @click="goCheckoutPage"
+                        >
+                            去結帳 ({{ 3 }})
+                        </button>
+                    </div>
+                </template>
+            </CardContainer>
         </div>
     </div>
 </template>
 
 <script setup>
 const productList = ref(Array.from({ length: 15 }, (num, i) => i));
+const showTotalDetail = ref(false);
 
 function goCheckoutPage() {
     navigateTo("/cart/checkout");
