@@ -1,7 +1,6 @@
 <template>
     <!-- <Header /> -->
-    <HeaderMobile class="block md:hidden" @openModal="openModal" />
-    <HeaderWeb class="hidden md:block" @openModal="openModal" />
+    <LayoutHeader @openModal="openModal" />
 
     <!-- 主要內容 -->
     <main class="pt-[52px] pb-[40px] md:pt-[74px] md:pb-[120px]">
@@ -9,7 +8,7 @@
     </main>
 
     <!-- 頁腳 -->
-    <TheFooter />
+    <LayoutFooter />
 
     <!-- Modal -->
     <ModalRegister v-model="showModal" />

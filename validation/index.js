@@ -40,7 +40,7 @@ export const memberInformationSchema = z.object({
 
 export const leaderInformationSchema = z.object({
     siteName: z.string(commonErrorMessage).min(1, "必填"),
-    selfDescription: z.string(commonErrorMessage).min(1, "必填"),
+    selfDescription: z.string(commonErrorMessage).min(1, "必填").max(250, "字數超過限制"),
 });
 
 export const submissionSchema = z.object({

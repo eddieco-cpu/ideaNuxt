@@ -13,8 +13,10 @@ import rocket from "assets/images/icon/rocket-icon.svg";
 import rocketActive from "assets/images/icon/rocket-small-active-icon.svg";
 import camera from "assets/images/icon/camera.svg";
 import users from "assets/images/icon/users-active-icon.svg";
-import rocketOrderActive from "assets/images/icon/rocket-active-icon.svg";
+import fundRaise from "assets/images/icon/fund-raise-icon.svg";
+import groupBuy from "assets/images/icon/groupbuy-icon.svg";
 import edit from "assets/images/icon/edit-icon.svg";
+import circle from "assets/images/icon/circle-icon.svg";
 
 // auth
 // header
@@ -35,6 +37,7 @@ import intro_3 from "assets/images/proposal/intro_3.png";
 
 export default {
     userInfo,
+    groupBuy,
     userInfoActive,
     home,
     homeActive,
@@ -48,7 +51,7 @@ export default {
     rocketActive,
     camera,
     users,
-    rocketOrderActive,
+    fundRaise,
     edit,
     facebook,
     instagram,
@@ -57,4 +60,5 @@ export default {
     intro_1,
     intro_2,
     intro_3,
+    circle,
 };
