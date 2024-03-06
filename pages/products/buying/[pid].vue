@@ -5,18 +5,18 @@
         </picture>
         <section class="max-w-[1090px] mx-auto max-xl:px-6 max-xl:py-4 max-md:px-0">
             <!--  -->
-            <section class="pt-8 pb-8 mt-[-140px] max-md:px-6">
+            <section class="pt-8 pb-8 mt-[-140px] max-md:px-6 max-md:pt-1 max-md:pb-3">
                 <UBreadcrumb
                     divider="/"
                     :links="[{ label: 'Home', to: '/' }, { label: 'Navigation' }, { label: 'Breadcrumb' }]"
                     :ui="{
-                        active: 'text-white',
-                        inactive: 'text-white',
+                        active: 'text-white font-normal',
+                        inactive: 'text-white font-normal',
                         divider: {
                             base: 'text-white bg-white',
                         },
                         ol: 'text-white',
-                        li: 'text-white',
+                        li: 'text-white !font-normal max-md:text-xs',
                     }"
                 />
             </section>
@@ -26,12 +26,14 @@
                 class="hidden max-xl:flex justify-between items-center max-xl:fixed max-xl:z-10 max-xl:bottom-0 max-xl:left-0 max-xl:w-full max-xl:bg-white max-xl:px-4 max-xl:py-2 max-md:gap-x-3"
             >
                 <!--  -->
-                <button class="w-12 h-12 rounded-lg ring-2 ring-Neutral-500-Primary flex justify-center items-center">
-                    <UIcon name="i-heroicons-heart" class="text-Neutral-500-Primary text-4xl" />
+                <button
+                    class="w-12 h-12 rounded-lg ring-2 ring-Neutral-500-Primary flex justify-center items-center max-xl:w-9 max-xl:h-9"
+                >
+                    <UIcon name="i-heroicons-heart" class="text-Neutral-500-Primary text-xl" />
                 </button>
 
                 <!-- @click="() => $router.push('/products/funding/1')" -->
-                <UiButton class="min-w-[370px] min-h-12 max-md:min-w-40 max-md:flex-grow">
+                <UiButton class="min-w-[370px] min-h-12 max-md:min-w-40 max-md:flex-grow max-md:min-h-9 max-md:h-9">
                     立即購買 {{ " " }}({{ recommendationSelects.reduce((c, t) => c + t.amount, 0) }})
                 </UiButton>
             </div>
@@ -40,11 +42,11 @@
             <section class="max-md:px-6 mb-10 max-md:mb-5">
                 <section class="p-4 bg-white rounded-lg overflow-hidden">
                     <div class="flex flex-row items-center gap-x-2">
-                        <p
-                            class="bg-Secondary-500-Primary rounded py-1 px-2 text-white flex justify-start items-center"
-                        >
-                            <UIcon name="i-heroicons-clock" class="w-4 h-4" />
-                            {{ " " }}03日04時34分22秒
+                        <p class="bg-[#4AACFD] rounded py-1 px-2 text-white flex justify-start items-center gap-x-1">
+                            <UIcon name="i-heroicons-clock" class="w-4 h-4 mr-1" />
+
+                            <span>03</span>
+                            日<span>04</span>時<span>34</span>分<span>22</span>秒
                         </p>
                         <div class="items-baseline">
                             <b
@@ -58,7 +60,7 @@
                             >
                         </div>
                     </div>
-                    <h2 class="font-black text-xl py-3">金秘書 x 藍海饌 美味就像現煮❤️常溫料理包直接買</h2>
+                    <h2 class="font-medium text-xl py-3">金秘書 x 藍海饌 美味就像現煮❤️常溫料理包直接買</h2>
                     <h3 class="font-noto text-xs text-Neutral-600-Dark-Primary">
                         聲震宇宙領域，虛擬現實音效耳罩，嵌入式通訊系統，危機中的最佳音樂夥伴聲震宇宙領域，虛擬現實音效耳罩，嵌入式通訊系統，危機。聲震宇宙領域，虛擬現實音效耳罩，嵌入式通訊系統，危機中的音。
                     </h3>
@@ -67,7 +69,7 @@
 
             <!--  -->
             <section
-                class="grid grid-rows-1 grid-cols-[auto_auto] gap-6 mb-7 max-xl:grid-rows-[auto_auto] max-xl:grid-cols-1 max-md:px-6"
+                class="grid grid-rows-1 grid-cols-[auto_auto] gap-6 mb-7 max-xl:grid-rows-[auto_auto] max-xl:grid-cols-1 max-md:px-6 max-md:gap-0"
             >
                 <!-- slider -->
                 <section
@@ -79,7 +81,9 @@
                 <!-- art -->
                 <article class="w-[436px] flex flex-col justify-center items-center max-xl:w-auto">
                     <!-- avater -->
-                    <div class="flex justify-between items-center gap-x-2 bg-white mb-2 p-3 rounded-lg w-full">
+                    <div
+                        class="flex justify-between items-center gap-x-2 bg-white mb-2 p-3 rounded-lg w-full max-md:mb-5 max-md:translate-y-[-4px]"
+                    >
                         <div class="flex justify-start items-center gap-x-3">
                             <picture class="block w-[110px] aspect-[1/1] overflow-hidden rounded-lg flex-shrink-0">
                                 <img :src="helperPicture()" class="block w-full h-full object-cover" />
@@ -319,6 +323,16 @@ const recommendationSelects = reactive([
 </script>
 
 <style scoped>
+.banner_photo::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
 .card_group::-webkit-scrollbar {
     width: 5px;
     height: 5px;
