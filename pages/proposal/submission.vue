@@ -201,17 +201,20 @@
                         <ModalDropImg ref="imgData" />
                     </UFormGroup>
 
-                    <UFormGroup label="專案說明審核" required class="mb-3">
-                        <div>
+                    <UFormGroup label="專案說明審核" required class="mb-8" name="projectDetailsDes">
+                        <div class="relative">
                             <UTextarea
-                                :id="'n'"
                                 placeholder=" 請您提供關於本次專案的故事與內容介紹，例如為什麼大家應該支持你的計畫，提案者必須提供足夠的資訊才有辦法審核計畫，如無法評估計畫的真實性、可行性，計畫就會無法上架，請特別注意唷！"
                                 :rows="screenWidth <= 768 ? 4 : 3"
                                 resize
                                 class="w-full"
                                 size="lg"
+                                v-model="submissionData.projectDetailsDes"
+                                @input="(e) => (e.target.value = e.target.value.slice(0, 300))"
                             />
-                            <p class="text-sm text-right text-Neutral-500-Primary"><span>0</span> / <span>300</span></p>
+                            <p class="text-sm text-right text-Neutral-500-Primary absolute bottom-[-20px] right-0">
+                                <span>{{ submissionData.projectDetailsDes.length }}</span> / <span>300</span>
+                            </p>
                         </div>
                     </UFormGroup>
                 </template>
@@ -445,6 +448,7 @@ const submissionData = reactive({
     phone: "0987654321",
     projectName: "",
     projectDes: "",
+    projectDetailsDes: "",
     projectTargetValue: "",
     dropdownValue: "",
     startDate: "",

@@ -1,13 +1,13 @@
 <template>
     <div
-        class="text-xs font-medium text-white px-2 py-1 rounded-md"
+        class="text-xs font-medium text-Primary-50 px-2 py-1 rounded-md"
         :class="showClass(tag.color)"
         v-if="tag.type === 'text'"
     >
         {{ tag.name }}
     </div>
     <div
-        class="text-xs font-medium text-white px-2 py-1 rounded-md flex items-center gap-x-[2px]"
+        class="text-xs font-medium text-Primary-50 px-2 py-1 rounded-md flex items-center gap-x-[2px]"
         :class="showClass(tag.color)"
         v-if="tag.type === 'time'"
     >
@@ -20,11 +20,11 @@
 <script setup>
 const { tag } = defineProps({
     tag: Object,
-    default: {
+    default: () => ({
         name: "",
         color: "primary",
         type: "text",
-    },
+    }),
 });
 
 function showClass(type) {

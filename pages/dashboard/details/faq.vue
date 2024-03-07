@@ -1,7 +1,6 @@
 <template>
     <div>
-        <h1>Dashboard</h1>
-        <h2 class="text-3xl font-bold underline text-gray-500">faq</h2>
-        <hr />
+        <!-- 導航列顯示內容 -->
+        <NuxtPage class="mx-auto ring-1 min-h-96" />
     </div>
 </template>

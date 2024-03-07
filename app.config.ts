@@ -2,7 +2,7 @@ export default defineAppConfig({
     ui: {
         primary: "fuchsia-blue",
         formGroup: {
-            help: "text-xs mt-0 text-black/[0.45]",
+            help: "text-xs mt-1 mb-[2px] text-black/[0.45]",
             label: { required: `before:content-['*'] before:mx-0.5 before:text-red-500 after:content-['']` },
             error: "mt-0 text-Status-Color-Danger-500-Primary",
         },

@@ -28,8 +28,8 @@
             <!-- 排序 -->
             <div class="flex justify-between items-end mt-10 mb-4">
                 <div class="flex items-end">
-                    <h2 class="text-xl font-medium">精選團主</h2>
-                    <span class="text-Primary-500-Primary text-xs ml-2">共{{ kolList.length }}位</span>
+                    <h2 class="text-xl font-medium leading-none">精選團主</h2>
+                    <span class="text-Primary-500-Primary text-xs ml-2 leading-none">共{{ kolList.length }}位</span>
                 </div>
 
                 <USelectMenu
@@ -48,7 +48,7 @@
 
             <!-- 精選團主卡片 -->
             <div class="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-5">
-                <CardKolRecommend v-for="(item, index) in kolList" :key="index" v-bind="item" />
+                <CardKol v-for="(item, index) in kolList" :key="index" v-bind="item" />
             </div>
 
             <UiPagination

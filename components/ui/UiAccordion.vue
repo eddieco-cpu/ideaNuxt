@@ -1,5 +1,5 @@
 <template>
-    <UAccordion :items="items">
+    <UAccordion :items="items" :class="class">
         <template #default="{ item, index, open }">
             <UButton
                 class="bg-Primary-50 hover:bg-Primary-100 active:bg-Primary-100 mb-4 py-[10px] items-start"
@@ -14,7 +14,9 @@
                 </template> -->
 
                 <template #leading>
-                    <div class="text-Primary-500-Primary text-base font-medium">Q{{ index + 1 }}.</div>
+                    <div class="text-Primary-500-Primary text-base font-medium">
+                        {{ item.leading || `Q${index + 1}. ` }}
+                    </div>
                 </template>
 
                 <span class="text-Primary-500-Primary text-base font-medium text-left"> {{ " " + item.label }}</span>
@@ -35,6 +37,7 @@
 </template>
 <script setup>
 const props = defineProps({
+    class: String,
     items: {
         type: Array,
         default: () => [

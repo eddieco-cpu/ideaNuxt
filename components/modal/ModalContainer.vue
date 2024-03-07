@@ -13,7 +13,7 @@
 
                 <h2 class="text-2xl font-medium">{{ text }}</h2>
 
-                <p class="text-xs text-Neutral-800 text-center md:text-left mt-3 mb-7">
+                <p class="text-xs md:text-sm text-Neutral-800 text-center md:text-left mt-3 mb-7">
                     {{ subTitle }}
                 </p>
                 <slot />

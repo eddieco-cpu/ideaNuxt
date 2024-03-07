@@ -8,8 +8,7 @@
                         v-for="(item, index) in category"
                         :key="index"
                         :to="item.link"
-                        style="'outline: 1px solid orange'"
-                        class="block whitespace-nowrap text-sm font-medium text-Neutral-900 hover:text-Primary-400-Hover active:text-Primary-600-Dark-Primary mx-6 transition-colors duration-200 ease-in-out"
+                        class="block whitespace-nowrap text-sm text-Neutral-900 hover:text-Primary-400-Hover active:text-Primary-600-Dark-Primary mx-6 transition-colors duration-200 ease-in-out"
                         >{{ item.name }}</NuxtLink
                     >
                 </div>
@@ -164,8 +163,15 @@
                     <!--  -->
                     <UiTitle>網紅推薦！限時開團中</UiTitle>
 
-                    <div class="grid grid-cols-1 gap-y-4 md:grid-cols-4 md:gap-x-5">
-                        <CardGroupBuying v-for="(item, index) in groupBuyingList" :key="index" v-bind="item" />
+                    <div class="grid grid-cols-1 gap-y-4 md:grid-cols-3 md:gap-x-5">
+                        <CardGroupBuying
+                            v-for="(item, index) in groupBuyingList"
+                            :key="index"
+                            v-bind="item"
+                            :isMainPictureShowLeft="
+                                screenWidth > 768 ? true : index === 0 || index === 1 ? true : false
+                            "
+                        />
                     </div>
                 </UiContainer>
             </section>
@@ -210,7 +216,12 @@
                     <UiTitle>即將開團</UiTitle>
 
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-y-4 md:gap-x-5">
-                        <CardGroupBuying v-for="(item, index) in groupBuyingList" :key="index" v-bind="item" />
+                        <CardGroupBuying
+                            v-for="(item, index) in groupBuyingList"
+                            :key="index"
+                            v-bind="item"
+                            :isMainPictureShowLeft="screenWidth <= 768"
+                        />
                     </div>
                 </UiContainer>
             </section>
@@ -219,11 +230,18 @@
 </template>
 
 <script setup>
+//
 const currentPage = ref(10);
 const totalPages = ref(20);
 const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
 };
+
+//
+const screenWidth = ref(800);
+onMounted(() => {
+    screenWidth.value = window.innerWidth;
+});
 
 const videoPlayList = ref([]);
 const kolList = ref([]);

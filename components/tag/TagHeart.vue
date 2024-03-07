@@ -16,12 +16,17 @@
             <img src="~assets/images/icon/heart-icon-purple.svg" alt="heart" v-show="!addKolFavorite" />
             <img src="~assets/images/icon/heart-icon-active-purple.svg" alt="heart" v-show="addKolFavorite" />
 
-            <h3 class="text-sm text-Primary-400-Hover">收藏團購主</h3>
+            <h3 class="text-sm" :class="[addKolFavorite ? 'text-Primary-600-Dark-Primary' : 'text-Primary-400-Hover']">
+                收藏團購主
+            </h3>
         </div>
     </div>
 
     <!-- 編輯模式 -->
-    <div v-if="isEditMode" class="cursor-pointer">
+    <div
+        v-if="isEditMode"
+        class="cursor-pointer size-[30px] bg-[#392B90]/[0.5] rounded flex items-center justify-center"
+    >
         <img src="~assets/images/icon/edit-gray-icon.svg" alt="edit" @click="editProposal" />
     </div>
 </template>
