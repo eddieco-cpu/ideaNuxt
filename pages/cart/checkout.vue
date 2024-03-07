@@ -28,19 +28,31 @@
                                 v-if="tempAddress"
                             />
 
-                            <CardMemberAddress
-                                v-for="(item, index) in addressInfo"
-                                class="border border-Primary-100"
-                                bgColor="bg-Primary-50"
-                                :key="index"
-                                v-bind="item"
-                            >
-                                <template #title>
-                                    <div class="flex pb-[10px] mb-[10px] border-b border-Primary-100 text-sm">
-                                        <p class="text-black/[0.85]">地址{{ index + 1 }}</p>
-                                    </div>
-                                </template>
-                            </CardMemberAddress>
+                            <label v-for="(item, index) in addressInfo" :key="index">
+                                <CardMemberAddress
+                                    class="border border-Primary-100 cursor-pointer"
+                                    bgColor="bg-Primary-50"
+                                    v-bind="item"
+                                >
+                                    <template #title>
+                                        <div
+                                            class="flex gap-x-2 items-center pb-[10px] mb-[10px] border-b border-Primary-100 text-sm"
+                                        >
+                                            <label class="radio-container">
+                                                <input
+                                                    hidden
+                                                    type="radio"
+                                                    name="address"
+                                                    v-model="deliveryAddress"
+                                                    :value="item"
+                                                />
+                                                <div class="mark"></div>
+                                            </label>
+                                            <p class="text-black/[0.85]">地址{{ index + 1 }}</p>
+                                        </div>
+                                    </template>
+                                </CardMemberAddress>
+                            </label>
 
                             <button
                                 class="flex gap-x-1 items-center justify-center w-full rounded-lg border border-Primary-100 bg-Primary-50 py-2"
@@ -68,7 +80,7 @@
 
                     <div>
                         <UFormGroup label="發票種類" name="invoice" :help="invoiceHint">
-                            <div class="flex gap-x-3">
+                            <div class="grid grid-cols-1 md:flex gap-3">
                                 <USelectMenu
                                     size="lg"
                                     class="min-w-[210px]"
@@ -89,7 +101,10 @@
                                     v-if="checkoutPayload.invoiceType === 2"
                                 />
 
-                                <div class="grid grid-cols-2 gap-3" v-if="checkoutPayload.invoiceType === 3">
+                                <div
+                                    class="grid grid-cols-1 md:grid-cols-2 gap-3"
+                                    v-if="checkoutPayload.invoiceType === 3"
+                                >
                                     <UInput placeholder="公司抬頭" v-model="orgInvoice.title" />
                                     <UInput placeholder="公司統一編號" v-model="orgInvoice.taxIdNumber" />
                                     <UInput type="address" placeholder="公司地址" v-model="orgInvoice.address" />
@@ -295,6 +310,7 @@ const addressInfo = ref([
         address: "台北市信義區",
     },
 ]);
+const deliveryAddress = ref(addressInfo.value[0]);
 
 async function editAddress() {
     tempAddress.value = null;
@@ -376,5 +392,20 @@ onBeforeUnmount(() => {
 .delivery :deep(fieldset) label,
 .payment :deep(fieldset) label {
     cursor: pointer;
+}
+
+.radio-container {
+    display: inline-flex;
+}
+.mark {
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+    background-color: #fff;
+    border: 1px solid #d5d9de;
+}
+
+input:checked + .mark {
+    border: 5px solid #6b56ca;
 }
 </style>
