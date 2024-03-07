@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class="pt-6 flex flex-wrap items-start gap-6 max-w-[324px] md:max-w-[1082px] mx-auto">
         <div class="flex flex-col gap-y-6 items-center w-full">
             <component :is="showOrderStatus" :orderId="orderStatus.orderId"></component>
 
-            <div class="w-[76%] flex flex-wrap gap-3">
+            <div class="flex flex-wrap gap-3">
                 <CardOrderInformation class="w-full md:w-[40%]" />
                 <CardProductInformation class="w-full md:flex-1" />
                 <CardBuyerInformation class="w-full md:w-[calc(50%_-_6px)]" v-if="isOrderSuccess" />
@@ -15,7 +15,6 @@
 
 <script setup>
 import { CartOrderSuccess, CartOrderFailed, CartOrderAtm } from "#components";
-const progress = ref(0);
 const orderStatus = ref({
     status: "success",
     payment: "atm",

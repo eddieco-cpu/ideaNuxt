@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="pt-6 flex flex-wrap items-start gap-6 max-w-[324px] md:max-w-[1082px] mx-auto">
         <CartHeader :step="2" />
         <!-- 商品資訊 -->
         <div class="flex flex-col gap-y-6 mx-auto w-full max-w-[324px] md:max-w-[786px]">
@@ -152,7 +152,7 @@
         </div>
 
         <!-- 總計 -->
-        <div class="flex-1 fixed w-full bottom-0 md:sticky md:top-[98px]">
+        <div class="flex-1 fixed w-full left-0 bottom-0 md:sticky md:top-[98px]">
             <CardContainer class="rounded-none md:rounded-lg">
                 <template #body>
                     <div
