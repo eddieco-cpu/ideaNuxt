@@ -1,17 +1,19 @@
 <template>
     <div class="flex md:flex-row gap-4">
-        <img :src="helperPicture()" alt="product" class="size-[66px] md:size-[100px] rounded" />
+        <img :src="image" alt="product" class="size-[66px] md:size-[100px] rounded" />
 
         <div class="flex flex-col justify-between gap-y-3 md:flex-row md:gap-x-6 flex-1 relative">
             <div class="md:max-w-[450px]">
                 <h1 class="text-Neutral-800 text-sm font-medium line-clamp-2">
-                    聲震宇宙領域，虛擬現實音效耳罩，嵌入式通訊系統，危機中的最佳音樂夥伴
+                    {{ title }}
                 </h1>
 
-                <p class="text-Neutral-700 text-xs mt-1">VIP超早鳥限定｜全套桌曆＋年曆</p>
+                <p class="text-Neutral-700 text-xs mt-1">{{ text }}</p>
             </div>
 
-            <span class="text-Neutral-900 font-medium font-roboto flex-1 md:text-right">NT$1,620</span>
+            <span class="text-Neutral-900 font-medium font-roboto flex-1 md:text-right">{{
+                helperMoneyComma(price * qty)
+            }}</span>
 
             <div
                 class="text-xs text-Neutral-700 flex gap-x-2 absolute bottom-1 right-0 md:flex-col md:gap-y-2 md:items-end md:static"
@@ -27,10 +29,31 @@
 </template>
 
 <script setup>
-const { showButton } = defineProps({
+const { showButton, id, image } = defineProps({
     showButton: {
         type: Boolean,
         default: true,
+    },
+    id: {
+        type: Number,
+    },
+    price: {
+        type: Number,
+    },
+    qty: {
+        type: Number,
+    },
+    image: {
+        type: String,
+        default: "",
+    },
+    title: {
+        type: String,
+        default: "",
+    },
+    text: {
+        type: String,
+        default: "",
     },
 });
 </script>

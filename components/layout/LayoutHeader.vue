@@ -74,7 +74,7 @@
 
                     <div
                         class="absolute -right-1 -top-1 bg-Dust-Red-5 rounded-full w-[7.5px] h-[7.5px]"
-                        v-if="true"
+                        v-if="cart.cartList.length !== 0"
                     ></div>
                 </div>
             </div>
@@ -225,7 +225,9 @@
 
 <script setup>
 import { useAuthStore } from "@/stores/auth";
+import { cartStore } from "@/stores/cart";
 
+const cart = cartStore();
 const store = useAuthStore();
 const emit = defineEmits(["openModal"]);
 

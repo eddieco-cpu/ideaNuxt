@@ -1,7 +1,7 @@
 <template>
     <div class="max-w-[324px] md:max-w-[1082px] mx-auto mt-8">
-        <CartHeader :step="1" />
-        <div class="pt-6 grid grid-cols-1 md:grid-cols-[76%_auto] items-start gap-6" v-if="true">
+        <CartHeader :step="1" v-if="cart.cartList.length !== 0" />
+        <div class="pt-6 grid grid-cols-1 md:grid-cols-[76%_auto] items-start gap-6" v-if="cart.cartList.length !== 0">
             <!-- 商品資訊 -->
             <div class="flex flex-col gap-6">
                 <CardContainer title="選擇團購">
@@ -9,18 +9,24 @@
                         <div>
                             <UCarousel
                                 v-slot="{ item, index }"
-                                :items="productList"
+                                :items="cart.cartList"
                                 :ui="{
                                     item: 'snap-start basis-[128px]',
                                     container: 'gap-x-3',
                                 }"
                                 class="max-w-[1200px]"
                             >
-                                <img
-                                    :src="helperPicture()"
-                                    alt="product"
-                                    class="rounded-lg w-full h-[81px] object-cover"
-                                />
+                                <label>
+                                    <input type="checkbox" :value="item" v-model="cart.selectProducts" hidden />
+                                    <img
+                                        :src="helperPicture()"
+                                        alt="product"
+                                        class="rounded-lg w-[126px] flex-1 h-[81px] object-cover"
+                                        :class="{
+                                            'border-Primary-50 border-2': isProductBeSelected(item.id),
+                                            'contrast-[.25]': !isProductBeSelected(item.id),
+                                        }"
+                                /></label>
                             </UCarousel>
                         </div>
                     </template>
@@ -55,7 +61,7 @@
                     </template>
 
                     <template #body>
-                        <CardCheckOutProduct v-for="(item, index) in 5" :key="index" />
+                        <CardCheckOutProduct v-for="(item, index) in cart.selectProducts" :key="index" v-bind="item" />
                     </template>
                 </CardContainer>
             </div>
@@ -72,14 +78,14 @@
                         >
                             <h1 class="pb-3 text-black/85 font-medium border-b border-b-Neutral-200">總計</h1>
                             <div class="flex justify-between text-Neutral-700 text-sm">
-                                <p>2件商品</p>
-                                <p>NT$3,240</p>
+                                <p>{{ cart.selectProducts.length }}件商品</p>
+                                <p>NT${{ helperMoneyComma(cart.totalPrice) }}</p>
                             </div>
                             <div
                                 class="flex justify-between text-Neutral-700 text-sm pb-3 border-b border-b-Neutral-200"
                             >
                                 <p>運費</p>
-                                <p>NT$240</p>
+                                <p>NT$0</p>
                             </div>
                         </div>
                     </template>
@@ -90,7 +96,7 @@
                                 <p
                                     class="text-xs pb-1 text-Neutral-600-Dark-Primary md:hidden flex items-center gap-x-1"
                                 >
-                                    共3商品
+                                    共{{ cart.selectProducts.length }}商品
                                     <UIcon
                                         name="i-heroicons-chevron-up"
                                         class="block w-4 h-4 text-Neutral-600-Dark-Primary cursor-pointer transition-transform duration-300"
@@ -101,7 +107,7 @@
                                 <p
                                     class="text-xl text-Neutral-800 md:text-Primary-500-Primary font-roboto font-medium md:text-right md:pb-3"
                                 >
-                                    NT$1,620
+                                    NT${{ helperMoneyComma(cart.totalPrice) }}
                                 </p>
                             </div>
 
@@ -109,7 +115,7 @@
                                 class="px-4 py-2 text-sm bg-Primary-500-Primary text-center rounded-lg w-full text-white flex-1"
                                 @click="goCheckoutPage"
                             >
-                                去結帳 ({{ 3 }})
+                                去結帳 ({{ cart.selectProducts.length }})
                             </button>
                         </div>
                     </template>
@@ -145,8 +151,14 @@
 </template>
 
 <script setup>
-const productList = ref(Array.from({ length: 15 }, (num, i) => i));
+import { cartStore } from "@/stores/cart";
+const cart = cartStore();
+
 const showTotalDetail = ref(false);
+
+function isProductBeSelected(id) {
+    return cart.selectProducts.some((item) => item.id === id);
+}
 
 function goCheckoutPage() {
     navigateTo("/cart/checkout");

@@ -6,7 +6,12 @@
             <div class="flex flex-col gap-6">
                 <CardContainer title="訂單明細">
                     <template #body>
-                        <CardCheckOutProduct v-for="(item, index) in 5" :key="index" :showButton="false" />
+                        <CardCheckOutProduct
+                            v-for="(item, index) in cart.selectProducts"
+                            :key="index"
+                            :showButton="false"
+                            v-bind="item"
+                        />
                     </template>
                 </CardContainer>
 
@@ -168,14 +173,14 @@
                         >
                             <h1 class="pb-3 text-black/85 font-medium border-b border-b-Neutral-200">總計</h1>
                             <div class="flex justify-between text-Neutral-700 text-sm">
-                                <p>2件商品</p>
-                                <p>NT$3,240</p>
+                                <p>{{ cart.selectProducts.length }}件商品</p>
+                                <p>NT${{ helperMoneyComma(cart.totalPrice) }}</p>
                             </div>
                             <div
                                 class="flex justify-between text-Neutral-700 text-sm pb-3 border-b border-b-Neutral-200"
                             >
                                 <p>運費</p>
-                                <p>NT$240</p>
+                                <p>NT$0</p>
                             </div>
                         </div>
                     </template>
@@ -186,7 +191,7 @@
                                 <p
                                     class="text-xs pb-1 text-Neutral-600-Dark-Primary md:hidden flex items-center gap-x-1"
                                 >
-                                    共3商品
+                                    共{{ cart.selectProducts.length }}商品
                                     <UIcon
                                         name="i-heroicons-chevron-up"
                                         class="block w-4 h-4 text-Neutral-600-Dark-Primary cursor-pointer transition-transform duration-300"
@@ -197,7 +202,7 @@
                                 <p
                                     class="text-xl text-Neutral-800 md:text-Primary-500-Primary font-roboto font-medium md:text-right md:pb-3"
                                 >
-                                    NT$1,620
+                                    NT${{ helperMoneyComma(cart.totalPrice) }}
                                 </p>
                             </div>
 
@@ -235,6 +240,9 @@
 </template>
 
 <script setup>
+import { cartStore } from "@/stores/cart";
+const cart = cartStore();
+
 const inProcessing = ref(false);
 const progress = ref(0);
 const progressTimer = ref(0);

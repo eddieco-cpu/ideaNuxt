@@ -23,12 +23,28 @@
             <!-- <p>
                 <input type="text" v-model="select.name" />
             </p> -->
-            <UiButton class="max-xl:w-full max-md:h-[30px] max-md:text-sm">加入購物車</UiButton>
+            <UiButton class="max-xl:w-full max-md:h-[30px] max-md:text-sm" @click="addToCart">加入購物車</UiButton>
         </section>
     </li>
 </template>
 <script setup>
+import { cartStore } from "@/stores/cart";
+const cart = cartStore();
+
 const props = defineProps({
     select: Object,
 });
+
+function addToCart() {
+    const productInfo = {
+        id: new Date().getTime(),
+        image: helperPicture(),
+        title: helperLorem(50, 80),
+        text: helperLorem(30, 50),
+        price: 1000,
+        qty: props.select.amount,
+    };
+
+    cart.cartList.push(productInfo);
+}
 </script>
