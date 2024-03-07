@@ -15,11 +15,25 @@
 
 <script setup>
 import { CartOrderSuccess, CartOrderFailed, CartOrderAtm } from "#components";
-const orderStatus = ref({
-    status: "success",
-    payment: "atm",
-    orderId: 122012,
-});
+const fakeStatus = [
+    {
+        status: "success",
+        payment: "atm",
+        orderId: 122011,
+    },
+    {
+        status: "success",
+        payment: "credit",
+        orderId: 222012,
+    },
+    {
+        status: "failed",
+        payment: "credit",
+        orderId: 322013,
+    },
+];
+
+const orderStatus = ref(fakeStatus[Math.floor(Math.random() * 3)]);
 
 const showOrderStatus = computed(() => {
     if (orderStatus.value.status === "success" && orderStatus.value.payment === "atm") {
