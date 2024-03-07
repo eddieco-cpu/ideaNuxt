@@ -3,7 +3,7 @@
         <!-- 排序 -->
         <template v-if="!isEmptyData">
             <div class="flex justify-between gap-4 items-center mt-8 mb-4 md:mt-0">
-                <h1 class="text-black text-xl font-medium">保健食品</h1>
+                <h1 class="text-black text-xl font-medium">3C家電</h1>
 
                 <USelectMenu
                     variant="none"
@@ -53,6 +53,7 @@
 <script setup>
 import { CardGroupBuying, CardFundraise } from "#components";
 const route = useRoute();
+const router = useRouter();
 
 const fundingRaiseList = ref([]);
 const groupBuyingList = ref([]);
@@ -68,6 +69,8 @@ const sortSelected = ref(sort[0]);
 
 getGroupBuyingList();
 getFundingRaiseList();
+
+console.log("route", route.params.name);
 
 const showCard = computed(() => {
     return route.query.type || "fundraise";

@@ -18,7 +18,6 @@
                             class="border border-Primary-100"
                             bgColor="bg-Primary-50"
                             v-bind="tempAddress"
-                            :isEditmode="isEditmode"
                             @onAbort="onAbort"
                             @onSubmit="onSubmit"
                             v-if="tempAddress"
@@ -40,7 +39,7 @@
 
                         <button
                             class="flex gap-x-1 items-center justify-center w-full rounded-lg border border-Primary-100 bg-Primary-50 py-2"
-                            @click="editAddress(undefined, false)"
+                            @click="editAddress"
                         >
                             <img src="~assets/images/icon/plus-icon.svg" alt="add" />
                             <span class="text-Primary-400-Hover text-sm">新增地址</span>
@@ -65,22 +64,13 @@
                             name="invoice"
                             help="手機載具應輸入共8碼，第1碼應為 / ，後7碼可為數字 0 - 9 、大寫英文 A - Z、半形符號共三種 + - ."
                         >
-                            <UDropdown
-                                v-model:open="open"
-                                :items="dropdownItems"
-                                :popper="{ placement: 'bottom-start' }"
-                            >
-                                <UButton
-                                    color="white"
-                                    :label="dropdownValue || '請選擇'"
-                                    class="min-w-[210px]"
-                                    :class="dropdownValue ? 'text-Neutral-900-Primary' : 'text-Neutral-500-Primary'"
-                                />
-                                <UIcon
-                                    name="i-heroicons-chevron-down-20-solid"
-                                    class="text-2xl flex justify-center items-center h-8 ml-[-32px] pointer-events-none"
-                                />
-                            </UDropdown>
+                            <USelectMenu
+                                size="lg"
+                                v-model="buyerInforamtion.invoice"
+                                :options="invoiceOptions"
+                                value-attribute="value"
+                                option-attribute="label"
+                            />
                         </UFormGroup>
                     </div>
                 </template>
@@ -112,31 +102,60 @@
         </div>
 
         <!-- 總計 -->
-        <div class="flex-1 md:sticky md:top-[98px]">
-            <CardContainer title="總計">
+        <div class="flex-1 fixed w-full bottom-0 md:sticky md:top-[98px]">
+            <CardContainer class="rounded-none md:rounded-lg">
                 <template #body>
-                    <div class="flex justify-between text-Neutral-700, text-sm">
-                        <p>2件商品</p>
-                        <p>NT$3,240</p>
-                    </div>
-                    <div class="flex justify-between text-Neutral-700, text-sm">
-                        <p>運費</p>
-                        <p>NT$240</p>
+                    <div
+                        class="flex flex-col gap-y-3 fixed w-screen -bottom-[150px] left-0 p-3 md:p-0 rounded-t-lg bg-white md:static md:w-full transition-[bottom] duration-300"
+                        :class="{ 'bottom-[87px]': showTotalDetail }"
+                    >
+                        <h1 class="pb-3 text-black/85 font-medium border-b border-b-Neutral-200">總計</h1>
+                        <div class="flex justify-between text-Neutral-700 text-sm">
+                            <p>2件商品</p>
+                            <p>NT$3,240</p>
+                        </div>
+                        <div class="flex justify-between text-Neutral-700 text-sm pb-3 border-b border-b-Neutral-200">
+                            <p>運費</p>
+                            <p>NT$240</p>
+                        </div>
                     </div>
                 </template>
 
                 <template #footer>
-                    <div class="border-t border-t-Neutral-200">
-                        <p class="text-xl text-Primary-500-Primary font-roboto font-medium text-right py-3">NT$1,620</p>
+                    <div class="py-2 md:py-0 flex md:block bg-white relative z-50">
+                        <div class="flex-1">
+                            <p class="text-xs pb-1 text-Neutral-600-Dark-Primary md:hidden flex items-center gap-x-1">
+                                共3商品
+                                <UIcon
+                                    name="i-heroicons-chevron-up"
+                                    class="block w-4 h-4 text-Neutral-600-Dark-Primary cursor-pointer transition-transform duration-300"
+                                    :class="{ 'rotate-180': showTotalDetail }"
+                                    @click="showTotalDetail = !showTotalDetail"
+                                />
+                            </p>
+                            <p
+                                class="text-xl text-Neutral-800 md:text-Primary-500-Primary font-roboto font-medium md:text-right md:pb-3"
+                            >
+                                NT$1,620
+                            </p>
+                        </div>
+
                         <button
-                            class="px-4 py-2 bg-Primary-500-Primary text-center rounded-lg w-full text-white"
+                            class="px-4 py-2 text-sm bg-Primary-500-Primary text-center rounded-lg w-full text-white flex-1"
                             @click="goFinishedPage"
                         >
-                            去結帳 ({{ 3 }})
+                            付款結帳
                         </button>
                     </div>
                 </template>
             </CardContainer>
+
+            <transition name="mask">
+                <div
+                    class="fixed w-screen h-screen top-0 left-0 z-[-1] bg-black/50 md:hidden"
+                    v-show="showTotalDetail"
+                ></div>
+            </transition>
         </div>
 
         <div class="w-screen h-screen pt-[170px] fixed top-0 left-0 bg-Neutral-bg" v-if="inProcessing">
@@ -149,76 +168,55 @@
 const inProcessing = ref(false);
 const progress = ref(0);
 const progressTimer = ref(0);
+const showTotalDetail = ref(false);
 
 const paymentOptions = [
     {
-        value: "1",
+        value: 1,
         label: "信用卡(3、6期)",
     },
     {
-        value: "2",
+        value: 2,
         label: "ATM 轉帳",
     },
     {
-        value: "3",
+        value: 3,
         label: "貨到付款",
     },
     {
-        value: "4",
+        value: 4,
         label: "LINE Pay",
     },
 ];
 
 const deliveryOptions = [
     {
-        value: "1",
+        value: 1,
         label: "超商取貨",
     },
     {
-        value: "2",
+        value: 2,
         label: "宅配到府",
     },
+];
+
+const invoiceOptions = [
+    { label: "手機條碼載具", value: 1 },
+    { label: "自然人憑證", value: 2 },
+    { label: "公司統編", value: 3 },
+    { label: "捐贈發票", value: 4 },
 ];
 
 const buyerInforamtion = ref({
     name: "",
     phone: "0911123456",
-    invoice: "",
-    payment: "",
-    delivery: "",
+    invoice: invoiceOptions[0].value,
+    payment: 1,
+    delivery: 2,
     remark: "",
 });
 
-const open = ref(false);
-defineShortcuts({
-    o: () => (open.value = !open.value),
-});
-const dropdownValue = ref("A category");
-const dropdownItems = [
-    [
-        {
-            label: "A category",
-            click: function () {
-                dropdownValue.value = this.label;
-            },
-        },
-        {
-            label: "B category",
-            click: function () {
-                dropdownValue.value = this.label;
-            },
-        },
-        {
-            label: "C category",
-            click: function () {
-                dropdownValue.value = this.label;
-            },
-        },
-    ],
-];
-
 const tempAddress = ref(null);
-const isEditmode = ref(false);
 
 const addressInfo = ref([
     {
@@ -239,31 +237,21 @@ const addressInfo = ref([
     },
 ]);
 
-async function editAddress(index, isEdit) {
+async function editAddress() {
     tempAddress.value = null;
-    isEditmode.value = isEdit;
 
     await nextTick();
-
-    if (isEdit) {
-        // 編輯地址
-        tempAddress.value = addressInfo.value.find((item, i) => i === index);
-    } else {
-        // 新增地址
-        tempAddress.value = {
-            index: Math.max(Math.max(...addressInfo.value.map((item) => item.index)), 0) + 1,
-        };
-    }
+    // 新增地址
+    tempAddress.value = {
+        index: Math.max(Math.max(...addressInfo.value.map((item) => item.index)), 0) + 1,
+    };
 }
 
-function onAbort(payload) {
-    if (payload.title === "刪除") {
-        addressInfo.value = addressInfo.value.filter((item) => item.index !== payload.index);
-    }
+function onAbort() {
     tempAddress.value = null;
 }
 
-function onSubmit(data, isEditmode) {
+function onSubmit(data) {
     const { index, name, phone, email, address, defaultAddress } = data;
 
     const payload = {
@@ -275,18 +263,9 @@ function onSubmit(data, isEditmode) {
         address,
     };
 
-    if (isEditmode) {
-        // 編輯地址
-        console.log("編輯地址");
-    } else {
-        // 新增地址
-        addressInfo.value.push(payload);
-    }
+    // 新增地址
+    addressInfo.value.push(payload);
 
-    if (defaultAddress) {
-        // 是否設預設
-        setDefaultAddress(index - 1);
-    }
     tempAddress.value = null;
 }
 
