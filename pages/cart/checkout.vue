@@ -12,38 +12,44 @@
             <CardContainer title="收件人資訊">
                 <template #body>
                     <div class="flex flex-col gap-y-4">
-                        <URadioGroup v-model="buyerInforamtion.delivery" :options="deliveryOptions" class="delivery" />
-
-                        <MemberEditAddress
-                            class="border border-Primary-100"
-                            bgColor="bg-Primary-50"
-                            v-bind="tempAddress"
-                            @onAbort="onAbort"
-                            @onSubmit="onSubmit"
-                            v-if="tempAddress"
+                        <URadioGroup
+                            v-model="checkoutPayload.deliveryType"
+                            :options="deliveryOptions"
+                            class="delivery"
                         />
 
-                        <CardMemberAddress
-                            v-for="(item, index) in addressInfo"
-                            class="border border-Primary-100"
-                            bgColor="bg-Primary-50"
-                            :key="index"
-                            v-bind="item"
-                        >
-                            <template #title>
-                                <div class="flex pb-[10px] mb-[10px] border-b border-Primary-100 text-sm">
-                                    <p class="text-black/[0.85]">地址{{ index + 1 }}</p>
-                                </div>
-                            </template>
-                        </CardMemberAddress>
+                        <div class="flex flex-col gap-y-4" v-if="checkoutPayload.deliveryType === 2">
+                            <MemberEditAddress
+                                class="border border-Primary-100"
+                                bgColor="bg-Primary-50"
+                                v-bind="tempAddress"
+                                @onAbort="addressOnAbort"
+                                @onSubmit="addressOnSubmit"
+                                v-if="tempAddress"
+                            />
 
-                        <button
-                            class="flex gap-x-1 items-center justify-center w-full rounded-lg border border-Primary-100 bg-Primary-50 py-2"
-                            @click="editAddress"
-                        >
-                            <img src="~assets/images/icon/plus-icon.svg" alt="add" />
-                            <span class="text-Primary-400-Hover text-sm">新增地址</span>
-                        </button>
+                            <CardMemberAddress
+                                v-for="(item, index) in addressInfo"
+                                class="border border-Primary-100"
+                                bgColor="bg-Primary-50"
+                                :key="index"
+                                v-bind="item"
+                            >
+                                <template #title>
+                                    <div class="flex pb-[10px] mb-[10px] border-b border-Primary-100 text-sm">
+                                        <p class="text-black/[0.85]">地址{{ index + 1 }}</p>
+                                    </div>
+                                </template>
+                            </CardMemberAddress>
+
+                            <button
+                                class="flex gap-x-1 items-center justify-center w-full rounded-lg border border-Primary-100 bg-Primary-50 py-2"
+                                @click="editAddress"
+                            >
+                                <img src="~assets/images/icon/plus-icon.svg" alt="add" />
+                                <span class="text-Primary-400-Hover text-sm">新增地址</span>
+                            </button>
+                        </div>
                     </div>
                 </template>
             </CardContainer>
@@ -52,25 +58,54 @@
                 <template #body>
                     <div class="grid md:grid-cols-2 gap-3">
                         <UFormGroup label="訂購人" name="name">
-                            <UInput placeholder="請輸入訂購人" v-model="buyerInforamtion.name" />
+                            <UInput placeholder="請輸入訂購人" v-model="checkoutPayload.name" />
                         </UFormGroup>
 
                         <UFormGroup label="訂購人手機" name="phone">
-                            <UInput v-model="buyerInforamtion.phone" disabled />
+                            <UInput v-model="checkoutPayload.phone" disabled />
                         </UFormGroup>
+                    </div>
 
-                        <UFormGroup
-                            label="發票種類"
-                            name="invoice"
-                            help="手機載具應輸入共8碼，第1碼應為 / ，後7碼可為數字 0 - 9 、大寫英文 A - Z、半形符號共三種 + - ."
-                        >
-                            <USelectMenu
-                                size="lg"
-                                v-model="buyerInforamtion.invoice"
-                                :options="invoiceOptions"
-                                value-attribute="value"
-                                option-attribute="label"
-                            />
+                    <div>
+                        <UFormGroup label="發票種類" name="invoice" :help="invoiceHint">
+                            <div class="flex gap-x-3">
+                                <USelectMenu
+                                    size="lg"
+                                    class="min-w-[210px]"
+                                    v-model="checkoutPayload.invoiceType"
+                                    :options="invoiceOptions"
+                                    value-attribute="value"
+                                    option-attribute="label"
+                                />
+                                <UInput
+                                    placeholder="請輸入載具號碼"
+                                    v-model="invoiceCarrier"
+                                    v-if="checkoutPayload.invoiceType === 1"
+                                />
+
+                                <UInput
+                                    placeholder="請輸入自然人憑證"
+                                    v-model="citizenDigitalCertificate"
+                                    v-if="checkoutPayload.invoiceType === 2"
+                                />
+
+                                <div class="grid grid-cols-2 gap-3" v-if="checkoutPayload.invoiceType === 3">
+                                    <UInput placeholder="公司抬頭" v-model="orgInvoice.title" />
+                                    <UInput placeholder="公司統一編號" v-model="orgInvoice.taxIdNumber" />
+                                    <UInput type="address" placeholder="公司地址" v-model="orgInvoice.address" />
+                                    <UInput type="email" placeholder="信箱(發票寄送於此)" v-model="orgInvoice.email" />
+                                </div>
+
+                                <USelectMenu
+                                    size="lg"
+                                    placeholder="選擇捐贈機構"
+                                    v-model="donateInvoice"
+                                    :options="donateInvoiceOptions"
+                                    value-attribute="value"
+                                    option-attribute="label"
+                                    v-if="checkoutPayload.invoiceType === 4"
+                                />
+                            </div>
                         </UFormGroup>
                     </div>
                 </template>
@@ -83,7 +118,7 @@
                     </p>
                 </template>
                 <template #body>
-                    <URadioGroup v-model="buyerInforamtion.payment" :options="paymentOptions" class="payment" />
+                    <URadioGroup v-model="checkoutPayload.payment" :options="paymentOptions" class="payment" />
                 </template>
             </CardContainer>
 
@@ -94,7 +129,7 @@
                             :resize="true"
                             placeholder="如有需要，請您簡短的以  90字備註說明，謝謝。"
                             :max="90"
-                            v-model="buyerInforamtion.remark"
+                            v-model="checkoutPayload.remark"
                         />
                     </UFormGroup>
                 </template>
@@ -170,6 +205,12 @@ const progress = ref(0);
 const progressTimer = ref(0);
 const showTotalDetail = ref(false);
 
+const invoiceOptions = [
+    { label: "手機條碼載具", value: 1 },
+    { label: "自然人憑證", value: 2 },
+    { label: "公司統編", value: 3 },
+    { label: "捐贈發票", value: 4 },
+];
 const paymentOptions = [
     {
         value: 1,
@@ -188,7 +229,6 @@ const paymentOptions = [
         label: "LINE Pay",
     },
 ];
-
 const deliveryOptions = [
     {
         value: 1,
@@ -199,25 +239,44 @@ const deliveryOptions = [
         label: "宅配到府",
     },
 ];
-
-const invoiceOptions = [
-    { label: "手機條碼載具", value: 1 },
-    { label: "自然人憑證", value: 2 },
-    { label: "公司統編", value: 3 },
-    { label: "捐贈發票", value: 4 },
-];
-
-const buyerInforamtion = ref({
+const checkoutPayload = ref({
     name: "",
     phone: "0911123456",
-    invoice: invoiceOptions[0].value,
+    invoiceType: invoiceOptions[0].value,
     payment: 1,
-    delivery: 2,
+    deliveryType: 2,
     remark: "",
 });
 
-const tempAddress = ref(null);
+// 依發票種類有不同的輸入
+const invoiceCarrier = ref("");
+const citizenDigitalCertificate = ref("");
+const donateInvoice = ref("");
+const orgInvoice = ref({
+    title: "",
+    taxIdNumber: "",
+    address: "",
+    email: "",
+});
 
+const donateInvoiceOptions = [
+    { label: "機構1", value: 1 },
+    { label: "機構2", value: 2 },
+];
+
+const invoiceHint = computed(() => {
+    const invoiceType = checkoutPayload.value.invoiceType;
+    switch (invoiceType) {
+        case 1:
+            return "手機載具應輸入共8碼，第1碼應為 / ，後7碼可為數字 0 - 9 、大寫英文 A - Z、半形符號共三種 + - .";
+        case 2:
+            return "自然人憑證應輸入共16碼，前2碼為大寫英文 A - Z，後14碼為數字 0 - 9";
+        default:
+            return "";
+    }
+});
+
+const tempAddress = ref(null);
 const addressInfo = ref([
     {
         index: 1,
@@ -247,11 +306,11 @@ async function editAddress() {
     };
 }
 
-function onAbort() {
+function addressOnAbort() {
     tempAddress.value = null;
 }
 
-function onSubmit(data) {
+function addressOnSubmit(data) {
     const { index, name, phone, email, address, defaultAddress } = data;
 
     const payload = {
