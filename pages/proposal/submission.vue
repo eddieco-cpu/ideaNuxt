@@ -128,23 +128,16 @@
                     </UFormGroup>
 
                     <UFormGroup label="專案分類" help="請選擇適合您本次計畫的商品分類/屬性。" class="mb-3">
-                        <div class="flex justify-start items-center">
-                            <UDropdown
-                                v-model:open="open"
-                                :items="dropdownItems"
-                                :popper="{ placement: 'bottom-start' }"
-                            >
-                                <UButton
-                                    color="white"
-                                    :label="dropdownValue || '請選擇'"
-                                    class="min-w-[210px]"
-                                    :class="dropdownValue ? 'text-Neutral-900-Primary' : 'text-Neutral-500-Primary'"
-                                />
-                                <UIcon
-                                    name="i-heroicons-chevron-down-20-solid"
-                                    class="text-2xl flex justify-center items-center h-8 ml-[-32px] pointer-events-none"
-                                />
-                            </UDropdown>
+                        <div class="flex justify-start items-center w-[210px]">
+                            <USelectMenu
+                                class="w-full h-11 lg:h-40"
+                                size="lg"
+                                v-model="submissionData.category"
+                                :options="categoryOpts"
+                                placeholder="請選擇"
+                                value-attribute="id"
+                                option-attribute="name"
+                            />
                         </div>
                     </UFormGroup>
 
@@ -450,7 +443,7 @@ const submissionData = reactive({
     projectDes: "",
     projectDetailsDes: "",
     projectTargetValue: "",
-    dropdownValue: "",
+    category: "",
     startDate: "",
     endDate: "",
     agree: {
@@ -478,34 +471,20 @@ const ytSwitcher = ref(false);
 const fbSwitcher = ref(false);
 
 //
-const dropdownValue = ref("");
-const dropdownItems = [
-    [
-        {
-            label: "A category",
-            click: function () {
-                dropdownValue.value = this.label;
-            },
-        },
-        {
-            label: "B category",
-            click: function () {
-                dropdownValue.value = this.label;
-            },
-        },
-        {
-            label: "C category",
-            click: function () {
-                dropdownValue.value = this.label;
-            },
-        },
-    ],
+const categoryOpts = [
+    {
+        id: "A",
+        name: "A category",
+    },
+    {
+        id: "B",
+        name: "B category",
+    },
+    {
+        id: "C",
+        name: "C category",
+    },
 ];
-
-const open = ref(false);
-defineShortcuts({
-    o: () => (open.value = !open.value),
-});
 
 //
 function doSubmit() {
