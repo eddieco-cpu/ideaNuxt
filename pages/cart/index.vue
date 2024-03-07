@@ -51,14 +51,10 @@
 
         <!-- 總計 -->
         <div class="flex-1 fixed w-full bottom-0 md:sticky md:top-[98px]">
-            <transition name="mask">
-                <div class="fixed w-screen h-screen top-0 left-0 bg-black/50 md:hidden" v-show="showTotalDetail"></div>
-            </transition>
-
-            <CardContainer>
+            <CardContainer class="rounded-none md:rounded-lg">
                 <template #body>
                     <div
-                        class="flex flex-col gap-y-3 fixed w-screen -bottom-[150px] left-0 p-3 md:p-0 rounded-lg bg-white md:static md:w-full transition-[bottom] duration-300"
+                        class="flex flex-col gap-y-3 fixed w-screen -bottom-[150px] left-0 p-3 md:p-0 rounded-t-lg bg-white md:static md:w-full transition-[bottom] duration-300"
                         :class="{ 'bottom-[87px]': showTotalDetail }"
                     >
                         <h1 class="pb-3 text-black/85 font-medium border-b border-b-Neutral-200">總計</h1>
@@ -74,7 +70,7 @@
                 </template>
 
                 <template #footer>
-                    <div class="py-2 md:py-0 flex md:block">
+                    <div class="py-2 md:py-0 flex md:block bg-white relative z-50">
                         <div class="flex-1">
                             <p class="text-xs pb-1 text-Neutral-600-Dark-Primary md:hidden flex items-center gap-x-1">
                                 共3商品
@@ -101,6 +97,13 @@
                     </div>
                 </template>
             </CardContainer>
+
+            <transition name="mask">
+                <div
+                    class="fixed w-screen h-screen top-0 left-0 z-[-1] bg-black/50 md:hidden"
+                    v-show="showTotalDetail"
+                ></div>
+            </transition>
         </div>
     </div>
 </template>
