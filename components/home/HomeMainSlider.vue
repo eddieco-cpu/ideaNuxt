@@ -1,48 +1,56 @@
 <template>
     <div class="min-h-[300px] relative mb-8 home max-md:min-h-[213px]">
-        <Swiper
-            v-if="slides.length > 0"
-            :modules="[SwiperAutoplay, SwiperPagination, SwiperNavigation]"
-            :slides-per-view="'auto'"
-            :centered-slides="true"
-            :loop="true"
-            :navigation="{
-                nextEl: '.main-slide__btn-next',
-                prevEl: '.main-slide__btn-pre',
-            }"
-            :autoplay="{
-                delay: 3000,
-                disableOnInteraction: false,
-            }"
-            :pagination="pagination"
-        >
-            <SwiperSlide v-for="(slide, idx) in slides" :key="idx">
-                <div
-                    class="relative block w-[630px] aspect-[63/30] rounded-lg overflow-hidden max-md:w-[324px] max-md:aspect-[324/200]"
-                >
-                    <picture class="block overflow-hidden w-full h-full">
-                        <img :src="slide.photo" alt="product" class="block w-full h-full object-cover" />
-                    </picture>
+        <ClientOnly>
+            <Swiper
+                v-if="slides.length > 0"
+                :modules="[SwiperAutoplay, SwiperPagination, SwiperNavigation]"
+                :slides-per-view="'auto'"
+                :centered-slides="true"
+                :loop="true"
+                :navigation="{
+                    nextEl: '.main-slide__btn-next',
+                    prevEl: '.main-slide__btn-pre',
+                }"
+                :autoplay="{
+                    delay: 3000,
+                    disableOnInteraction: false,
+                }"
+                :pagination="pagination"
+            >
+                <SwiperSlide v-for="(slide, idx) in slides" :key="idx">
                     <div
-                        class="py-4 px-6 absolute z-[2] bottom-0 left-0 w-full bg-[rgba(0,0,0,0.3)] text-white max-md:py-2 max-md:px-3"
+                        class="relative block w-[630px] aspect-[63/30] rounded-lg overflow-hidden max-md:w-[324px] max-md:aspect-[324/200] group"
                     >
-                        <p
-                            class="font-medium text-base mb-4 flex justify-start items-center max-md:text-xs max-md:mb-3"
+                        <picture class="block overflow-hidden w-full h-full">
+                            <img
+                                :src="slide.photo"
+                                alt="product"
+                                class="block w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                        </picture>
+                        <div
+                            class="py-4 px-6 absolute z-[2] bottom-0 left-0 w-full bg-[rgba(23,20,56,0.5)] text-white max-md:py-2 max-md:px-3"
                         >
-                            <span
-                                class="inline-block font-normal text-sm text-center bg-Secondary-500-Primary rounded px-2 py-1 mr-2 max-md:text-xs"
-                                >限時團購</span
+                            <p
+                                class="font-medium text-base mb-3 flex justify-start items-center max-md:text-xs max-md:mb-[6px]"
                             >
-                            {{ slide.provider }}
-                            <!-- {{ useState(slide.photo + idx, () => helperLorem(5, 10)).value }} -->
-                        </p>
-                        <p class="font-normal text-xl line-clamp-2 max-md:text-xs max-md:line-clamp-1">
-                            {{ slide.title }}
-                        </p>
+                                <span
+                                    class="inline-block font-normal text-sm text-center bg-Secondary-500-Primary rounded px-2 py-1 mr-2 max-md:text-xs"
+                                    >限時團購</span
+                                >
+                                {{ slide.provider }}
+                                <!-- {{ useState(slide.photo + idx, () => helperLorem(5, 10)).value }} -->
+                            </p>
+                            <p
+                                class="font-normal text-xl leading-5 line-clamp-2 max-md:text-xs max-md:line-clamp-1 max-md:leading-3"
+                            >
+                                {{ slide.title }}
+                            </p>
+                        </div>
                     </div>
-                </div>
-            </SwiperSlide>
-        </Swiper>
+                </SwiperSlide>
+            </Swiper>
+        </ClientOnly>
         <div
             class="main-slide__btn-pre w-8 h-8 bg-white rounded-[50px] ring-2 ring-Primary-200 flex justify-center items-center cursor-pointer absolute m-auto top-0 bottom-0 right-0 left-0 z-[2] translate-x-[-370px] max-md:hidden"
         >
@@ -93,8 +101,9 @@ const pagination = {
 }
 .home .main-slide__pagnation {
     width: auto;
-    height: 4px;
     transform: translate(0, 10px) !important;
+    left: 0 !important;
+    background-color: transparent;
     /* outline: 1px solid red; */
     margin: 0 auto;
 }
@@ -102,7 +111,7 @@ const pagination = {
     /* outline: 1px solid green; */
 
     width: 36px;
-    height: 100%;
+    height: 4px !important;
     background-color: #ccbff6;
     border-radius: 50px;
     cursor: pointer;

@@ -1,5 +1,5 @@
 export default defineEventHandler((event) => {
-    return Array.from({ length: 12 }, (item, i) => ({
+    return Array.from({ length: 8 }, (item, i) => ({
         id: i + 1,
         image: helperPicture(),
         isFavorite: Math.floor(Math.random() * i) % 2 === 0,
