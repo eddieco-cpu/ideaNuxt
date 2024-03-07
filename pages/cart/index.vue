@@ -50,7 +50,7 @@
         </div>
 
         <!-- 總計 -->
-        <div class="flex-1 fixed w-full bottom-0 md:sticky md:top-[98px]">
+        <div class="flex-1 fixed w-full bottom-0 md:sticky md:top-[98px] shadow-[0_-2px_20px_0px_rgba(0,0,0,0.06)]">
             <CardContainer class="rounded-none md:rounded-lg">
                 <template #body>
                     <div
