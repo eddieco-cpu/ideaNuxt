@@ -16,7 +16,7 @@
                                 }"
                                 class="max-w-[1200px]"
                             >
-                                <label>
+                                <label class="cursor-pointer">
                                     <input type="checkbox" :value="item" v-model="cart.selectProducts" hidden />
                                     <img
                                         :src="helperPicture()"

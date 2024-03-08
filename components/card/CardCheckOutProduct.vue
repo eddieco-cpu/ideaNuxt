@@ -11,9 +11,9 @@
                 <p class="text-Neutral-700 text-xs mt-1">{{ text }}</p>
             </div>
 
-            <span class="text-Neutral-900 font-medium font-roboto flex-1 md:text-right">{{
-                helperMoneyComma(price * qty)
-            }}</span>
+            <span class="text-Neutral-900 font-medium font-roboto flex-1 md:text-right"
+                >NT${{ helperMoneyComma(price * qty) }}</span
+            >
 
             <div
                 class="text-xs text-Neutral-700 flex gap-x-2 absolute bottom-1 right-0 md:flex-col md:gap-y-2 md:items-end md:static"

@@ -29,6 +29,8 @@
 </template>
 <script setup>
 import { cartStore } from "@/stores/cart";
+import { useToast } from "vue-toastification";
+const toast = useToast();
 const cart = cartStore();
 
 const props = defineProps({
@@ -46,5 +48,9 @@ function addToCart() {
     };
 
     cart.cartList.push(productInfo);
+
+    props.select.amount = 0;
+
+    toast.success("已加入購物車");
 }
 </script>
