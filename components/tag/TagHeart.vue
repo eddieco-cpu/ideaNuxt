@@ -3,8 +3,8 @@
     <div v-if="!isEditMode" class="cursor-pointer">
         <!-- 收藏卡片 -->
         <div v-if="!isAddKol" @click="isAddFavorite($event, !addFavorite)">
-            <img src="~assets/images/icon/heart-icon.svg" alt="favorite" v-show="!addFavorite" />
-            <img src="~assets/images/icon/heart-active-icon.svg" alt="favorite" v-show="addFavorite" />
+            <img src="~assets/images/icon/heart-icon.svg" alt="favorite" v-show="!addFavorite" class="w-6" />
+            <img src="~assets/images/icon/heart-active-icon.svg" alt="favorite" v-show="addFavorite" class="w-6" />
         </div>
 
         <!-- 收藏團購主 -->
