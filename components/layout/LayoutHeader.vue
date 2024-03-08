@@ -23,7 +23,7 @@
             </ul>
 
             <!-- 搜尋欄 -->
-            <div class="search md:flex" :class="{ hidden: !isShowSearchContent }">
+            <div class="search max-w-[240px] md:max-w-full md:flex" :class="{ hidden: !isShowSearchContent }">
                 <UButtonGroup size="lg" orientation="horizontal" class="shadow-none md:relative">
                     <UInput
                         ref="searchInput"
