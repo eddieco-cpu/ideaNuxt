@@ -53,7 +53,6 @@
 <script setup>
 import { CardGroupBuying, CardFundraise } from "#components";
 const route = useRoute();
-const router = useRouter();
 
 const fundingRaiseList = ref([]);
 const groupBuyingList = ref([]);

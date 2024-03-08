@@ -11,13 +11,13 @@
                     <UFormGroup label="個人網址名稱" name="siteName" help="此網址為您在本站的個人網址。" required>
                         <UButtonGroup orientation="horizontal" class="shadow-none w-full">
                             <UInput
-                                placeholder="https://www.idea2gether.com/"
+                                placeholder="https://www.idea2gether.com/users/"
                                 class="flex-1"
                                 disabled
                                 :ui="{ placeholder: 'placeholder-black' }"
                             />
 
-                            <UInput placeholder="請輸入網址" class="w-[20%] md:w-[45%]" v-model="leaderInfo.siteName" />
+                            <UInput placeholder="請輸入網址" class="w-[20%] md:w-[35%]" v-model="leaderInfo.siteName" />
                         </UButtonGroup>
                     </UFormGroup>
 
