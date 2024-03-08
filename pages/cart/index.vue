@@ -17,7 +17,7 @@
                                 class="max-w-[1200px]"
                             >
                                 <label class="cursor-pointer">
-                                    <input type="checkbox" :value="item" v-model="cart.selectProducts" hidden />
+                                    <input type="checkbox" :value="item" v-model="cart.selectGroupBuyProducts" hidden />
                                     <img
                                         :src="helperPicture()"
                                         alt="product"
@@ -61,7 +61,11 @@
                     </template>
 
                     <template #body>
-                        <CardCheckOutProduct v-for="(item, index) in cart.selectProducts" :key="index" v-bind="item" />
+                        <CardCheckOutProduct
+                            v-for="(item, index) in cart.selectGroupBuyProducts"
+                            :key="index"
+                            v-bind="item"
+                        />
                     </template>
                 </CardContainer>
             </div>
@@ -78,8 +82,8 @@
                         >
                             <h1 class="pb-3 text-black/85 font-medium border-b border-b-Neutral-200">總計</h1>
                             <div class="flex justify-between text-Neutral-700 text-sm">
-                                <p>{{ cart.selectProducts.length }}件商品</p>
-                                <p>NT${{ helperMoneyComma(cart.totalPrice) }}</p>
+                                <p>{{ cart.selectGroupBuyProducts.length }}件商品</p>
+                                <p>NT${{ helperMoneyComma(cart.totalGroupBuyPrice) }}</p>
                             </div>
                             <div
                                 class="flex justify-between text-Neutral-700 text-sm pb-3 border-b border-b-Neutral-200"
@@ -96,7 +100,7 @@
                                 <p
                                     class="text-xs pb-1 text-Neutral-600-Dark-Primary md:hidden flex items-center gap-x-1"
                                 >
-                                    共{{ cart.selectProducts.length }}商品
+                                    共{{ cart.selectGroupBuyProducts.length }}商品
                                     <UIcon
                                         name="i-heroicons-chevron-up"
                                         class="block w-4 h-4 text-Neutral-600-Dark-Primary cursor-pointer transition-transform duration-300"
@@ -107,7 +111,7 @@
                                 <p
                                     class="text-xl text-Neutral-800 md:text-Primary-500-Primary font-roboto font-medium md:text-right md:pb-3"
                                 >
-                                    NT${{ helperMoneyComma(cart.totalPrice) }}
+                                    NT${{ helperMoneyComma(cart.totalGroupBuyPrice) }}
                                 </p>
                             </div>
 
@@ -115,7 +119,7 @@
                                 class="px-4 py-2 text-sm bg-Primary-500-Primary text-center rounded-lg w-full text-white flex-1"
                                 @click="goCheckoutPage"
                             >
-                                去結帳 ({{ cart.selectProducts.length }})
+                                去結帳 ({{ cart.selectGroupBuyProducts.length }})
                             </button>
                         </div>
                     </template>
@@ -136,7 +140,7 @@
                     <div class="flex flex-col items-center gap-y-6">
                         <img src="~assets/images/status/emptyDataCart.svg" alt="empty" class="w-[224px]" />
                         <p class="text-Neutral-600-Dark-Primary">購物車無商品</p>
-                        <NuxtLink to="/category/technology-ai?type=fundraise">
+                        <NuxtLink to="/category/technology-ai?type=groupbuying">
                             <button
                                 class="text-sm rounded-lg px-4 py-2 text-white bg-Primary-500-Primary shadow-[0px_1px_10px_rgba(0,0,0,0.04)]"
                             >
@@ -157,7 +161,7 @@ const cart = cartStore();
 const showTotalDetail = ref(false);
 
 function isProductBeSelected(id) {
-    return cart.selectProducts.some((item) => item.id === id);
+    return cart.selectGroupBuyProducts.some((item) => item.id === id);
 }
 
 function goCheckoutPage() {

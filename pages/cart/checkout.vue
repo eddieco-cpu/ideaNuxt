@@ -1,13 +1,17 @@
 <template>
     <div class="max-w-[324px] md:max-w-[1082px] mx-auto mt-8">
-        <CartHeader :step="2" />
+        <div>
+            <CartAds v-if="isFundRaiseCheckout" />
+            <CartHeader :step="2" v-else />
+        </div>
+
         <div class="pt-6 grid grid-cols-1 md:grid-cols-[76%_auto] items-start gap-6">
             <!-- 商品資訊 -->
             <div class="flex flex-col gap-6">
                 <CardContainer title="訂單明細">
                     <template #body>
                         <CardCheckOutProduct
-                            v-for="(item, index) in cart.selectProducts"
+                            v-for="(item, index) in productLists"
                             :key="index"
                             :showButton="false"
                             v-bind="item"
@@ -173,8 +177,8 @@
                         >
                             <h1 class="pb-3 text-black/85 font-medium border-b border-b-Neutral-200">總計</h1>
                             <div class="flex justify-between text-Neutral-700 text-sm">
-                                <p>{{ cart.selectProducts.length }}件商品</p>
-                                <p>NT${{ helperMoneyComma(cart.totalPrice) }}</p>
+                                <p>{{ productListsLength }}件商品</p>
+                                <p>NT${{ helperMoneyComma(totalPrice) }}</p>
                             </div>
                             <div
                                 class="flex justify-between text-Neutral-700 text-sm pb-3 border-b border-b-Neutral-200"
@@ -191,7 +195,7 @@
                                 <p
                                     class="text-xs pb-1 text-Neutral-600-Dark-Primary md:hidden flex items-center gap-x-1"
                                 >
-                                    共{{ cart.selectProducts.length }}商品
+                                    共{{ productListsLength }}商品
                                     <UIcon
                                         name="i-heroicons-chevron-up"
                                         class="block w-4 h-4 text-Neutral-600-Dark-Primary cursor-pointer transition-transform duration-300"
@@ -202,7 +206,7 @@
                                 <p
                                     class="text-xl text-Neutral-800 md:text-Primary-500-Primary font-roboto font-medium md:text-right md:pb-3"
                                 >
-                                    NT${{ helperMoneyComma(cart.totalPrice) }}
+                                    NT${{ helperMoneyComma(totalPrice) }}
                                 </p>
                             </div>
 
@@ -240,6 +244,7 @@
 </template>
 
 <script setup>
+const route = useRoute();
 import { cartStore } from "@/stores/cart";
 const cart = cartStore();
 
@@ -317,6 +322,34 @@ const invoiceHint = computed(() => {
             return "自然人憑證應輸入共16碼，前2碼為大寫英文 A - Z，後14碼為數字 0 - 9";
         default:
             return "";
+    }
+});
+
+const isFundRaiseCheckout = computed(() => {
+    return route.query.type === "fundraise";
+});
+
+const productLists = computed(() => {
+    if (route.query.type === "fundraise") {
+        return cart.selectFundRaiseProducts;
+    } else {
+        return cart.selectGroupBuyProducts;
+    }
+});
+
+const productListsLength = computed(() => {
+    if (route.query.type === "fundraise") {
+        return cart.selectFundRaiseProducts.length;
+    } else {
+        return cart.selectGroupBuyProducts.length;
+    }
+});
+
+const totalPrice = computed(() => {
+    if (route.query.type === "fundraise") {
+        return cart.totalFundRaisePrice;
+    } else {
+        return cart.totalGroupBuyPrice;
     }
 });
 

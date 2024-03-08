@@ -3,7 +3,7 @@
         <template #body>
             <div class="flex flex-col gap-2">
                 <CardCheckOutProduct
-                    v-for="(item, index) in cart.selectProducts"
+                    v-for="(item, index) in cart.selectGroupBuyProducts"
                     :key="index"
                     :showButton="false"
                     v-bind="item"
@@ -17,7 +17,9 @@
 
             <div class="flex justify-between pt-[10px] mt-[70px] border-t border-t-Neutral-200">
                 <p class="text-Neutral-700 text-sm">總金額</p>
-                <p class="text-Neutral-900 font-roboto font-medium">NT${{ helperMoneyComma(cart.totalPrice) }}</p>
+                <p class="text-Neutral-900 font-roboto font-medium">
+                    NT${{ helperMoneyComma(cart.totalGroupBuyPrice) }}
+                </p>
             </div>
         </template>
     </CardContainer>
