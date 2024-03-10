@@ -22,6 +22,11 @@
                     :key="index"
                     :to="item.link"
                     class="flex-shrink-0 break-keep h-9 font-medium max-md:flex max-md:items-center max-md:justify-center max-md:font-normal max-md:hover:bg-Primary-50 max-md:active:bg-Primary-50"
+                    :class="
+                        $route.path.includes(item.pathName)
+                            ? 'router-link-active router-link-exact-active pointer-events-none'
+                            : ''
+                    "
                     @click="memberTypeChoose(index)"
                 >
                     <span>{{ item.name }}</span>
@@ -57,18 +62,22 @@ const detailsNavList = ref([
     {
         name: "基本資料",
         link: "/dashboard/details/basic",
+        pathName: "basic",
     },
     {
         name: "商品介紹",
         link: "/dashboard/details/product",
+        pathName: "product",
     },
     {
         name: "優惠方案",
         link: "/dashboard/details/proposals",
+        pathName: "proposals",
     },
     {
         name: "常見問題",
         link: "/dashboard/details/faq",
+        pathName: "faq",
     },
 ]);
 

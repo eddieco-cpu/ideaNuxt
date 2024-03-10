@@ -92,12 +92,12 @@
                     class="dashboard-nav flex flex-nowrap gap-x-8 overflow-x-auto bg-white max-md:px-3 md:px-0 md:flex-col md:gap-y-2 md:rounded-lg md:overflow-hidden md:w-[256px]"
                 >
                     <template v-for="(item, index) in dashboardNavList" :key="item.id">
-                        <template v-if="item.id === '/details'">
+                        <template v-if="item.pathName !== 'index'">
                             <nuxt-link
                                 :to="item.link"
                                 class="flex gap-x-3 flex-shrink-0 items-center border-b-2 border-white max-md:py-3 md:py-4 md:px-6 md:border-none"
                                 :class="
-                                    $route.path.startsWith('/dashboard/details')
+                                    $route.path.includes(item.pathName)
                                         ? 'router-link-exact-active pointer-events-none'
                                         : ''
                                 "
@@ -161,36 +161,42 @@ const dashboardNavListDep = [
         name: "數據總覽",
         imgUrl: "i-heroicons-rectangle-group",
         link: "/dashboard/",
+        pathName: "index",
     },
     {
         id: "/details",
         name: "編輯商品詳情",
         imgUrl: "i-heroicons-rocket-launch",
         link: "/dashboard/details/basic",
+        pathName: "basic",
     },
     {
         id: "/progress",
         name: "募資進度更新",
         imgUrl: "i-heroicons-newspaper",
         link: "/dashboard/progress",
+        pathName: "progress",
     },
     {
         id: "/orders",
         name: "訂單總覽",
         imgUrl: "i-heroicons-shopping-cart",
         link: "/dashboard/orders",
+        pathName: "orders",
     },
     {
         id: "/proposer",
         name: "提案人資料",
         imgUrl: "i-heroicons-home-modern",
         link: "/dashboard/proposer",
+        pathName: "proposer",
     },
     {
         id: "/payment",
         name: "金流帳號設定",
         imgUrl: "i-heroicons-credit-card",
         link: "/dashboard/payment",
+        pathName: "payment",
     },
 ];
 const dashboardNavList = computed(() => {
