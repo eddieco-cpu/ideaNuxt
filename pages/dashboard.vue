@@ -2,7 +2,7 @@
     <div>
         <!-- <input type="number" v-model="stepsStatus" /> -->
         <section
-            class="max-w-[1082px] mx-auto py-4 mt-8 rounded-lg bg-white max-md:max-w-[100%-24px] max-md:mt-6 max-xl:mx-3"
+            class="max-w-[1082px] mx-auto py-4 mt-8 rounded-lg bg-white max-md:max-w-[100%-24px] max-md:mt-6 max-xl:mx-3 max-xl:max-w-[100%]"
         >
             <ul
                 class="w-[calc(100%-200px)] max-md:w-[calc(100%-20px)] mx-auto flex justify-between items-start relative"
@@ -41,7 +41,7 @@
             </ul>
         </section>
         <section
-            class="max-w-[1082px] mx-auto p-3 mt-8 rounded-lg bg-white max-md:max-w-[100%-24px] max-md:mt-3 max-xl:mx-3"
+            class="max-w-[1082px] mx-auto p-3 mt-8 rounded-lg bg-white max-md:max-w-[100%-24px] max-md:mt-3 max-xl:mx-3 max-xl:max-w-[100%]"
         >
             <div class="flex justify-between items-center gap-x-2">
                 <div class="flex justify-start items-center">
@@ -83,7 +83,9 @@
                 </button>
             </div>
         </section>
-        <div class="md:flex md:gap-x-7 md:max-w-[1082px] md:mx-auto md:pt-10 max-md:mt-3">
+        <div
+            class="md:flex md:gap-x-7 md:mx-auto md:pt-10 max-md:mt-3 xl:max-w-[1082px] max-xl:max-w-[calc(100%-24px)] max-md:max-w-[100%]"
+        >
             <!--  -->
             <div class="md:max-w-[256px]">
                 <!-- 導航列 -->
@@ -122,7 +124,9 @@
             </div>
 
             <!-- 導航列顯示內容 -->
-            <NuxtPage class="max-w-[323px] mx-auto md:col-span-9 md:max-w-full md:flex-1 max-md:mt-6" />
+            <NuxtPage
+                class="max-md:max-w-[323px] mx-auto max-w-full md:flex-1 max-md:mt-6 max-xl:overflow-x-auto ring-1"
+            />
         </div>
     </div>
 </template>
@@ -168,7 +172,7 @@ const dashboardNavListDep = [
         name: "編輯商品詳情",
         imgUrl: "i-heroicons-rocket-launch",
         link: "/dashboard/details/basic",
-        pathName: "basic",
+        pathName: "details",
     },
     {
         id: "/progress",
