@@ -183,3 +183,10 @@ export const proposalSchema = z.object({
 
     deliveryWays: z.array(z.string()).min(1, "You must select at least one delivery way."),
 });
+
+export const checkOutSchema = z.object({
+    name: z.string(commonErrorMessage).min(1, "必填"),
+    isAgree: z.boolean({
+        required_error: "必填",
+    }),
+});
