@@ -5,8 +5,13 @@
             <CartHeader :step="2" v-else />
         </div>
 
-        <div class="pt-6 grid grid-cols-1 md:grid-cols-[76%_auto] items-start gap-6">
-            <!-- 商品資訊 -->
+        <!-- 商品資訊 -->
+        <UForm
+            :schema="checkOutSchema"
+            :state="checkoutPayload"
+            class="pt-6 grid grid-cols-1 md:grid-cols-[76%_auto] items-start gap-6"
+            @submit="goFinishedPage"
+        >
             <div class="flex flex-col gap-6">
                 <CardContainer title="訂單明細">
                     <template #body>
@@ -79,7 +84,7 @@
                 <CardContainer title="訂購人資訊">
                     <template #body>
                         <div class="grid md:grid-cols-2 gap-3">
-                            <UFormGroup label="訂購人" name="name">
+                            <UFormGroup label="訂購人" name="name" required>
                                 <UInput placeholder="請輸入訂購人" v-model="checkoutPayload.name" />
                             </UFormGroup>
 
@@ -89,7 +94,7 @@
                         </div>
 
                         <div>
-                            <UFormGroup label="發票種類" name="invoice" :help="invoiceHint">
+                            <UFormGroup label="發票種類" name="invoice" :help="invoiceHint" required>
                                 <div class="grid grid-cols-1 md:flex gap-3">
                                     <USelectMenu
                                         size="lg"
@@ -101,13 +106,13 @@
                                     />
                                     <UInput
                                         placeholder="請輸入載具號碼"
-                                        v-model="invoiceCarrier"
+                                        v-model="checkoutPayload.invoiceCarrier"
                                         v-if="checkoutPayload.invoiceType === 1"
                                     />
 
                                     <UInput
                                         placeholder="請輸入自然人憑證"
-                                        v-model="citizenDigitalCertificate"
+                                        v-model="checkoutPayload.citizenDigitalCertificate"
                                         v-if="checkoutPayload.invoiceType === 2"
                                     />
 
@@ -115,20 +120,27 @@
                                         class="grid grid-cols-1 md:grid-cols-2 gap-3"
                                         v-if="checkoutPayload.invoiceType === 3"
                                     >
-                                        <UInput placeholder="公司抬頭" v-model="orgInvoice.title" />
-                                        <UInput placeholder="公司統一編號" v-model="orgInvoice.taxIdNumber" />
-                                        <UInput type="address" placeholder="公司地址" v-model="orgInvoice.address" />
+                                        <UInput placeholder="公司抬頭" v-model="checkoutPayload.orgInvoice.title" />
+                                        <UInput
+                                            placeholder="公司統一編號"
+                                            v-model="checkoutPayload.orgInvoice.taxIdNumber"
+                                        />
+                                        <UInput
+                                            type="address"
+                                            placeholder="公司地址"
+                                            v-model="checkoutPayload.orgInvoice.address"
+                                        />
                                         <UInput
                                             type="email"
                                             placeholder="信箱(發票寄送於此)"
-                                            v-model="orgInvoice.email"
+                                            v-model="checkoutPayload.orgInvoice.email"
                                         />
                                     </div>
 
                                     <USelectMenu
                                         size="lg"
                                         placeholder="選擇捐贈機構"
-                                        v-model="donateInvoice"
+                                        v-model="checkoutPayload.donateInvoice"
                                         :options="donateInvoiceOptions"
                                         value-attribute="value"
                                         option-attribute="label"
@@ -219,8 +231,8 @@
                             />
 
                             <button
+                                type="submit"
                                 class="px-4 py-2 text-sm bg-Primary-500-Primary text-center rounded-lg w-full text-white flex-1"
-                                @click="goFinishedPage"
                             >
                                 付款結帳
                             </button>
@@ -235,7 +247,7 @@
                     ></div>
                 </transition>
             </div>
-        </div>
+        </UForm>
 
         <div class="w-screen h-screen pt-[170px] fixed top-0 left-0 bg-Neutral-bg" v-if="inProcessing">
             <CartProcessing :progress="progress" />
@@ -244,9 +256,10 @@
 </template>
 
 <script setup>
-const route = useRoute();
+import { checkOutSchema } from "~/validation";
 import { cartStore } from "@/stores/cart";
 const cart = cartStore();
+const route = useRoute();
 
 const inProcessing = ref(false);
 const progress = ref(0);
@@ -291,21 +304,14 @@ const checkoutPayload = ref({
     name: "",
     phone: "0911123456",
     invoiceType: invoiceOptions[0].value,
+    invoiceCarrier: "",
+    citizenDigitalCertificate: "",
+    donateInvoice: "",
+    orgInvoice: { title: "", taxIdNumber: "", address: "", email: "" },
     payment: 1,
     deliveryType: 2,
     isAgree: false,
     remark: "",
-});
-
-// 依發票種類有不同的輸入
-const invoiceCarrier = ref("");
-const citizenDigitalCertificate = ref("");
-const donateInvoice = ref("");
-const orgInvoice = ref({
-    title: "",
-    taxIdNumber: "",
-    address: "",
-    email: "",
 });
 
 const donateInvoiceOptions = [
