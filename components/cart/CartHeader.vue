@@ -17,7 +17,7 @@
             <p class="font-normal text-xs">填寫資料</p>
         </div>
         <div
-            class="flex-1 bg-no-repeat bg-[length:100%_100%] md:bg-contain pt-[8px] pl-[25px] md:pt-[12px] md:pl-[30px]"
+            class="flex-1 bg-no-repeat bg-[length:100%_100%] pt-[8px] pl-[25px] md:pt-[12px] md:pl-[30px]"
             :class="[step === 1 ? stepOne.third : stepTwo.third]"
         >
             <p>Step 3</p>
