@@ -1,8 +1,14 @@
 <script setup>
 import { useDropzone } from "vue3-dropzone";
 //import axios from "axios";
+const props = defineProps({
+    max: {
+        type: Number,
+        default: 5,
+    },
+});
 
-const maxFilesLength = 5;
+const maxFilesLength = props.max;
 const maxFileSize = 500; // KB
 
 const clg = () => console.log(state.files);
