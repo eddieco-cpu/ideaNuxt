@@ -123,10 +123,12 @@
                 </nav>
             </div>
 
-            <!-- 導航列顯示內容 -->
-            <NuxtPage
-                class="max-md:max-w-[323px] mx-auto max-w-full md:flex-1 max-md:mt-6 max-xl:overflow-x-auto ring-1"
-            />
+            <div class="md:max-w-[calc(100%-256px-28px)] md:flex-grow">
+                <!-- 導航列顯示內容 -->
+                <NuxtPage
+                    class="max-md:max-w-[323px] mx-auto max-w-full md:flex-1 max-md:mt-6 max-xl:overflow-x-auto ring-1"
+                />
+            </div>
         </div>
     </div>
 </template>
