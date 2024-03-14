@@ -9,18 +9,19 @@
             <section class="bg-white p-6 rounded-lg grid grid-cols-2 grid-rows-[auto_auto] gap-3">
                 <!--  -->
                 <UFormGroup label="公司法人登記名稱" class="mb-6">
-                    <UInput placeholder="虛擬國際網站事業有限公司" v-model="proposer.companyName" />
+                    <UInput disabled placeholder="虛擬國際網站事業有限公司" v-model="proposer.companyName" />
                 </UFormGroup>
 
                 <!--  -->
                 <UFormGroup label="統一編號" class="mb-6">
-                    <UInput placeholder="349670360" v-model="proposer.companyTaxIdNumber" />
+                    <UInput disabled placeholder="349670360" v-model="proposer.companyTaxIdNumber" />
                 </UFormGroup>
 
                 <!--  -->
                 <UFormGroup label="法人資本額" help="可填「在中華民國境內營運資金」，若皆不適用請填 0">
                     <UInput
                         class=""
+                        disabled
                         type="number"
                         inputClass="!pl-[55px]"
                         v-model="proposer.companyCapital"
@@ -38,7 +39,21 @@
 
                 <!--  -->
                 <UFormGroup label="法人成立日期">
-                    <UInput placeholder="2020-11-08" v-model="proposer.companyStartDate" />
+                    <div class="max-w-[216px] relative">
+                        <!-- :min-date="new Date()" -->
+                        <VueDatePicker
+                            position="left"
+                            auto-apply
+                            year-first
+                            placeholder="2020-11-08"
+                            :format-locale="zhTW"
+                            :start-date="new Date()"
+                            :enable-time-picker="false"
+                            v-model="proposer.companyStartDate"
+                            class="date-picker"
+                            disabled
+                        />
+                    </div>
                 </UFormGroup>
             </section>
         </section>
@@ -49,35 +64,50 @@
             <section class="bg-white p-6 rounded-lg grid grid-cols-4 grid-rows-[auto_auto] gap-3">
                 <!--  -->
                 <UFormGroup label="負責人中文名" class="mb-6 col-span-2">
-                    <UInput placeholder="王大明" v-model="proposer.name" />
+                    <UInput disabled placeholder="王大明" v-model="proposer.name" />
                 </UFormGroup>
 
                 <!--  -->
                 <UFormGroup label="負責人英文名" class="mb-6 col-span-1">
-                    <UInput placeholder="CING YI" v-model="proposer.englishFirstName" />
+                    <UInput disabled placeholder="CING YI" v-model="proposer.englishFirstName" />
                 </UFormGroup>
 
                 <!--  -->
                 <UFormGroup
                     label="負責人英文名"
                     class="mb-6 col-span-1"
+                    disabled
                     :ui="{
                         label: {
                             base: 'opacity-0',
                         },
                     }"
                 >
-                    <UInput placeholder="LIU" v-model="proposer.englishLastName" />
+                    <UInput disabled placeholder="LIU" v-model="proposer.englishLastName" />
                 </UFormGroup>
 
                 <!--  -->
                 <UFormGroup label="負責人手機號碼" class="mb-6 col-span-2">
-                    <UInput placeholder="0909090909" v-model="proposer.phone" />
+                    <UInput disabled placeholder="0909090909" v-model="proposer.phone" />
                 </UFormGroup>
 
                 <!--  -->
                 <UFormGroup label="負責人手機號碼" class="mb-6 col-span-2">
-                    <UInput placeholder="2020-11-08" v-model="proposer.birthDate" />
+                    <div class="max-w-[216px] relative">
+                        <!-- :min-date="new Date()" -->
+                        <VueDatePicker
+                            position="left"
+                            auto-apply
+                            year-first
+                            placeholder="2020-11-08"
+                            :format-locale="zhTW"
+                            :start-date="new Date()"
+                            :enable-time-picker="false"
+                            v-model="proposer.birthDate"
+                            class="date-picker"
+                            disabled
+                        />
+                    </div>
                 </UFormGroup>
             </section>
         </section>
@@ -159,6 +189,9 @@
     </div>
 </template>
 <script setup>
+import { zhTW } from "date-fns/locale";
+import VueDatePicker from "@vuepic/vue-datepicker";
+
 const proposer = reactive({
     //
     name: "",
@@ -189,3 +222,9 @@ const proposer = reactive({
     contactLogisticsAddress: "",
 });
 </script>
+<style>
+.date-picker .dp__input {
+    height: 40px;
+    border-color: rgba(221, 222, 224, 0.7);
+}
+</style>
