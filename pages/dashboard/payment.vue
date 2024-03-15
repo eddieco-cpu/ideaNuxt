@@ -112,7 +112,7 @@
                             value-attribute="id"
                             option-attribute="name"
                             disabled
-                            :class="true ? 'bg-[rgb(244,244,244)] opacity-100' : 'bg-white'"
+                            :class="true ? ' bg-gray-200 opacity-100 rounded-md' : 'bg-white'"
                         />
                     </div>
                 </UFormGroup>
@@ -129,7 +129,7 @@
                             value-attribute="id"
                             option-attribute="name"
                             disabled
-                            :class="true ? 'bg-[rgb(244,244,244)] opacity-100' : 'bg-white'"
+                            :class="true ? ' bg-gray-200 opacity-100 rounded-md' : 'bg-white'"
                         />
                     </div>
                 </UFormGroup>
