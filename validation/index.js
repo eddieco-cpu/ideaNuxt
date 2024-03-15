@@ -136,6 +136,25 @@ export const basicFaqSchema = z.object({
     ans: z.string(commonErrorMessage).min(1, "必填"),
 });
 
+export const basicProgressSchema = z.object({
+    title: z.string().min(1, "必填"),
+    content: z
+        .string()
+        .min(1, "必填")
+        .refine(
+            (content) => {
+                // 使用正則表達式去除 HTML 標籤
+                const plainText = content.replace(/<[^>]+>/g, "").trim();
+                // 檢查去除標籤後的內容是否仍有非空字符
+                return plainText.length > 0;
+            },
+            {
+                // 如果沒有通過檢查，顯示錯誤信息
+                message: "內容不能僅包含 HTML 標籤",
+            },
+        ),
+});
+
 export const proposalSchema = z
     .object({
         projectName: z.string(commonErrorMessage).min(1, "必填"),

@@ -1,9 +1,9 @@
 <template>
     <section>
-        <div class="min-h-[300px]">
+        <div class="min-h-[300px] max-md:min-h-[600px]">
             <ClientOnly>
                 <QuillEditor
-                    class="min-h-[300px] border-[1px] border-[#E5E5E5] rounded-b-lg"
+                    class="min-h-[300px] max-md:min-h-[600px] border-[1px] border-[#E5E5E5] rounded-b-lg"
                     v-model:content="editorContent"
                     ref="quillEditorBody"
                     :options="editorOptions"
