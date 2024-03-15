@@ -157,14 +157,12 @@ export const basicProgressSchema = z.object({
         ),
 });
 
-<<<<<<< HEAD
 export const checkOutSchema = z.object({
     name: z.string(commonErrorMessage).min(1, "必填"),
     isAgree: z.boolean({
         required_error: "必填",
     }),
 });
-=======
 export const proposalSchema = z
     .object({
         projectName: z.string(commonErrorMessage).min(1, "必填"),
@@ -240,4 +238,3 @@ export const proposalSchema = z
             path: ["salesLimitedQuantity"], // 指定錯誤訊息應該被附加到哪個路徑
         },
     );
->>>>>>> bc4c6c195c400bd2e6382ce7b7b10bcfb8c880ca
