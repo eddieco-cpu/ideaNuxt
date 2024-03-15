@@ -92,6 +92,7 @@ export const basicProjectDataSchema = z.object({
     email: z.string(commonErrorMessage).regex(emailRegex, "請輸入有效電子信箱").min(1, "必填"),
     projectName: z.string(commonErrorMessage).min(1, "必填"),
     projectDes: z.string(commonErrorMessage).min(1, "必填"),
+    projectWebsiteName: z.string(commonErrorMessage).min(1, "必填"),
     projectTargetValue: z
         .number()
         .gte(0, "請輸入大於等於零的數字")
@@ -129,6 +130,7 @@ export const basicProjectDataSchema = z.object({
             return date;
         }),
     projectDetailsDes: z.string(commonErrorMessage).min(1, "必填"),
+    imgDataQuantity: z.number().min(1, { message: "必須大於等於 1 張" }).max(5, { message: "數值必須小於等於 5 張" }),
 });
 
 export const basicFaqSchema = z.object({

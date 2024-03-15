@@ -1,9 +1,11 @@
 <template>
     <section>
-        <div class="min-h-[300px]">
+        <div
+            class="min-h-[calc(100vh-74px-32px-72px-32px-88px-40px-36px-12px)] max-md:min-h-[calc(100vh-55px-24px-72px-12px-50px-32px-36px-12px)]"
+        >
             <ClientOnly>
                 <QuillEditor
-                    class="min-h-[300px] border-[1px] border-[#E5E5E5] rounded-b-lg"
+                    class="min-h-[calc(100vh-74px-32px-72px-32px-88px-40px-36px-12px)] border-[1px] border-[#E5E5E5] rounded-b-lg max-md:min-h-[calc(100vh-55px-24px-72px-12px-50px-32px-36px-12px)]"
                     v-model:content="editorContent"
                     ref="quillEditorBody"
                     :options="editorOptions"
@@ -24,7 +26,7 @@ import "@vueup/vue-quill/dist/vue-quill.snow.css";
 const quillEditorBody = ref();
 const editorContent = ref("");
 const editorOptions = {
-    placeholder: "進度更新可透過文字或圖片呈現內容",
+    placeholder: "請輸入內容",
     theme: "snow",
     modules: {
         toolbar: [

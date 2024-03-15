@@ -35,19 +35,11 @@
         </div>
 
         <!-- 導航列顯示內容 -->
-        <NuxtPage
-            class="mx-auto md:max-w-full ring-1 min-h-96"
-            :class="$route.fullPath.includes('basic') ? 'bg-white p-6 rounded-lg' : 'bg-transparent '"
-        />
+        <NuxtPage class="mx-auto md:max-w-full ring-1 min-h-96 bg-transparent" />
     </div>
 </template>
 
 <script setup>
-// import { useAuthStore } from "@/stores/auth";
-// import Icon from "assets/images/";
-
-// const store = useAuthStore();
-
 //
 const route = useRoute();
 const fullPaths = route.fullPath.split("/").filter((el) => el);
