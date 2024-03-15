@@ -28,6 +28,7 @@ const reviewedProposals = ref([
         deliveryTime: "2022-12-31",
         deliveryWays: ["deliveInCountry", "deliveToStore", "deliveToHouse"],
         deliveToStoreFee: 50,
+        soldOut: false,
     },
     {
         id: 2,
@@ -43,6 +44,7 @@ const reviewedProposals = ref([
         deliveryTime: "2022-12-31",
         deliveryWays: ["deliveInCountry", "deliveToStore", "deliveToHouse"],
         deliveToStoreFee: 50,
+        soldOut: false,
     },
     {
         id: 3,
@@ -58,6 +60,7 @@ const reviewedProposals = ref([
         deliveryTime: "2022-12-31",
         deliveryWays: ["deliveInCountry", "deliveToStore", "deliveToHouse"],
         deliveToStoreFee: 50,
+        soldOut: false,
     },
     {
         id: 4,
@@ -73,6 +76,7 @@ const reviewedProposals = ref([
         deliveryTime: "2022-12-31",
         deliveryWays: ["deliveInCountry", "deliveToStore", "deliveToHouse"],
         deliveToStoreFee: 50,
+        soldOut: false,
     },
     {
         id: 5,
@@ -88,6 +92,7 @@ const reviewedProposals = ref([
         deliveryTime: "2022-12-31",
         deliveryWays: ["deliveInCountry", "deliveToStore", "deliveToHouse"],
         deliveToStoreFee: 50,
+        soldOut: true,
     },
 ]);
 </script>

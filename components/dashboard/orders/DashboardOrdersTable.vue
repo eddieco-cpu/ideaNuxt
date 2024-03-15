@@ -45,7 +45,7 @@
                 </UInput>
             </div>
         </div>
-        <UCarousel v-slot="{ item }" :items="['1']" :ui="{ item: 'snap-start' }" class="max-w-[800px] mx-auto ring-2">
+        <UCarousel v-slot="{ item }" :items="['1']" :ui="{ item: 'snap-start' }" class="max-w-[800px] mx-auto">
             <div>
                 <UTable
                     :rows="datas"

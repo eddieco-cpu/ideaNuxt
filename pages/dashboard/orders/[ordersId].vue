@@ -47,7 +47,7 @@
             </ul>
         </section>
 
-        <section class="grid_block ring-1 gap-3 min-h-[calc(302px+12px+270px)]">
+        <section class="grid_block gap-3 min-h-[calc(302px+12px+270px)]">
             <article class="grid_item">
                 <h3 class="text-base font-medium pb-3 border-b-[1px] border-gray-100">訂單資訊</h3>
                 <ul>

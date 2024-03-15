@@ -35,7 +35,7 @@
         </div>
 
         <!-- 導航列顯示內容 -->
-        <NuxtPage class="mx-auto md:max-w-full ring-1 min-h-96 bg-transparent" />
+        <NuxtPage class="mx-auto md:max-w-full min-h-96 bg-transparent" />
     </div>
 </template>
 

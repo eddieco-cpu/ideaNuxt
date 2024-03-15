@@ -207,22 +207,24 @@
                                     @change="updateDeliveryWays($event)"
                                 />
                             </UFormGroup>
-                            <UInput
-                                class="w-40 m-auto relative bottom-[-26px] left-[-70px] max-md:absolute max-md:left-0 max-md:right-0 max-md:top-[26px] max-md:bottom-auto max-md:translate-x-7 max-md:h-[32px]"
-                                :disabled="!submissionData.deliveryWays.includes('deliveToStore')"
-                                type="number"
-                                inputClass="!pl-[55px]"
-                                v-model="submissionData.deliveToStoreFee"
-                                size="sm"
-                            >
-                                <template #leading>
-                                    <div
-                                        class="flex justify-center items-center h-full px-2 bg-gray-50 relative left-[-14px] border-[1px] border-[rgb(221,222,224)] rounded-s-md"
-                                    >
-                                        NT$
-                                    </div>
-                                </template>
-                            </UInput>
+                            <div>
+                                <UInput
+                                    class="w-40 m-auto relative bottom-[-26px] left-[-70px] max-md:absolute max-md:left-0 max-md:right-0 max-md:top-[26px] max-md:bottom-auto max-md:translate-x-7 max-md:h-[32px]"
+                                    :disabled="!submissionData.deliveryWays.includes('deliveToStore')"
+                                    type="number"
+                                    inputClass="!pl-[55px]"
+                                    v-model="submissionData.deliveToStoreFee"
+                                    size="sm"
+                                >
+                                    <template #leading>
+                                        <div
+                                            class="flex justify-center items-center h-full px-2 bg-gray-50 relative left-[-14px] border-[1px] border-[rgb(221,222,224)] rounded-s-md"
+                                        >
+                                            NT$
+                                        </div>
+                                    </template>
+                                </UInput>
+                            </div>
                         </div>
                     </div>
 

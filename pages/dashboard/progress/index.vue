@@ -27,6 +27,9 @@
                 </template>
             </draggable>
         </section>
+        <section class="mt-3">
+            <UiButton class="max-md:w-full md:w-full" type="secondary" @click="toNewProgress">＋ 新增進度更新</UiButton>
+        </section>
     </div>
 </template>
 <script setup>
@@ -81,6 +84,15 @@ function dragEnd() {
     draggingIndex.value = -1; // 重置
     console.log("拖放操作完成", progressList.value);
 }
+
+//
+//
+function toNewProgress() {
+    const x = new Date().getTime();
+    navigateTo(`/dashboard/progress/${x}`);
+}
+
+//
 </script>
 <style scoped>
 .dragging {
