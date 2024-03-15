@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <div class="flex justify-between items-center mb-3">
-            <nuxt-link to="/dashboard/details/proposals" class="flex justify-start items-center">
+            <nuxt-link to="/dashboard/details/faq" class="flex justify-start items-center">
                 <UIcon name="i-heroicons-chevron-left" class="block w-4 h-4 mr-2" />
                 <b class="text-xl font-medium">{{ submissionFaq.id ? "編輯問與答" : "新增問與答" }}</b>
             </nuxt-link>

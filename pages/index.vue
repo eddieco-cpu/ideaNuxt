@@ -41,7 +41,6 @@
                         :items="newIdeasTypes.types"
                         :ui="{ item: 'snap-start' }"
                         class="max-w-[1200px] mx-auto mb-4 max-md:w-[calc(100%+48px)] max-md:ml-[-24px] max-md:pl-4"
-                        :class="false && 'ring-1 ring-green-200 max-md:ring-yellow-400'"
                     >
                         <NuxtLink
                             to="/"
