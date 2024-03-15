@@ -2,26 +2,40 @@
     <section class="overflow-hidden">
         <section class="py-[1px] mb-10 max-md:mb-0">
             <!--  -->
-            <div
-                class="mt-[182px] mb-[216px] max-w-[760px] mx-auto relative max-md:mt-[70px] max-md:mb-[88px] max-md:px-9"
-            >
+            <div class="mt-[182px] mb-[180px] max-w-[760px] mx-auto relative max-md:mt-[70px] max-md:mb-14 max-md:px-7">
                 <h1 class="text-[40px] leading-relaxed font-bold text-center max-md:text-[32px]">
-                    將您的 <b class="text-Secondary-500-Primary">好創意</b><b class="max-md:hidden">，</b
-                    ><br class="md:hidden" />
-                    變成一門<b class="text-Secondary-500-Primary">好生意</b><b class="max-md:hidden">。</b>
+                    將您的
+                    <b class="text-Secondary-500-Primary relative"
+                        >好創意
+                        <img src="~assets/images/proposal/underline.svg" class="absolute bottom-[-5px] left-0" /> </b
+                    ><b class="max-md:hidden">，</b><br class="md:hidden" />
+                    變成一門
+                    <b class="text-Secondary-500-Primary relative"
+                        >好生意
+                        <img src="~assets/images/proposal/underline.svg" class="absolute bottom-[-5px] left-0" /> </b
+                    ><b class="max-md:hidden">。</b>
                 </h1>
                 <p
                     class="text-[40px] leading-relaxed font-bold text-center pb-8 max-md:text-sm max-md:mt-5 max-md:pb-4"
                 >
                     運用群眾的力量，讓您好點子再次被實現！
                 </p>
-                <div class="border-t-2 mx-auto pt-8 border-Primary-100 text-center max-md:pt-4 max-md:w-10/12">
-                    <h2 class="text-2xl text-Primary-500-Primary font-bold mb-8 max-md:text-base max-md:mb-14">
+                <div class="border-t-2 mx-auto pt-8 border-Primary-100 text-center max-md:pt-4 max-md:w-full">
+                    <h2 class="text-2xl text-Primary-500-Primary font-bold max-md:text-base mb-2">
                         idea2gether <br class="md:hidden" />
                         全台首創募資平台＋團購型網站
                     </h2>
-                    <UiButton class="max-md:w-[147px] max-md:text-sm"
-                        ><NuxtLink to="/proposal/submission">我要提案</NuxtLink></UiButton
+                    <p
+                        class="max-w-[560px] font-medium text-center text-sm text-[#261C74] mx-auto mb-6 max-md:text-xs max-md:mb-5"
+                    >
+                        有特點才有賣點，一件好的商品，同時要有對的夥伴共同推廣，募資專案成功後，我們能再協助您提供多元管道的行銷工具，延續產品的力道與熱度，再創第二波的商品紅利！
+                    </p>
+                    <UiButton class="max-md:w-[147px] max-md:text-sm relative"
+                        ><NuxtLink
+                            to="/proposal/submission"
+                            class="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center"
+                            >我要提案</NuxtLink
+                        ></UiButton
                     >
                 </div>
                 <div
@@ -78,9 +92,7 @@
             <div class="overflow-hidden">
                 <div class="flex justify-center items-center gap-x-14 max-md:flex-col">
                     <div class="flex flex-col items-center justify-center w-[446px] max-md:mb-8">
-                        <h2 class="text-3xl text-Primary-500-Primary font-bold text-center mb-6 max-md:text-xl">
-                            為什麼您該選擇群眾募資？
-                        </h2>
+                        <h2 class="text-3xl font-bold text-center mb-6 max-md:text-xl">為什麼您該選擇群眾募資？</h2>
                         <img src="~assets/images/proposal/demo_idea.png" class="block w-[446px] max-md:w-44" />
                     </div>
                     <ul>
@@ -96,12 +108,12 @@
                 </div>
             </div>
         </section>
-        <section class="py-20">
+        <section class="py-20 max-md:pt-12">
             <section
                 class="py-14 flex justify-center items-center mb-20 relative max-md:flex-col max-md:pt-0 max-md:pb-16 max-md:mb-[120px]"
             >
-                <div class="w-72 text-left max-md:w-[200px]">
-                    <h2 class="text-3xl text-Primary-500-Primary font-bold text-left mb-6 max-md:text-xl">
+                <div class="w-[300px] text-left max-md:w-full">
+                    <h2 class="text-3xl font-bold text-left mb-6 max-md:text-xl">
                         歡迎創作者們 <br />
                         您可以開始選擇提案...
                     </h2>
@@ -139,9 +151,7 @@
                 </div>
             </section>
             <section class="w-[966px] mx-auto max-md:w-full">
-                <h2 class="text-3xl text-Primary-500-Primary font-bold text-center mb-10 max-md:text-xl max-md:mb-6">
-                    募資提案常見問題
-                </h2>
+                <h2 class="text-3xl font-bold text-center mb-10 max-md:text-xl max-md:mb-6">募資提案常見問題</h2>
                 <div class="bg-white rounded-3xl px-[60px] py-5 max-md:rounded-none max-md:px-6 relative">
                     <UiHorizontalNav
                         :nav-items="navItems"
