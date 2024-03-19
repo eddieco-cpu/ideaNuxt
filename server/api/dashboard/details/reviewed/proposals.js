@@ -41,7 +41,7 @@ function generateRandomArray(minLength, maxLength) {
 }
 
 export default defineEventHandler(() => {
-    const proposals = Array.from({ length: 10 }, () => ({
+    const proposals = Array.from({ length: 6 }, () => ({
         id: generateUniqueId(),
         photo: helperPicture(),
         name: helperLorem(15, 30),

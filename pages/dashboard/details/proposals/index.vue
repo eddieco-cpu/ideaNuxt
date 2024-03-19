@@ -20,14 +20,17 @@
                             >
                                 <!--  -->
                                 <div>
-                                    <div
-                                        class="flex-shrink-0 h-8 flex justify-center items-center group cursor-pointer"
-                                    >
-                                        <UIcon
-                                            name="i-heroicons-pencil-square"
-                                            class="block w-5 h-5 text-Neutral-500-Primary text-Primary-500-Primary group-hover:text-Primary-400-Hover group-active:text-Primary-200"
-                                        />
-                                    </div>
+                                    <!-- fake use -->
+                                    <nuxt-link :to="'/dashboard/details/proposals/' + proposl.linkProposalsId">
+                                        <div
+                                            class="flex-shrink-0 h-8 flex justify-center items-center group cursor-pointer"
+                                        >
+                                            <UIcon
+                                                name="i-heroicons-pencil-square"
+                                                class="block w-5 h-5 text-Neutral-500-Primary text-Primary-500-Primary group-hover:text-Primary-400-Hover group-active:text-Primary-200"
+                                            />
+                                        </div>
+                                    </nuxt-link>
                                 </div>
 
                                 <!--  -->
@@ -119,7 +122,12 @@ const proposals = ref([]);
 async function getReviewedProposalsData() {
     const data = await GET(`/api/dashboard/details/reviewed/proposals`);
     if (!!data) {
-        proposals.value = data.proposals;
+        proposals.value = data.proposals.map((el, i) => ({
+            ...el,
+
+            //
+            linkProposalsId: "fakeDataOfDetailsProposal" + (i + 1), //fake use //fakeDataOfDetailsProposal6
+        }));
     }
 }
 getReviewedProposalsData();

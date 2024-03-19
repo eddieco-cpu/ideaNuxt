@@ -19,7 +19,7 @@ export default defineEventHandler((event) => {
         return {
             progressId,
             progressData: { ...fakeDataOfProgress },
-            progressStatus: "new",
+            progressStatus: "edit",
         };
     }
 });

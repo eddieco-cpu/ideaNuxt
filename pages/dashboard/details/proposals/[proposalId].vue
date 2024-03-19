@@ -3,7 +3,7 @@
         <div class="flex justify-between items-center mb-3">
             <nuxt-link to="/dashboard/details/proposals" class="flex justify-start items-center">
                 <UIcon name="i-heroicons-chevron-left" class="block w-4 h-4 mr-2" />
-                <b class="text-xl font-medium">{{ 1 === 1 ? "編輯方案內容" : "編輯方案內容" }}</b>
+                <b class="text-xl font-medium">{{ pageStatus === "new" ? "新增方案" : "編輯方案內容" }}</b>
             </nuxt-link>
             <span class="opacity-0">{{ $route.params.proposalId }}</span>
         </div>
@@ -49,7 +49,7 @@
                             <div class="h-0 overflow-hidden opacity-0">
                                 <UInput type="number" v-model="submissionData.imgDataQuantity" />
                             </div>
-                            <ModalDropImg ref="imgData" :max="1" />
+                            <ModalDropImg ref="imgData" :max="1" :files="imgFilesFetched" />
                         </UFormGroup>
 
                         <!-- 方案金額 -->
@@ -327,19 +327,52 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 
 //
 const route = useRoute();
+const proposalId = route.params.proposalId;
+
+async function getEditedProposalData() {
+    const data = await GET(`/api/dashboard/details/proposals/${proposalId}`);
+    if (!!data) {
+        console.log("data", data);
+        pageStatus.value = data.proposalStatus;
+
+        if (data.proposalData) {
+            //
+            let editedSubmissionData = {
+                ...data.proposalData,
+            };
+            submissionData.value = editedSubmissionData;
+
+            //
+            let imgFile = {
+                path: "",
+                preview: data.proposalData.imgData,
+                sizeKB: "",
+                dimensions: "",
+            };
+            imgFilesFetched.push(imgFile);
+        }
+    }
+}
+
+onMounted(() => {
+    getEditedProposalData();
+});
 
 //
+const pageStatus = ref("new"); // new, edit
+//const pageTime;
+
 const screenWidth = ref(800);
 onMounted(() => {
     screenWidth.value = window.innerWidth;
 });
 
 //
-const submissionData = reactive({
+const submissionData = ref({
     projectName: "",
     originalPrice: null,
     specialOffer: null,
-    salesLimit: null,
+    salesLimit: null, //boolean
     salesLimitedQuantity: undefined,
     deliveryTime: null,
     content: "",
@@ -351,13 +384,18 @@ const submissionData = reactive({
     imgDataQuantity: 0,
 });
 
+const imgFilesFetched = reactive([
+    // {},
+]);
+
 const imgData = ref(); //imgData.value.files
 const imgDataQuantity = computed(() => imgData.value?.files?.length || 0);
 
 watch(imgDataQuantity, (val) => {
     //console.log(val);
-    submissionData.imgDataQuantity = val;
-    submissionData.imgData = imgData.value.files[0];
+    console.log(imgData.value.files);
+    submissionData.value.imgDataQuantity = val;
+    submissionData.value.imgData = imgData.value.files[0];
 });
 
 //
@@ -380,12 +418,12 @@ const updateDeliveryWays = (event) => {
     const { value, checked } = event.target;
     if (checked) {
         // 如果被選取，將此 value 加入到陣列中
-        submissionData.deliveryWays.push(value);
+        submissionData.value.deliveryWays.push(value);
     } else {
         // 如果取消選取，從陣列中移除此 value
-        const index = submissionData.deliveryWays.indexOf(value);
+        const index = submissionData.value.deliveryWays.indexOf(value);
         if (index > -1) {
-            submissionData.deliveryWays.splice(index, 1);
+            submissionData.value.deliveryWays.splice(index, 1);
         }
     }
 };
