@@ -39,10 +39,13 @@
                                 />
                             </div>
                             <div class="flex-shrink-0 h-8 flex justify-center items-center group cursor-pointer">
-                                <UIcon
-                                    name="i-heroicons-pencil-square"
-                                    class="block w-5 h-5 text-Neutral-500-Primary text-Primary-500-Primary group-hover:text-Primary-400-Hover group-active:text-Primary-200"
-                                />
+                                <!-- fake use -->
+                                <nuxt-link :to="'/dashboard/details/faq/' + item.linkFaqsId">
+                                    <UIcon
+                                        name="i-heroicons-pencil-square"
+                                        class="block w-5 h-5 text-Neutral-500-Primary text-Primary-500-Primary group-hover:text-Primary-400-Hover group-active:text-Primary-200"
+                                    />
+                                </nuxt-link>
                             </div>
                         </div>
                     </template>
@@ -75,6 +78,9 @@ async function getReviewedFaqData() {
             label,
             content,
             defaultOpen: i === 0 ? true : false,
+
+            //
+            linkFaqsId: "fakeDataOfDetailsFaq" + (i + 1), //fake use
         }));
     }
 }
