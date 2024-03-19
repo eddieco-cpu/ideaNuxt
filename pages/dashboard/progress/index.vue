@@ -15,10 +15,12 @@
                             />
                         </div>
                         <div class="flex-shrink-0 h-8 flex justify-center items-center group cursor-pointer">
-                            <UIcon
-                                name="i-heroicons-pencil-square"
-                                class="block w-5 h-5 text-Neutral-500-Primary text-Primary-500-Primary group-hover:text-Primary-400-Hover group-active:text-Primary-200"
-                            />
+                            <nuxt-link :to="'/dashboard/progress/' + item.linkProgressId">
+                                <UIcon
+                                    name="i-heroicons-pencil-square"
+                                    class="block w-5 h-5 text-Neutral-500-Primary text-Primary-500-Primary group-hover:text-Primary-400-Hover group-active:text-Primary-200"
+                                />
+                            </nuxt-link>
                         </div>
                         <div class="flex-grow">
                             <DashboardProgressAccordion :item="item" />
@@ -47,30 +49,35 @@ const progressList = ref([
         title: "進度更新標題",
         html: "進度更新內容",
         date: "2021-10-01",
+        linkProgressId: "fakeDataOfProgress",
     },
     {
         id: 2,
         title: "進度更新標題進度更新標題",
         html: "<p>進度更新內容</p><p>進度更新內容</p>",
         date: "2021-10-01",
+        linkProgressId: "fakeDataOfProgress",
     },
     {
         id: 3,
         title: "進度更新標題進度更新標題進度更新標題",
         html: "<p>進度更新內容</p><p>進度更新內容</p><p>進度更新內容</p>",
         date: "2021-10-01",
+        linkProgressId: "fakeDataOfProgress",
     },
     {
         id: 4,
         title: "進度更新標題進度更新標題進度更新標題進度更新標題",
         html: "<p>進度更新內容</p><p>進度更新內容</p><p>進度更新內容</p><p>進度更新內容</p>",
         date: "2021-10-01",
+        linkProgressId: "fakeDataOfProgress",
     },
     {
         id: 5,
         title: "進度更新標題",
         html: "進度更新內容",
         date: "2021-10-01",
+        linkProgressId: "fakeDataOfProgress",
     },
 ]);
 
