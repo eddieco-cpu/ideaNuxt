@@ -4,7 +4,7 @@
             <UiButton class="max-md:w-full md:w-full" type="secondary" @click="toNewProposal">＋ 新增方案卡</UiButton>
         </section>
 
-        <article class="rounded-lg bg-white w-[800px]">
+        <article class="rounded-lg bg-white">
             <div>
                 <draggable v-model="proposals" handle=".handle" item-key="id" @end="dragEnd" @start="dragStart">
                     <template #item="{ element: proposl, index }">
