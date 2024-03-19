@@ -43,8 +43,12 @@
                             label="方案照片"
                             help="請上傳檔案小於 500kb 的圖片，尺寸必須為 1252 x 800 像素"
                             required
+                            name="imgDataQuantity"
                             class="mb-3"
                         >
+                            <div class="h-0 overflow-hidden opacity-0">
+                                <UInput type="number" v-model="submissionData.imgDataQuantity" />
+                            </div>
                             <ModalDropImg ref="imgData" :max="1" />
                         </UFormGroup>
 
@@ -333,7 +337,6 @@ onMounted(() => {
 //
 const submissionData = reactive({
     projectName: "",
-    projectImg: null,
     originalPrice: null,
     specialOffer: null,
     salesLimit: null,
@@ -343,9 +346,19 @@ const submissionData = reactive({
     specification: "",
     deliveryWays: [],
     deliveToStoreFee: 0,
+
+    imgData: null,
+    imgDataQuantity: 0,
 });
+
 const imgData = ref(); //imgData.value.files
-const imgDatalength = computed(() => imgData.value?.files?.length || 0);
+const imgDataQuantity = computed(() => imgData.value?.files?.length || 0);
+
+watch(imgDataQuantity, (val) => {
+    //console.log(val);
+    submissionData.imgDataQuantity = val;
+    submissionData.imgData = imgData.value.files[0];
+});
 
 //
 const deliveryWays = ref([
@@ -376,11 +389,6 @@ const updateDeliveryWays = (event) => {
         }
     }
 };
-
-//
-watch(imgDatalength, (newVal) => {
-    console.log("@@@@", imgData.value.files);
-});
 
 function textToHtml(text) {
     // 將文本中的換行符轉換為<br>標籤
