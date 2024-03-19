@@ -6,7 +6,7 @@
             >
         </section>
 
-        <article class="border-[1px] border-[Primary-100] rounded-lg bg-white">
+        <article class="border-[1px] border-[Primary-100] rounded-lg bg-white overflow-hidden">
             <div>
                 <draggable v-model="faqs" handle=".handle" item-key="id" @end="dragEnd" @start="dragStart">
                     <template #item="{ element: item, index }">

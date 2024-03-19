@@ -1,7 +1,7 @@
 <template>
     <div>
         <UiTitle class="w-full">募資進度更新</UiTitle>
-        <section class="min-h-32 rounded-lg border-[1px] border-[#E5E5E5] mb-3 bg-white">
+        <section class="min-h-32 rounded-lg border-[1px] border-[#E5E5E5] mb-3 bg-white overflow-hidden">
             <draggable v-model="progressList" handle=".handle" item-key="id" @end="dragEnd" @start="dragStart($event)">
                 <template #item="{ element: item, index }">
                     <div
