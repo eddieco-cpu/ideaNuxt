@@ -63,6 +63,10 @@
 import { basicProgressSchema } from "~/validation";
 
 //
+const route = useRoute();
+const progressId = route.params.progressId;
+
+//
 const pageStatus = ref("edit"); // new, edit
 const pageTime = ref("2023/10/27 11:16");
 
@@ -84,6 +88,24 @@ const submissionProgress = reactive({
 watch(fullContextLength, (val) => {
     //console.log("fullContext", fullContext.value.editorContent);
     submissionProgress.content = fullContext.value.editorContent;
+});
+
+//
+async function getReviewedProgressData() {
+    const data = await GET(`/api/dashboard/progress/${progressId}`);
+    if (!!data) {
+        console.log("data", data);
+
+        pageStatus.value = data.progressStatus;
+        pageTime.value = data.progressData?.date || "";
+
+        submissionProgress.title = data.progressData?.title || "";
+        submissionProgress.content = data.progressData?.html || "";
+        fullContext.value.quillEditorBody.setHTML(data.progressData?.html || "");
+    }
+}
+onMounted(() => {
+    getReviewedProgressData();
 });
 
 //

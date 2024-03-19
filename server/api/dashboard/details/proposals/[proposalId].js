@@ -1,0 +1,100 @@
+//
+const fakeDatas = [
+    {
+        id: "fakeDataOfDetailsProposal1",
+        projectName: helperLorem(5, 20),
+        originalPrice: helperRandomNumber(5000, 9000),
+        specialOffer: helperRandomNumber(500, 4999),
+        salesLimit: true,
+        salesLimitedQuantity: helperRandomNumber(10, 100),
+        deliveryTime: helperRandomDate("yyyy/mm/dd"),
+        content: helperLorem(30, 100),
+        specification: helperLorem(30, 100),
+        deliveryWays: ["deliveToStore", "deliveToHouse"],
+        deliveToStoreFee: helperRandomNumber(5, 100),
+        imgData: helperPicture(),
+    },
+    {
+        id: "fakeDataOfDetailsProposal2",
+        projectName: helperLorem(5, 20),
+        originalPrice: helperRandomNumber(5000, 9000),
+        specialOffer: helperRandomNumber(500, 4999),
+        salesLimit: true,
+        salesLimitedQuantity: helperRandomNumber(10, 100),
+        deliveryTime: helperRandomDate("yyyy/mm/dd"),
+        content: helperLorem(30, 100),
+        specification: helperLorem(30, 100),
+        deliveryWays: ["deliveToStore", "deliveToHouse"],
+        deliveToStoreFee: helperRandomNumber(5, 100),
+        imgData: helperPicture(),
+    },
+    {
+        id: "fakeDataOfDetailsProposal3",
+        projectName: helperLorem(5, 20),
+        originalPrice: helperRandomNumber(5000, 9000),
+        specialOffer: helperRandomNumber(500, 4999),
+        salesLimit: true,
+        salesLimitedQuantity: helperRandomNumber(10, 100),
+        deliveryTime: helperRandomDate("yyyy/mm/dd"),
+        content: helperLorem(30, 100),
+        specification: helperLorem(30, 100),
+        deliveryWays: ["deliveToStore", "deliveToHouse"],
+        deliveToStoreFee: helperRandomNumber(5, 100),
+        imgData: helperPicture(),
+    },
+    {
+        id: "fakeDataOfDetailsProposal4",
+        projectName: helperLorem(5, 20),
+        originalPrice: helperRandomNumber(5000, 9000),
+        specialOffer: helperRandomNumber(500, 4999),
+        salesLimit: true,
+        salesLimitedQuantity: helperRandomNumber(10, 100),
+        deliveryTime: helperRandomDate("yyyy/mm/dd"),
+        content: helperLorem(30, 100),
+        specification: helperLorem(30, 100),
+        deliveryWays: ["deliveToStore", "deliveToHouse"],
+        deliveToStoreFee: helperRandomNumber(5, 100),
+        imgData: helperPicture(),
+    },
+    {
+        id: "fakeDataOfDetailsProposal5",
+        projectName: helperLorem(5, 20),
+        originalPrice: helperRandomNumber(5000, 9000),
+        specialOffer: helperRandomNumber(500, 4999),
+        salesLimit: true,
+        salesLimitedQuantity: helperRandomNumber(10, 100),
+        deliveryTime: helperRandomDate("yyyy/mm/dd"),
+        content: helperLorem(30, 100),
+        specification: helperLorem(30, 100),
+        deliveryWays: ["deliveToStore", "deliveToHouse"],
+        deliveToStoreFee: helperRandomNumber(5, 100),
+        imgData: helperPicture(),
+    },
+    {
+        id: "fakeDataOfDetailsProposal6",
+        projectName: helperLorem(5, 20),
+        originalPrice: helperRandomNumber(5000, 9000),
+        specialOffer: helperRandomNumber(500, 4999),
+        salesLimit: true,
+        salesLimitedQuantity: helperRandomNumber(10, 100),
+        deliveryTime: helperRandomDate("yyyy/mm/dd"),
+        content: helperLorem(30, 100),
+        specification: helperLorem(30, 100),
+        deliveryWays: ["deliveToStore", "deliveToHouse"],
+        deliveToStoreFee: helperRandomNumber(5, 100),
+        imgData: helperPicture(),
+    },
+];
+
+//
+export default defineEventHandler((event) => {
+    const proposalId = getRouterParam(event, "proposalId");
+
+    return {
+        proposalId,
+        proposalData: fakeDatas.find((el) => el.id === proposalId)
+            ? { ...fakeDatas.find((el) => el.id === proposalId) }
+            : null,
+        proposalStatus: fakeDatas.find((el) => el.id === proposalId) ? "edit" : "new",
+    };
+});
