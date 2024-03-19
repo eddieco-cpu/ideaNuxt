@@ -51,7 +51,7 @@
                     :rows="datas"
                     :columns="columns"
                     :ui="{
-                        thead: ' bg-[#F8F8F8]',
+                        thead: ' bg-Primary-100  rounded-t-lg',
                         tbody: ' bg-white shadow-md rounded-lg ',
                         th: {
                             base: 'text-left relative before:absolute before:content-[`h`]',
@@ -60,6 +60,7 @@
                             size: 'text-sm',
                         },
                     }"
+                    class="rounded-lg"
                 >
                     <template #id-data="{ row }">
                         <nuxt-link

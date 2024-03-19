@@ -8,6 +8,15 @@ const commonErrorMessage = {
 const phoneRegex_TW = new RegExp(/^09\d{2}-?\d{3}-?\d{3}$/);
 const passwordRegex = new RegExp(/^(?=.*[A-Z]).{8,}$/);
 const emailRegex = new RegExp(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/);
+const urlPattern = new RegExp(
+    "^(https?:\\/\\/)?" + // 協議
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // 域名
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR IP (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+        "(\\#[-a-z\\d_]*)?$",
+    "i",
+); // fragment locator
 
 export const setPasswordSchema = z
     .object({
@@ -85,6 +94,13 @@ export const submissionSchema = z.object({
             return date;
         }),
     projectDetailsDes: z.string(commonErrorMessage).min(1, "必填"),
+    imgDataQuantity: z.number().min(1, { message: "必須大於等於 1 張" }).max(5, { message: "數值必須小於等於 5 張" }),
+    relatedWebsite: z
+        .string()
+        .min(1, "必填")
+        .refine((value) => urlPattern.test(value), {
+            message: "無效的網址格式",
+        }),
 });
 
 export const basicProjectDataSchema = z.object({
@@ -166,21 +182,6 @@ export const checkOutSchema = z.object({
 export const proposalSchema = z
     .object({
         projectName: z.string(commonErrorMessage).min(1, "必填"),
-        // projectImg: z
-        //     .object({
-        //         name: z.string(),
-        //         type: z.string().refine((type) => type.startsWith("image/"), {
-        //             message: "Project image must be an image", // 不是图像类型
-        //         }),
-        //         size: z.number().refine((size) => size <= 500 * 1024, {
-        //             // 限制文件大小不超过 500KB
-        //             message: "Project image must be 500KB or less", // 文件大小超过 500KB
-        //         }),
-        //     })
-        //     .refine((data) => data !== null && data !== undefined, {
-        //         // 确保文件对象存在，即“必填”
-        //         message: "Project image is required", // 文件未上传或不存在
-        //     }),
         originalPrice: z
             .number()
             .gte(0, "請輸入大於等於零的數字")
@@ -226,6 +227,10 @@ export const proposalSchema = z
         specification: z.string(commonErrorMessage).min(1, "必填"),
 
         deliveryWays: z.array(z.string()).min(1, "You must select at least one delivery way."),
+
+        imgDataQuantity: z.number().refine((value) => value === 1, {
+            message: "必需上傳 1 張圖片",
+        }),
 
         salesLimit: z.boolean(),
         salesLimitedQuantity: z.number().optional(),
