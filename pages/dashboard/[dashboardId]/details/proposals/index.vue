@@ -21,7 +21,9 @@
                                 <!--  -->
                                 <div>
                                     <!-- fake use -->
-                                    <nuxt-link :to="'/dashboard/details/proposals/' + proposl.linkProposalsId">
+                                    <nuxt-link
+                                        :to="`/dashboard/${$route.params.dashboardId}/details/proposals/${proposl.linkProposalsId}`"
+                                    >
                                         <div
                                             class="flex-shrink-0 h-8 flex justify-center items-center group cursor-pointer"
                                         >
@@ -107,12 +109,13 @@
 </template>
 <script setup>
 const route = useRoute();
+const dashboardId = route.params.dashboardId;
 
 //
 function toNewProposal() {
     console.log("toNewProposal");
     const x = new Date().getTime();
-    navigateTo(`/dashboard/details/proposals/${x}`);
+    navigateTo(`/dashboard/${dashboardId}/details/proposals/${x}`);
 }
 
 //

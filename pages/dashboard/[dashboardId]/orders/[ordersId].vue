@@ -1,7 +1,10 @@
 <template>
     <div>
         <UiTitle class="w-full">
-            <nuxt-link to="/dashboard/orders/" class="flex justify-start items-center gap-1">
+            <nuxt-link
+                :to="`/dashboard/${$route.params.dashboardId}/orders/`"
+                class="flex justify-start items-center gap-1"
+            >
                 <UIcon name="i-heroicons-chevron-left" class="" /> 訂單詳情</nuxt-link
             >
         </UiTitle>

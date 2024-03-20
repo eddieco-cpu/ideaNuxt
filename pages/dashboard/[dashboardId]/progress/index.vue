@@ -15,7 +15,7 @@
                             />
                         </div>
                         <div class="flex-shrink-0 h-8 flex justify-center items-center group cursor-pointer">
-                            <nuxt-link :to="'/dashboard/progress/' + item.linkProgressId">
+                            <nuxt-link :to="`/dashboard/${$route.params.dashboardId}/progress/${item.linkProgressId}`">
                                 <UIcon
                                     name="i-heroicons-pencil-square"
                                     class="block w-5 h-5 text-Neutral-500-Primary text-Primary-500-Primary group-hover:text-Primary-400-Hover group-active:text-Primary-200"
@@ -35,6 +35,9 @@
     </div>
 </template>
 <script setup>
+const route = useRoute();
+const dashboardId = route.params.dashboardId;
+
 /**
  * {
  *  id: 1,
@@ -96,7 +99,7 @@ function dragEnd() {
 //
 function toNewProgress() {
     const x = new Date().getTime();
-    navigateTo(`/dashboard/progress/${x}`);
+    navigateTo(`/dashboard/${dashboardId}/progress/${x}`);
 }
 
 //

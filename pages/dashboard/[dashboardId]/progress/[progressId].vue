@@ -1,7 +1,10 @@
 <template>
     <div>
         <UiTitle class="w-full max-md:mb-1">
-            <nuxt-link to="/dashboard/progress/" class="inline-flex justify-start items-center gap-1">
+            <nuxt-link
+                :to="`/dashboard/${$route.params.dashboardId}/progress/`"
+                class="inline-flex justify-start items-center gap-1"
+            >
                 <UIcon name="i-heroicons-chevron-left" class="" />
                 {{ pageStatus === "edit" ? "編輯" : "新增" }}進度更新</nuxt-link
             >
