@@ -16,17 +16,17 @@
                     ><b class="max-md:hidden">。</b>
                 </h1>
                 <p
-                    class="text-[40px] leading-relaxed font-bold text-center pb-8 max-md:text-sm max-md:mt-5 max-md:pb-4"
+                    class="text-[40px] leading-relaxed font-bold text-center pb-8 max-md:text-xl max-md:mt-5 max-md:pb-4"
                 >
                     運用群眾的力量，讓您好點子再次被實現！
                 </p>
                 <div class="border-t-2 mx-auto pt-8 border-Primary-100 text-center max-md:pt-4 max-md:w-full">
-                    <h2 class="text-2xl text-Primary-500-Primary font-bold max-md:text-base mb-2">
+                    <h2 class="text-2xl text-Primary-500-Primary font-bold max-md:text-xl mb-2">
                         idea2gether <br class="md:hidden" />
                         全台首創募資平台＋團購型網站
                     </h2>
                     <p
-                        class="max-w-[560px] font-medium text-center text-sm text-[#261C74] mx-auto mb-6 max-md:text-xs max-md:mb-5"
+                        class="max-w-[560px] font-medium text-center text-sm text-[#261C74] mx-auto mb-6 max-md:text-sm max-md:mb-5"
                     >
                         有特點才有賣點，一件好的商品，同時要有對的夥伴共同推廣，募資專案成功後，我們能再協助您提供多元管道的行銷工具，延續產品的力道與熱度，再創第二波的商品紅利！
                     </p>
@@ -113,7 +113,7 @@
                 class="py-14 flex justify-center items-center mb-20 relative max-md:flex-col max-md:pt-0 max-md:pb-16 max-md:mb-[120px]"
             >
                 <div class="w-[300px] text-left max-md:w-full">
-                    <h2 class="text-3xl font-bold text-left mb-6 max-md:text-xl">
+                    <h2 class="text-3xl font-bold text-left mb-6 max-md:text-xl max-md:ml-6">
                         歡迎創作者們 <br />
                         您可以開始選擇提案...
                     </h2>
@@ -191,7 +191,7 @@ const proposalIntros = [
     {
         note: "關於團隊",
         title: "About Team",
-        content: `愛上大數據是間專業服務品牌的「整合顧問團隊」。<br />
+        content: `愛上大數據是間專業服務品牌的「整合顧問團隊」。<br class="max-md:hidden" />
 縮短您創業0到1的學習時間與延伸的資源耗損，我們服務超過數百家品牌與企業，整合所擅長的通路、倉儲、物流、媒體、行銷等全方位資源， 讓品牌端更能專注於開發與塑造自我的價值。`,
         photo: Icon.intro_1,
     },

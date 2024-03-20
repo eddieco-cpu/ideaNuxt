@@ -9,47 +9,6 @@
             >
         </UiTitle>
 
-        <section
-            class="max-w-[1082px] mx-auto py-4 rounded-lg bg-white max-md:max-w-[100%-24px] mb-3 max-md:mt-6 max-xl:mx-3 max-xl:max-w-[100%]"
-        >
-            <ul
-                class="w-[calc(100%-200px)] max-md:w-[calc(100%-20px)] mx-auto flex justify-between items-start relative"
-            >
-                <li
-                    :key="step.id"
-                    v-for="(step, stepIndex) in stepsData"
-                    class="w-17 flex flex-col justify-center items-center gap-y-2 relative z-[1]"
-                >
-                    <div
-                        class="w-4 h-4 rounded-full flex justify-center items-center"
-                        :class="stepIndex > stepsStatus ? ' bg-Primary-400-Hover' : ' bg-Primary-500-Primary'"
-                    >
-                        <template v-if="stepIndex >= stepsStatus">
-                            <div class="w-2 h-2 rounded-full bg-white"></div>
-                        </template>
-                        <template v-else>
-                            <UIcon name="i-heroicons-check" class="block size-[13px] font-black text-white" />
-                        </template>
-                    </div>
-                    <div
-                        class="text-xs font-medium text-center"
-                        :class="stepIndex > stepsStatus ? ' text-Neutral-500-Primary' : 'text-Primary-500-Primary'"
-                    >
-                        <p>{{ step.name }}</p>
-                        <p>{{ step.time || " " }}</p>
-                    </div>
-                </li>
-                <li
-                    class="mx-auto absolute top-[7px] left-0 right-0 w-[calc(100%-64px)] h-[2px] bg-Primary-500-Primary"
-                    :style="
-                        stepsStatus < 3
-                            ? ` background-image: linear-gradient(to right, rgb(107,86,202) ${stepsStatus * 33.3333}%, rgb(145,127,221) ${stepsStatus * 33.3333}%);`
-                            : ''
-                    "
-                ></li>
-            </ul>
-        </section>
-
         <section class="grid_block gap-3 min-h-[calc(302px+12px+270px)]">
             <article class="grid_item">
                 <h3 class="text-base font-medium pb-3 border-b-[1px] border-gray-100">訂單資訊</h3>
@@ -58,43 +17,43 @@
                         <span class="w-[70px] text-Neutral-600-Dark-Primary text-sm font-normal flex-shrink-0"
                             >訂單編號</span
                         >
-                        <span class="text-sm font-normal flex-grow">ID22092313548</span>
+                        <span class="text-sm font-normal flex-grow">{{ ordersInfo.id }}</span>
                     </li>
                     <li class="flex justify-start items-center gap-x-2 mt-3">
                         <span class="w-[70px] text-Neutral-600-Dark-Primary text-sm font-normal flex-shrink-0"
                             >成立時間</span
                         >
-                        <span class="text-sm font-normal flex-grow">2022-10-18 03:34</span>
+                        <span class="text-sm font-normal flex-grow">{{ ordersInfo.date }}</span>
                     </li>
                     <li class="flex justify-start items-center gap-x-2 mt-3">
                         <span class="w-[70px] text-Neutral-600-Dark-Primary text-sm font-normal flex-shrink-0"
                             >訂單狀態</span
                         >
-                        <span class="text-sm font-normal flex-grow">已成立</span>
+                        <span class="text-sm font-normal flex-grow">{{ ordersInfo.status }}</span>
                     </li>
                     <li class="flex justify-start items-center gap-x-2 mt-3">
                         <span class="w-[70px] text-Neutral-600-Dark-Primary text-sm font-normal flex-shrink-0"
                             >訂單金額</span
                         >
-                        <span class="text-sm font-normal flex-grow">NT$1,620</span>
+                        <span class="text-sm font-normal flex-grow">NT${{ ordersInfo.amount }}</span>
                     </li>
                     <li class="flex justify-start items-center gap-x-2 mt-3">
                         <span class="w-[70px] text-Neutral-600-Dark-Primary text-sm font-normal flex-shrink-0"
                             >付款方式</span
                         >
-                        <span class="text-sm font-normal flex-grow">信用卡付款</span>
+                        <span class="text-sm font-normal flex-grow">{{ ordersInfo.payment }}</span>
                     </li>
                     <li class="flex justify-start items-center gap-x-2 mt-3">
                         <span class="w-[70px] text-Neutral-600-Dark-Primary text-sm font-normal flex-shrink-0"
                             >配送方式</span
                         >
-                        <span class="text-sm font-normal flex-grow">宅配到府</span>
+                        <span class="text-sm font-normal flex-grow">{{ ordersInfo.delivery }}</span>
                     </li>
                     <li class="flex justify-start items-center gap-x-2 mt-3">
                         <span class="w-[70px] text-Neutral-600-Dark-Primary text-sm font-normal flex-shrink-0"
                             >訂單備註</span
                         >
-                        <span class="text-sm font-normal flex-grow">無</span>
+                        <span class="text-sm font-normal flex-grow">{{ ordersInfo.notes }}</span>
                     </li>
                 </ul>
             </article>
@@ -104,27 +63,27 @@
                     class="mt-3 border-b-[1px] border-gray-100 flex justify-start items-start gap-x-4 w-full flex-grow"
                 >
                     <picture class="block w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
-                        <img :src="helperPicture()" alt="" class="block w-full h-full object-cover" />
+                        <img :src="productsInfo.photo" alt="" class="block w-full h-full object-cover" />
                     </picture>
                     <article class="">
                         <h3 class="line-clamp-2 max-md:text-sm text-base font-medium">
-                            聲震宇宙領域，虛擬現實音效耳罩，嵌入式通訊系統，危機中的最佳音樂夥伴
+                            {{ productsInfo.title }}
                         </h3>
                         <ul>
                             <li class="flex justify-between items-center gap-x-2 mt-3">
-                                <span class="text-Neutral-700 text-sm font-normal">VIP超早鳥限定｜全套桌曆＋年曆</span>
-                                <span class="text-base font-normal">NT$1,620</span>
+                                <span class="text-Neutral-700 text-sm font-normal">{{ productsInfo.name }}</span>
+                                <span class="text-base font-normal">NT${{ productsInfo.price }}</span>
                             </li>
                             <li class="flex justify-between items-center gap-x-2 mt-3">
                                 <span class="text-Neutral-700 text-sm font-normal">運費</span>
-                                <span class="text-base font-normal">NT$80</span>
+                                <span class="text-base font-normal">NT${{ productsInfo.shipping }}</span>
                             </li>
                         </ul>
                     </article>
                 </section>
                 <p class="mt-3 flex justify-between items-center w-full">
                     <span class="text-sm font-normal">總金額</span>
-                    <span class="text-base font-medium">NT$1,620</span>
+                    <span class="text-base font-medium">NT${{ productsInfo.price + productsInfo.shipping }}</span>
                 </p>
             </article>
             <article class="grid_item">
@@ -134,37 +93,37 @@
                         <span class="w-[70px] text-Neutral-600-Dark-Primary text-sm font-normal flex-shrink-0"
                             >購買人姓名</span
                         >
-                        <span class="text-sm font-normal flex-grow">陳佑瑋</span>
+                        <span class="text-sm font-normal flex-grow">{{ buyerInfo.name }}</span>
                     </li>
                     <li class="flex justify-start items-center gap-x-2 mt-3">
                         <span class="w-[70px] text-Neutral-600-Dark-Primary text-sm font-normal flex-shrink-0"
                             >聯絡地址</span
                         >
-                        <span class="text-sm font-normal flex-grow">114 台北市內湖區成功路五段450巷4號4樓</span>
+                        <span class="text-sm font-normal flex-grow">{{ buyerInfo.address }}</span>
                     </li>
                     <li class="flex justify-start items-center gap-x-2 mt-3">
                         <span class="w-[70px] text-Neutral-600-Dark-Primary text-sm font-normal flex-shrink-0"
                             >聯絡電話</span
                         >
-                        <span class="text-sm font-normal flex-grow">+8860926390926</span>
+                        <span class="text-sm font-normal flex-grow">{{ buyerInfo.phone }}</span>
                     </li>
                     <li class="flex justify-start items-center gap-x-2 mt-3">
                         <span class="w-[70px] text-Neutral-600-Dark-Primary text-sm font-normal flex-shrink-0"
                             >電子郵件</span
                         >
-                        <span class="text-sm font-normal flex-grow">baby.c.a.t@yahoo.com.tw</span>
+                        <span class="text-sm font-normal flex-grow">{{ buyerInfo.email }}</span>
                     </li>
                     <li class="flex justify-start items-center gap-x-2 mt-3">
                         <span class="w-[70px] text-Neutral-600-Dark-Primary text-sm font-normal flex-shrink-0"
                             >付款方式</span
                         >
-                        <span class="text-sm font-normal flex-grow">信用卡付款</span>
+                        <span class="text-sm font-normal flex-grow">{{ buyerInfo.payment }}</span>
                     </li>
                     <li class="flex justify-start items-center gap-x-2 mt-3">
                         <span class="w-[70px] text-Neutral-600-Dark-Primary text-sm font-normal flex-shrink-0"
                             >發票類型</span
                         >
-                        <span class="text-sm font-normal flex-grow">電子發票 (T9BXTCQ)</span>
+                        <span class="text-sm font-normal flex-grow">{{ buyerInfo.invoice }}</span>
                     </li>
                 </ul>
             </article>
@@ -175,31 +134,31 @@
                         <span class="w-[70px] text-Neutral-600-Dark-Primary text-sm font-normal flex-shrink-0"
                             >收件人姓名</span
                         >
-                        <span class="text-sm font-normal flex-grow">陳佑瑋</span>
+                        <span class="text-sm font-normal flex-grow">{{ recipientInfo.name }}</span>
                     </li>
                     <li class="flex justify-start items-center gap-x-2 mt-3">
                         <span class="w-[70px] text-Neutral-600-Dark-Primary text-sm font-normal flex-shrink-0"
                             >聯絡地址</span
                         >
-                        <span class="text-sm font-normal flex-grow">114 台北市內湖區成功路五段450巷4號4樓</span>
+                        <span class="text-sm font-normal flex-grow">{{ recipientInfo.address }}</span>
                     </li>
                     <li class="flex justify-start items-center gap-x-2 mt-3">
                         <span class="w-[70px] text-Neutral-600-Dark-Primary text-sm font-normal flex-shrink-0"
                             >聯絡電話</span
                         >
-                        <span class="text-sm font-normal flex-grow">+8860926390926</span>
+                        <span class="text-sm font-normal flex-grow">{{ recipientInfo.phone }}</span>
                     </li>
                     <li class="flex justify-start items-center gap-x-2 mt-3">
                         <span class="w-[70px] text-Neutral-600-Dark-Primary text-sm font-normal flex-shrink-0"
                             >電子郵件</span
                         >
-                        <span class="text-sm font-normal flex-grow">baby.c.a.t@yahoo.com.tw</span>
+                        <span class="text-sm font-normal flex-grow">{{ recipientInfo.email }}</span>
                     </li>
                     <li class="flex justify-start items-center gap-x-2 mt-3">
                         <span class="w-[70px] text-Neutral-600-Dark-Primary text-sm font-normal flex-shrink-0"
                             >配送方式</span
                         >
-                        <span class="text-sm font-normal flex-grow">宅配到府</span>
+                        <span class="text-sm font-normal flex-grow">{{ recipientInfo.delivery }}</span>
                     </li>
                 </ul>
             </article>
@@ -208,29 +167,43 @@
 </template>
 <script setup>
 //
-const stepsStatus = ref(1); //0~4
-const stepsData = ref([
-    {
-        id: "1",
-        name: "已成立",
-        time: "06-16 12:00",
-    },
-    {
-        id: "2",
-        name: "備貨中",
-        time: "",
-    },
-    {
-        id: "3",
-        name: "出貨中",
-        time: "",
-    },
-    {
-        id: "4",
-        name: "已完成",
-        time: "",
-    },
-]);
+const ordersInfo = ref({
+    id: "ID22092313548",
+    date: "2022-10-18 03:34",
+    amount: 1620,
+    status: "已成立",
+    payment: "ATM 轉帳付款",
+    delivery: "宅配到府",
+    notes: "無",
+});
+
+const productsInfo = ref({
+    id: 1,
+    photo: helperPicture(),
+    title: "聲震宇宙領域，虛擬現實音效耳罩，嵌入式通訊系統，危機中的最佳音樂夥伴",
+    name: "VIP超早鳥限定｜全套桌曆＋年曆",
+    price: 1620,
+    shipping: 80,
+});
+
+const buyerInfo = ref({
+    name: "陳佑瑋",
+    address: "114 台北市內湖區成功路五段450巷4號4樓",
+    phone: "+8860926390926",
+    email: "baby.c.a.t@yahoo.com.tw",
+    payment: "信用卡付款",
+    invoice: "電子發票 (T9BXTCQ)",
+});
+
+const recipientInfo = ref({
+    name: "陳佑瑋",
+    address: "114 台北市內湖區成功路五段450巷4號4樓",
+    phone: "+8860926390926",
+    email: "baby.c.a.t@yahoo.com.tw",
+    delivery: "宅配到府",
+});
+
+//
 </script>
 <style scoped>
 .grid_block {
