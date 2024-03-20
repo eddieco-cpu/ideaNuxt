@@ -3,7 +3,7 @@
         <!-- 排序 -->
         <template v-if="!isEmptyData">
             <div class="flex justify-between gap-4 items-center mt-8 mb-4 md:mt-0">
-                <h1 class="text-black text-xl font-medium">3C家電</h1>
+                <h1 class="text-black text-xl font-medium">{{ categoryName }}</h1>
 
                 <USelectMenu
                     variant="none"
@@ -53,7 +53,6 @@
 <script setup>
 import { CardGroupBuying, CardFundraise } from "#components";
 const route = useRoute();
-const router = useRouter();
 
 const fundingRaiseList = ref([]);
 const groupBuyingList = ref([]);
@@ -62,6 +61,7 @@ const currentPage = ref(1);
 const totalPages = ref(20);
 const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
+    getFundingRaiseList()
 };
 
 const sort = ["最新", "最熱門", "價格高", "價格低"];
@@ -71,6 +71,7 @@ getGroupBuyingList();
 getFundingRaiseList();
 
 console.log("route", route.params.name);
+const categoryName = route.params.name;
 
 const showCard = computed(() => {
     return route.query.type || "fundraise";
@@ -96,10 +97,12 @@ const showCardClass = computed(() => {
 });
 
 async function getFundingRaiseList() {
-    const data = await GET("/api/fundingRaise");
+    const queryParam = `?category_name=${route.params.name}&type=fundraise`;
+    const data = await GET(`/frontend/getCategoryPageData${queryParam}`,1);
 
     if (!!data) {
-        fundingRaiseList.value = data;
+        fundingRaiseList.value = data.paginateData.data;
+        totalPages.value =  data.paginateData.last_page;
     }
 }
 
@@ -108,6 +111,7 @@ async function getGroupBuyingList() {
 
     if (!!data) {
         groupBuyingList.value = data;
+        
     }
 }
 </script>

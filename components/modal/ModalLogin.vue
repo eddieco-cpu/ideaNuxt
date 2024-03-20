@@ -66,15 +66,16 @@ const state = reactive({
 async function onSubmit(event) {
     const { phone, password } = event.data;
 
-    const payload = { username: phone, password: password };
+    const payload = { account: phone, password: password };
 
-    const data = await POST("https://dummyjson.com/auth/login", payload);
+    const data = await POST("/login", payload);
 
     if (!!data) {
         toast.success("登入成功");
 
         store.isLogin = true;
-        store.userInfo = data;
+        store.setToken(data.access_token)
+        // store.userInfo = data;
 
         openModal("close");
     }

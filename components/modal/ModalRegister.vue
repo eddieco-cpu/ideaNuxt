@@ -9,7 +9,10 @@
             <!-- 註冊第一步 -->
             <div class="w-full" v-if="registerStep === 1">
                 <UFormGroup label="手機號碼" name="phone" class="w-full mb-6">
-                    <UInput placeholder="輸入手機號碼：">
+                    <UInput 
+                        placeholder="輸入手機號碼："
+                        v-model="registerData.account"
+                    >
                         <template #leading>
                             <img src="~assets/images/icon/phone-icon.svg" alt="phone-icon" />
                         </template>
@@ -19,7 +22,11 @@
                 <UFormGroup label="驗證碼：" name="validateCode">
                     <UButtonGroup orientation="horizontal" class="w-full self-start flex shadow-none">
                         <UFormGroup class="w-3/5">
-                            <UInput placeholder="ex: 0912345678" class="mr-1" />
+                            <UInput 
+                                placeholder="ex: 0912345678" 
+                                class="mr-1" 
+                                v-model="registerData.captcha"
+                            />
                         </UFormGroup>
 
                         <button
@@ -45,7 +52,7 @@
                     <span class="text-xs text-neutral-500">（長度至少為8個字元且含大寫字母）</span>
                 </p>
 
-                <UInput type="password" placeholder="ex: A2345678" class="mb-6">
+                <UInput type="password" placeholder="ex: A2345678" class="mb-6"  v-model="registerData.password">
                     <template #leading>
                         <img src="~assets/images/icon/lock-icon.svg" alt="phone-icon" />
                     </template>
@@ -53,7 +60,7 @@
 
                 <p class="self-start mb-2 text-sm text-opacity-85">請再輸入密碼</p>
 
-                <UInput type="password" placeholder="ex: A2345678" class="mb-6">
+                <UInput type="password" placeholder="ex: A2345678" class="mb-6"  v-model="registerData.password_confirmation">
                     <template #leading>
                         <img src="~assets/images/icon/lock-icon.svg" alt="phone-icon" />
                     </template>
@@ -75,8 +82,20 @@
 </template>
 
 <script setup>
+import { useToast } from "vue-toastification";
+import { useAuthStore } from "@/stores/auth";
+
 const { modelValue } = defineProps(["modelValue"]);
-const emit = defineEmits(["update:modelValue"]);
+const emit  = defineEmits(["update:modelValue"]);
+const toast = useToast();
+const store = useAuthStore();
+
+const registerData = ref({
+    account: undefined,
+    password: undefined,
+    password_confirmation: undefined,
+    captcha:undefined
+});
 
 const registerStep = ref(1);
 
@@ -84,7 +103,28 @@ function registerStepHandler(step) {
     registerStep.value = step;
 }
 
-function register() {}
+async function register() {
+    console.log(registerData.value.account)
+
+    const payload = { 
+        account: registerData.value.account, 
+        password: registerData.value.password,
+        password_confirmation: registerData.value.password_confirmation,
+    };
+
+    const data = await POST("/registerUser", payload);
+
+    if (!!data) {
+        toast.success("註冊成功");
+
+        store.isLogin = true;
+        store.setToken(data.access_token)
+        // store.userInfo = data;
+
+        openModal("close");
+    }
+
+}
 
 function openModal() {
     emit("update:modelValue", "");

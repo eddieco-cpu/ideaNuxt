@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-const { index, id, name } = defineProps({
+const { index, id, name, image } = defineProps({
     index: {
         type: Number,
     },

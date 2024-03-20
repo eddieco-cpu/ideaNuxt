@@ -23,7 +23,7 @@
                     <picture
                         class="block overflow-hidden w-full h-full max-md:w-auto max-md:h-auto max-md:absolute max-md:top-0 max-md:left-0 max-md:right-0 max-md:bottom-0"
                     >
-                        <img :src="slide.photo" alt="product" class="block w-full h-full object-cover" />
+                        <img :src="slide" alt="product" class="block w-full h-full object-cover" />
                     </picture>
                 </div>
             </SwiperSlide>
@@ -47,15 +47,15 @@
 </template>
 
 <script setup>
-const slides = ref(
-    Array.from({ length: 12 }, () => {
-        return {
-            photo: helperPicture(),
-        };
-    }),
-);
 
-//
+const props = defineProps({
+    slides: {
+        type: Array,
+            default: []
+    },
+});
+
+
 const pagination = {
     el: ".main-slide__pagnation",
     type: "fraction",

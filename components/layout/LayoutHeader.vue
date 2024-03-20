@@ -103,7 +103,8 @@
                             class="relative bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover group max-md:bg-Primary-500-Primary max-md:border max-md:border-Primary-200 max-md:text-white"
                             @click="goToPage('/member/information')"
                         >
-                            <img
+                            <img 
+                                v-if = "store.userInfo.image"
                                 :src="store.userInfo.image"
                                 alt="memberPic"
                                 class="block rounded-full w-[18px] h-[18px] object-cover"
@@ -338,6 +339,7 @@ async function logout(e) {
 
     store.isLogin = false;
     store.userInfo = {};
+    store.clearToken();
     await navigateTo("/");
 }
 </script>

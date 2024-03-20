@@ -1,4 +1,10 @@
-export const POST = async (url, payload) => {
+import { useRuntimeConfig } from '#app'
+
+export const POST = async (endpoint, payload) => {
+    const config   = useRuntimeConfig();
+    const baseUrl  = config.public.apiBaseUrl;
+    const url      = `${baseUrl}${endpoint}`
+
     try {
         const data = await $fetch(url, {
             method: "POST",
@@ -16,7 +22,15 @@ export const POST = async (url, payload) => {
     }
 };
 
-export const GET = async (url) => {
+export const GET = async (url,test="0") => {
+    if(test == 1) {
+        const config   = useRuntimeConfig();
+        const baseUrl  = config.public.apiBaseUrl;
+        url      = `${baseUrl}${url}`
+        console.log(123123)
+        
+    }
+    
     try {
         const data = await $fetch(url, {
             method: "GET",
@@ -27,10 +41,11 @@ export const GET = async (url) => {
 
         return data;
     } catch (error) {
-        const {
-            _data: { message },
-        } = error.response;
+        console.log(error)
+        // const {
+        //     _data: { message },
+        // } = error.response;
 
-        helperResponseHandle(error.statusCode, message);
+        // helperResponseHandle(error.statusCode, message);
     }
 };

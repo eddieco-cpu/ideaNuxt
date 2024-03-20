@@ -52,56 +52,17 @@ if (route.query.type) {
     typeSelected.value = type.value.find((item) => item.query === route.query.type);
 }
 
-const category = computed(() => {
-    const link = [
-        {
-            name: "科技AI",
-            link: `/category/technology-ai?type=${typeSelected.value.query}`,
-        },
-        {
-            name: "時尚流行",
-            link: `/category/fashion?type=${typeSelected.value.query}`,
-        },
-        {
-            name: "3C家電",
-            link: `/category/appliance?type=${typeSelected.value.query}`,
-        },
-        {
-            name: "書籍出版",
-            link: `/category/books?type=${typeSelected.value.query}`,
-        },
-        {
-            name: "設計藝術",
-            link: `/category/design?type=${typeSelected.value.query}`,
-        },
-        {
-            name: "遊戲動漫",
-            link: `/category/gaming?type=${typeSelected.value.query}`,
-        },
-        {
-            name: "保健食品",
-            link: `/category/health?type=${typeSelected.value.query}`,
-        },
-        {
-            name: "課程教育",
-            link: `/category/education?type=${typeSelected.value.query}`,
-        },
-        {
-            name: "攝影圖像",
-            link: `/category/photography?type=${typeSelected.value.query}`,
-        },
-        {
-            name: "表演/門票",
-            link: `/category/tickets?type=${typeSelected.value.query}`,
-        },
-        {
-            name: "服務/公益",
-            link: `/category/welfare?type=${typeSelected.value.query}`,
-        },
-    ];
+const category = ref([]);
 
-    return link;
-});
+getCategory()
+
+async function getCategory() {
+    const queryParam = "?type=fundraise";
+    const data = await GET(`/frontend/getFrontendCategory${queryParam}`,1);
+    if (!!data) {
+        category.value = data.Categorydata;
+    }
+}
 
 const categorySelected = ref(category.value[0]);
 

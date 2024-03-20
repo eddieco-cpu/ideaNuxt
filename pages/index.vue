@@ -27,7 +27,7 @@
                     <!--  -->
                     <div class="text-right mb-[-30px] max-md:mt-[-44px] max-md:mb-4">
                         <NuxtLink
-                            to="/category/technology-ai?type=fundraise"
+                            :to="categoryIndex"
                             class="inline-flex justify-center items-center px-4 py-1 text-sm font-light group text-Primary-500-Primary relative z-[2] max-md:translate-x-4"
                         >
                             <b class="block translate-y-[-1px] mr-1 font-light">找更多點子</b>
@@ -38,7 +38,7 @@
                     <!--  -->
                     <UCarousel
                         v-slot="{ item }"
-                        :items="newIdeasTypes.types"
+                        :items="category"
                         :ui="{ item: 'snap-start' }"
                         class="max-w-[1200px] mx-auto mb-4 max-md:w-[calc(100%+48px)] max-md:ml-[-24px] max-md:pl-4"
                         :class="false && 'ring-1 ring-green-200 max-md:ring-yellow-400'"
@@ -51,7 +51,7 @@
                                     : 'bg-Primary-50 text-Primary-400-Hover'
                             "
                             class="block rounded-lg whitespace-nowrap text-sm leading-6 px-4 py-1 mr-4 hover:text-Primary-400-Hover active:text-Primary-600-Dark-Primary transition-colors duration-200 ease-in-out"
-                            @click="newIdeasTypes.typeActive = item.id"
+                            @click="refresFundingRaiseList(item.id)"
                             >{{ item.name }}</NuxtLink
                         >
                     </UCarousel>
@@ -86,7 +86,7 @@
                     <!--  -->
                     <UCarousel
                         v-slot="{ item }"
-                        :items="fundingRaiseList"
+                        :items="fundingRaiseListByHot"
                         :ui="{
                             item: 'snap-start basis-[304px] md:basis-[calc((100%-80px)/4)]',
                             container: 'gap-x-3 md:gap-x-5',
@@ -107,7 +107,7 @@
                     <UiTitle>最後集資倒數</UiTitle>
 
                     <div class="grid grid-cols-1 md:grid-cols-4 md:gap-x-5 gap-y-4">
-                        <CardFundraise v-for="(item, i) in fundingRaiseList" v-bind="item" class="mb-4" />
+                        <CardFundraise v-for="(item, i) in fundingRaiseListByLast" v-bind="item" class="mb-4" />
                     </div>
 
                     <UiPagination
@@ -165,7 +165,7 @@
 
                     <div class="grid grid-cols-1 gap-y-4 md:grid-cols-3 md:gap-x-5">
                         <CardGroupBuying
-                            v-for="(item, index) in groupBuyingList"
+                            v-for="(item, index) in formattedGroupBuyingList"
                             :key="index"
                             v-bind="item"
                             :isMainPictureShowLeft="
@@ -217,7 +217,7 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-y-4 md:gap-x-5">
                         <CardGroupBuying
-                            v-for="(item, index) in groupBuyingList"
+                            v-for="(item, index) in formattedGroupBuyingListSoon"
                             :key="index"
                             v-bind="item"
                             :isMainPictureShowLeft="screenWidth <= 768"
@@ -231,10 +231,11 @@
 
 <script setup>
 //
-const currentPage = ref(10);
-const totalPages = ref(20);
+const currentPage = ref(1);
+const totalPages = ref(1);
 const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
+    getFundingRaiseListByLast()
 };
 
 //
@@ -246,46 +247,46 @@ onMounted(() => {
 const videoPlayList = ref([]);
 const kolList = ref([]);
 const fundingRaiseList = ref([]);
+const fundingRaiseListByHot = ref([]);
+const fundingRaiseListByLast = ref([]);
 const groupBuyingList = ref([]);
+const groupBuyingListSoon = ref([]);
 const slides = ref([]);
-const category = [
-    { name: "科技AI", link: "/category/technology-ai?type=fundraise" },
-    { name: "時尚流行", link: "/category/fashion?type=fundraise" },
-    { name: "3C家電", link: "/category/appliance?type=fundraise" },
-    { name: "書籍出版", link: "/category/books?type=fundraise" },
-    { name: "設計藝術", link: "/category/design?type=fundraise" },
-    { name: "遊戲動漫", link: "/category/gaming?type=fundraise" },
-    { name: "保健食品", link: "/category/health?type=fundraise" },
-    { name: "課程教育", link: "/category/education?type=fundraise" },
-    { name: "攝影圖像", link: "/category/photography?type=fundraise" },
-    { name: "表演/門票", link: "/category/tickets?type=fundraise" },
-    { name: "服務/公益", link: "/category/welfare?type=fundraise" },
-];
+const category = ref([]);
+
 const newIdeasTypes = reactive({
     typeActive: "1",
-    types: [
-        { id: "1", name: "時尚流行" },
-        { id: "2", name: "3C家電" },
-        { id: "3", name: "書籍出版" },
-        { id: "4", name: "遊戲動漫" },
-        { id: "5", name: "保健食品" },
-        { id: "6", name: "科技AI" },
-    ],
 });
 
 const isOpenVideo = ref(false);
 const videoIndex = ref(0);
+const categoryIndex = ref('');
 
 getSliderDatas();
+getCategory()
 getKol();
 getFundingRaiseList();
+getFundingRaiseListByHot();
+getFundingRaiseListByLast();
 getGroupBuyingList();
+getGroupBuyingListSoon();
 getVideoList();
 
 async function getSliderDatas() {
-    const data = await GET(`/api/sliderDatas`);
+    
+    const data = await GET(`/frontend/getBannerData`,1);
     if (!!data) {
-        slides.value = data.sliderDatas;
+        slides.value = data.data;
+    }
+}
+
+async function getCategory() {
+    const queryParam = "?type=fundraise";
+    const data = await GET(`/frontend/getFrontendCategory${queryParam}`,1);
+    if (!!data) {
+        category.value = data.Categorydata;
+        categoryIndex.value = data.Categorydata[0].link;
+        newIdeasTypes.typeActive = data.Categorydata[0].id;
     }
 }
 
@@ -310,28 +311,99 @@ function scrollDirection() {
 }
 
 async function getKol() {
-    const data = await GET("/api/kol");
-
+    const data = await GET("/frontend/getGroupListForHome",1);
+    console.log(data)
     if (!!data) {
-        kolList.value = data.sort((a, b) => a.index - b.index).slice(0, 6);
+        kolList.value = data.data;
     }
 }
 
 async function getFundingRaiseList() {
-    const data = await GET("/api/fundingRaise");
+    const queryParam = `?category_id=${newIdeasTypes.typeActive}&limit=4`;
+    const data = await GET(`/frontend/getFrontendProject/${queryParam}`,1);
 
     if (!!data) {
-        fundingRaiseList.value = data;
+        fundingRaiseList.value = data.data;
+    }
+}
+
+function refresFundingRaiseList(categoryId) {
+    newIdeasTypes.typeActive = categoryId
+    getFundingRaiseList();
+}
+
+async function getFundingRaiseListByHot() {
+
+    const data = await GET(`/frontend/getFrontendProjectByHot`,1);
+
+    if (!!data) {
+        fundingRaiseListByHot.value = data.data;
+    }
+}
+
+async function getFundingRaiseListByLast() {
+    const queryParam = `?page=${currentPage.value}`;
+    const data = await GET(`/frontend/getFrontendProjectByLast${queryParam}`,1);
+
+    if (!!data) {
+        fundingRaiseListByLast.value = data.paginateData.data;
+        totalPages.value =  data.paginateData.last_page;
     }
 }
 
 async function getGroupBuyingList() {
-    const data = await GET("/api/groupBuying");
+    const data = await GET("/frontend/getGroupForHome",1);
 
     if (!!data) {
         groupBuyingList.value = data;
     }
 }
+
+
+
+
+
+const formattedGroupBuyingList = computed(() => {
+  if (Array.isArray(groupBuyingList.value.data)) {
+    return groupBuyingList.value.data.map(item => ({
+      id: item.id,
+      name: item.users ? item.users.name : 'Default Name',
+      image: item.projects ? item.projects.image : 'Default Image',
+      avatar: item.users ? item.users.image : 'Default Avatar',
+      text: item.projects ? item.projects.name : 'Default Text',
+      price: item.price,
+      tags: item.product ? item.product.tags : []
+    }));
+  } else {
+    return [];
+  }
+});
+
+async function getGroupBuyingListSoon() {
+    const data = await GET("/frontend/getGroupForHomeBySoon",1);
+
+    if (!!data) {
+        groupBuyingListSoon.value = data;
+    }
+}
+
+const formattedGroupBuyingListSoon = computed(() => {
+  if (Array.isArray(groupBuyingListSoon.value.data)) {
+    return groupBuyingListSoon.value.data.map(item => ({
+      id: item.id,
+      name: item.users ? item.users.name : 'Default Name',
+      image: item.projects ? item.projects.image : 'Default Image',
+      avatar: item.users ? item.users.image : 'Default Avatar',
+      text: item.projects ? item.projects.name : 'Default Text',
+      price: item.price,
+      tags: item.product ? item.product.tags : []
+    }));
+  } else {
+    return [];
+  }
+});
+
+
 
 async function getVideoList() {
     const data = await GET("/api/video");

@@ -31,7 +31,7 @@
             </UButton>
         </template>
         <template #item="{ item }">
-            <p class="text-sm mb-2 mx-3 mt-[-6px]" v-for="(content, i) in item.content" :key="i" v-html="content"></p>
+            <p class="text-sm mb-2 mx-3 mt-[-6px]" :key="i" v-html="item.content"></p>
         </template>
     </UAccordion>
 </template>

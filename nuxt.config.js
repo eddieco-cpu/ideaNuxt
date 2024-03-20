@@ -33,6 +33,7 @@ export default defineNuxtConfig({
 
         //暴露給client端
         public: {
+            apiBaseUrl: process.env.NUXT_PUBLIC_API_URL,
             baseUrl: baseUrl,
             host: host,
         },

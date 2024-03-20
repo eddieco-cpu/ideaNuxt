@@ -8,6 +8,9 @@ export default function (status, message) {
         case 401:
             toast.error(message);
             break;
+        case 422:
+            toast.error(message);
+            break;
         default:
             break;
     }
