@@ -4,7 +4,11 @@
         <section class="pt-12 pb-5 max-md:px-6 max-md:pt-1 max-md:pb-3">
             <UBreadcrumb
                 divider="/"
-                :links="[{ label: 'Home', to: '/' }, { label: '群眾集資' }, { label: '3C科技' }]"
+                :links="[
+                    { label: 'Home', to: '/' },
+                    { label: '群眾集資' },
+                    { label: '3C科技', to: '/category/technology-ai?type=fundraise' },
+                ]"
                 :ui="{
                     active: 'text-black font-bold max-md:font-normal',
                     inactive: 'text-Neutral-600-Dark-Primary font-normal max-md:font-normal',
@@ -89,7 +93,10 @@
                     </button>
 
                     <!-- @click="() => $router.push('/products/funding/1')" -->
-                    <UiButton class="min-w-[370px] min-h-12 max-md:min-w-40 max-md:flex-grow max-xl:min-h-9 max-xl:h-9">
+                    <UiButton
+                        class="min-w-[370px] min-h-12 max-md:min-w-40 max-md:flex-grow max-xl:min-h-9 max-xl:h-9"
+                        @click="addToCart"
+                    >
                         立即贊助
                     </UiButton>
                 </div>

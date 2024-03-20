@@ -19,7 +19,7 @@
                     </button>
                 </NuxtLink>
 
-                <NuxtLink to="/category/technology-ai?type=fundraise">
+                <NuxtLink to="/category/technology-ai?type=groupbuying">
                     <button
                         class="text-sm rounded-lg px-4 py-2 text-Primary-400-Hover border border-Neutral-300 shadow-[0px_1px_10px_rgba(0,0,0,0.04)]"
                     >

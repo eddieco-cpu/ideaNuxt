@@ -8,7 +8,11 @@
             <section class="pt-8 pb-8 mt-[-140px] max-md:px-6 max-md:pt-1 max-md:pb-3">
                 <UBreadcrumb
                     divider="/"
-                    :links="[{ label: 'Home', to: '/' }, { label: '團主推薦' }, { label: '3C科技' }]"
+                    :links="[
+                        { label: 'Home', to: '/' },
+                        { label: '團主推薦' },
+                        { label: '3C科技', to: '/category/technology-ai?type=groupbuying' },
+                    ]"
                     :ui="{
                         active: 'text-white font-normal',
                         inactive: 'text-white font-normal',
@@ -45,7 +49,9 @@
             <section class="max-md:px-6 mb-10 max-md:mb-5">
                 <section class="p-4 bg-white rounded-lg overflow-hidden">
                     <div class="flex flex-row items-center gap-x-2">
-                        <p class="bg-[#4AACFD] rounded py-1 px-2 text-white flex justify-start items-center gap-x-1">
+                        <p
+                            class="bg-[#4AACFD] rounded py-1 px-2 text-white flex justify-start items-center gap-x-1 max-md:text-sm"
+                        >
                             <UIcon name="i-heroicons-clock" class="w-4 h-4 mr-1" />
 
                             <span>03</span>
@@ -53,12 +59,13 @@
                         </p>
                         <div class="items-baseline">
                             <b
-                                class="inline-block rounded px-2 py-1 bg-Status-Color-Danger-500-Primary text-white font-light"
+                                class="inline-block rounded px-2 py-1 bg-Status-Color-Danger-500-Primary text-white font-light whitespace-nowrap max-md:text-sm"
                                 >促銷</b
                             >
                         </div>
                         <div class="items-baseline">
-                            <b class="inline-block rounded px-2 py-1 bg-Primary-500-Primary text-white font-light"
+                            <b
+                                class="inline-block rounded px-2 py-1 bg-Primary-500-Primary text-white font-light whitespace-nowrap max-md:text-sm"
                                 >獨家</b
                             >
                         </div>

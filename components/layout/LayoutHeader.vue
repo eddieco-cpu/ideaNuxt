@@ -1,7 +1,7 @@
 <template>
     <header class="fixed top-0 w-full z-50 border border-b-neutral-100 shadow bg-white">
         <div
-            class="flex items-center justify-between max-w-[363px] md:max-w-[1200px] mx-auto min-h-[52px] md:min-h-[74px]"
+            class="flex items-center justify-between px-[10px] md:px-0 max-w-[360px] md:max-w-[1200px] 3xl:max-w-[1300px] mx-auto min-h-[52px] md:min-h-[74px]"
         >
             <!-- 漢堡 -->
             <div class="block md:hidden" :class="{ 'w-16': !isShowSearchContent }" @click="openModal('sideMenu')">
@@ -23,7 +23,7 @@
             </ul>
 
             <!-- 搜尋欄 -->
-            <div class="search md:flex" :class="{ hidden: !isShowSearchContent }">
+            <div class="search max-w-[240px] md:max-w-full md:flex" :class="{ hidden: !isShowSearchContent }">
                 <UButtonGroup size="lg" orientation="horizontal" class="shadow-none md:relative">
                     <UInput
                         ref="searchInput"
@@ -74,7 +74,7 @@
 
                     <div
                         class="absolute -right-1 -top-1 bg-Dust-Red-5 rounded-full w-[7.5px] h-[7.5px]"
-                        v-if="true"
+                        v-if="cart.cartList.length !== 0"
                     ></div>
                 </div>
             </div>
@@ -226,7 +226,9 @@
 
 <script setup>
 import { useAuthStore } from "@/stores/auth";
+import { cartStore } from "@/stores/cart";
 
+const cart = cartStore();
 const store = useAuthStore();
 const emit = defineEmits(["openModal"]);
 
@@ -311,7 +313,9 @@ const memberCenterLink = [
     },
 ];
 
-function openModal(type) {
+async function openModal(type) {
+    await nextTick();
+
     if (type === "search") {
         hideSideNav.value = true;
         isShowSearchContent.value = true;

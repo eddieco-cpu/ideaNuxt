@@ -5,13 +5,15 @@
         >
             <!-- 團主排名卡片 -->
             <div
-                class="none-scrollbar px-6 md:max-w-[1200px] md:gap-y-4 md:mx-auto flex flex-nowrap md:grid md:grid-cols-3 gap-x-3 overflow-x-auto overscroll-x-none transform translate-y-[12.5rem]"
+                class="none-scrollbar px-6 md:max-w-[1200px] 3xl:max-w-[1300px] md:gap-y-4 md:mx-auto flex flex-nowrap md:grid md:grid-cols-3 gap-x-12 overflow-x-auto overscroll-x-none transform translate-y-[12.5rem]"
             >
-                <CardKolRank v-for="(item, index) in kolRank" :key="index" v-bind="item" />
+                <div class="" v-for="(item, index) in kolRank" :key="index">
+                    <CardKolRank v-bind="item" />
+                </div>
             </div>
         </div>
 
-        <div class="max-w-[324px] mx-auto md:max-w-[1086px]">
+        <div class="max-w-[324px] mx-auto md:max-w-[1086px] 3xl:max-w-[1300px]">
             <!-- 小banner -->
             <div
                 class="h-[75px] rounded-lg mt-40 md:mt-80 flex items-center justify-center bg-no-repeat bg-cover bg-[url('assets/images/kol/banner-sm.png')] md:bg-[url('assets/images/kol/banner-sm-web.png')]"

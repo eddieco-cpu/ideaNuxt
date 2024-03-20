@@ -3,8 +3,8 @@
     <div v-if="!isEditMode" class="cursor-pointer">
         <!-- 收藏卡片 -->
         <div v-if="!isAddKol" @click="isAddFavorite($event, !addFavorite)">
-            <img src="~assets/images/icon/heart-icon.svg" alt="favorite" v-show="!addFavorite" />
-            <img src="~assets/images/icon/heart-active-icon.svg" alt="favorite" v-show="addFavorite" />
+            <img src="~assets/images/icon/heart-icon.svg" alt="favorite" v-show="!addFavorite" class="w-6" />
+            <img src="~assets/images/icon/heart-active-icon.svg" alt="favorite" v-show="addFavorite" class="w-6" />
         </div>
 
         <!-- 收藏團購主 -->
@@ -36,7 +36,7 @@ import { useToast } from "vue-toastification";
 
 const toast = useToast();
 
-const { isFavorite, isEditMode, isAddKol } = defineProps({
+const { isFavorite, isEditMode, isAddKol, id } = defineProps({
     isFavorite: {
         type: Boolean,
         default: false,
@@ -48,6 +48,10 @@ const { isFavorite, isEditMode, isAddKol } = defineProps({
     isAddKol: {
         type: Boolean,
         default: false,
+    },
+    id: {
+        type: Number,
+        default: undefined,
     },
 });
 
@@ -80,6 +84,10 @@ function isAddKolFavorite(e, status) {
 
 function editProposal(e) {
     e.stopPropagation();
+
+    if (!!id) {
+        navigateTo("/dashboard/" + id);
+    }
 }
 </script>
 
