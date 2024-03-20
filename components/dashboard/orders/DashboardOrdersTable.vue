@@ -126,20 +126,8 @@ const selectOptsOfTable = ref([
         name: "已成立",
     },
     {
-        id: "preparing",
-        name: "備貨中",
-    },
-    {
-        id: "delivering",
-        name: "出貨中",
-    },
-    {
-        id: "completed",
-        name: "已完成",
-    },
-    {
-        id: "canceled",
-        name: "取消",
+        id: "unreviewed",
+        name: "未成立",
     },
 ]);
 
