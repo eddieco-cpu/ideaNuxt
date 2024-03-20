@@ -1,6 +1,5 @@
 <template>
     <div class="">
-        <!-- 導航列 -->
         <div
             class="mb-3 max-md:w-44 max-md:relative max-md:h-9 max-md:bg-white max-md:mt-8 max-md:rounded-md max-md:ring-1 ring-gray-300"
         >
@@ -8,7 +7,7 @@
                 class="hidden max-md:flex justify-between items-center w-full h-full px-3 py-2 max-md:rounded-md cursor-pointer"
                 @click="detailsNavSwitcher = !detailsNavSwitcher"
             >
-                {{ detailsNavList.find((el) => $route.path.startsWith(el.link)).name }}
+                {{ detailsNavList.find((el) => $route.path.includes(el.pathName))?.name || "" }}
                 <UIcon name="i-heroicons-chevron-down" class="block w-4 h-4 text-Neutral-500-Primary" />
             </p>
             <nav
@@ -34,14 +33,20 @@
             </nav>
         </div>
 
-        <!-- 導航列顯示內容 -->
         <NuxtPage class="mx-auto md:max-w-full min-h-96 bg-transparent" />
     </div>
 </template>
+<!-- <template>
+    <div>
+        <NuxtPage class="mx-auto md:max-w-full min-h-96" />
+    </div>
+</template> -->
 
 <script setup>
 //
 const route = useRoute();
+const dashboardId = route.params.dashboardId;
+
 const fullPaths = route.fullPath.split("/").filter((el) => el);
 console.log("fullPaths", fullPaths);
 
@@ -53,22 +58,22 @@ const detailsNav = ref(null);
 const detailsNavList = ref([
     {
         name: "基本資料",
-        link: "/dashboard/details/basic",
+        link: "/dashboard/" + dashboardId + "/details/basic",
         pathName: "basic",
     },
     {
         name: "商品介紹",
-        link: "/dashboard/details/product",
+        link: "/dashboard/" + dashboardId + "/details/product",
         pathName: "product",
     },
     {
         name: "優惠方案",
-        link: "/dashboard/details/proposals",
+        link: "/dashboard/" + dashboardId + "/details/proposals",
         pathName: "proposals",
     },
     {
         name: "常見問題",
-        link: "/dashboard/details/faq",
+        link: "/dashboard/" + dashboardId + "/details/faq",
         pathName: "faq",
     },
 ]);

@@ -64,7 +64,7 @@
                 >
                     <template #id-data="{ row }">
                         <nuxt-link
-                            :to="`/dashboard/orders/${row.id.val}`"
+                            :to="`/dashboard/${$route.params.dashboardId}/orders/${row.id.val}`"
                             class="block text-Primary-500-Primary underline overflow-hidden whitespace-nowrap truncate max-w-[126px]"
                         >
                             {{ row.id.val }}
