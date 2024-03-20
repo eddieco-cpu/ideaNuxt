@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-80 md:max-w-[1200px] mt-6 mx-auto md:grid md:grid-cols-12 md:gap-x-6 md:mt-10">
+    <div class="max-w-80 md:max-w-[1200px] 3xl:max-w-[1300px] mt-6 mx-auto md:grid md:grid-cols-12 md:gap-x-6 md:mt-10">
         <!-- 下拉選單 -->
         <div class="grid grid-cols-2 gap-3 md:flex md:flex-col md:col-span-2">
             <USelectMenu

@@ -1,7 +1,7 @@
 <template>
     <header class="fixed top-0 w-full z-50 border border-b-neutral-100 shadow bg-white">
         <div
-            class="flex items-center justify-between max-w-[360px] md:max-w-[1200px] mx-auto min-h-[52px] md:min-h-[74px]"
+            class="flex items-center justify-between px-[10px] md:px-0 max-w-[360px] md:max-w-[1200px] 3xl:max-w-[1300px] mx-auto min-h-[52px] md:min-h-[74px]"
         >
             <!-- 漢堡 -->
             <div class="block md:hidden" :class="{ 'w-16': !isShowSearchContent }" @click="openModal('sideMenu')">
@@ -312,7 +312,9 @@ const memberCenterLink = [
     },
 ];
 
-function openModal(type) {
+async function openModal(type) {
+    await nextTick();
+
     if (type === "search") {
         hideSideNav.value = true;
         isShowSearchContent.value = true;
