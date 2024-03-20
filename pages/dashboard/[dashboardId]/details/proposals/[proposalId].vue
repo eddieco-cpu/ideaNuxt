@@ -1,7 +1,10 @@
 <template>
     <section>
         <div class="flex justify-between items-center mb-3">
-            <nuxt-link to="/dashboard/details/proposals" class="flex justify-start items-center">
+            <nuxt-link
+                :to="`/dashboard/${$route.params.dashboardId}/details/proposals`"
+                class="flex justify-start items-center"
+            >
                 <UIcon name="i-heroicons-chevron-left" class="block w-4 h-4 mr-2" />
                 <b class="text-xl font-medium">{{ pageStatus === "new" ? "新增方案" : "編輯方案內容" }}</b>
             </nuxt-link>
