@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="submission">
         <section
             class="banner relative z-[-1] overflow-hidden mb-[-5%] 2xl:aspect-[144/23] max-2xl:aspect-[144/26] max-xl:mb-0 max-lg:aspect-[144/30] max-md:aspect-[375/127]"
         >
@@ -130,7 +130,7 @@
                     <UFormGroup label="專案分類" help="請選擇適合您本次計畫的商品分類/屬性。" class="mb-3">
                         <div class="flex justify-start items-center w-[210px]">
                             <USelectMenu
-                                class="w-full h-11 lg:h-40"
+                                class="w-full h-11 lg:h-10"
                                 size="lg"
                                 v-model="submissionData.category"
                                 :options="categoryOpts"
@@ -159,6 +159,7 @@
                                 :start-date="new Date()"
                                 :enable-time-picker="false"
                                 v-model="submissionData.startDate"
+                                class="submission_date-picker"
                             />
                         </div>
                     </UFormGroup>
@@ -181,6 +182,7 @@
                                 :start-date="new Date()"
                                 :enable-time-picker="false"
                                 v-model="submissionData.endDate"
+                                class="submission_date-picker"
                             />
                         </div>
                     </UFormGroup>
@@ -189,8 +191,12 @@
                         label="封面照片"
                         help="請上傳檔案小於 500kb 的圖片，尺寸必須為 1252 x 800 像素 ，至多5張，封面圖片可在專案上線前再另行編輯修改。"
                         required
+                        name="imgDataQuantity"
                         class="mb-3"
                     >
+                        <div class="h-0 overflow-hidden opacity-0">
+                            <UInput type="number" v-model="submissionData.imgDataQuantity" />
+                        </div>
                         <ModalDropImg ref="imgData" />
                     </UFormGroup>
 
@@ -223,8 +229,8 @@
                 </template>
                 <template #form>
                     <!-- plus-circle / minus-circle -->
-                    <UFormGroup label="相關網頁" required class="mb-3">
-                        <UInput placeholder="https://web.com" v-model="submissionData.website.related" />
+                    <UFormGroup label="相關網頁" required class="mb-3" name="relatedWebsite">
+                        <UInput placeholder="https://web.com" v-model="submissionData.relatedWebsite" />
                     </UFormGroup>
 
                     <div class="flex justify-start content-center items-center flex-wrap gap-x-2">
@@ -450,14 +456,23 @@ const submissionData = reactive({
         contract: false,
         understand: false,
     },
+    relatedWebsite: "",
     website: {
-        related: "",
         ig: "",
         fb: "",
         yt: "",
     },
+    imgData: [],
+    imgDataQuantity: 0,
 });
 const imgData = ref(); //imgData.value.files
+const imgDataQuantity = computed(() => imgData.value?.files?.length || 0);
+
+watch(imgDataQuantity, (val) => {
+    //console.log(val);
+    submissionData.imgDataQuantity = val;
+    submissionData.imgData = imgData.value.files;
+});
 
 //
 const screenWidth = ref(800);
@@ -488,21 +503,28 @@ const categoryOpts = [
 
 //
 function doSubmit() {
+    if (!submissionData.agree.contract || !submissionData.agree.understand) {
+        return alert("請同意提案契約書");
+    }
     alert("doSubmit");
 }
 </script>
-<style scoped>
+<style>
 /* .banner {
     background-image: linear-gradient(to bottom, #917fdd 50%, transparent 50%);
 } */
-.scroll-container::-webkit-scrollbar {
+.submission .scroll-container::-webkit-scrollbar {
     width: 4px;
     height: 4px;
 }
-.scroll-container::-webkit-scrollbar-thumb {
+.submission .scroll-container::-webkit-scrollbar-thumb {
     background-color: #d4d4d4;
 }
-.scroll-container::-webkit-scrollbar-track {
+.submission .scroll-container::-webkit-scrollbar-track {
     background-color: #f5f5f5;
+}
+.submission .submission_date-picker .dp__input {
+    height: 40px;
+    border-color: rgba(221, 222, 224, 0.7);
 }
 </style>

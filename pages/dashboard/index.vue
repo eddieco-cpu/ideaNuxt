@@ -26,10 +26,11 @@
                     :contentObj="{
                         label: '累積訂單數',
                         amount: '2,234 筆',
-                        description: '本週新增 24 筆，<a>前往出貨</a>',
+                        description: '本週新增 24 筆',
                     }"
                     type="secondary"
                     class="w-1/3 max-lg:w-full mb-2"
+                    :isLink="true"
                 />
                 <DashboardIndexCard
                     :contentObj="{

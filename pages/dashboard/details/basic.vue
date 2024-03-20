@@ -50,11 +50,30 @@
                         <UFormGroup
                             label="專案網址名稱"
                             name="projectWebsiteName"
-                            help="此為本專案的網址 ，同金流資料，請謹慎修改。網址目前為：https://www.idea2gether.com/projects/long-jing-you"
+                            :help="`此為本專案的網址 ，同金流資料，請謹慎修改。網址目前為：https://www.idea2gether.com/projects/${submissionData.projectWebsiteName}`"
                             required
                             class="mb-8"
                         >
-                            <UInput class="md:max-w-[218px]" v-model="submissionData.projectWebsiteName" />
+                            <UInput
+                                class="md:max-w-[218px]"
+                                v-model="submissionData.projectWebsiteName"
+                                @input="(e) => (e.target.value = e.target.value.replace(/[^a-zA-Z0-9\-_]/g, ''))"
+                                @keydown="
+                                    (e) => {
+                                        const allowedKeys = /[a-zA-Z0-9\-_]/;
+                                        const isControlKey =
+                                            e.ctrlKey ||
+                                            e.metaKey ||
+                                            e.altKey ||
+                                            e.key === 'Backspace' ||
+                                            e.key === 'Delete' ||
+                                            e.key === 'ArrowLeft' ||
+                                            e.key === 'ArrowRight' ||
+                                            (e.key === 'v' && (e.ctrlKey || e.metaKey));
+                                        if (!allowedKeys.test(e.key) && !isControlKey) e.preventDefault();
+                                    }
+                                "
+                            />
                         </UFormGroup>
 
                         <UFormGroup
