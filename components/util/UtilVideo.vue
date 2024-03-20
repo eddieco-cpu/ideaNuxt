@@ -111,6 +111,7 @@ const options = reactive({
     language: "zh-TW",
     loop: true,
     notSupportedMessage: "影片格式不支援",
+    playsinline: true,
 });
 
 const playList = videoPlayList;
