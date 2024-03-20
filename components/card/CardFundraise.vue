@@ -16,7 +16,7 @@
 
                 <!-- 愛心 -->
                 <div class="absolute top-2 right-2">
-                    <TagHeart :isEditMode="isEditMode" :isFavorite="isFavorite" />
+                    <TagHeart :isEditMode="isEditMode" :isFavorite="isFavorite" :id="id" />
                 </div>
             </div>
 

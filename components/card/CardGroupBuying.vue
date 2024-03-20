@@ -21,7 +21,7 @@
                     />
                     <!-- 愛心 -->
                     <div class="absolute top-2 right-2">
-                        <TagHeart :isFavorite="isFavorite" />
+                        <TagHeart :isFavorite="isFavorite" :id="id" />
                     </div>
                 </div>
 
