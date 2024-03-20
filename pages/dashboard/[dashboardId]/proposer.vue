@@ -1,6 +1,9 @@
 <template>
     <div>
         <section class="mb-7">
+            <div class="text-right mb-[-28px] mt-[-12px] max-md:mt-0">
+                <UiButton class="max-w-[90px]" @click="doSubmit">審核</UiButton>
+            </div>
             <UiTitle class="!mb-2">公司基本資料</UiTitle>
             <p class="text-sm font-normal mb-3 text-Neutral-600-Dark-Primary">
                 此區資訊將依主管機關規定揭露。所提供之法人資料請與 商工登記資料 及 稅籍登記資料 一致。
@@ -374,6 +377,10 @@ const identityCardStatusOpts = reactive([
     { label: "補發", value: "reissuance" },
     { label: "換發", value: "replacement" },
 ]);
+
+function doSubmit() {
+    alert("doSubmit");
+}
 </script>
 <style>
 .date-picker .dp__input {
