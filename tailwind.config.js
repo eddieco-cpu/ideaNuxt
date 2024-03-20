@@ -14,6 +14,9 @@ export default {
             minHeight: {
                 "80vh": "80vh",
             },
+            screens: {
+                "3xl": "2600px",
+            },
             colors: {
                 "fuchsia-blue": {
                     DEFAULT: "#6B56CA",

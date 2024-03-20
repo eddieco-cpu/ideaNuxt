@@ -1,5 +1,5 @@
 <template>
-    <div class="pt-6 flex flex-wrap items-start gap-6 max-w-[324px] md:max-w-[1082px] mx-auto">
+    <div class="pt-6 flex flex-wrap items-start gap-6 max-w-[324px] md:max-w-[1082px] 3xl:max-w-[1300px] mx-auto">
         <div class="flex flex-col gap-y-6 items-center w-full">
             <component :is="showOrderStatus" :orderId="orderStatus.orderId"></component>
 

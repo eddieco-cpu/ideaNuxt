@@ -1,6 +1,6 @@
 <template>
     <div
-        class="relative max-w-[324px] min-h-[138px] w-full mx-auto rounded-2xl flex bg-white border border-Secondary-200 flex-shrink-0 group cursor-pointer"
+        class="relative min-h-[138px] w-full mx-auto rounded-2xl flex bg-white border border-Secondary-200 flex-shrink-0 group cursor-pointer"
         @click="goToPage"
     >
         <!-- 名次-->
