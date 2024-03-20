@@ -40,7 +40,9 @@
                             </div>
                             <div class="flex-shrink-0 h-8 flex justify-center items-center group cursor-pointer">
                                 <!-- fake use -->
-                                <nuxt-link :to="'/dashboard/details/faq/' + item.linkFaqsId">
+                                <nuxt-link
+                                    :to="`/dashboard/${$route.params.dashboardId}/details/faq/${item.linkFaqsId}`"
+                                >
                                     <UIcon
                                         name="i-heroicons-pencil-square"
                                         class="block w-5 h-5 text-Neutral-500-Primary text-Primary-500-Primary group-hover:text-Primary-400-Hover group-active:text-Primary-200"
@@ -56,6 +58,9 @@
 </template>
 <script setup>
 import UiAccordion from "~/components/ui/UiAccordion.vue";
+
+const route = useRoute();
+const dashboardId = route.params.dashboardId;
 
 //
 const faqs = ref([
@@ -118,7 +123,7 @@ function exchangeNext(item, index) {
 function toNewProposal() {
     console.log("to new faq");
     const x = new Date().getTime();
-    navigateTo(`/dashboard/details/faq/${x}`);
+    navigateTo(`/dashboard/${dashboardId}/details/faq/${x}`);
 }
 </script>
 <style scoped>
