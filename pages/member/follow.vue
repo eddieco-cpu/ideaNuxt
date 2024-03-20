@@ -1,9 +1,7 @@
 <template>
     <div>
         <div>
-            <ul
-                class="relative max-w-[570px] hidden py-4 font-medium border-b-2 border-Neutral-200 mb-6 md:flex md:justify-between"
-            >
+            <ul class="relative hidden py-4 font-medium border-b-2 border-Neutral-200 mb-6 md:flex md:gap-x-8">
                 <li
                     v-for="(item, index) in mapfollowType"
                     :key="index"
