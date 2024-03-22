@@ -21,7 +21,7 @@
             >
                 <slot name="button">
                     <button class="underline">移至收藏夾</button>
-                    <button class="underline">刪除</button>
+                    <button class="underline" @click="removeProduct">刪除</button>
                 </slot>
             </div>
         </div>
@@ -29,6 +29,9 @@
 </template>
 
 <script setup>
+import { cartStore } from "@/stores/cart";
+const cart = cartStore();
+
 const { showButton, id, image } = defineProps({
     showButton: {
         type: Boolean,
@@ -56,4 +59,8 @@ const { showButton, id, image } = defineProps({
         default: "",
     },
 });
+
+function removeProduct() {
+    cart.selectGroupBuyProducts = [];
+}
 </script>

@@ -16,8 +16,7 @@
                                 }"
                                 class="max-w-[1200px]"
                             >
-                                <label class="cursor-pointer">
-                                    <input type="checkbox" :value="item" v-model="cart.selectGroupBuyProducts" hidden />
+                                <div class="cursor-pointer" @click="selectProduct(item)">
                                     <img
                                         :src="helperPicture()"
                                         alt="product"
@@ -26,7 +25,8 @@
                                             'border-Primary-50 border-2': isProductBeSelected(item.id),
                                             'contrast-[.25]': !isProductBeSelected(item.id),
                                         }"
-                                /></label>
+                                    />
+                                </div>
                             </UCarousel>
                         </div>
                     </template>
@@ -165,6 +165,10 @@ const showTotalDetail = ref(false);
 
 function isProductBeSelected(id) {
     return cart.selectGroupBuyProducts.some((item) => item.id === id);
+}
+
+function selectProduct(product) {
+    cart.selectGroupBuyProducts = [product];
 }
 
 function goCheckoutPage() {
