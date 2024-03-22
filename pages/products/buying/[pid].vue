@@ -8,7 +8,11 @@
             <section class="pt-8 pb-8 mt-[-140px] max-md:px-6 max-md:pt-1 max-md:pb-3">
                 <UBreadcrumb
                     divider="/"
-                    :links="[{ label: 'Home', to: '/' }, { label: '團主推薦' }, { label: '3C科技' }]"
+                    :links="[
+                        { label: 'Home', to: '/' },
+                        { label: '團主推薦' },
+                        { label: '3C科技', to: '/category/technology-ai?type=groupbuying' },
+                    ]"
                     :ui="{
                         active: 'text-white font-normal',
                         inactive: 'text-white font-normal',

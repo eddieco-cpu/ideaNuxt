@@ -8,12 +8,12 @@
                         class="item bg-white px-6 pt-8 pb-2 border-b-[1px] border-[#f3f3f3] flex justify-start items-start gap-x-2 max-md:p-3 max-md:pb-0"
                         :class="{ dragging: draggingIndex === index }"
                     >
-                        <div class="handle cursor-grab flex-shrink-0 h-8 flex justify-center items-center group">
+                        <!-- <div class="handle cursor-grab flex-shrink-0 h-8 flex justify-center items-center group">
                             <UIcon
                                 name="i-heroicons-bars-3"
                                 class="block w-5 h-5 text-Neutral-500-Primary text-Primary-500-Primary group-hover:text-Primary-400-Hover group-active:text-Primary-200"
                             />
-                        </div>
+                        </div> -->
                         <div class="flex-shrink-0 h-8 flex justify-center items-center group cursor-pointer">
                             <nuxt-link :to="`/dashboard/${$route.params.dashboardId}/progress/${item.linkProgressId}`">
                                 <UIcon
