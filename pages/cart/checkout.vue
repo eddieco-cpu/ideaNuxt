@@ -339,7 +339,7 @@ const productLists = computed(() => {
     if (route.query.type === "fundraise") {
         return cart.selectFundRaiseProducts;
     } else {
-        return cart.selectGroupBuyProducts;
+        return cart.selectGroupBuyProducts.products;
     }
 });
 
@@ -347,7 +347,7 @@ const productListsLength = computed(() => {
     if (route.query.type === "fundraise") {
         return cart.selectFundRaiseProducts.length;
     } else {
-        return cart.selectGroupBuyProducts.length;
+        return cart.selectGroupBuyProducts.products.length;
     }
 });
 
