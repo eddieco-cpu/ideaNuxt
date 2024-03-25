@@ -38,29 +38,29 @@
                 </UFormGroup>
 
                 <UFormGroup label="收件人地址" name="address" help="如使用宅配到府得以直接帶入該地址。" required>
-                    <div class="twzipcode w-full flex gap-x-2 mb-2">
+                    <div class="twzipcode w-full flex flex-wrap gap-2 mb-2">
                         <input
                             placeholder="郵遞區號"
                             data-role="zipcode"
                             ref="zipcode"
-                            class="zipcode flex-1 border border-Neutral-400-Hover rounded-md py-1 px-3 focus-visible:outline-Primary-400-Hover"
+                            class="zipcode w-[calc(50%-4px)] md:flex-1 border border-Neutral-400-Hover rounded-md py-1 px-3 focus-visible:outline-Primary-400-Hover"
                         />
                         <select
                             placeholder="縣市"
                             data-role="county"
-                            class="flex-1 border border-Neutral-400-Hover rounded-md py-1 px-3 focus-visible:outline-Primary-400-Hover"
+                            class="w-[calc(50%-4px)] md:flex-1 border border-Neutral-400-Hover rounded-md py-1 px-3 focus-visible:outline-Primary-400-Hover"
                             @change="getZipCode"
                             v-model="addressInfo.city"
                         ></select>
                         <select
                             placeholder="鄉鎮市區"
                             data-role="district"
-                            class="flex-1 border border-Neutral-400-Hover rounded-md py-1 px-3 focus-visible:outline-Primary-400-Hover"
+                            class="w-full md:flex-1 border border-Neutral-400-Hover rounded-md py-1 px-3 focus-visible:outline-Primary-400-Hover"
                             @change="getZipCode"
                             v-model="addressInfo.district"
                         ></select>
                     </div>
-                    <UInput placeholder="新北市樹林區五重路25巷3號3F" v-model="addressInfo.address" />
+                    <UInput placeholder="詳細地址" v-model="addressInfo.address" />
                 </UFormGroup>
 
                 <!-- 儲存更新 -->
