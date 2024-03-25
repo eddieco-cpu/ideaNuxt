@@ -22,8 +22,7 @@
                                         alt="product"
                                         class="rounded-lg w-[126px] flex-1 h-[81px] object-cover"
                                         :class="{
-                                            'border-Primary-50 border-2': isProductBeSelected(item.cartId),
-                                            'contrast-[.25]': !isProductBeSelected(item.cartId),
+                                            'opacity-40': !isProductBeSelected(item.cartId),
                                         }"
                                     />
                                 </div>
