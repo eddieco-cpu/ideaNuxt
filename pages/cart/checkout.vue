@@ -222,20 +222,31 @@
                                 </p>
                             </div>
 
-                            <UCheckbox
-                                v-model="checkoutPayload.isAgree"
-                                required
-                                name="agreement"
-                                label="我已閱讀 售後服務 並同意"
-                                class="w-[120px] md:mb-3 md:w-full"
-                            />
+                            <div class="flex gap-y-2 md:gap-y-0 flex-col">
+                                <UCheckbox
+                                    v-model="checkoutPayload.isAgree"
+                                    required
+                                    name="agreement"
+                                    label="我已閱讀 售後服務 並同意"
+                                    class="md:mb-3 md:w-full"
+                                />
+                                <div class="flex gap-x-2">
+                                    <button
+                                        type="button"
+                                        class="px-2 py-2 text-sm bg-Primary-50 text-center rounded-lg text-Primary-400-Hover w-[80px]"
+                                        @click="goBack"
+                                    >
+                                        上一步
+                                    </button>
 
-                            <button
-                                type="submit"
-                                class="px-4 py-2 text-sm bg-Primary-500-Primary text-center rounded-lg w-full text-white flex-1"
-                            >
-                                付款結帳
-                            </button>
+                                    <button
+                                        type="submit"
+                                        class="px-2 py-2 text-sm bg-Primary-500-Primary text-center rounded-lg w-full text-white flex-1"
+                                    >
+                                        付款結帳
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </template>
                 </CardContainer>
@@ -410,6 +421,10 @@ function addressOnSubmit(data) {
     addressInfo.value.push(payload);
 
     tempAddress.value = null;
+}
+
+function goBack() {
+    navigateTo("/cart");
 }
 
 function goFinishedPage() {
