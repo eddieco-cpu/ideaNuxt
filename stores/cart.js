@@ -1,12 +1,18 @@
 import { defineStore } from "pinia";
 
 export const cartStore = defineStore("cart", () => {
-    const cartList = ref([]);
+    const cartList = ref({});
 
-    const selectGroupBuyProducts = ref([]);
+    const isCartEmpty = computed(() => {
+        const arr = Object.keys(cartList.value);
+
+        return arr.length === 0;
+    });
+
+    const selectGroupBuyProducts = ref({});
 
     const totalGroupBuyPrice = computed(() => {
-        return selectGroupBuyProducts.value.reduce((a, b) => a + b.price * b.qty, 0);
+        return selectGroupBuyProducts.value?.products?.reduce((a, b) => a + b.price * b.qty, 0) ?? 0;
     });
 
     const selectFundRaiseProducts = ref([]);
@@ -15,5 +21,12 @@ export const cartStore = defineStore("cart", () => {
         return selectFundRaiseProducts.value.reduce((a, b) => a + b.price * b.qty, 0);
     });
 
-    return { cartList, selectGroupBuyProducts, selectFundRaiseProducts, totalGroupBuyPrice, totalFundRaisePrice };
+    return {
+        cartList,
+        isCartEmpty,
+        selectGroupBuyProducts,
+        selectFundRaiseProducts,
+        totalGroupBuyPrice,
+        totalFundRaisePrice,
+    };
 });

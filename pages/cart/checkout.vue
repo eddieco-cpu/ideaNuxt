@@ -33,6 +33,35 @@
                                 class="delivery"
                             />
 
+                            <div
+                                class="w-full p-6 border border-Primary-100 bg-Primary-50 shadow-[0_0_5px_0_rgba(0,0,0,0.02)] rounded-lg flex flex-col gap-y-[10px]"
+                                v-if="checkoutPayload.deliveryType === 1"
+                            >
+                                <p class="text-sm text-black/85" v-if="storeType">
+                                    已選擇取貨超商：{{ storeType.label }}
+                                </p>
+                                <p class="text-sm text-black/85" v-if="!storeType">請選擇欲取貨超商</p>
+                                <p class="text-xs text-black/45">
+                                    將優先為你安排超商取貨，但若出貨時，選擇的超商因故不支援店取，將把回饋品寄至收件地址。廠商保有寄件方式的最終決定權。
+                                </p>
+                                <div class="flex flex-col md:flex-row gap-3">
+                                    <label
+                                        v-for="(item, index) in convenienceStoreOptions"
+                                        :key="index"
+                                        class="flex p-3 items-center justify-between rounded-lg border w-full shadow-[0_0_5px_0_rgba(0,0,0,0.02)] cursor-pointer"
+                                        :class="{
+                                            'bg-Primary-200 border-Primary-200 text-white':
+                                                item.value === storeType?.value ?? -1,
+                                            'bg-white border-Primary-100': item.value !== storeType?.value ?? -1,
+                                        }"
+                                    >
+                                        <input type="radio" v-model="storeType" :value="item" hidden />
+                                        <span class="text-sm">{{ item.label }}</span>
+                                        <img :src="item.img" :alt="item.label" />
+                                    </label>
+                                </div>
+                            </div>
+
                             <div class="flex flex-col gap-y-4" v-if="checkoutPayload.deliveryType === 2">
                                 <MemberEditAddress
                                     class="border border-Primary-100"
@@ -222,20 +251,31 @@
                                 </p>
                             </div>
 
-                            <UCheckbox
-                                v-model="checkoutPayload.isAgree"
-                                required
-                                name="agreement"
-                                label="我已閱讀 售後服務 並同意"
-                                class="w-[120px] md:mb-3 md:w-full"
-                            />
+                            <div class="flex gap-y-2 md:gap-y-0 flex-col">
+                                <UCheckbox
+                                    v-model="checkoutPayload.isAgree"
+                                    required
+                                    name="agreement"
+                                    label="我已閱讀 售後服務 並同意"
+                                    class="md:mb-3 md:w-full"
+                                />
+                                <div class="flex gap-x-2">
+                                    <button
+                                        type="button"
+                                        class="px-2 py-2 text-sm bg-Primary-50 text-center rounded-lg text-Primary-400-Hover w-[80px]"
+                                        @click="goBack"
+                                    >
+                                        上一步
+                                    </button>
 
-                            <button
-                                type="submit"
-                                class="px-4 py-2 text-sm bg-Primary-500-Primary text-center rounded-lg w-full text-white flex-1"
-                            >
-                                付款結帳
-                            </button>
+                                    <button
+                                        type="submit"
+                                        class="px-2 py-2 text-sm bg-Primary-500-Primary text-center rounded-lg w-full text-white flex-1"
+                                    >
+                                        付款結帳
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </template>
                 </CardContainer>
@@ -258,6 +298,7 @@
 <script setup>
 import { checkOutSchema } from "~/validation";
 import { cartStore } from "@/stores/cart";
+import Icon from "assets/images/";
 const cart = cartStore();
 const route = useRoute();
 
@@ -300,6 +341,30 @@ const deliveryOptions = [
         label: "宅配到府",
     },
 ];
+
+const convenienceStoreOptions = [
+    {
+        value: 1,
+        label: "7-Eleven",
+        img: Icon.sevenEleven,
+    },
+    {
+        value: 2,
+        label: "全家便利商店",
+        img: Icon.familyMart,
+    },
+    {
+        value: 3,
+        label: "OK便利商店",
+        img: Icon.familyMart,
+    },
+    {
+        value: 4,
+        label: "萊爾富超商",
+        img: Icon.familyMart,
+    },
+];
+
 const checkoutPayload = ref({
     name: "",
     phone: "0911123456",
@@ -339,7 +404,7 @@ const productLists = computed(() => {
     if (route.query.type === "fundraise") {
         return cart.selectFundRaiseProducts;
     } else {
-        return cart.selectGroupBuyProducts;
+        return cart.selectGroupBuyProducts.products;
     }
 });
 
@@ -347,7 +412,7 @@ const productListsLength = computed(() => {
     if (route.query.type === "fundraise") {
         return cart.selectFundRaiseProducts.length;
     } else {
-        return cart.selectGroupBuyProducts.length;
+        return cart.selectGroupBuyProducts.products.length;
     }
 });
 
@@ -379,6 +444,7 @@ const addressInfo = ref([
     },
 ]);
 const deliveryAddress = ref(addressInfo.value[0]);
+const storeType = ref(null);
 
 async function editAddress() {
     tempAddress.value = null;
@@ -410,6 +476,10 @@ function addressOnSubmit(data) {
     addressInfo.value.push(payload);
 
     tempAddress.value = null;
+}
+
+function goBack() {
+    navigateTo("/cart");
 }
 
 function goFinishedPage() {

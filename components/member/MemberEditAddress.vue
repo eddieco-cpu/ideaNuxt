@@ -38,6 +38,28 @@
                 </UFormGroup>
 
                 <UFormGroup label="收件人地址" name="address" help="如使用宅配到府得以直接帶入該地址。" required>
+                    <div class="twzipcode w-full flex gap-x-2 mb-2">
+                        <input
+                            placeholder="郵遞區號"
+                            data-role="zipcode"
+                            ref="zipcode"
+                            class="zipcode flex-1 border border-Neutral-400-Hover rounded-md py-1 px-3 focus-visible:outline-Primary-400-Hover"
+                        />
+                        <select
+                            placeholder="縣市"
+                            data-role="county"
+                            class="flex-1 border border-Neutral-400-Hover rounded-md py-1 px-3 focus-visible:outline-Primary-400-Hover"
+                            @change="getZipCode"
+                            v-model="addressInfo.city"
+                        ></select>
+                        <select
+                            placeholder="鄉鎮市區"
+                            data-role="district"
+                            class="flex-1 border border-Neutral-400-Hover rounded-md py-1 px-3 focus-visible:outline-Primary-400-Hover"
+                            @change="getZipCode"
+                            v-model="addressInfo.district"
+                        ></select>
+                    </div>
                     <UInput placeholder="新北市樹林區五重路25巷3號3F" v-model="addressInfo.address" />
                 </UFormGroup>
 
@@ -61,10 +83,13 @@
 </template>
 
 <script setup>
+import TWzipcode from "twzipcode.js";
 import { addressSchema } from "~/validation";
 import { useToast } from "vue-toastification";
 
 const toast = useToast();
+const twzipcode = ref(null);
+const zipcode = ref(null);
 
 const { index, defaultAddress, name, phone, email, address, isEditmode } = defineProps({
     index: {
@@ -105,8 +130,19 @@ const addressInfo = reactive({
     name: name,
     phone: phone,
     email: email,
+    zipCode: undefined,
+    city: "",
+    district: "",
     address: address,
 });
+
+async function getZipCode() {
+    await nextTick();
+
+    setTimeout(() => {
+        addressInfo.zipCode = zipcode.value.value;
+    }, 0);
+}
 
 function abortAddress() {
     if (defaultAddress) {
@@ -127,6 +163,16 @@ function setDefaultAddress() {
 function onSubmit(event) {
     emit("onSubmit", event.data, isEditmode);
 }
+
+onMounted(() => {
+    twzipcode.value = new TWzipcode();
+});
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.twzipcode select {
+    -moz-appearance: none; /* Firefox */
+    -webkit-appearance: none; /* Safari and Chrome */
+    appearance: none;
+}
+</style>

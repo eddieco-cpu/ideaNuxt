@@ -35,6 +35,10 @@ import intro_3 from "assets/images/proposal/intro_3.png";
 
 // status
 
+// store
+import sevenEleven from "assets/images/store/7-11.png";
+import familyMart from "assets/images/store/family.png";
+
 export default {
     userInfo,
     groupBuy,
@@ -61,4 +65,6 @@ export default {
     intro_2,
     intro_3,
     circle,
+    sevenEleven,
+    familyMart,
 };
