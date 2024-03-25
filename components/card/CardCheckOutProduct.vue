@@ -32,12 +32,15 @@
 import { cartStore } from "@/stores/cart";
 const cart = cartStore();
 
-const { showButton, id, image } = defineProps({
+const props = defineProps({
     showButton: {
         type: Boolean,
         default: true,
     },
     id: {
+        type: Number,
+    },
+    cartId: {
         type: Number,
     },
     price: {
@@ -60,7 +63,17 @@ const { showButton, id, image } = defineProps({
     },
 });
 
-function removeProduct() {
-    cart.selectGroupBuyProducts = [];
+async function removeProduct() {
+    const productIndex = cart.selectGroupBuyProducts.products.findIndex((item) => item.id === props.id);
+
+    cart.selectGroupBuyProducts.products.splice(productIndex, 1);
+
+    await nextTick();
+
+    if (cart.selectGroupBuyProducts.products.length === 0) {
+        cart.selectGroupBuyProducts = {};
+
+        delete cart.cartList[props.cartId];
+    }
 }
 </script>

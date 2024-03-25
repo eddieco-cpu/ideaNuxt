@@ -3,7 +3,7 @@
         <template #body>
             <div class="flex flex-col gap-2">
                 <CardCheckOutProduct
-                    v-for="(item, index) in cart.selectGroupBuyProducts"
+                    v-for="(item, index) in cart.selectGroupBuyProducts.products"
                     :key="index"
                     :showButton="false"
                     v-bind="item"
