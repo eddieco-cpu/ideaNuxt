@@ -92,7 +92,7 @@
                 <!-- art -->
                 <article class="w-[436px] flex flex-col justify-center items-center max-xl:w-auto">
                     <!-- avater -->
-                    <div
+                    <nuxt-link to="/kol/1"
                         class="flex justify-between items-center gap-x-2 bg-white mb-2 p-3 rounded-lg w-full max-md:mb-5 max-md:translate-y-[-4px]"
                     >
                         <div class="flex justify-start items-center gap-x-3">
@@ -109,7 +109,7 @@
                             name="i-heroicons-arrow-right-circle"
                             class="block w-8 h-8 text-Secondary-500-Primary flex-shrink-0"
                         />
-                    </div>
+                    </nuxt-link>
 
                     <!-- detail -->
                     <ul class="bg-white py-3 px-5 flex-grow w-full">
