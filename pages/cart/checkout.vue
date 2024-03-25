@@ -353,16 +353,6 @@ const convenienceStoreOptions = [
         label: "全家便利商店",
         img: Icon.familyMart,
     },
-    {
-        value: 3,
-        label: "OK便利商店",
-        img: Icon.familyMart,
-    },
-    {
-        value: 4,
-        label: "萊爾富超商",
-        img: Icon.familyMart,
-    },
 ];
 
 const checkoutPayload = ref({
