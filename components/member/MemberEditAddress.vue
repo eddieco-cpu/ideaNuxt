@@ -43,19 +43,19 @@
                             placeholder="郵遞區號"
                             data-role="zipcode"
                             ref="zipcode"
-                            class="zipcode w-[calc(50%-4px)] md:flex-1 border border-Neutral-400-Hover rounded-md py-1 px-3 focus-visible:outline-Primary-400-Hover"
+                            class="zipcode w-[calc(50%-4px)] md:flex-1 border border-Neutral-400-Hover rounded-md py-[7px] px-3 focus-visible:outline-Primary-400-Hover bg-white"
                         />
                         <select
                             placeholder="縣市"
                             data-role="county"
-                            class="w-[calc(50%-4px)] md:flex-1 border border-Neutral-400-Hover rounded-md py-1 px-3 focus-visible:outline-Primary-400-Hover"
+                            class="w-[calc(50%-4px)] md:flex-1 border border-Neutral-400-Hover rounded-md py-[7px] px-3 focus-visible:outline-Primary-400-Hover bg-white"
                             @change="getZipCode"
                             v-model="addressInfo.city"
                         ></select>
                         <select
                             placeholder="鄉鎮市區"
                             data-role="district"
-                            class="w-full md:flex-1 border border-Neutral-400-Hover rounded-md py-1 px-3 focus-visible:outline-Primary-400-Hover"
+                            class="w-full md:flex-1 border border-Neutral-400-Hover rounded-md py-[7px] px-3 focus-visible:outline-Primary-400-Hover bg-white"
                             @change="getZipCode"
                             v-model="addressInfo.district"
                         ></select>
