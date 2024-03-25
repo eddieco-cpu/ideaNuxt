@@ -9,7 +9,10 @@
             <p class="line-through text-xs text-Neutral-600-Dark-Primary mb-3">市價 $ 6,280</p>
 
             <div class="flex justify-center ring-1 ring-gray-200 rounded overflow-hidden mb-3">
-                <button class="w-8 flex justify-center items-center" @click="select.amount >= 1 ? select.amount-- : ''">
+                <button
+                    class="w-8 flex justify-center items-center"
+                    @click="select.amount > 1 ? select.amount-- : (select.amount = 1)"
+                >
                     －
                 </button>
                 <p class="flex-grow flex justify-center items-center ring-1 ring-gray-200">
