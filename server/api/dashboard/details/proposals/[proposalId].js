@@ -9,10 +9,23 @@ const fakeDatas = [
         salesLimitedQuantity: helperRandomNumber(10, 100),
         deliveryTime: helperRandomDate("yyyy/mm/dd"),
         content: helperLorem(30, 100),
-        specification: helperLorem(30, 100),
-        deliveryWays: ["deliveToStore", "deliveToHouse"],
-        deliveToStoreFee: helperRandomNumber(5, 100),
+
         imgData: helperPicture(),
+
+        deliveryWays: ["deliveToStore", "deliveToHouse"],
+        deliveOverseas: {
+            isAvailable: false,
+            fee: null,
+        },
+        deliveToStore: {
+            isAvailable: true,
+            fee: 10,
+            stores: ["711"],
+        },
+        deliveToHouse: {
+            isAvailable: true,
+            fee: 0,
+        },
     },
     {
         id: "fakeDataOfDetailsProposal2",
@@ -23,10 +36,23 @@ const fakeDatas = [
         salesLimitedQuantity: helperRandomNumber(10, 100),
         deliveryTime: helperRandomDate("yyyy/mm/dd"),
         content: helperLorem(30, 100),
-        specification: helperLorem(30, 100),
-        deliveryWays: ["deliveToStore", "deliveToHouse"],
-        deliveToStoreFee: helperRandomNumber(5, 100),
+
         imgData: helperPicture(),
+
+        deliveryWays: ["deliveOverseas", "deliveToStore", "deliveToHouse"],
+        deliveOverseas: {
+            isAvailable: true,
+            fee: 299,
+        },
+        deliveToStore: {
+            isAvailable: true,
+            fee: 10,
+            stores: ["family"],
+        },
+        deliveToHouse: {
+            isAvailable: true,
+            fee: 0,
+        },
     },
     {
         id: "fakeDataOfDetailsProposal3",
@@ -37,10 +63,23 @@ const fakeDatas = [
         salesLimitedQuantity: helperRandomNumber(10, 100),
         deliveryTime: helperRandomDate("yyyy/mm/dd"),
         content: helperLorem(30, 100),
-        specification: helperLorem(30, 100),
-        deliveryWays: ["deliveToStore", "deliveToHouse"],
-        deliveToStoreFee: helperRandomNumber(5, 100),
+
         imgData: helperPicture(),
+
+        deliveryWays: ["deliveOverseas", "deliveToStore", "deliveToHouse"],
+        deliveOverseas: {
+            isAvailable: true,
+            fee: 299,
+        },
+        deliveToStore: {
+            isAvailable: true,
+            fee: 10,
+            stores: ["family", "711"],
+        },
+        deliveToHouse: {
+            isAvailable: true,
+            fee: 0,
+        },
     },
     {
         id: "fakeDataOfDetailsProposal4",
@@ -51,10 +90,23 @@ const fakeDatas = [
         salesLimitedQuantity: helperRandomNumber(10, 100),
         deliveryTime: helperRandomDate("yyyy/mm/dd"),
         content: helperLorem(30, 100),
-        specification: helperLorem(30, 100),
-        deliveryWays: ["deliveToStore", "deliveToHouse"],
-        deliveToStoreFee: helperRandomNumber(5, 100),
+
         imgData: helperPicture(),
+
+        deliveryWays: ["deliveToHouse"],
+        deliveOverseas: {
+            isAvailable: false,
+            fee: null,
+        },
+        deliveToStore: {
+            isAvailable: false,
+            fee: null,
+            stores: [],
+        },
+        deliveToHouse: {
+            isAvailable: true,
+            fee: 0,
+        },
     },
     {
         id: "fakeDataOfDetailsProposal5",
@@ -65,10 +117,23 @@ const fakeDatas = [
         salesLimitedQuantity: helperRandomNumber(10, 100),
         deliveryTime: helperRandomDate("yyyy/mm/dd"),
         content: helperLorem(30, 100),
-        specification: helperLorem(30, 100),
-        deliveryWays: ["deliveToStore", "deliveToHouse"],
-        deliveToStoreFee: helperRandomNumber(5, 100),
+
         imgData: helperPicture(),
+
+        deliveryWays: ["deliveToStore", "deliveToHouse"],
+        deliveOverseas: {
+            isAvailable: false,
+            fee: null,
+        },
+        deliveToStore: {
+            isAvailable: true,
+            fee: 10,
+            stores: ["family", "711"],
+        },
+        deliveToHouse: {
+            isAvailable: true,
+            fee: 0,
+        },
     },
     {
         id: "fakeDataOfDetailsProposal6",
@@ -79,10 +144,23 @@ const fakeDatas = [
         salesLimitedQuantity: helperRandomNumber(10, 100),
         deliveryTime: helperRandomDate("yyyy/mm/dd"),
         content: helperLorem(30, 100),
-        specification: helperLorem(30, 100),
-        deliveryWays: ["deliveToStore", "deliveToHouse"],
-        deliveToStoreFee: helperRandomNumber(5, 100),
+
         imgData: helperPicture(),
+
+        deliveryWays: ["deliveToStore", "deliveToHouse"],
+        deliveOverseas: {
+            isAvailable: false,
+            fee: null,
+        },
+        deliveToStore: {
+            isAvailable: true,
+            fee: 10,
+            stores: ["family", "711"],
+        },
+        deliveToHouse: {
+            isAvailable: true,
+            fee: 0,
+        },
     },
 ];
 

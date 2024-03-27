@@ -42,15 +42,45 @@ function generateRandomArray(minLength, maxLength) {
 
 export default defineEventHandler(() => {
     const proposals = Array.from({ length: 6 }, () => ({
+        //
         id: generateUniqueId(),
-        photo: helperPicture(),
-        name: helperLorem(15, 30),
+        projectName: helperLorem(15, 30),
+        projectPreview: helperPicture(),
+
+        //
         originalPrice: 15000,
         specialOffer: 10000,
-        contentList: generateRandomArray(1, 3),
-        sizeList: generateRandomArray(1, 3),
+
+        //
+        salesLimit: true,
+        salesLimitedQuantity: helperRandomNumber(30, 80),
+
+        //
+        sponsors: helperRandomNumber(0, 10),
+
+        //
+        content: generateRandomArray(1, 3),
+
+        //
         deliveryTime: formatDate(randomDate(new Date(2024, 3, 30), new Date(2025, 6, 30))),
-        isDeliveryFree: true,
+
+        //
+        deliveOverseas: {
+            isAvailable: true,
+            fee: helperRandomNumber(0, 100),
+        },
+        deliveToStore: {
+            isAvailable: true,
+            fee: 0,
+        },
+        deliveToHouse: {
+            isAvailable: true,
+            fee: helperRandomNumber(0, 100),
+        },
+
+        //
+        soldOut: false,
     }));
+    proposals[proposals.length - 1].soldOut = true;
     return { proposals };
 });

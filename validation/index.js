@@ -18,6 +18,21 @@ const urlPattern = new RegExp(
     "i",
 ); // fragment locator
 
+const dateSchema = z.union([
+    z
+        .string()
+        .regex(/^\d{2}\/\d{2}\/\d{4}$/, "請輸入有效的日期格式 MM/DD/YYYY")
+        .transform((val) => {
+            const [month, day, year] = val.split("/").map(Number);
+            const date = new Date(year, month - 1, day);
+            if (date.getFullYear() !== year || date.getMonth() + 1 !== month || date.getDate() !== day) {
+                throw new Error("無效的日期");
+            }
+            return date;
+        }),
+    z.date(),
+]);
+
 export const setPasswordSchema = z
     .object({
         password: z.string(commonErrorMessage).min(1, "必填"),
@@ -71,28 +86,8 @@ export const submissionSchema = z.object({
                     return num;
                 }),
         ),
-    startDate: z
-        .string()
-        .regex(/^\d{2}\/\d{2}\/\d{4}$/, "請輸入有效的日期格式 MM/DD/YYYY")
-        .transform((val) => {
-            const [month, day, year] = val.split("/").map(Number);
-            const date = new Date(year, month - 1, day);
-            if (date.getFullYear() !== year || date.getMonth() + 1 !== month || date.getDate() !== day) {
-                throw new Error("無效的日期");
-            }
-            return date;
-        }),
-    endDate: z
-        .string()
-        .regex(/^\d{2}\/\d{2}\/\d{4}$/, "請輸入有效的日期格式 MM/DD/YYYY")
-        .transform((val) => {
-            const [month, day, year] = val.split("/").map(Number);
-            const date = new Date(year, month - 1, day);
-            if (date.getFullYear() !== year || date.getMonth() + 1 !== month || date.getDate() !== day) {
-                throw new Error("無效的日期");
-            }
-            return date;
-        }),
+    startDate: dateSchema,
+    endDate: dateSchema,
     projectDetailsDes: z.string(commonErrorMessage).min(1, "必填"),
     imgDataQuantity: z.number().min(1, { message: "必須大於等於 1 張" }).max(5, { message: "數值必須小於等於 5 張" }),
     relatedWebsite: z
@@ -123,28 +118,8 @@ export const basicProjectDataSchema = z.object({
                     return num;
                 }),
         ),
-    startDate: z
-        .string()
-        .regex(/^\d{2}\/\d{2}\/\d{4}$/, "請輸入有效的日期格式 MM/DD/YYYY")
-        .transform((val) => {
-            const [month, day, year] = val.split("/").map(Number);
-            const date = new Date(year, month - 1, day);
-            if (date.getFullYear() !== year || date.getMonth() + 1 !== month || date.getDate() !== day) {
-                throw new Error("無效的日期");
-            }
-            return date;
-        }),
-    endDate: z
-        .string()
-        .regex(/^\d{2}\/\d{2}\/\d{4}$/, "請輸入有效的日期格式 MM/DD/YYYY")
-        .transform((val) => {
-            const [month, day, year] = val.split("/").map(Number);
-            const date = new Date(year, month - 1, day);
-            if (date.getFullYear() !== year || date.getMonth() + 1 !== month || date.getDate() !== day) {
-                throw new Error("無效的日期");
-            }
-            return date;
-        }),
+    startDate: dateSchema,
+    endDate: dateSchema,
     projectDetailsDes: z.string(commonErrorMessage).min(1, "必填"),
     imgDataQuantity: z.number().min(1, { message: "必須大於等於 1 張" }).max(5, { message: "數值必須小於等於 5 張" }),
 });
@@ -173,67 +148,47 @@ export const basicProgressSchema = z.object({
         ),
 });
 
-export const proposalSchema = z
-    .object({
-        projectName: z.string(commonErrorMessage).min(1, "必填"),
-        originalPrice: z
-            .number()
-            .gte(0, "請輸入大於等於零的數字")
-            .or(
-                z
-                    .string()
-                    .min(1, "必填")
-                    .transform((val) => {
-                        if (val === "") throw new Error("必填");
-                        const num = Number(val);
-                        if (isNaN(num) || num < 0) throw new Error("請輸入大於等於零的數字");
-                        return num;
-                    }),
-            ),
-        specialOffer: z
-            .number()
-            .gte(0, "請輸入大於等於零的數字")
-            .or(
-                z
-                    .string()
-                    .min(1, "必填")
-                    .transform((val) => {
-                        if (val === "") throw new Error("必填");
-                        const num = Number(val);
-                        if (isNaN(num) || num < 0) throw new Error("請輸入大於等於零的數字");
-                        return num;
-                    }),
-            ),
+export const proposalSchema = z.object({
+    projectName: z.string(commonErrorMessage).min(1, "必填"),
+    originalPrice: z
+        .number()
+        .gte(0, "請輸入大於等於零的數字")
+        .or(
+            z
+                .string()
+                .min(1, "必填")
+                .transform((val) => {
+                    if (val === "") throw new Error("必填");
+                    const num = Number(val);
+                    if (isNaN(num) || num < 0) throw new Error("請輸入大於等於零的數字");
+                    return num;
+                }),
+        ),
+    specialOffer: z
+        .number()
+        .gte(0, "請輸入大於等於零的數字")
+        .or(
+            z
+                .string()
+                .min(1, "必填")
+                .transform((val) => {
+                    if (val === "") throw new Error("必填");
+                    const num = Number(val);
+                    if (isNaN(num) || num < 0) throw new Error("請輸入大於等於零的數字");
+                    return num;
+                }),
+        ),
 
-        deliveryTime: z
-            .string()
-            .regex(/^\d{2}\/\d{2}\/\d{4}$/, "請輸入有效的日期格式 MM/DD/YYYY")
-            .transform((val) => {
-                const [month, day, year] = val.split("/").map(Number);
-                const date = new Date(year, month - 1, day);
-                if (date.getFullYear() !== year || date.getMonth() + 1 !== month || date.getDate() !== day) {
-                    throw new Error("無效的日期");
-                }
-                return date;
-            }),
+    deliveryTime: dateSchema,
 
-        content: z.string(commonErrorMessage).min(1, "必填"),
-        specification: z.string(commonErrorMessage).min(1, "必填"),
+    content: z.string(commonErrorMessage).min(1, "必填"),
 
-        deliveryWays: z.array(z.string()).min(1, "You must select at least one delivery way."),
+    deliveryWays: z.array(z.string()).min(1, "You must select at least one delivery way."),
 
-        imgDataQuantity: z.number().refine((value) => value === 1, {
-            message: "必需上傳 1 張圖片",
-        }),
+    imgDataQuantity: z.number().refine((value) => value === 1, {
+        message: "必需上傳 1 張圖片",
+    }),
 
-        salesLimit: z.boolean(),
-        salesLimitedQuantity: z.number().optional(),
-    })
-    .refine(
-        (data) =>
-            data.salesLimit === "false" || (data.salesLimit === "true" && data.salesLimitedQuantity !== undefined),
-        {
-            message: "Account limit count is required when sales limit is enabled",
-            path: ["salesLimitedQuantity"], // 指定錯誤訊息應該被附加到哪個路徑
-        },
-    );
+    salesLimit: z.boolean(),
+    salesLimitedQuantity: z.number().min(1, { message: "必須大於等於 1" }).nullable(),
+});
