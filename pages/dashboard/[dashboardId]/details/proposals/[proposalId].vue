@@ -11,9 +11,9 @@
             <span class="opacity-0">{{ $route.params.proposalId }}</span>
         </div>
 
-        <section class="flex justify-start items-start gap-x-6 rounded-lg bg-white p-6 relative max-md:p-3">
+        <section class="flex justify-start items-start gap-x-6 rounded-lg bg-white p-6 px-5 relative max-md:p-3">
             <!-- form -->
-            <article>
+            <article class="max-w-[420px]">
                 <UForm :schema="proposalSchema" :state="submissionData" @submit="doSave">
                     <!--  -->
                     <div>
@@ -110,6 +110,12 @@
                                     ]"
                                     v-model="submissionData.salesLimit"
                                     class="mt-2"
+                                    @change="
+                                        () =>
+                                            !submissionData.salesLimit
+                                                ? (submissionData.salesLimitedQuantity = null)
+                                                : ''
+                                    "
                                 >
                                     <template #label="{ option }">
                                         <p class="mb-3">{{ option.label }}</p>
@@ -117,19 +123,26 @@
                                 </URadioGroup>
                             </UFormGroup>
                             <!--  -->
-                            <UFormGroup class="mb-3" name="salesLimitedQuantity">
+                            <UFormGroup class="mb-3 relative" name="salesLimitedQuantity">
                                 <UInput
                                     class="w-52 mb-1 max-md:w-[205px]"
                                     :disabled="!submissionData.salesLimit"
                                     type="number"
                                     :modelValue="submissionData.salesLimitedQuantity"
                                     v-model="submissionData.salesLimitedQuantity"
+                                    @change="(e) => (e.target.value = Math.max(1, e.target.value))"
                                     size="sm"
                                 >
                                     <template #trailing>
                                         <p class="flex justify-center items-center">組</p>
                                     </template>
                                 </UInput>
+                                <p
+                                    class="dark:text-red-400 mt-0 text-Status-Color-Danger-500-Primary text-sm absolute bottom-[-20px] right-2"
+                                    v-if="submitedError.salesLimitedQuantity"
+                                >
+                                    請輸入組數
+                                </p>
                             </UFormGroup>
                         </div>
 
@@ -158,7 +171,7 @@
 
                         <!-- 商品內容物 -->
                         <UFormGroup
-                            label="商品內容物"
+                            label="商品內容/規格詳情"
                             help="建議您可使用點列、數字等方式顯示較易於閱讀。"
                             name="content"
                             required
@@ -174,65 +187,160 @@
                             />
                         </UFormGroup>
 
-                        <!-- 商品規格 -->
-                        <UFormGroup
-                            label="商品規格"
-                            help="請詳細填入基本商品規格與內容介紹，建議可用條列式方式顯示。"
-                            name="specification"
-                            required
-                            class="mb-3"
-                        >
-                            <UTextarea
-                                placeholder=" ．淨重 4.5 kg   ．尺寸 39 x 25 x 59cm"
-                                :rows="4"
-                                resize
-                                class="w-full"
-                                size="lg"
-                                v-model="submissionData.specification"
-                            />
-                        </UFormGroup>
-
                         <!-- 出貨方式與運費 -->
                         <div class="flex justify-start items-start max-md:block max-md:relative">
-                            <UFormGroup label="出貨方式與運費 (可複選)" required class="mb-3" name="deliveryWays">
+                            <UFormGroup
+                                label="出貨方式與運費 (可複選)"
+                                required
+                                help="提供多種配送服務可以提高顧客選擇與購買意願，物流費用可針對不同優惠方案進行區隔設定，物流費將於顧客結帳時另外收取。"
+                                class="mb-3"
+                                name="deliveryWays"
+                            >
+                                <div class="h-0 overflow-hidden opacity-0">
+                                    <USelectMenu
+                                        v-model="submissionData.deliveryWays"
+                                        :options="deliveryWays"
+                                        multiple
+                                        placeholder="請選擇"
+                                        @change="updateDeliveryWays(submissionData.deliveryWays)"
+                                    />
+                                </div>
+                            </UFormGroup>
+                        </div>
+
+                        <section class="mb-10">
+                            <!-- deliveToStore -->
+                            <div class="flex justify-start items-center gap-x-3 max-md:items-start max-md:gap-x-0">
                                 <UCheckbox
                                     label="超商取貨"
-                                    class="mb-3 mt-3"
-                                    :value="deliveryWays[0].val"
-                                    @change="updateDeliveryWays($event)"
+                                    class="whitespace-nowrap"
+                                    v-model="submissionData.deliveToStore.isAvailable"
+                                    @change="cancelFeeIfNotAvailable(submissionData.deliveToStore, 'deliveToStore')"
                                 />
+                                <div class="flex justify-start items-end gap-x-2 flex-wrap">
+                                    <UInput
+                                        class="w-44 m-auto max-md:h-[32px] mb-2 max-md:ml-3"
+                                        type="number"
+                                        placeholder="輸入運費金額"
+                                        inputClass="!pl-[55px]"
+                                        size="sm"
+                                        @input="(e) => (e.target.value = Math.max(0, e.target.value))"
+                                        :disabled="!submissionData.deliveToStore.isAvailable"
+                                        v-model="submissionData.deliveToStore.fee"
+                                    >
+                                        <template #leading>
+                                            <div
+                                                class="flex justify-center items-center h-full px-2 bg-gray-50 relative left-[-14px] border-[1px] border-[rgb(221,222,224)] rounded-s-md"
+                                            >
+                                                NT$
+                                            </div>
+                                        </template>
+                                    </UInput>
+                                    <p
+                                        class="dark:text-red-400 mt-0 text-Status-Color-Danger-500-Primary text-sm max-md:pl-4 max-md:mt-[-8px]"
+                                        v-if="submitedError.deliveToStoreFee"
+                                    >
+                                        請輸入金額
+                                    </p>
+                                </div>
+                            </div>
+                            <div
+                                class="flex justify-start items-center ml-8 gap-x-8 max-md:flex-col max-md:items-start max-md:gap-y-3"
+                            >
+                                <UCheckbox
+                                    label="7-Eleven"
+                                    :disabled="!submissionData.deliveToStore.isAvailable"
+                                    :checked="submissionData.deliveToStore.stores.includes('711')"
+                                    @change="($event) => setStoresInDeliveToStore($event, '711')"
+                                />
+                                <UCheckbox
+                                    label="全家便利商店"
+                                    :disabled="!submissionData.deliveToStore.isAvailable"
+                                    :checked="submissionData.deliveToStore.stores.includes('family')"
+                                    @change="($event) => setStoresInDeliveToStore($event, 'family')"
+                                />
+                            </div>
+                            <div class="mb-5">
+                                <p
+                                    class="dark:text-red-400 mt-0 text-Status-Color-Danger-500-Primary text-sm ml-8"
+                                    v-if="submitedError.deliveToStoreStores"
+                                >
+                                    請選擇 1 個以上超商
+                                </p>
+                            </div>
+
+                            <!-- deliveToHouse -->
+                            <div class="flex justify-start items-center gap-x-3 mb-5 max-md:items-start max-md:gap-x-0">
                                 <UCheckbox
                                     label="宅配"
-                                    class="mb-3"
-                                    :value="deliveryWays[1].val"
-                                    @change="updateDeliveryWays($event)"
+                                    class="whitespace-nowrap"
+                                    v-model="submissionData.deliveToHouse.isAvailable"
+                                    @change="cancelFeeIfNotAvailable(submissionData.deliveToHouse, 'deliveToHouse')"
                                 />
-                                <UCheckbox
-                                    label="國內離島配送"
-                                    class="mb-3"
-                                    :value="deliveryWays[2].val"
-                                    @change="updateDeliveryWays($event)"
-                                />
-                            </UFormGroup>
-                            <div>
-                                <UInput
-                                    class="w-40 m-auto relative bottom-[-26px] left-[-70px] max-md:absolute max-md:left-0 max-md:right-0 max-md:top-[26px] max-md:bottom-auto max-md:translate-x-7 max-md:h-[32px]"
-                                    :disabled="!submissionData.deliveryWays.includes('deliveToStore')"
-                                    type="number"
-                                    inputClass="!pl-[55px]"
-                                    v-model="submissionData.deliveToStoreFee"
-                                    size="sm"
-                                >
-                                    <template #leading>
-                                        <div
-                                            class="flex justify-center items-center h-full px-2 bg-gray-50 relative left-[-14px] border-[1px] border-[rgb(221,222,224)] rounded-s-md"
-                                        >
-                                            NT$
-                                        </div>
-                                    </template>
-                                </UInput>
+                                <div class="flex justify-start items-end gap-2 flex-wrap">
+                                    <UInput
+                                        class="w-44 m-auto max-md:h-[32px] max-md:ml-3"
+                                        type="number"
+                                        placeholder="輸入運費金額"
+                                        inputClass="!pl-[55px]"
+                                        size="sm"
+                                        @input="(e) => (e.target.value = Math.max(0, e.target.value))"
+                                        :disabled="!submissionData.deliveToHouse.isAvailable"
+                                        v-model="submissionData.deliveToHouse.fee"
+                                    >
+                                        <template #leading>
+                                            <div
+                                                class="flex justify-center items-center h-full px-2 bg-gray-50 relative left-[-10px] border-[1px] border-[rgb(221,222,224)] rounded-s-md"
+                                            >
+                                                NT$
+                                            </div>
+                                        </template>
+                                    </UInput>
+                                    <p
+                                        class="dark:text-red-400 mt-0 text-Status-Color-Danger-500-Primary text-sm max-md:pl-4 max-md:mt-[-8px]"
+                                        v-if="submitedError.deliveToHouseFee"
+                                    >
+                                        請輸入金額
+                                    </p>
+                                </div>
                             </div>
-                        </div>
+
+                            <!-- deliveOverseas -->
+                            <div class="flex justify-start items-center gap-x-3 mb-5 max-md:items-start max-md:gap-x-0">
+                                <UCheckbox
+                                    label="國外/離島配送"
+                                    class="whitespace-nowrap"
+                                    v-model="submissionData.deliveOverseas.isAvailable"
+                                    @change="cancelFeeIfNotAvailable(submissionData.deliveOverseas, 'deliveOverseas')"
+                                />
+                                <div class="flex justify-start items-end gap-2 flex-wrap">
+                                    <UInput
+                                        class="w-44 m-auto max-md:h-[32px] max-md:ml-2"
+                                        type="number"
+                                        placeholder="輸入運費金額"
+                                        inputClass="!pl-[55px]"
+                                        size="sm"
+                                        @input="(e) => (e.target.value = Math.max(0, e.target.value))"
+                                        :disabled="!submissionData.deliveOverseas.isAvailable"
+                                        v-model="submissionData.deliveOverseas.fee"
+                                    >
+                                        <template #leading>
+                                            <div
+                                                class="flex justify-center items-center h-full px-2 bg-gray-50 relative left-[-10px] border-[1px] border-[rgb(221,222,224)] rounded-s-md"
+                                            >
+                                                NT$
+                                            </div>
+                                        </template>
+                                    </UInput>
+                                    <p
+                                        class="dark:text-red-400 mt-0 text-Status-Color-Danger-500-Primary text-sm max-md:pl-4 max-md:mt-[-8px]"
+                                        v-if="submitedError.deliveOverseasFee"
+                                    >
+                                        請輸入金額
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
                     </div>
 
                     <!--  -->
@@ -247,77 +355,108 @@
 
             <!-- card -->
             <div
-                class="absolute top-6 right-6 w-[242px] min-h-[316px] border-[1px] border-Primary-100 rounded-lg px-4 py-3 max-xl:hidden"
+                class="absolute top-6 right-5 w-[320px] min-h-[400px] border-[1px] border-Primary-100 rounded-lg px-4 py-3 bg-white max-xl:hidden"
             >
-                <picture
-                    class="block aspect-[212/75] rounded overflow-hidden mb-[10px]"
-                    :class="!imgData?.files[0]?.preview ? ' bg-gray-200' : ''"
-                >
-                    <img
-                        v-if="imgData?.files[0]?.preview"
-                        class="block h-full w-full object-cover"
-                        :src="imgData?.files[0]?.preview"
-                    />
-                </picture>
+                <div class="flex flex-col justify-start items-center min-h-[400px]">
+                    <picture
+                        class="w-full block aspect-[212/75] rounded overflow-hidden mb-[10px]"
+                        :class="!imgData?.files[0]?.preview ? ' bg-gray-200' : ''"
+                    >
+                        <img
+                            v-if="imgData?.files[0]?.preview"
+                            class="block h-full w-full object-cover"
+                            :src="imgData?.files[0]?.preview"
+                        />
+                    </picture>
 
-                <div
-                    v-if="submissionData.salesLimit"
-                    class="bg-Primary-400-Hover text-white rounded inline-block p-1 px-[6px] mb-[10px] text-[9px]"
-                >
-                    剩餘{{ submissionData.salesLimitedQuantity }}組
+                    <div class="w-full">
+                        <div
+                            v-if="submissionData.salesLimit"
+                            class="bg-Primary-400-Hover text-white rounded inline-block p-1 px-[6px] mb-[10px] text-[9px]"
+                        >
+                            剩餘{{ submissionData.salesLimitedQuantity }}組
+                        </div>
+                    </div>
+
+                    <h3 class="w-full text-base font-medium mb-[10px] line-clamp-1">
+                        {{ submissionData.projectName }}
+                    </h3>
+
+                    <p class="w-full flex justify-start items-center gap-x-1 mb-[10px]">
+                        <b class="text-Status-Color-Danger-500-Primary text-sm font-medium text-sm"
+                            >NT$ {{ submissionData.specialOffer }}</b
+                        >
+                        <b class="text-Status-Color-Danger-400-Hover text-xs font-normal line-through text-[9px]"
+                            >定價 ${{ submissionData.originalPrice }}，現省 ${{
+                                submissionData.originalPrice - submissionData.specialOffer
+                            }}</b
+                        >
+                    </p>
+                    <section class="w-full border-y-[1px] border-gray-100 py-[6px] mb-[10px] text-[#29303D]">
+                        <p class="text-xs font-medium">商品內容</p>
+                        <article
+                            class="text-xs mb-4 text-[#29303D]"
+                            v-html="textToHtml(submissionData.content)"
+                        ></article>
+                    </section>
+
+                    <ul
+                        class="flex-grow w-full text-xs text-Neutral-800 flex flex-col justify-start items-start gap-1 mb-3"
+                    >
+                        <li
+                            class="flex justify-start items-center gap-x-1 text-xs"
+                            v-if="submissionData.deliveToStore.isAvailable"
+                        >
+                            <UIcon
+                                name="i-heroicons-check-circle"
+                                class="block text-base w-4 h-4 text-Primary-500-Primary"
+                            />
+                            本方案可選超商取貨，運費{{ submissionData.deliveToStore.fee }}元
+                        </li>
+                        <li
+                            class="flex justify-start items-center gap-x-1 text-xs"
+                            v-if="submissionData.deliveToHouse.isAvailable"
+                        >
+                            <UIcon
+                                name="i-heroicons-check-circle"
+                                class="block text-base w-4 h-4 text-Primary-500-Primary"
+                            />
+                            宅配出貨，運費{{ submissionData.deliveToHouse.fee }}元
+                        </li>
+                        <li
+                            class="flex justify-start items-center gap-x-1 text-xs"
+                            v-if="
+                                (submissionData.deliveToHouse.isAvailable && submissionData.deliveToHouse.fee === 0) ||
+                                (submissionData.deliveToStore.isAvailable && submissionData.deliveToStore.fee === 0)
+                            "
+                        >
+                            <UIcon
+                                name="i-heroicons-check-circle"
+                                class="block text-base w-4 h-4 text-Primary-500-Primary"
+                            />
+                            本專案想免運優惠
+                        </li>
+                        <li
+                            class="flex justify-start items-center gap-x-1 text-xs"
+                            v-if="submissionData.deliveOverseas.isAvailable"
+                        >
+                            <UIcon
+                                name="i-heroicons-check-circle"
+                                class="block text-base w-4 h-4 text-Primary-500-Primary"
+                            />
+                            可寄送國外/離島，運費{{ submissionData.deliveOverseas.fee }}元
+                        </li>
+                    </ul>
+                    <div class="w-full border-t-[1px] border-gray-100">
+                        <p class="pt-3 pb-2 text-center text-xs font-normal text-Primary-500-Primary">
+                            本專案預計
+                            {{
+                                submissionData.deliveryTime ? formatDateToYearMonth(submissionData.deliveryTime) : ""
+                            }}
+                            實現，敬啟期待
+                        </p>
+                    </div>
                 </div>
-
-                <h3 class="text-xs font-medium mb-[10px] line-clamp-1">
-                    {{ submissionData.projectName }}
-                </h3>
-
-                <p class="flex justify-start items-center gap-x-1 mb-[10px]">
-                    <b class="text-Status-Color-Danger-500-Primary text-sm font-medium text-sm"
-                        >NT$ {{ submissionData.specialOffer }}</b
-                    >
-                    <b class="text-Status-Color-Danger-400-Hover text-xs font-normal line-through text-[9px]"
-                        >定價 ${{ submissionData.originalPrice }}，現省 ${{
-                            submissionData.originalPrice - submissionData.specialOffer
-                        }}</b
-                    >
-                </p>
-                <section class="border-y-[1px] border-gray-100 py-[6px] mb-[10px]">
-                    <p class="text-[9px] font-medium">商品內容</p>
-                    <article class="text-[8px] leading-3 mb-4" v-html="textToHtml(submissionData.content)"></article>
-                    <p class="text-[9px] font-medium">商品規格</p>
-                    <article class="text-[8px] leading-3" v-html="textToHtml(submissionData.specification)"></article>
-                </section>
-                <ul class="text-xs text-Neutral-800 flex justify-start content-start items-start flex-wrap gap-1">
-                    <li class="mb-1 flex justify-start items-center gap-x-1 text-[9px]">
-                        <UIcon name="i-heroicons-shopping-bag" class="block w-3 h-3" />
-                        預計{{
-                            submissionData.deliveryTime
-                                ? formatDateToYearMonth(submissionData.deliveryTime)
-                                : " yyyy/mm "
-                        }}出貨
-                    </li>
-                    <li
-                        v-if="submissionData.deliveryWays.includes('deliveInCountry')"
-                        class="mb-1 flex justify-start items-center gap-x-1 text-[9px]"
-                    >
-                        <UIcon name="i-heroicons-shopping-cart" class="block w-3 h-3" />
-                        台灣本島免運費
-                    </li>
-                    <li
-                        v-if="submissionData.deliveryWays.includes('deliveToStore')"
-                        class="mb-1 flex justify-start items-center gap-x-1 text-[9px]"
-                    >
-                        <UIcon name="i-heroicons-shopping-cart" class="block w-3 h-3" />
-                        超商取貨 {{ submissionData.deliveToStoreFee }} 元
-                    </li>
-                    <li
-                        v-if="submissionData.deliveryWays.includes('deliveToHouse')"
-                        class="mb-1 flex justify-start items-center gap-x-1 text-[9px]"
-                    >
-                        <UIcon name="i-heroicons-shopping-cart" class="block w-3 h-3" />
-                        宅配
-                    </li>
-                </ul>
             </div>
         </section>
     </section>
@@ -371,17 +510,39 @@ onMounted(() => {
 });
 
 //
+const submitedError = ref({
+    salesLimitedQuantity: false,
+    deliveToStoreStores: false,
+    deliveToStoreFee: false,
+    deliveOverseasFee: false,
+    deliveToHouseFee: false,
+});
 const submissionData = ref({
     projectName: "",
     originalPrice: null,
     specialOffer: null,
     salesLimit: null, //boolean
-    salesLimitedQuantity: undefined,
+    salesLimitedQuantity: null,
     deliveryTime: null,
     content: "",
     specification: "",
+
+    //
     deliveryWays: [],
-    deliveToStoreFee: 0,
+
+    deliveOverseas: {
+        isAvailable: false,
+        fee: null,
+    },
+    deliveToStore: {
+        isAvailable: false,
+        fee: null,
+        stores: [],
+    },
+    deliveToHouse: {
+        isAvailable: false,
+        fee: null,
+    },
 
     imgData: null,
     imgDataQuantity: 0,
@@ -402,32 +563,30 @@ watch(imgDataQuantity, (val) => {
 });
 
 //
-const deliveryWays = ref([
-    {
-        val: "deliveToStore",
-        name: "超商取貨",
-    },
-    {
-        val: "deliveToHouse",
-        name: "宅配",
-    },
-    {
-        val: "deliveInCountry",
-        name: "國內離島配送",
-    },
-]);
+const deliveryWays = ref(["deliveToStore", "deliveToHouse", "deliveOverseas"]);
 
-const updateDeliveryWays = (event) => {
-    const { value, checked } = event.target;
-    if (checked) {
-        // 如果被選取，將此 value 加入到陣列中
-        submissionData.value.deliveryWays.push(value);
+const updateDeliveryWays = (deliveryWaysData) => {
+    deliveryWays.value.map((el) => {
+        submissionData.value[el].isAvailable = deliveryWaysData.includes(el);
+    });
+};
+
+const cancelFeeIfNotAvailable = (deliveObj, key) => {
+    if (!deliveObj.isAvailable) {
+        deliveObj.fee = null;
+        let i = submissionData.value.deliveryWays.indexOf(key);
+        i > -1 && submissionData.value.deliveryWays.splice(i, 1);
     } else {
-        // 如果取消選取，從陣列中移除此 value
-        const index = submissionData.value.deliveryWays.indexOf(value);
-        if (index > -1) {
-            submissionData.value.deliveryWays.splice(index, 1);
-        }
+        !submissionData.value.deliveryWays.includes(key) && submissionData.value.deliveryWays.push(key);
+    }
+};
+
+const setStoresInDeliveToStore = (e, store) => {
+    if (e.target.checked) {
+        submissionData.value.deliveToStore.stores.push(store);
+    } else {
+        let i = submissionData.value.deliveToStore.stores.indexOf(store);
+        i > -1 && submissionData.value.deliveToStore.stores.splice(i, 1);
     }
 };
 
@@ -449,8 +608,26 @@ function formatDateToYearMonth(dateInput) {
 
 //
 function doSave() {
+    //
+    submitedError.value = {
+        salesLimitedQuantity: submissionData.value.salesLimit && !submissionData.value.salesLimitedQuantity,
+        deliveToStoreStores:
+            submissionData.value.deliveToStore.isAvailable && !submissionData.value.deliveToStore.stores.length,
+        deliveToStoreFee:
+            submissionData.value.deliveToStore.isAvailable && submissionData.value.deliveToStore.fee === null,
+        deliveOverseasFee:
+            submissionData.value.deliveOverseas.isAvailable && submissionData.value.deliveOverseas.fee === null,
+        deliveToHouseFee:
+            submissionData.value.deliveToHouse.isAvailable && submissionData.value.deliveToHouse.fee === null,
+    };
+
+    //
+    if (Object.keys(submitedError.value).find((el) => submitedError.value[el])) {
+        return console.log("error in submitedError");
+    }
+
+    //
     alert("doSave");
-    //console.log(imgData.value.files);
 }
 function doDel(event) {
     event.preventDefault();

@@ -263,6 +263,13 @@ const activeNavItemId = ref("a");
 const updateNavItemId = (id) => {
     activeNavItemId.value = id;
 };
+
+//
+function goToCart() {
+    setTimeout(() => {
+        navigateTo(`/cart`);
+    }, 100);
+}
 </script>
 
 <style scoped>
