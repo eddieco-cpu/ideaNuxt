@@ -202,7 +202,12 @@
                 >
                     <li
                         class="bg-white p-6 rounded-lg border-2 border-Primary-100 mb-5 relative xl:mr-[5px]"
-                        :class="faq.soldOut ? 'opacity-50' : 'opacity-100'"
+                        :class="
+                            faq.soldOut
+                                ? 'opacity-50 cursor-not-allowed pointer-events-none'
+                                : 'opacity-100 cursor-pointer active:border-white hover:border-Primary-400-Hover transition duration-300'
+                        "
+                        @click="goToCart"
                     >
                         <!--  -->
                         <p
@@ -307,6 +312,13 @@ const activeNavItemId = ref("a");
 const updateNavItemId = (id) => {
     activeNavItemId.value = id;
 };
+
+//
+function goToCart() {
+    setTimeout(() => {
+        navigateTo(`/cart`);
+    }, 100);
+}
 </script>
 
 <style scoped>
