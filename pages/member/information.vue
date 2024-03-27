@@ -145,6 +145,12 @@ const sexOptions = [
 ];
 
 function onSubmit(event) {
+    const data =  POST("/frontend/updateUserInfo",event.data);
+
+    // if (!!data) {
+    //     // kolList.value = data.data;
+    // }
+
     console.log(event.data);
 }
 </script>

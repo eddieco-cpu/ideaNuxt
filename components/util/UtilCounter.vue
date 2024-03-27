@@ -5,7 +5,7 @@
 <script setup>
 const span = ref(null);
 
-const { endNumber, startNumber } = defineProps({
+const props  = defineProps({
     endNumber: {
         type: Number,
         default: 0,
@@ -15,6 +15,7 @@ const { endNumber, startNumber } = defineProps({
         default: 0,
     },
 });
+
 
 function numberConutUp(num, maxNumber) {
     var numText = num;
@@ -38,8 +39,14 @@ function numberConutUp(num, maxNumber) {
     numSlideFun();
 }
 
+watch(() => props.endNumber, (newVal) => {
+    if (newVal > 0) {
+        numberConutUp(props.startNumber, newVal);
+    }
+});
+
 onMounted(() => {
-    numberConutUp(startNumber, endNumber);
+        numberConutUp(props.startNumber, props.endNumber);
 });
 </script>
 <style scoped></style>

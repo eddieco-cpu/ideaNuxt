@@ -58,6 +58,8 @@
 <script setup>
 import { cartStore } from "@/stores/cart";
 const router = useRouter();
+const route = useRoute();
+console.log(route.query.id)
 const cart = cartStore();
 
 const productList = ref([

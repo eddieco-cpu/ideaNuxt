@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-const { index, id, name, image } = defineProps({
+const { index, id, name, image, hashId } = defineProps({
     index: {
         type: Number,
     },
@@ -44,10 +44,14 @@ const { index, id, name, image } = defineProps({
         type: String,
         default: "",
     },
+    hashId: {
+        type: String,
+        default: "",
+    }
 });
 
 function goToPage() {
-    navigateTo(`/kol/${id}`);
+    navigateTo(`/kol/${hashId}`);
 }
 </script>
 

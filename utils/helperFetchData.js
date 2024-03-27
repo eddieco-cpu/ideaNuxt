@@ -4,11 +4,11 @@ export const POST = async (endpoint, payload) => {
     const config   = useRuntimeConfig();
     const baseUrl  = config.public.apiBaseUrl;
     const url      = `${baseUrl}${endpoint}`
-
+    console.log(url)
     try {
         const data = await $fetch(url, {
             method: "POST",
-            headers: { "Content-Type": "application/json", Authorization: "Bearer /* YOUR_TOKEN_HERE */" },
+            headers: { "Content-Type": "application/json" },
             body: payload,
         });
 
@@ -27,8 +27,6 @@ export const GET = async (url,test="0") => {
         const config   = useRuntimeConfig();
         const baseUrl  = config.public.apiBaseUrl;
         url      = `${baseUrl}${url}`
-        console.log(123123)
-        
     }
     
     try {

@@ -21,7 +21,7 @@
                 <p class="text-white text-sm font-medium">
                     已集結
 
-                    <UtilCounter class="font-roboto text-4xl font-bold" :endNumber="128" />
+                    <UtilCounter class="font-roboto text-4xl font-bold" :endNumber="kolCount" />
 
                     位達人，一同分享好務!
                 </p>
@@ -31,7 +31,7 @@
             <div class="flex justify-between items-end mt-10 mb-4">
                 <div class="flex items-end">
                     <h2 class="text-xl font-medium leading-none">精選團主</h2>
-                    <span class="text-Primary-500-Primary text-xs ml-2 leading-none">共{{ kolList.length }}位</span>
+                    <span class="text-Primary-500-Primary text-xs ml-2 leading-none">共{{ kolCount }}位</span>
                 </div>
 
                 <USelectMenu
@@ -69,6 +69,9 @@ import { GET } from "~/utils/helperFetchData.js";
 const sort = ["新到舊", "舊到新", "開團數", "活耀度"];
 const sortSelected = ref(sort[0]);
 const kolList = ref([]);
+const kolRank = ref([]);
+const kolCount = ref(0)
+
 
 const currentPage = ref(1);
 const totalPages = ref(20);
@@ -77,17 +80,27 @@ const updateCurrentPage = (newPage) => {
 };
 
 async function getKol() {
-    const data = await GET("/api/kol");
+
+    const queryParam = `?page=${currentPage.value}`;
+    const data = await GET(`/frontend/getKols${queryParam}`,1);
 
     if (!!data) {
-        kolList.value = data;
+        kolList.value = data.data.data;
+        kolCount.value = data.data.total
     }
 }
-getKol();
 
-const kolRank = computed(() => {
-    return kolList.value.sort((a, b) => a.index - b.index).slice(0, 6);
-});
+async function getKolRank() {
+    const data = await GET("/frontend/getGroupListForHome",1);
+    if (!!data) {
+        kolRank.value = data.data;
+    }
+}
+
+getKol();
+getKolRank();
+
+
 </script>
 
 <style scoped></style>

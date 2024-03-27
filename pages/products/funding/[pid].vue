@@ -221,6 +221,10 @@ const route = useRoute();
 
 const isFavorite = ref(false);
 
+function addToCart(params) {
+    navigateTo(`/cart/cart-fundraise?id=${route.params.pid}`);
+}
+
 const pageData = ref([]);
 const cards = ref([])
 
