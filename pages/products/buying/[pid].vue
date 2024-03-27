@@ -244,6 +244,7 @@
                         <ProductsSelectCard
                             v-for="(select, i) in recommendationSelects"
                             :key="select.id"
+                            :id="select.id"
                             :select="select"
                         />
                     </ul>
@@ -317,33 +318,33 @@ const updateNavItemId = (id) => {
 //
 const recommendationSelects = reactive([
     {
-        id: "a",
-        amount: 0,
+        id: 1,
+        amount: 1,
         name: "",
     },
     {
-        id: "b",
-        amount: 0,
+        id: 2,
+        amount: 1,
         name: "",
     },
     {
-        id: "c",
-        amount: 0,
+        id: 3,
+        amount: 1,
         name: "",
     },
     {
-        id: "d",
-        amount: 0,
+        id: 4,
+        amount: 1,
         name: "",
     },
     {
-        id: "e",
-        amount: 0,
+        id: 5,
+        amount: 1,
         name: "",
     },
     {
-        id: "f",
-        amount: 0,
+        id: 6,
+        amount: 1,
         name: "",
     },
 ]);

@@ -1,7 +1,7 @@
 <template>
     <div class="max-w-[324px] md:max-w-[1082px] 3xl:max-w-[1300px] mx-auto mt-8">
-        <CartHeader :step="1" v-if="cart.cartList.length !== 0" />
-        <div class="pt-6 grid grid-cols-1 md:grid-cols-[76%_auto] items-start gap-6" v-if="cart.cartList.length !== 0">
+        <CartHeader :step="1" v-if="!cart.isCartEmpty" />
+        <div class="pt-6 grid grid-cols-1 md:grid-cols-[76%_auto] items-start gap-6" v-if="!cart.isCartEmpty">
             <!-- 商品資訊 -->
             <div class="flex flex-col gap-6">
                 <CardContainer title="選擇團購">
@@ -16,17 +16,16 @@
                                 }"
                                 class="max-w-[1200px]"
                             >
-                                <label class="cursor-pointer">
-                                    <input type="checkbox" :value="item" v-model="cart.selectGroupBuyProducts" hidden />
+                                <div class="cursor-pointer" @click="selectProduct(item)">
                                     <img
-                                        :src="helperPicture()"
+                                        :src="item.mainImage"
                                         alt="product"
                                         class="rounded-lg w-[126px] flex-1 h-[81px] object-cover"
                                         :class="{
-                                            'border-Primary-50 border-2': isProductBeSelected(item.id),
-                                            'contrast-[.25]': !isProductBeSelected(item.id),
+                                            'opacity-40': !isProductBeSelected(item.cartId),
                                         }"
-                                /></label>
+                                    />
+                                </div>
                             </UCarousel>
                         </div>
                     </template>
@@ -62,7 +61,8 @@
 
                     <template #body>
                         <CardCheckOutProduct
-                            v-for="(item, index) in cart.selectGroupBuyProducts"
+                            v-for="(item, index) in cart.selectGroupBuyProducts.products"
+                            :cartId="cart.selectGroupBuyProducts.cartId"
                             :key="index"
                             v-bind="item"
                         />
@@ -82,7 +82,7 @@
                         >
                             <h1 class="pb-3 text-black/85 font-medium border-b border-b-Neutral-200">總計</h1>
                             <div class="flex justify-between text-Neutral-700 text-sm">
-                                <p>{{ cart.selectGroupBuyProducts.length }}件商品</p>
+                                <p>{{ cart.selectGroupBuyProducts?.products?.length ?? 0 }}件商品</p>
                                 <p>NT${{ helperMoneyComma(cart.totalGroupBuyPrice) }}</p>
                             </div>
                             <div
@@ -100,7 +100,7 @@
                                 <p
                                     class="text-xs pb-1 text-Neutral-600-Dark-Primary md:hidden flex items-center gap-x-1"
                                 >
-                                    共{{ cart.selectGroupBuyProducts.length }}商品
+                                    共{{ cart.selectGroupBuyProducts?.products?.length ?? 0 }}商品
                                     <UIcon
                                         name="i-heroicons-chevron-up"
                                         class="block w-4 h-4 text-Neutral-600-Dark-Primary cursor-pointer transition-transform duration-300"
@@ -119,7 +119,7 @@
                                 class="px-4 py-2 text-sm bg-Primary-500-Primary text-center rounded-lg w-full text-white flex-1"
                                 @click="goCheckoutPage"
                             >
-                                去結帳 ({{ cart.selectGroupBuyProducts.length }})
+                                去結帳 ({{ cart.selectGroupBuyProducts?.products?.length ?? 0 }})
                             </button>
                         </div>
                     </template>
@@ -163,8 +163,12 @@ const cart = cartStore();
 
 const showTotalDetail = ref(false);
 
-function isProductBeSelected(id) {
-    return cart.selectGroupBuyProducts.some((item) => item.id === id);
+function isProductBeSelected(cartId) {
+    return cart.selectGroupBuyProducts.cartId === cartId;
+}
+console.log(" cart.selectGroupBuyProducts", cart.selectGroupBuyProducts);
+function selectProduct(products) {
+    cart.selectGroupBuyProducts = products;
 }
 
 function goCheckoutPage() {

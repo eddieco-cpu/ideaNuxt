@@ -21,7 +21,7 @@
             >
                 <slot name="button">
                     <button class="underline">移至收藏夾</button>
-                    <button class="underline">刪除</button>
+                    <button class="underline" @click="removeProduct">刪除</button>
                 </slot>
             </div>
         </div>
@@ -29,12 +29,18 @@
 </template>
 
 <script setup>
-const { showButton, id, image } = defineProps({
+import { cartStore } from "@/stores/cart";
+const cart = cartStore();
+
+const props = defineProps({
     showButton: {
         type: Boolean,
         default: true,
     },
     id: {
+        type: Number,
+    },
+    cartId: {
         type: Number,
     },
     price: {
@@ -56,4 +62,18 @@ const { showButton, id, image } = defineProps({
         default: "",
     },
 });
+
+async function removeProduct() {
+    const productIndex = cart.selectGroupBuyProducts.products.findIndex((item) => item.id === props.id);
+
+    cart.selectGroupBuyProducts.products.splice(productIndex, 1);
+
+    await nextTick();
+
+    if (cart.selectGroupBuyProducts.products.length === 0) {
+        cart.selectGroupBuyProducts = {};
+
+        delete cart.cartList[props.cartId];
+    }
+}
 </script>
