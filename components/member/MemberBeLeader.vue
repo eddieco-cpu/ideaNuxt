@@ -80,7 +80,7 @@
                         />
 
                         <h1 class="text-Primary-500-Primary text-xl font-medium text-center break-all">
-                            {{ name || "媽媽我想嫁去台南" }}
+                            {{ name || "您的暱稱" }}
                         </h1>
 
                         <p class="text-sm text-Neutral-800 break-all">
@@ -129,7 +129,7 @@ const store = useAuthStore();
 const { name } = defineProps({
     name: {
         type: String,
-        default: "媽媽我想嫁去台南",
+        default: "您的暱稱",
     },
 });
 
