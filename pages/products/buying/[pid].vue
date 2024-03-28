@@ -1,7 +1,7 @@
 <template>
     <div>
         <picture class="block h-36 w-auto relative z-[-1] banner_photo">
-            <img :src="helperPicture()" alt="" class="block w-full h-full object-cover" />
+            <img :src="banner" alt="" class="block w-full h-full object-cover" />
         </picture>
         <section class="max-w-[1090px] mx-auto max-xl:px-6 max-xl:py-4 max-md:px-0">
             <!--  -->
@@ -54,8 +54,9 @@
                         >
                             <UIcon name="i-heroicons-clock" class="w-4 h-4 mr-1" />
 
-                            <span>03</span>
-                            日<span>04</span>時<span>34</span>分<span>22</span>秒
+                            <!-- <span>03</span>
+                            日<span>04</span>時<span>34</span>分<span>22</span>秒 -->
+                            <p>{{ countdownTime }}</p>
                         </p>
                         <div class="items-baseline">
                             <b
@@ -91,12 +92,12 @@
                 <!-- art -->
                 <article class="w-[436px] flex flex-col justify-center items-center max-xl:w-auto">
                     <!-- avater -->
-                    <div
+                    <nuxt-link to="/kol/1"
                         class="flex justify-between items-center gap-x-2 bg-white mb-2 p-3 rounded-lg w-full max-md:mb-5 max-md:translate-y-[-4px]"
                     >
                         <div class="flex justify-start items-center gap-x-3">
                             <picture class="block w-[110px] aspect-[1/1] overflow-hidden rounded-lg flex-shrink-0">
-                                <img :src="helperPicture()" class="block w-full h-full object-cover" />
+                                <img :src="avater" class="block w-full h-full object-cover" />
                             </picture>
                             <div>
                                 <p class="text-xs text-gray-400 mb-1">本次開團主</p>
@@ -108,7 +109,7 @@
                             name="i-heroicons-arrow-right-circle"
                             class="block w-8 h-8 text-Secondary-500-Primary flex-shrink-0"
                         />
-                    </div>
+                    </nuxt-link>
 
                     <!-- detail -->
                     <ul class="bg-white py-3 px-5 flex-grow w-full">
@@ -202,25 +203,11 @@
                             <h5 class="text-xs font-normal mb-4 text-[#696969]">
                                 {{ useState("e", () => helperLorem(20, 40)).value }}
                             </h5>
-                            <picture class="block w-full mb-4">
-                                <img :src="helperPicture()" alt="" class="block w-full" />
+
+                            <picture class="block w-full mb-4" v-for="(photo, i) in photos" :key="i">
+                                <img :src="photo" alt="" class="block w-full" />
                             </picture>
 
-                            <picture class="block w-full mb-4">
-                                <img :src="helperPicture()" alt="" class="block w-full" />
-                            </picture>
-
-                            <picture class="block w-full mb-4">
-                                <img :src="helperPicture()" alt="" class="block w-full" />
-                            </picture>
-
-                            <picture class="block w-full mb-4">
-                                <img :src="helperPicture()" alt="" class="block w-full" />
-                            </picture>
-
-                            <picture class="block w-full mb-4">
-                                <img :src="helperPicture()" alt="" class="block w-full" />
-                            </picture>
                         </article>
                     </template>
                     <template v-if="activeNavItemId === 'b'">
@@ -287,11 +274,61 @@ const maxHeight = 700;
 const articleRef = ref(null);
 const articleRefHeight = ref(0);
 
+const banner = helperPicture();
+const avater = helperPicture();
+const photos = [
+    helperPicture(),
+    helperPicture(),
+    helperPicture(),
+    helperPicture(),
+    helperPicture(),
+];
+
+//
+const targetTime = new Date('2024-06-20T12:00:00').getTime();
+const countdownTime = ref("");
+
+function formatCountdown(milliseconds) {
+    const oneDay = 24 * 60 * 60 * 1000;
+    const oneHour = 60 * 60 * 1000;
+    const oneMinute = 60 * 1000;
+    const oneSecond = 1000;
+
+    const days = Math.floor(milliseconds / oneDay);
+    const hours = Math.floor((milliseconds % oneDay) / oneHour);
+    const minutes = Math.floor((milliseconds % oneHour) / oneMinute);
+    const seconds = Math.floor((milliseconds % oneMinute) / oneSecond);
+
+     // 
+     const pad = (num) => (String(num).padStart(2, '0'));
+
+    return `${pad(days)} 日 ${pad(hours)} 時 ${pad(minutes)} 分 ${pad(seconds)} 秒`;
+}
+
+function startCountdown(targetDate) {
+    //
+    const updateCountdown = () => {
+        const currentTime = new Date().getTime();
+        const distance = targetDate - currentTime;
+
+        countdownTime.value = formatCountdown(distance);
+
+        if (distance < 0) {
+            clearInterval(interval);
+            countdownTime.value= '時間到！';
+        }
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+}
+
 onMounted(() => {
     if (articleRef.value) {
         //console.log("articleRef 高度:", articleRef.value.offsetHeight);
         articleRefHeight.value = articleRef.value.offsetHeight;
     }
+    startCountdown(targetTime)
 });
 
 const progressMeter = 300;
