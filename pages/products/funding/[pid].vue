@@ -194,7 +194,7 @@
                 class="card_group xl:sticky xl:mt-auto bottom-0 xl:h-[calc(100vh-48px-75px)] xl:overflow-y-auto max-md:px-6"
             >
                 <template v-for="(prod, i) in prods" :key="prod.id">
-                    <ProductsFundraise :prod="prod" @click="goToCart" />
+                    <ProductsFundraise :prod="prod" @click="addToCart" />
                 </template>
             </ul>
         </section>
@@ -231,7 +231,6 @@ const articleRefHeight = ref(0);
 //
 onMounted(() => {
     if (articleRef.value) {
-        //console.log("articleRef 高度:", articleRef.value.offsetHeight);
         articleRefHeight.value = articleRef.value.offsetHeight;
     }
 });
@@ -269,13 +268,6 @@ const activeNavItemId = ref("a");
 const updateNavItemId = (id) => {
     activeNavItemId.value = id;
 };
-
-//
-function goToCart() {
-    setTimeout(() => {
-        navigateTo(`/cart`);
-    }, 100);
-}
 </script>
 
 <style scoped>
