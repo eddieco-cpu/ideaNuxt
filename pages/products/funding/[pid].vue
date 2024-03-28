@@ -193,17 +193,9 @@
             <ul
                 class="card_group xl:sticky xl:mt-auto bottom-0 xl:h-[calc(100vh-48px-75px)] xl:overflow-y-auto max-md:px-6"
             >
-                <li
-                    v-for="(faq, i) in [
-                        { id: 'Q1', content: 'A1', soldOut: false },
-                        { id: 'Q2', content: 'A2', soldOut: false },
-                        { id: 'Q3', content: 'A3', soldOut: true },
-                        { id: 'Q4', content: 'A4', soldOut: true },
-                    ]"
-                    :key="faq.id"
-                >
-                    <ProductsFundraise :soldOut="faq.soldOut" />
-                </li>
+                <template v-for="(prod, i) in prods" :key="prod.id">
+                    <ProductsFundraise :prod="prod" @click="goToCart" />
+                </template>
             </ul>
         </section>
     </section>
@@ -236,12 +228,26 @@ const maxHeight = ref(700);
 const articleRef = ref(null);
 const articleRefHeight = ref(0);
 
+//
 onMounted(() => {
     if (articleRef.value) {
         //console.log("articleRef 高度:", articleRef.value.offsetHeight);
         articleRefHeight.value = articleRef.value.offsetHeight;
     }
 });
+
+//
+const prods = ref([]);
+
+async function getProdsData() {
+    const data = await GET(`/api/productsFundraise`);
+    if (!!data) {
+        prods.value = data.prods.map((el, i) => ({
+            ...el,
+        }));
+    }
+}
+getProdsData();
 
 const progressMeter = 300;
 
