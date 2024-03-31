@@ -357,7 +357,7 @@
             <div
                 class="absolute top-6 right-5 w-[320px] min-h-[400px] border-[1px] border-Primary-100 rounded-lg px-4 py-3 bg-white max-xl:hidden"
             >
-                <div class="flex flex-col justify-start items-center min-h-[400px]">
+                <div class="flex flex-col justify-start items-center min-h-[495px]">
                     <picture
                         class="w-full block aspect-[212/75] rounded overflow-hidden mb-[10px]"
                         :class="!imgData?.files[0]?.preview ? ' bg-gray-200' : ''"
@@ -378,26 +378,23 @@
                         </div>
                     </div>
 
-                    <h3 class="w-full text-base font-medium mb-[10px] line-clamp-1">
+                    <h3 class="w-full text-base font-medium mb-2 line-clamp-1">
                         {{ submissionData.projectName }}
                     </h3>
 
                     <p class="w-full flex justify-start items-center gap-x-1 mb-[10px]">
-                        <b class="text-Status-Color-Danger-500-Primary text-sm font-medium text-sm"
+                        <b class="text-Status-Color-Danger-500-Primary text-xl font-medium"
                             >NT$ {{ submissionData.specialOffer }}</b
                         >
-                        <b class="text-Status-Color-Danger-400-Hover text-xs font-normal line-through text-[9px]"
+                        <b class="text-Status-Color-Danger-400-Hover text-xs font-normal line-through"
                             >定價 ${{ submissionData.originalPrice }}，現省 ${{
                                 submissionData.originalPrice - submissionData.specialOffer
                             }}</b
                         >
                     </p>
-                    <section class="w-full border-y-[1px] border-gray-100 py-[6px] mb-[10px] text-[#29303D]">
-                        <p class="text-xs font-medium">商品內容</p>
-                        <article
-                            class="text-xs mb-4 text-[#29303D]"
-                            v-html="textToHtml(submissionData.content)"
-                        ></article>
+                    <section class="w-full border-t-[1px] border-gray-100 py-[6px] mb-1 text-[#29303D]">
+                        <p class="text-xs font-medium mb-1">商品內容：</p>
+                        <article class="text-xs text-[#29303D]" v-html="textToHtml(submissionData.content)"></article>
                     </section>
 
                     <ul
@@ -434,7 +431,7 @@
                                 name="i-heroicons-check-circle"
                                 class="block text-base w-4 h-4 text-Primary-500-Primary"
                             />
-                            本專案想免運優惠
+                            本專案享免運優惠
                         </li>
                         <li
                             class="flex justify-start items-center gap-x-1 text-xs"
@@ -450,9 +447,7 @@
                     <div class="w-full border-t-[1px] border-gray-100">
                         <p class="pt-3 pb-2 text-center text-xs font-normal text-Primary-500-Primary">
                             本專案預計
-                            {{
-                                submissionData.deliveryTime ? formatDateToYearMonth(submissionData.deliveryTime) : ""
-                            }}
+                            {{ submissionData.deliveryTime ? formatDateToYearMonth(submissionData.deliveryTime) : "" }}
                             實現，敬啟期待
                         </p>
                     </div>
