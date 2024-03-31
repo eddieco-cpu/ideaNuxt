@@ -379,7 +379,7 @@
                         class="w-full h-44 rounded-md border-2 border-Neutral-400-Hover overflow-y-scroll scroll-container mb-4"
                     >
                         <article class="py-3 px-3 pb-4 pr-2">
-                            <h4 class="text-xl mb-2 font-medium">嘖嘖網站預購式專案委託契約書</h4>
+                            <h4 class="text-xl mb-2 font-medium">idea2gether網站預購式專案委託契約書</h4>
                             <p class="text-sm">
                                 本契約書為您（提案人）在idea2gether網站上提出預購式專案時，您必須同意的提案契約書內容，當您提出專案內容時，idea2gether網站會請您詳閱並同意本契約書內容後才可送出。
                             </p>
