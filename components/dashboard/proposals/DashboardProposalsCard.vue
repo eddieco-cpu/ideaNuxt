@@ -32,10 +32,8 @@
             </h3>
 
             <p class="w-full flex justify-start items-center gap-x-1 mb-[10px]">
-                <b class="text-Status-Color-Danger-500-Primary text-sm font-medium text-xl"
-                    >NT$ {{ item.specialOffer }}</b
-                >
-                <b class="text-Status-Color-Danger-400-Hover text-xs font-normal line-through text-xs"
+                <b class="text-Status-Color-Danger-500-Primary font-medium text-xl">NT$ {{ item.specialOffer }}</b>
+                <b class="text-Status-Color-Danger-400-Hover font-normal line-through text-xs"
                     >定價 ${{ item.originalPrice }}，現省 ${{ item.originalPrice - item.specialOffer }}</b
                 >
             </p>
@@ -63,7 +61,7 @@
                     "
                 >
                     <UIcon name="i-heroicons-check-circle" class="block text-base w-4 h-4 text-Primary-500-Primary" />
-                    本專案想免運優惠
+                    本專案享免運優惠
                 </li>
                 <li class="flex justify-start items-center gap-x-1 text-xs" v-if="item.deliveOverseas.isAvailable">
                     <UIcon name="i-heroicons-check-circle" class="block text-base w-4 h-4 text-Primary-500-Primary" />
