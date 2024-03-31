@@ -73,6 +73,7 @@ async function onSubmit(event) {
     if (!!data) {
         toast.success("登入成功");
 
+        console.log(store)
         store.isLogin = true;
         store.setToken(data.access_token)
         // store.userInfo = data;

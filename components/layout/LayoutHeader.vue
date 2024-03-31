@@ -78,141 +78,141 @@
                     ></div>
                 </div>
             </div>
-
+            <ClientOnly>
             <!-- 會員 -->
-            <div
-                class="max-md:fixed left-0 top-0 max-md:w-64 max-md:h-full max-md:bg-white max-md:overflow-x-auto transition-transform max-md:duration-500 max-md:transform max-md:z-50"
-                :class="{ 'max-md:-translate-x-full': hideSideNav }"
-            >
-                <div class="max-md:py-4 max-md:px-7 max-md:flex max-md:items-center max-md:bg-Primary-500-Primary">
-                    <!-- 會員未登入 -->
-                    <button
-                        class="bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover max-md:bg-Primary-500-Primary max-md:border max-md:border-Primary-200 max-md:text-white"
-                        v-if="!store.isLogin"
-                        @click="openModal('login')"
-                    >
-                        <img src="~assets/images/header/user-purple.svg" class="w-[18px] h-[18px] hidden md:block" />
-                        <img src="~assets/images/header/user.svg" class="block md:hidden" />
-
-                        <span class="font-normal"> 登入 /註冊 </span>
-                    </button>
-
-                    <!-- 會員已登入 -->
-                    <div class="flex" v-else>
+                <div
+                    class="max-md:fixed left-0 top-0 max-md:w-64 max-md:h-full max-md:bg-white max-md:overflow-x-auto transition-transform max-md:duration-500 max-md:transform max-md:z-50"
+                    :class="{ 'max-md:-translate-x-full': hideSideNav }"
+                >
+                    <div class="max-md:py-4 max-md:px-7 max-md:flex max-md:items-center max-md:bg-Primary-500-Primary">
+                        <!-- 會員未登入 -->
                         <button
-                            class="relative bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover group max-md:bg-Primary-500-Primary max-md:border max-md:border-Primary-200 max-md:text-white"
-                            @click="goToPage('/member/information')"
+                            class="bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover max-md:bg-Primary-500-Primary max-md:border max-md:border-Primary-200 max-md:text-white"
+                            v-if="!store.isLogin"
+                            @click="openModal('login')"
                         >
-                            <img 
-                                v-if = "store.userInfo.image"
-                                :src="store.userInfo.image"
-                                alt="memberPic"
-                                class="block rounded-full w-[18px] h-[18px] object-cover"
-                            />
+                            <img src="~assets/images/header/user-purple.svg" class="w-[18px] h-[18px] hidden md:block" />
+                            <img src="~assets/images/header/user.svg" class="block md:hidden" />
 
-                            <span class="font-normal"> 會員中心 </span>
-
-                            <div
-                                class="absolute top-full left-0 w-full bg-white rounded-lg py-1 shadow hidden md:group-hover:block"
-                            >
-                                <ul
-                                    class="flex flex-col items-center [&>*:nth-child(4)]:border-t-Neutral-200 [&>*:nth-child(4)]:border-t"
-                                >
-                                    <li
-                                        class="text-black hover:bg-Primary-50 w-full"
-                                        v-for="(item, index) in memberCenterLink"
-                                        :key="index"
-                                    >
-                                        <nuxt-link class="block w-full py-2" :to="item.link">{{ item.name }}</nuxt-link>
-                                    </li>
-                                </ul>
-
-                                <button
-                                    class="bg-white border border-Primary-50 px-4 py-2 rounded-lg text-sm text-Primary-400-Hover w-[80px] mt-2"
-                                    @click="logout"
-                                >
-                                    <span class="text-Primary-400-Hover"> 登出 </span>
-                                </button>
-                            </div>
+                            <span class="font-normal"> 登入 /註冊 </span>
                         </button>
 
-                        <button class="underline text-white text-sm ml-3 md:hidden" @click="logout">登出</button>
+                        <!-- 會員已登入 -->
+                        <div class="flex" v-else>
+                            <button
+                                class="relative bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover group max-md:bg-Primary-500-Primary max-md:border max-md:border-Primary-200 max-md:text-white"
+                                @click="goToPage('/member/information')"
+                            >
+                                <img 
+                                    v-if = "store.userInfo.image"
+                                    :src="store.userInfo.image"
+                                    alt="memberPic"
+                                    class="block rounded-full w-[18px] h-[18px] object-cover"
+                                />
+
+                                <span class="font-normal"> 會員中心 </span>
+
+                                <div
+                                    class="absolute top-full left-0 w-full bg-white rounded-lg py-1 shadow hidden md:group-hover:block"
+                                >
+                                    <ul
+                                        class="flex flex-col items-center [&>*:nth-child(4)]:border-t-Neutral-200 [&>*:nth-child(4)]:border-t"
+                                    >
+                                        <li
+                                            class="text-black hover:bg-Primary-50 w-full"
+                                            v-for="(item, index) in memberCenterLink"
+                                            :key="index"
+                                        >
+                                            <nuxt-link class="block w-full py-2" :to="item.link">{{ item.name }}</nuxt-link>
+                                        </li>
+                                    </ul>
+
+                                    <button
+                                        class="bg-white border border-Primary-50 px-4 py-2 rounded-lg text-sm text-Primary-400-Hover w-[80px] mt-2"
+                                        @click="logout"
+                                    >
+                                        <span class="text-Primary-400-Hover"> 登出 </span>
+                                    </button>
+                                </div>
+                            </button>
+
+                            <button class="underline text-white text-sm ml-3 md:hidden" @click="logout">登出</button>
+                        </div>
+
+                        <img
+                            src="~assets/images/header/arrow-left.svg"
+                            alt="arrow-left"
+                            class="ml-auto md:hidden"
+                            @click="hideSideNav = true"
+                        />
                     </div>
 
-                    <img
-                        src="~assets/images/header/arrow-left.svg"
-                        alt="arrow-left"
-                        class="ml-auto md:hidden"
-                        @click="hideSideNav = true"
-                    />
+                    <UAccordion
+                        :items="navAccordionItems"
+                        color="black"
+                        size="xl"
+                        open-icon="i-heroicons-plus"
+                        close-icon="i-heroicons-minus"
+                        :ui="{
+                            item: { padding: 'p-0' },
+                        }"
+                        class="text-Primary-600-Dark-Primary px-7 md:hidden"
+                    >
+                        <template #category="{ item }">
+                            <ul class="text-left bg-Primary-50 py-3 px-5 text-Neutral-900">
+                                <li
+                                    v-for="(list, index) in item.lists"
+                                    :key="index"
+                                    class="mb-5 last:mb-0 cursor-pointer"
+                                    @click="goToPage(list.link)"
+                                >
+                                    <p>{{ list.name }}</p>
+                                </li>
+                            </ul>
+                        </template>
+
+                        <template #proposal="{ item }">
+                            <ul class="text-left bg-Primary-50 py-3 px-5 text-Neutral-900">
+                                <li
+                                    v-for="(list, index) in item.lists"
+                                    :key="index"
+                                    class="mb-5 last:mb-0 cursor-pointer"
+                                    @click="goToPage(list.link)"
+                                >
+                                    <p>{{ list.name }}</p>
+                                </li>
+                            </ul>
+                        </template>
+
+                        <template #default="{ item, open }">
+                            <UButton
+                                color="white"
+                                variant="ghost"
+                                :ui="{ rounded: 'rounded-none' }"
+                                class="text-Primary-600-Dark-Primary disabled:opacity-100 text-base justify-between p-0 pt-4 pb-2"
+                                @click="goToPage(item.link)"
+                            >
+                                <span class="truncate">{{ item.label }}</span>
+
+                                <template #trailing>
+                                    <div v-show="item.showOpenIcon">
+                                        <UIcon
+                                            v-if="open"
+                                            name="i-heroicons-minus"
+                                            class="w-5 h-5 ms-auto transform transition-transform duration-200 flex"
+                                        />
+                                        <UIcon
+                                            v-else
+                                            name=" i-heroicons-plus"
+                                            class="w-5 h-5 ms-auto transform transition-transform duration-200 flex"
+                                        />
+                                    </div>
+                                </template>
+                            </UButton>
+                        </template>
+                    </UAccordion>
                 </div>
-
-                <UAccordion
-                    :items="navAccordionItems"
-                    color="black"
-                    size="xl"
-                    open-icon="i-heroicons-plus"
-                    close-icon="i-heroicons-minus"
-                    :ui="{
-                        item: { padding: 'p-0' },
-                    }"
-                    class="text-Primary-600-Dark-Primary px-7 md:hidden"
-                >
-                    <template #category="{ item }">
-                        <ul class="text-left bg-Primary-50 py-3 px-5 text-Neutral-900">
-                            <li
-                                v-for="(list, index) in item.lists"
-                                :key="index"
-                                class="mb-5 last:mb-0 cursor-pointer"
-                                @click="goToPage(list.link)"
-                            >
-                                <p>{{ list.name }}</p>
-                            </li>
-                        </ul>
-                    </template>
-
-                    <template #proposal="{ item }">
-                        <ul class="text-left bg-Primary-50 py-3 px-5 text-Neutral-900">
-                            <li
-                                v-for="(list, index) in item.lists"
-                                :key="index"
-                                class="mb-5 last:mb-0 cursor-pointer"
-                                @click="goToPage(list.link)"
-                            >
-                                <p>{{ list.name }}</p>
-                            </li>
-                        </ul>
-                    </template>
-
-                    <template #default="{ item, open }">
-                        <UButton
-                            color="white"
-                            variant="ghost"
-                            :ui="{ rounded: 'rounded-none' }"
-                            class="text-Primary-600-Dark-Primary disabled:opacity-100 text-base justify-between p-0 pt-4 pb-2"
-                            @click="goToPage(item.link)"
-                        >
-                            <span class="truncate">{{ item.label }}</span>
-
-                            <template #trailing>
-                                <div v-show="item.showOpenIcon">
-                                    <UIcon
-                                        v-if="open"
-                                        name="i-heroicons-minus"
-                                        class="w-5 h-5 ms-auto transform transition-transform duration-200 flex"
-                                    />
-                                    <UIcon
-                                        v-else
-                                        name=" i-heroicons-plus"
-                                        class="w-5 h-5 ms-auto transform transition-transform duration-200 flex"
-                                    />
-                                </div>
-                            </template>
-                        </UButton>
-                    </template>
-                </UAccordion>
-            </div>
-
+            </ClientOnly>
             <Transition name="mask">
                 <div
                     class="fixed md:hidden left-0 top-0 h-full w-full bg-black bg-opacity-50 z-[49]"

@@ -57,9 +57,9 @@ const category = ref([]);
 getCategory()
 
 async function getCategory() {
-    const queryParam = "?type=fundraise";
+    const queryParam = `?type=${route.query.type}`;
     const data = await GET(`/frontend/getFrontendCategory${queryParam}`,1);
-    if (!!data) {
+    if (!!data.status) {
         category.value = data.Categorydata;
     }
 }

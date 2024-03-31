@@ -1,7 +1,8 @@
 <template>
-    <div class="h-full w-full relative max-xl:h-auto">
+    <div class="h-full w-full relative max-xl:h-auto" v-if="slides">
         <!--  -->
         <Swiper
+            v-if="slides.length > 0"
             :modules="[SwiperAutoplay, SwiperPagination, SwiperNavigation]"
             :slides-per-view="'auto'"
             :centered-slides="true"
@@ -16,7 +17,7 @@
             }"
             :pagination="pagination"
         >
-            <SwiperSlide v-for="(slide, idx) in slides" :key="idx">
+            <SwiperSlide v-for="(slide, idx) in slides" :key="idx" >
                 <div
                     class="relative block w-[626px] h-[400px] aspect-[313/200] rounded-lg overflow-hidden max-xl:aspect-auto max-md:aspect-[323/206] max-md:w-full max-md:h-auto"
                 >
@@ -51,7 +52,7 @@
 const props = defineProps({
     slides: {
         type: Array,
-            default: []
+        default: () => [],
     },
 });
 

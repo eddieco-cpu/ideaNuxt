@@ -1,9 +1,9 @@
-import { defineStore } from "pinia";
+import { defineStore, skipHydrate } from "pinia";
 
 export const useAuthStore = defineStore("auth", () => {
 
 
-    const isLogin = ref(false);
+    const isLogin = ref(null);
     const userInfo = ref({});
     const token = ref(null);
     const cookie = useCookie('jwt-token')
@@ -21,7 +21,19 @@ export const useAuthStore = defineStore("auth", () => {
       function clearToken() {
         cookie.value = null 
         token.value = null 
+        isLogin.value = null 
       }
 
-    return { isLogin, userInfo, token,setToken,getToken,clearToken };
-});
+    return { 
+        isLogin, 
+        userInfo, 
+        token,
+        setToken,
+        getToken,
+        clearToken
+     };
+  },
+  {
+    persist: process.client ? true : false,
+  }
+);

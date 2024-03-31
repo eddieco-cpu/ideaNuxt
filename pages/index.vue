@@ -311,7 +311,6 @@ function scrollDirection() {
 
 async function getKol() {
     const data = await GET("/frontend/getGroupListForHome",1);
-    console.log(data)
     if (!!data) {
         kolList.value = data.data;
     }

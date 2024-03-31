@@ -25,7 +25,7 @@
             <section
                 class="w-[626px] h-[408px] aspect-[313/204] rounded-lg py-1 max-xl:w-full max-xl:aspect-auto max-xl:py-0 max-md:h-auto max-md:aspect-auto"
             >
-                <ProductsSlider :slides="pageData.photo" />
+                <ProductsSlider  :slides="pageData.photo"/>
             </section>
 
             <!-- product details -->
@@ -225,17 +225,18 @@ function addToCart(params) {
     navigateTo(`/cart/cart-fundraise?id=${route.params.pid}`);
 }
 
-const pageData = ref([]);
+const pageData = ref([])
 const cards = ref([])
 
 getDatas()
 async function getDatas() {
+
     const queryParam = `?type=fundraise&product_id=${route.params.pid}`;
     const data = await GET(`/frontend/getProject${queryParam}`,1);
+    console.log(data)
     if (!!data) {
         pageData.value = data.data;
         cards.value = data.data.cards;
-
     }
 }
 

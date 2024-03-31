@@ -28,7 +28,7 @@
                     v-if="showCard === 'fundraise'"
                 />
                 <CardGroupBuying
-                    v-for="(item, index) in groupBuyingList"
+                    v-for="(item, index) in formattedGroupBuyingList"
                     :key="index"
                     v-bind="item"
                     v-if="showCard === 'groupbuying'"
@@ -70,7 +70,6 @@ const sortSelected = ref(sort[0]);
 getGroupBuyingList();
 getFundingRaiseList();
 
-console.log("route", route.params.name);
 const categoryName = route.params.name;
 
 const showCard = computed(() => {
@@ -97,23 +96,42 @@ const showCardClass = computed(() => {
 });
 
 async function getFundingRaiseList() {
-    const queryParam = `?category_name=${route.params.name}&type=fundraise`;
+    const queryParam = `?category_name=${route.params.name}&type=fundraise&page=${currentPage}`;
     const data = await GET(`/frontend/getCategoryPageData${queryParam}`,1);
 
-    if (!!data) {
+    if (!!data.status) {
         fundingRaiseList.value = data.paginateData.data;
         totalPages.value =  data.paginateData.last_page;
     }
 }
 
 async function getGroupBuyingList() {
-    const data = await GET("/api/groupBuying");
+    const queryParam = `?category_name=${route.params.name}&type=groupbuying&page=${currentPage}`;
+    const data = await GET(`/frontend/getGroupCategoryPageData${queryParam}`,1);
+    // const data = await GET("/api/groupBuying");
 
-    if (!!data) {
-        groupBuyingList.value = data;
-        
+    if (!!data.status) {
+        console.log(data)
+        groupBuyingList.value = data.paginateData.data;
+        totalPages.value =  data.paginateData.last_page;
     }
 }
+
+const formattedGroupBuyingList = computed(() => {
+  if (Array.isArray(groupBuyingList.value)) {
+    return groupBuyingList.value.map(item => ({
+      id: item.id,
+      name: item.users ? item.users.name : 'Default Name',
+      image: item.projects ? item.projects.image : 'Default Image',
+      avatar: item.users ? item.users.image : 'Default Avatar',
+      text: item.projects ? item.projects.name : 'Default Text',
+      price: item.price,
+      tags: item.product ? item.product.tags : []
+    }));
+  } else {
+    return [];
+  }
+});
 </script>
 
 <style scoped>
