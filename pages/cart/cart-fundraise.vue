@@ -24,6 +24,7 @@
                                 cart.selectFundRaiseProducts[0]?.id === item.id,
                         },
                     ]"
+                    :prod="item"
                     :soldOut="item.soldOut"
                     @click="addToCart(item)"
                 />
@@ -62,49 +63,20 @@ const route = useRoute();
 console.log(route.query.id)
 const cart = cartStore();
 
-const productList = ref([
-    {
-        id: 1,
-        image: helperPicture(),
-        title: helperLorem(50, 80),
-        text: helperLorem(30, 50),
-        price: Math.floor(Math.random() * 1000) + 2000,
-        qty: 1,
-        soldOut: true,
-    },
-    {
-        id: 2,
-        image: helperPicture(),
-        title: helperLorem(50, 80),
-        text: helperLorem(30, 50),
-        price: Math.floor(Math.random() * 1000) + 2000,
-        qty: 1,
-    },
-    {
-        id: 3,
-        image: helperPicture(),
-        title: helperLorem(50, 80),
-        text: helperLorem(30, 50),
-        price: Math.floor(Math.random() * 1000) + 2000,
-        qty: 1,
-    },
-    {
-        id: 4,
-        image: helperPicture(),
-        title: helperLorem(50, 80),
-        text: helperLorem(30, 50),
-        price: Math.floor(Math.random() * 1000) + 2000,
-        qty: 1,
-    },
-    {
-        id: 5,
-        image: helperPicture(),
-        title: helperLorem(50, 80),
-        text: helperLorem(30, 50),
-        price: Math.floor(Math.random() * 1000) + 2000,
-        qty: 1,
-    },
-]);
+const productList = ref([]);
+
+async function getProdsData() {
+    const data = await GET(`/api/productsFundraise`);
+
+    if (!!data) {
+        productList.value = data.prods.map((el, i) => ({
+            ...el,
+        }));
+
+        cart.selectFundRaiseProducts = [productList.value[0]];
+    }
+}
+getProdsData();
 
 function goCheckoutPage() {
     navigateTo("/cart/checkout?type=fundraise");
@@ -120,3 +92,9 @@ function goBack() {
     router.go(-1);
 }
 </script>
+
+<style lang="scss" scoped>
+li {
+    list-style: none;
+}
+</style>

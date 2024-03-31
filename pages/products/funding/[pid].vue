@@ -209,6 +209,9 @@
                         <p></p>
                     </li>
                 </template>
+                <template v-for="(prod, i) in prods" :key="prod.id">
+                    <ProductsFundraise :prod="prod" @click="addToCart" />
+                </template>
             </ul>
         </section>
     </section>
@@ -267,12 +270,25 @@ const maxHeight = ref(700);
 const articleRef = ref(null);
 const articleRefHeight = ref(0);
 
+//
 onMounted(() => {
     if (articleRef.value) {
-        //console.log("articleRef 高度:", articleRef.value.offsetHeight);
         articleRefHeight.value = articleRef.value.offsetHeight;
     }
 });
+
+//
+const prods = ref([]);
+
+async function getProdsData() {
+    const data = await GET(`/api/productsFundraise`);
+    if (!!data) {
+        prods.value = data.prods.map((el, i) => ({
+            ...el,
+        }));
+    }
+}
+getProdsData();
 
 const progressMeter = 300;
 

@@ -3,70 +3,76 @@
         class="border-[1px] border-Primary-100 rounded-lg px-4 py-3 bg-white ring-1 ring-Primary-100 mb-1 relative"
         :class="class"
     >
-        <div :class="item.soldOut ? ' opacity-45 sold-out' : ''">
-            <picture class="block aspect-[212/75] rounded overflow-hidden mb-[10px]">
+        <div
+            :class="item.soldOut ? ' opacity-45 sold-out' : ''"
+            class="flex flex-col justify-start items-center min-h-[495px]"
+        >
+            <picture class="w-full block aspect-[212/75] rounded overflow-hidden mb-[10px]">
                 <img class="block h-full w-full object-cover" :src="item.projectPreview" />
             </picture>
 
-            <div
-                v-if="item.sponsors && item.sponsors > 0"
-                class="bg-Primary-400-Hover text-white rounded inline-block p-1 px-[6px] mb-[10px] text-xs mr-2"
-            >
-                已支持{{ item.sponsors }}人
+            <div class="w-full">
+                <div
+                    v-if="item.sponsors && item.sponsors > 0"
+                    class="bg-Primary-400-Hover text-white rounded inline-block p-1 px-[6px] mb-[10px] text-xs mr-2"
+                >
+                    已支持{{ item.sponsors }}人
+                </div>
+
+                <div
+                    v-if="item.salesLimit"
+                    class="bg-Primary-400-Hover text-white rounded inline-block p-1 px-[6px] mb-[10px] text-xs"
+                >
+                    剩餘{{ item.salesLimitedQuantity }}組
+                </div>
             </div>
 
-            <div
-                v-if="item.salesLimit"
-                class="bg-Primary-400-Hover text-white rounded inline-block p-1 px-[6px] mb-[10px] text-xs"
-            >
-                剩餘{{ item.salesLimitedQuantity }}組
-            </div>
-
-            <h3 class="text-base font-medium mb-2 line-clamp-1">
+            <h3 class="w-full text-base font-medium mb-2 line-clamp-1">
                 {{ item.projectName }}
             </h3>
 
-            <p class="flex justify-start items-center gap-x-1 mb-[10px]">
-                <b class="text-Status-Color-Danger-500-Primary text-sm font-medium text-xl"
-                    >NT$ {{ item.specialOffer }}</b
-                >
-                <b class="text-Status-Color-Danger-400-Hover text-xs font-normal line-through text-xs"
+            <p class="w-full flex justify-start items-center gap-x-1 mb-[10px]">
+                <b class="text-Status-Color-Danger-500-Primary font-medium text-xl">NT$ {{ item.specialOffer }}</b>
+                <b class="text-Status-Color-Danger-400-Hover font-normal line-through text-xs"
                     >定價 ${{ item.originalPrice }}，現省 ${{ item.originalPrice - item.specialOffer }}</b
                 >
             </p>
-            <section class="border-y-[1px] border-gray-100 py-[6px] mb-[10px]">
-                <p class="text-xs font-medium">商品內容</p>
-                <article class="text-xs mb-4" v-html="item.content"></article>
-                <p class="text-xs font-medium">商品規格</p>
-                <article class="text-xs" v-html="item.specification"></article>
+
+            <section class="w-full border-t-[1px] border-gray-100 py-[6px] mb-1">
+                <p class="text-xs font-medium mb-1">商品內容：</p>
+                <article class="text-xs">
+                    <p v-for="(content, i) in item.content" :key="i" v-html="content"></p>
+                </article>
             </section>
-            <ul class="text-xs text-Neutral-800 flex justify-start content-start items-start flex-wrap gap-1">
-                <li class="mb-1 flex justify-start items-center gap-x-1 text-xs">
-                    <UIcon name="i-heroicons-shopping-bag" class="block w-3 h-3" />
-                    預計{{ item.deliveryTime ? formatDateToYearMonth(item.deliveryTime) : " yyyy/mm " }}出貨
+            <ul class="flex-grow w-full text-xs text-Neutral-800 flex flex-col justify-start items-start gap-1 mb-3">
+                <li class="flex justify-start items-center gap-x-1 text-xs" v-if="item.deliveToStore.isAvailable">
+                    <UIcon name="i-heroicons-check-circle" class="block text-base w-4 h-4 text-Primary-500-Primary" />
+                    本方案可選超商取貨，運費{{ item.deliveToStore.fee }}元
+                </li>
+                <li class="flex justify-start items-center gap-x-1 text-xs" v-if="item.deliveToHouse.isAvailable">
+                    <UIcon name="i-heroicons-check-circle" class="block text-base w-4 h-4 text-Primary-500-Primary" />
+                    宅配出貨，運費{{ item.deliveToHouse.fee }}元
                 </li>
                 <li
-                    v-if="item.deliveryWays.includes('deliveInCountry')"
-                    class="mb-1 flex justify-start items-center gap-x-1 text-xs"
+                    class="flex justify-start items-center gap-x-1 text-xs"
+                    v-if="
+                        (item.deliveToHouse.isAvailable && !item.deliveToHouse.fee) ||
+                        (item.deliveToStore.isAvailable && !item.deliveToStore.fee)
+                    "
                 >
-                    <UIcon name="i-heroicons-shopping-cart" class="block w-3 h-3" />
-                    台灣本島免運費
+                    <UIcon name="i-heroicons-check-circle" class="block text-base w-4 h-4 text-Primary-500-Primary" />
+                    本專案享免運優惠
                 </li>
-                <li
-                    v-if="item.deliveryWays.includes('deliveToStore')"
-                    class="mb-1 flex justify-start items-center gap-x-1 text-xs"
-                >
-                    <UIcon name="i-heroicons-shopping-cart" class="block w-3 h-3" />
-                    超商取貨 {{ item.deliveToStoreFee }} 元
-                </li>
-                <li
-                    v-if="item.deliveryWays.includes('deliveToHouse')"
-                    class="mb-1 flex justify-start items-center gap-x-1 text-xs"
-                >
-                    <UIcon name="i-heroicons-shopping-cart" class="block w-3 h-3" />
-                    宅配
+                <li class="flex justify-start items-center gap-x-1 text-xs" v-if="item.deliveOverseas.isAvailable">
+                    <UIcon name="i-heroicons-check-circle" class="block text-base w-4 h-4 text-Primary-500-Primary" />
+                    可寄送國外/離島，運費{{ item.deliveOverseas.fee }}元
                 </li>
             </ul>
+            <div class="w-full border-t-[1px] border-gray-100">
+                <p class="pt-3 pb-2 text-center text-xs font-normal text-Primary-500-Primary">
+                    本專案預計 {{ item.deliveryTime }} 實現，敬啟期待
+                </p>
+            </div>
         </div>
     </div>
 </template>
@@ -75,18 +81,35 @@ const props = defineProps({
     item: {
         type: Object,
         default: () => ({
-            projectPreview: "",
-            salesLimit: "",
-            salesLimitedQuantity: "",
-            sponsors: 0,
+            id: "",
             projectName: "",
+            projectPreview: "",
+
             specialOffer: "",
             originalPrice: "",
+
+            salesLimit: "",
+            salesLimitedQuantity: "",
+
+            sponsors: 0,
+
             content: "",
-            specification: "",
+
             deliveryTime: "",
-            deliveryWays: ["deliveInCountry", "deliveToStore", "deliveToHouse"],
-            deliveToStoreFee: 0,
+
+            deliveOverseas: {
+                isAvailable: true,
+                fee: 0,
+            },
+            deliveToStore: {
+                isAvailable: true,
+                fee: 0,
+            },
+            deliveToHouse: {
+                isAvailable: true,
+                fee: 0,
+            },
+
             soldOut: false,
         }),
     },
