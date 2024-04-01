@@ -3,7 +3,9 @@
         class="relative overflow-hidden bg-cover bg-[url('assets/images/contact/mob-bg.png')] md:bg-[url('assets/images/contact/web-bg.png')] py-4 md:py-10 mb-[-40px] md:mb-[-120px]"
     >
         <div class="max-w-[323px] md:max-w-[1000px] mx-auto">
-            <p class="text-white text-sm mb-8"><NuxtLink to="/">Home</NuxtLink>&nbsp; / &nbsp;聯絡我們</p>
+            <p class="text-white text-sm mb-8">
+                <NuxtLink to="/" class="text-xs">Home</NuxtLink>&nbsp; / &nbsp;聯絡我們
+            </p>
 
             <div class="flex flex-col md:flex-row gap-6 md:gap-x-14 md:items-center">
                 <div class="relative z-10 backdrop-blur px-8 py-7 bg-white/30 rounded-lg max-w-[628px]">
