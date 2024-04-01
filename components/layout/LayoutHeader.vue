@@ -283,7 +283,7 @@ const navAccordionItems = [
         showOpenIcon: true,
         lists: [
             { name: "關於我們", link: "/" },
-            { name: "聯絡我們", link: "/" },
+            { name: "聯絡我們", link: "/contact-us" },
         ],
     },
     ...navLink.slice(-1),

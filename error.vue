@@ -46,4 +46,12 @@
 const props = defineProps({
     error: { type: Object, required: true },
 });
+
+const handleError = () => clearError({ redirect: "/" });
 </script>
+
+<style scoped lang="scss">
+.wrapper {
+    height: calc(100vh - 74px - 120px - 44px - 295px);
+}
+</style>
