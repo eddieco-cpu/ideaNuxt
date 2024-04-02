@@ -17,27 +17,76 @@
                         </p>
                     </div>
 
-                    <UForm class="flex flex-col gap-y-3 font-base" @submit="onSubmit">
-                        <UFormGroup label="您的姓名" name="name" :ui="{ label: { base: 'text-white font-normal' } }">
+                    <UForm
+                        class="flex flex-col gap-y-3 font-base"
+                        :schema="contactUsSchema"
+                        :state="contact"
+                        @submit="onSubmit"
+                    >
+                        <UFormGroup
+                            label="您的姓名"
+                            name="name"
+                            :ui="{
+                                label: {
+                                    base: 'text-white font-normal',
+                                    required: `before:text-white`,
+                                },
+                            }"
+                            required
+                        >
                             <UInput placeholder="ex:王小美" v-model="contact.name" size="sm" />
                         </UFormGroup>
 
-                        <UFormGroup label="公司名稱" name="company" :ui="{ label: { base: 'text-white font-normal' } }">
+                        <UFormGroup
+                            label="公司名稱"
+                            name="company"
+                            :ui="{
+                                label: {
+                                    base: 'text-white font-normal',
+                                    required: `before:text-white`,
+                                },
+                            }"
+                        >
                             <UInput placeholder="ex: 愛上大數據股份有限公司" v-model="contact.company" size="sm" />
                         </UFormGroup>
 
-                        <UFormGroup label="聯絡信箱" name="email" :ui="{ label: { base: 'text-white font-normal' } }">
+                        <UFormGroup
+                            label="聯絡信箱"
+                            name="email"
+                            :ui="{
+                                label: {
+                                    base: 'text-white font-normal',
+                                    required: `before:text-white`,
+                                },
+                            }"
+                            required
+                        >
                             <UInput placeholder="ex: idea2gether @gmail.com" v-model="contact.email" size="sm" />
                         </UFormGroup>
 
-                        <UFormGroup label="聯絡電話" name="phone" :ui="{ label: { base: 'text-white font-normal' } }">
+                        <UFormGroup
+                            label="聯絡電話"
+                            name="phone"
+                            :ui="{
+                                label: {
+                                    base: 'text-white font-normal',
+                                    required: `before:text-white`,
+                                },
+                            }"
+                        >
                             <UInput placeholder="ex: 0909090234" v-model="contact.phone" size="sm" />
                         </UFormGroup>
 
                         <UFormGroup
                             label="問題與訊息簡述"
                             name="description"
-                            :ui="{ label: { base: 'text-white font-normal' } }"
+                            :ui="{
+                                label: {
+                                    base: 'text-white font-normal',
+                                    required: `before:text-white`,
+                                },
+                            }"
+                            required
                         >
                             <UtilTextarea
                                 :resize="true"
@@ -115,6 +164,8 @@
     </div>
 </template>
 <script setup>
+import { contactUsSchema } from "~/validation";
+
 const contact = ref({
     name: "",
     company: "",
