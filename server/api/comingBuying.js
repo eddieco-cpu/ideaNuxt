@@ -48,6 +48,6 @@ export default defineEventHandler((event) => {
         avatar: helperPicture(),
         isFavorite: Math.floor(Math.random() * i) % 2 === 0,
         name: fakeNames[i],
-        text: helperLorem(),
+        text: "小花愛吃愛分享推薦！年度必買居家小物開箱，買完好過年度必買居家～",
     }));
 });
