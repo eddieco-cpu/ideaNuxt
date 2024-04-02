@@ -250,7 +250,7 @@ const navLink = [
     },
     {
         label: "好物分享",
-        link: "/good-thing",
+        link: "/good-blog",
     },
     {
         label: "提案",

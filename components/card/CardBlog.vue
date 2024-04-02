@@ -1,12 +1,12 @@
 <template>
-    <div class="w-full rounded-lg shadow-card bg-white pb-2 cursor-pointer relative">
+    <div class="w-full md:max-w-[384px] rounded-lg shadow-card bg-white pb-2 cursor-pointer relative">
         <!-- 愛心 -->
         <div class="absolute top-2 right-2">
             <TagHeart :isFavorite="isFavorite" />
         </div>
 
         <!-- 主圖 -->
-        <img :src="image" alt="product" class="rounded-lg w-full h-[148px] object-cover" />
+        <img :src="image" alt="product" class="rounded-lg w-full h-[148px] md:h-[202px] object-cover" />
 
         <div class="relative px-2">
             <!-- 團主名稱 -->
@@ -31,7 +31,23 @@
                 {{ text }}
             </p>
 
-            <p class="text-Neutral-500-Primary text-xs">2023/12/31</p>
+            <div class="flex gap-x-3 items-center">
+                <p class="text-Neutral-500-Primary text-xs">2023/12/31</p>
+
+                <div class="flex gap-x-2 items-center">
+                    <UAvatar
+                        :src="avatar"
+                        alt="user"
+                        size="xl"
+                        :ui="{
+                            size: {
+                                xl: 'w-[18px] h-[18px]',
+                            },
+                        }"
+                    />
+                    <span class="text-xs text-Neutral-600-Dark-Primary">vicky 媽媽</span>
+                </div>
+            </div>
         </div>
     </div>
 </template>
