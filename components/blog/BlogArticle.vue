@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col md:flex-row gap-x-5 group cursor-pointer">
+    <div class="flex flex-col md:flex-row gap-x-5 group cursor-pointer" @click="goToArticle">
         <div class="w-full h-[170px] md:w-[348px] md:h-[184px]">
             <img
                 :src="helperPicture()"
@@ -76,5 +76,9 @@ function isAddFavorite(e, status) {
     } else {
         toast.error("已取消收藏");
     }
+}
+
+function goToArticle() {
+    navigateTo("/blog/article/1");
 }
 </script>

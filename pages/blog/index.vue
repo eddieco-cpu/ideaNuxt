@@ -58,11 +58,12 @@
                             <div class="flex flex-col gap-y-8">
                                 <BlogArticle v-for="item in 5" />
                                 <div class="text-center py-8 border-t border-t-Neutral-300">
-                                    <button
-                                        class="w-full text-Primary-400-Hover text-sm max-w-[380px] rounded-lg mx-auto py-2 shadow-[0_1px_10px_0px_rgba(0,0,0,0.02)] border border-Primary-100 bg-white"
+                                    <NuxtLink
+                                        to="/blog/list/technology-ai"
+                                        class="w-full text-Primary-400-Hover text-sm max-w-[380px] rounded-lg mx-auto py-2 shadow-[0_1px_10px_0px_rgba(0,0,0,0.02)] border border-Primary-100 bg-white block"
                                     >
-                                        更多文章
-                                    </button>
+                                        更多文章</NuxtLink
+                                    >
                                 </div>
                             </div>
                         </div>
@@ -97,57 +98,27 @@
 </template>
 
 <script setup>
-//
-const currentPage = ref(10);
-const totalPages = ref(20);
-const updateCurrentPage = (newPage) => {
-    currentPage.value = newPage;
-};
-
-//
-const screenWidth = ref(800);
-onMounted(() => {
-    screenWidth.value = window.innerWidth;
-});
-
 const videoPlayList = ref([]);
-const kolList = ref([]);
-const fundingRaiseList = ref([]);
-const groupBuyingList = ref([]);
 const slides = ref([]);
 const category = [
     { name: "全部文章", link: "/blog" },
-    { name: "科技AI", link: "/category/technology-ai?type=fundraise" },
-    { name: "時尚流行", link: "/category/fashion?type=fundraise" },
-    { name: "3C家電", link: "/category/appliance?type=fundraise" },
-    { name: "書籍出版", link: "/category/books?type=fundraise" },
-    { name: "設計藝術", link: "/category/design?type=fundraise" },
-    { name: "遊戲動漫", link: "/category/gaming?type=fundraise" },
-    { name: "保健食品", link: "/category/health?type=fundraise" },
-    { name: "課程教育", link: "/category/education?type=fundraise" },
-    { name: "攝影圖像", link: "/category/photography?type=fundraise" },
-    { name: "表演/門票", link: "/category/tickets?type=fundraise" },
-    { name: "服務/公益", link: "/category/welfare?type=fundraise" },
+    { name: "科技AI", link: "/blog/list/technology-ai" },
+    { name: "時尚流行", link: "/blog/list/fashion" },
+    { name: "3C家電", link: "/blog/list/appliance" },
+    { name: "書籍出版", link: "/blog/list/books" },
+    { name: "設計藝術", link: "/blog/list/design" },
+    { name: "遊戲動漫", link: "/blog/list/gaming" },
+    { name: "保健食品", link: "/blog/list/health" },
+    { name: "課程教育", link: "/blog/list/education" },
+    { name: "攝影圖像", link: "/blog/list/photography" },
+    { name: "表演/門票", link: "/blog/list/tickets" },
+    { name: "服務/公益", link: "/blog/list/welfare" },
 ];
-const newIdeasTypes = reactive({
-    typeActive: "1",
-    types: [
-        { id: "1", name: "時尚流行" },
-        { id: "2", name: "3C家電" },
-        { id: "3", name: "書籍出版" },
-        { id: "4", name: "遊戲動漫" },
-        { id: "5", name: "保健食品" },
-        { id: "6", name: "科技AI" },
-    ],
-});
 
 const isOpenVideo = ref(false);
 const videoIndex = ref(0);
 
 getSliderDatas();
-getKol();
-getFundingRaiseList();
-getGroupBuyingList();
 getVideoList();
 
 async function getSliderDatas() {
@@ -175,30 +146,6 @@ function scrollDirection() {
         document.querySelector(".header-links").style.top = "74px";
     }
     oldScrollY = window.scrollY;
-}
-
-async function getKol() {
-    const data = await GET("/api/kol");
-
-    if (!!data) {
-        kolList.value = data.sort((a, b) => a.index - b.index).slice(0, 6);
-    }
-}
-
-async function getFundingRaiseList() {
-    const data = await GET("/api/fundingRaise");
-
-    if (!!data) {
-        fundingRaiseList.value = data;
-    }
-}
-
-async function getGroupBuyingList() {
-    const data = await GET("/api/groupBuying");
-
-    if (!!data) {
-        groupBuyingList.value = data;
-    }
 }
 
 async function getVideoList() {
