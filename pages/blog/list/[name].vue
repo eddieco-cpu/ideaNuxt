@@ -58,7 +58,7 @@
                 </div>
             </div>
 
-            <div class="md:w-[27%]">
+            <div class="md:w-[27%] md:h-screen md:overflow-auto md:sticky top-[120px]">
                 <h1 class="text-[#010204] text-xl font-medium mb-4">猜你想看…</h1>
                 <div class="flex flex-wrap gap-4">
                     <BlogTag v-for="item in 10" />

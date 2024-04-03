@@ -1,6 +1,6 @@
 <template>
     <section class="section">
-        <div class="bg-white overflow-hidden">
+        <div class="bg-white">
             <!--  -->
             <div class="w-screen bg-white fixed top-[74px] z-30 header-links">
                 <div class="max-md:hidden flex justify-evenly max-w-[1200px] mx-auto py-3">
@@ -18,7 +18,7 @@
             <section class="bg-[rgb(247,248,252)] py-[1px]">
                 <!--  -->
                 <div class="my-10 max-md:my-9 md:mt-24">
-                    <HomeMainSlider :slides="slides" />
+                    <BlogSlider :slides="slides" />
                 </div>
             </section>
 
@@ -56,8 +56,8 @@
                         <div class="w-full order-2 md:w-[68%] mt-9 md:order-1 md:mt-0">
                             <h1 class="text-[#010204] text-xl font-medium mb-4">精選文章</h1>
                             <div class="flex flex-col gap-y-8">
-                                <BlogArticle v-for="item in 5" />
-                                <div class="text-center py-8 border-t border-t-Neutral-300">
+                                <BlogArticle v-for="item in 20" />
+                                <div class="text-center pt-8 border-t border-t-Neutral-300">
                                     <NuxtLink
                                         to="/blog/list/technology-ai"
                                         class="w-full text-Primary-400-Hover text-sm max-w-[380px] rounded-lg mx-auto py-2 shadow-[0_1px_10px_0px_rgba(0,0,0,0.02)] border border-Primary-100 bg-white block"
@@ -68,7 +68,9 @@
                             </div>
                         </div>
 
-                        <div class="w-full order-1 md:w-[27%] md:order-2">
+                        <div
+                            class="w-full order-1 md:w-[27%] md:h-screen md:overflow-auto md:sticky top-[120px] md:order-2"
+                        >
                             <div>
                                 <h1 class="text-[#010204] text-xl font-medium mb-4">文章排行榜</h1>
                                 <div class="bg-white rounded-lg py-2 divide-y-[1px] divide-Neutral-300">
@@ -122,10 +124,12 @@ getSliderDatas();
 getVideoList();
 
 async function getSliderDatas() {
-    const data = await GET(`/api/sliderDatas`);
+    const data = await GET(`/api/blogSliderDatas`);
     if (!!data) {
         slides.value = data.sliderDatas;
     }
+
+    console.log("data", data);
 }
 
 function openVideo(index) {
