@@ -118,8 +118,12 @@
                         您可以開始選擇提案...
                     </h2>
                     <UiButton
-                        class="max-md:absolute max-md:bottom-0 max-md:right-0 max-md:left-0 max-md:mx-auto max-md:text-sm"
-                        >我要提案</UiButton
+                        class="relative max-md:absolute max-md:bottom-0 max-md:right-0 max-md:left-0 max-md:mx-auto max-md:text-sm"
+                        ><NuxtLink
+                            to="/proposal/submission"
+                            class="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center"
+                            >我要提案</NuxtLink
+                        ></UiButton
                     >
                 </div>
                 <div
