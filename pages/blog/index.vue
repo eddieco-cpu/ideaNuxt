@@ -78,20 +78,18 @@
                                 </div>
                             </div>
 
-                            <div class="w-full mt-9 hidden md:block">
-                                <h1 class="text-[#010204] text-xl font-medium mb-4">猜你想看…</h1>
-                                <div class="flex flex-wrap gap-4">
-                                    <BlogTag v-for="tag in blogTagsList" :text="tag" />
-                                </div>
-                            </div>
+                            <ClientOnly
+                                ><Teleport to="#blogTagTeleport" :disabled="isWeb">
+                                    <div class="w-full mt-9 hidden md:block">
+                                        <h1 class="text-[#010204] text-xl font-medium mb-4">猜你想看…</h1>
+                                        <div class="flex flex-wrap gap-4">
+                                            <BlogTag v-for="tag in blogTagsList" :text="tag" />
+                                        </div></div
+                                ></Teleport>
+                            </ClientOnly>
                         </div>
 
-                        <div class="w-full order-3 mt-9 md:hidden">
-                            <h1 class="text-[#010204] text-xl font-medium mb-4">猜你想看…</h1>
-                            <div class="flex flex-wrap gap-4">
-                                <BlogTag v-for="tag in blogTagsList" :text="tag" />
-                            </div>
-                        </div>
+                        <div id="blogTagTeleport"></div>
                     </div>
                 </UiContainer>
             </section>
@@ -133,8 +131,6 @@ async function getSliderDatas() {
     if (!!data) {
         slides.value = data.sliderDatas;
     }
-
-    console.log("data", data);
 }
 
 function openVideo(index) {
@@ -181,16 +177,29 @@ async function getBlogTagList() {
     }
 }
 
+const isDisabledTelePort = ref(true);
+
+function checkIsWeb() {
+    isDisabledTelePort.value = window.innerWidth >= 768;
+}
+checkIsWeb();
+
+const isWeb = computed(() => {
+    return isDisabledTelePort.value;
+});
+
 const blogRank = computed(() => {
     return blogList.value.sort((a, b) => a.index - b.index).slice(0, 5);
 });
 
 onMounted(() => {
     window.addEventListener("scroll", scrollDirection);
+    window.addEventListener("resize", checkIsWeb);
 });
 
 onBeforeUnmount(() => {
     window.removeEventListener("scroll", scrollDirection);
+    window.removeEventListener("resize", checkIsWeb);
 });
 </script>
 

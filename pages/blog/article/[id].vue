@@ -93,24 +93,7 @@
 
                     <UDivider class="mt-2 mb-4" />
 
-                    <div
-                        class="md:hidden md:w-[calc(1200px*0.27)] md:fixed md:right-[calc((100vw-1200px)/2)]"
-                        ref="artcleRight"
-                    >
-                        <div class="flex flex-col gap-y-4">
-                            <h1 class="text-[#010204] text-xl font-medium">推薦給您</h1>
-                            <BlogFundraise />
-
-                            <BlogGroupBuying v-for="item in 3" />
-                        </div>
-
-                        <div class="mt-4 md:mt-9">
-                            <h1 class="text-[#010204] text-xl font-medium mb-4">猜你想看…</h1>
-                            <div class="flex flex-wrap gap-4">
-                                <BlogTag v-for="tag in blogTagsList" :text="tag" />
-                            </div>
-                        </div>
-                    </div>
+                    <div id="contentSlot"></div>
 
                     <div class="flex flex-col gap-y-4 mt-4">
                         <h1 class="text-[#010204] text-xl font-medium flex items-center justify-between">
@@ -126,23 +109,25 @@
                     </div>
                 </div>
 
-                <div
-                    class="hidden md:block md:w-[27%] md:overflow-auto md:sticky bottom-[0px] md:h-[calc(100vh-76px-60px)]"
-                >
-                    <div class="flex flex-col gap-y-4">
-                        <h1 class="text-[#010204] text-xl font-medium">推薦給您</h1>
-                        <BlogFundraise />
+                <ClientOnly>
+                    <Teleport to="#contentSlot" :disabled="isWeb">
+                        <div class="md:w-[27%] md:overflow-auto md:sticky bottom-[0px] md:h-[calc(100vh-76px-60px)]">
+                            <div class="flex flex-col gap-y-4">
+                                <h1 class="text-[#010204] text-xl font-medium">推薦給您</h1>
+                                <BlogFundraise />
 
-                        <BlogGroupBuying v-for="item in 3" />
-                    </div>
+                                <BlogGroupBuying v-for="item in 3" />
+                            </div>
 
-                    <div class="mt-4 md:mt-9">
-                        <h1 class="text-[#010204] text-xl font-medium mb-4">猜你想看…</h1>
-                        <div class="flex flex-wrap gap-4">
-                            <BlogTag v-for="tag in blogTagsList" :text="tag" />
+                            <div class="mt-4 md:mt-9">
+                                <h1 class="text-[#010204] text-xl font-medium mb-4">猜你想看…</h1>
+                                <div class="flex flex-wrap gap-4">
+                                    <BlogTag v-for="tag in blogTagsList" :text="tag" />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </Teleport>
+                </ClientOnly>
             </div>
         </div>
     </div>
@@ -153,6 +138,7 @@ import { useToast } from "vue-toastification";
 
 const toast = useToast();
 
+const render = ref(true);
 const blogList = ref([]);
 const blogTagsList = ref([]);
 
@@ -190,4 +176,23 @@ async function getBlogTagList() {
         blogTagsList.value = data;
     }
 }
+
+const isDisabledTelePort = ref(true);
+
+function checkIsWeb() {
+    isDisabledTelePort.value = window.innerWidth >= 768;
+}
+checkIsWeb();
+
+const isWeb = computed(() => {
+    return isDisabledTelePort.value;
+});
+
+onMounted(() => {
+    window.addEventListener("resize", checkIsWeb);
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener("resize", checkIsWeb);
+});
 </script>
