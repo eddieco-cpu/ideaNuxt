@@ -11,7 +11,10 @@
                     nextEl: '.main-slide__btn-next',
                     prevEl: '.main-slide__btn-pre',
                 }"
-                :autoplay="false"
+                :autoplay="{
+                    delay: 3000,
+                    disableOnInteraction: false,
+                }"
                 :pagination="pagination"
             >
                 <SwiperSlide v-for="(slide, idx) in slides" :key="idx">
