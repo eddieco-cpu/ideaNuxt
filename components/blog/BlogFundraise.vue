@@ -1,6 +1,7 @@
 <template>
     <div
         class="flex md:gap-x-3 justify-between py-2 px-[10px] rounded-lg border border-Primary-100 shadow-[0px_0px_5px_0px_rgba(0,0,0,0.02)] group cursor-pointer"
+        @click="goToPage"
     >
         <div class="w-[100px] md:w-[184px]">
             <img
@@ -51,5 +52,7 @@
 </template>
 
 <script setup>
-//
+function goToPage() {
+    navigateTo(`/products/funding/${1}`);
+}
 </script>

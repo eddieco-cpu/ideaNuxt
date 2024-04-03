@@ -56,7 +56,7 @@
                         <div class="w-full order-2 md:w-[68%] mt-9 md:order-1 md:mt-0">
                             <h1 class="text-[#010204] text-xl font-medium mb-4">精選文章</h1>
                             <div class="flex flex-col gap-y-8">
-                                <BlogArticle v-for="item in 20" />
+                                <BlogArticle v-for="item in blogList" v-bind="item" />
                                 <div class="text-center pt-8 border-t border-t-Neutral-300">
                                     <NuxtLink
                                         to="/blog/list/technology-ai"
@@ -74,14 +74,14 @@
                             <div>
                                 <h1 class="text-[#010204] text-xl font-medium mb-4">文章排行榜</h1>
                                 <div class="bg-white rounded-lg py-2 divide-y-[1px] divide-Neutral-300">
-                                    <BlogRank v-for="item in 5" />
+                                    <BlogRank v-for="item in blogRank" v-bind="item" />
                                 </div>
                             </div>
 
                             <div class="w-full mt-9 hidden md:block">
                                 <h1 class="text-[#010204] text-xl font-medium mb-4">猜你想看…</h1>
                                 <div class="flex flex-wrap gap-4">
-                                    <BlogTag v-for="item in 10" />
+                                    <BlogTag v-for="tag in blogTagsList" :text="tag" />
                                 </div>
                             </div>
                         </div>
@@ -89,7 +89,7 @@
                         <div class="w-full order-3 mt-9 md:hidden">
                             <h1 class="text-[#010204] text-xl font-medium mb-4">猜你想看…</h1>
                             <div class="flex flex-wrap gap-4">
-                                <BlogTag v-for="item in 10" />
+                                <BlogTag v-for="tag in blogTagsList" :text="tag" />
                             </div>
                         </div>
                     </div>
@@ -101,7 +101,10 @@
 
 <script setup>
 const videoPlayList = ref([]);
+const blogList = ref([]);
+const blogTagsList = ref([]);
 const slides = ref([]);
+
 const category = [
     { name: "全部文章", link: "/blog" },
     { name: "科技AI", link: "/blog/list/technology-ai" },
@@ -122,6 +125,8 @@ const videoIndex = ref(0);
 
 getSliderDatas();
 getVideoList();
+getBlogList();
+getBlogTagList();
 
 async function getSliderDatas() {
     const data = await GET(`/api/blogSliderDatas`);
@@ -159,6 +164,26 @@ async function getVideoList() {
         videoPlayList.value = data;
     }
 }
+
+async function getBlogList() {
+    const data = await GET("/api/blog");
+
+    if (!!data) {
+        blogList.value = data;
+    }
+}
+
+async function getBlogTagList() {
+    const data = await GET("/api/blogTags");
+
+    if (!!data) {
+        blogTagsList.value = data;
+    }
+}
+
+const blogRank = computed(() => {
+    return blogList.value.sort((a, b) => a.index - b.index).slice(0, 5);
+});
 
 onMounted(() => {
     window.addEventListener("scroll", scrollDirection);

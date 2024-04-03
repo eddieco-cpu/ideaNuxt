@@ -6,8 +6,17 @@
             <span class="text-Primary-500-Primary mr-1">＃</span>
             <span
                 class="text-Neutral-600-Dark-Primary group-hover/tag:text-Primary-500-Primary transition-all duration-300"
-                >生活</span
+                >{{ text }}</span
             >
         </div>
     </div>
 </template>
+
+<script setup>
+const { text } = defineProps({
+    text: {
+        type: String,
+        default: "",
+    },
+});
+</script>

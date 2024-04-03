@@ -25,7 +25,7 @@
                             <span class="ml-1">2023/12/31</span>
                         </div>
 
-                        <BlogTag v-for="item in 2" />
+                        <BlogTag v-for="tag in ['生活', '疫情']" :text="tag" />
 
                         <div class="ml-auto cursor-pointer" @click="isAddFavorite($event, !addFavorite)">
                             <img
@@ -104,7 +104,7 @@
                         <div class="mt-4 md:mt-9">
                             <h1 class="text-[#010204] text-xl font-medium mb-4">猜你想看…</h1>
                             <div class="flex flex-wrap gap-4">
-                                <BlogTag v-for="item in 10" />
+                                <BlogTag v-for="tag in blogTagsList" :text="tag" />
                             </div>
                         </div>
                     </div>
@@ -119,7 +119,7 @@
                                 <img src="~assets/images/blog/right-circle-light.svg" alt="arrow" width="16" />
                             </NuxtLink>
                         </h1>
-                        <BlogArticle v-for="item in 3" />
+                        <BlogArticle v-for="item in blogList" v-bind="item" />
                     </div>
                 </div>
             </div>
@@ -131,6 +131,9 @@
 import { useToast } from "vue-toastification";
 
 const toast = useToast();
+
+const blogList = ref([]);
+const blogTagsList = ref([]);
 
 const links = [{ label: "Home", to: "/" }, { label: "好物分享", to: "/blog" }, { label: "生活常識" }];
 
@@ -145,6 +148,25 @@ function isAddFavorite(e, status) {
         toast.success("已成功加入收藏");
     } else {
         toast.error("已取消收藏");
+    }
+}
+
+getBlogList();
+getBlogTagList();
+
+async function getBlogList() {
+    const data = await GET("/api/blog");
+
+    if (!!data) {
+        blogList.value = data;
+    }
+}
+
+async function getBlogTagList() {
+    const data = await GET("/api/blogTags");
+
+    if (!!data) {
+        blogTagsList.value = data;
     }
 }
 </script>

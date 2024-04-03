@@ -2,7 +2,7 @@
     <div class="flex flex-col md:flex-row gap-x-5 group cursor-pointer" @click="goToArticle">
         <div class="w-full h-[170px] md:w-[348px] md:h-[184px]">
             <img
-                :src="helperPicture()"
+                :src="image"
                 alt="image"
                 class="w-full h-full object-cover rounded transition-transform duration-300 group-hover:scale-[1.03]"
             />
@@ -12,12 +12,12 @@
             <div class="flex gap-x-3 items-center">
                 <div class="text-Neutral-600-Dark-Primary text-xs flex items-center">
                     <img src="~assets/images/icon/calendar-icon.svg" alt="calendar-icon" />
-                    <span class="ml-1">2023/12/31</span>
+                    <span class="ml-1">{{ date }}</span>
                 </div>
 
                 <div class="flex gap-x-2 items-center">
                     <UAvatar
-                        :src="helperPicture()"
+                        :src="avatar"
                         alt="user"
                         size="xl"
                         :ui="{
@@ -26,7 +26,7 @@
                             },
                         }"
                     />
-                    <span class="text-xs text-Neutral-600-Dark-Primary">vicky 媽媽</span>
+                    <span class="text-xs text-Neutral-600-Dark-Primary">{{ name }}</span>
                 </div>
 
                 <div class="ml-auto cursor-pointer" @click="isAddFavorite($event, !addFavorite)">
@@ -46,15 +46,15 @@
             </div>
 
             <h1 class="text-Neutral-800 font-medium group-hover:underline">
-                揭開團購的神秘面紗，享受超值折扣，共享樂趣，省錢購物新體驗！
+                {{ title }}
             </h1>
 
             <p class="text-xs text-Neutral-600-Dark-Primary">
-                在當今快速變化的市場中，探索省錢的方式同時享受物超所值的產品成為人們的共同追求。讓我們以一個產品為例，來看看團購如何為消費者帶來實惠和樂趣。
+                {{ text }}
             </p>
 
             <div class="flex flex-wrap gap-2">
-                <BlogTag v-for="item in 3" />
+                <BlogTag v-for="item in tags" :text="item" />
             </div>
         </div>
     </div>
@@ -63,8 +63,49 @@
 <script setup>
 import { useToast } from "vue-toastification";
 
+const { id, isFavorite } = defineProps({
+    id: {
+        type: Number,
+    },
+    index: {
+        type: Number,
+    },
+    isFavorite: {
+        type: Boolean,
+        default: false,
+    },
+    title: {
+        type: String,
+        default: "",
+    },
+    text: {
+        type: String,
+        default: "",
+    },
+    name: {
+        type: String,
+        default: "",
+    },
+    image: {
+        type: String,
+        default: "",
+    },
+    avatar: {
+        type: String,
+        default: "",
+    },
+    tags: {
+        type: Array,
+        default: () => [],
+    },
+    date: {
+        type: String,
+        default: "",
+    },
+});
+
 const toast = useToast();
-const addFavorite = ref(false);
+const addFavorite = ref(isFavorite);
 
 function isAddFavorite(e, status) {
     e.stopPropagation();
@@ -79,6 +120,6 @@ function isAddFavorite(e, status) {
 }
 
 function goToArticle() {
-    navigateTo("/blog/article/1");
+    navigateTo(`/blog/article/${id}`);
 }
 </script>
