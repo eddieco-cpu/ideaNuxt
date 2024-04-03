@@ -394,7 +394,10 @@
                     </p>
                     <section class="w-full border-t-[1px] border-gray-100 py-[6px] mb-1 text-[#29303D]">
                         <p class="text-xs font-medium mb-1">商品內容：</p>
-                        <article class="text-xs text-[#29303D]" v-html="textToHtml(submissionData.content)"></article>
+                        <article
+                            class="text-xs text-[#29303D] break-words"
+                            v-html="textToHtml(submissionData.content)"
+                        ></article>
                     </section>
 
                     <ul
