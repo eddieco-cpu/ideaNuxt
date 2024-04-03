@@ -42,6 +42,9 @@ const addressInfo = ref([
         phone: "0911123456",
         email: "fake@hotmail.com",
         address: "新北市淡水區",
+        zipCode: "333",
+        city: "桃園市",
+        district: "龜山區",
     },
     {
         index: 2,
@@ -50,6 +53,9 @@ const addressInfo = ref([
         phone: "0922321123",
         email: "fake@hotmail.com",
         address: "台北市信義區",
+        zipCode: "333",
+        city: "桃園市",
+        district: "龜山區",
     },
 ]);
 
@@ -89,7 +95,7 @@ function onAbort(payload) {
 }
 
 function onSubmit(data, isEditmode) {
-    const { index, name, phone, email, address, defaultAddress } = data;
+    const { index, name, phone, email, address, defaultAddress, zipCode, city, district } = data;
 
     const payload = {
         index,
@@ -98,6 +104,9 @@ function onSubmit(data, isEditmode) {
         phone,
         email,
         address,
+        zipCode,
+        city,
+        district,
     };
 
     if (isEditmode) {

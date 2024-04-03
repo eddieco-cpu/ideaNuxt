@@ -91,7 +91,7 @@ const toast = useToast();
 const twzipcode = ref(null);
 const zipcode = ref(null);
 
-const { index, defaultAddress, name, phone, email, address, isEditmode } = defineProps({
+const { index, defaultAddress, name, phone, email, address, zipCode, city, district, isEditmode } = defineProps({
     index: {
         type: Number,
         default: 1,
@@ -116,6 +116,18 @@ const { index, defaultAddress, name, phone, email, address, isEditmode } = defin
         type: String,
         default: "",
     },
+    zipCode: {
+        type: String,
+        default: undefined,
+    },
+    city: {
+        type: String,
+        default: "",
+    },
+    district: {
+        type: String,
+        default: "",
+    },
     isEditmode: {
         type: Boolean,
         default: false,
@@ -130,9 +142,9 @@ const addressInfo = reactive({
     name: name,
     phone: phone,
     email: email,
-    zipCode: undefined,
-    city: "",
-    district: "",
+    zipCode: zipCode,
+    city: city,
+    district: district,
     address: address,
 });
 
@@ -166,6 +178,10 @@ function onSubmit(event) {
 
 onMounted(() => {
     twzipcode.value = new TWzipcode();
+
+    if (!!zipCode) {
+        twzipcode.value.set(zipCode);
+    }
 });
 </script>
 
