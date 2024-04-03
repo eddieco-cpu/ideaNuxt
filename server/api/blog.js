@@ -42,7 +42,7 @@ export default defineEventHandler((event) => {
         "Michelle",
     ];
 
-    return Array.from({ length: 10 }, (item, i) => ({
+    return Array.from({ length: 30 }, (item, i) => ({
         id: i + 1,
         index: i + 1,
         isFavorite: Math.floor(Math.random() * i) % 2 === 0,

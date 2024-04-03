@@ -12,8 +12,8 @@
                 class="mb-5"
             />
 
-            <div class="flex flex-col md:flex-row md:justify-between md:flex-wrap gap-y-8">
-                <div class="flex flex-col gap-y-4 md:w-[67%]">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-end md:flex-wrap gap-y-8">
+                <div class="flex flex-col gap-y-4 md:w-[67%]" ref="artcleLeft">
                     <!-- Title -->
                     <h1 class="text-Neutral-900 text-[28px] font-medium">
                         揭開團購的神秘面紗，享受超值折扣，共享樂趣，省錢購物新體驗！
@@ -93,7 +93,10 @@
 
                     <UDivider class="mt-2 mb-4" />
 
-                    <div class="md:w-[calc(100vw-32px-75%)] md:absolute md:right-[calc(100vw-32px-90%)]">
+                    <div
+                        class="md:hidden md:w-[calc(1200px*0.27)] md:fixed md:right-[calc((100vw-1200px)/2)]"
+                        ref="artcleRight"
+                    >
                         <div class="flex flex-col gap-y-4">
                             <h1 class="text-[#010204] text-xl font-medium">推薦給您</h1>
                             <BlogFundraise />
@@ -120,6 +123,24 @@
                             </NuxtLink>
                         </h1>
                         <BlogArticle v-for="item in blogList" v-bind="item" />
+                    </div>
+                </div>
+
+                <div
+                    class="hidden md:block md:w-[27%] md:overflow-auto md:sticky bottom-[0px] md:h-[calc(100vh-76px-60px)]"
+                >
+                    <div class="flex flex-col gap-y-4">
+                        <h1 class="text-[#010204] text-xl font-medium">推薦給您</h1>
+                        <BlogFundraise />
+
+                        <BlogGroupBuying v-for="item in 3" />
+                    </div>
+
+                    <div class="mt-4 md:mt-9">
+                        <h1 class="text-[#010204] text-xl font-medium mb-4">猜你想看…</h1>
+                        <div class="flex flex-wrap gap-4">
+                            <BlogTag v-for="tag in blogTagsList" :text="tag" />
+                        </div>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@ export default defineEventHandler(() => {
     const subSlider = Array.from({ length: 2 }, () => ({
         photo: helperPicture(),
         provider: "Vicky爸爸",
-        title: helperLorem(20, 50),
+        title: helperLorem(20, 30),
         tag: "生活",
         date: "2024/04/01",
     }));

@@ -52,7 +52,7 @@
 
             <section class="bg-[rgb(247,248,252)] py-[1px]">
                 <UiContainer>
-                    <div class="flex justify-between flex-wrap">
+                    <div class="flex justify-between items-end flex-wrap">
                         <div class="w-full order-2 md:w-[68%] mt-9 md:order-1 md:mt-0">
                             <h1 class="text-[#010204] text-xl font-medium mb-4">精選文章</h1>
                             <div class="flex flex-col gap-y-8">
@@ -69,7 +69,7 @@
                         </div>
 
                         <div
-                            class="w-full order-1 md:w-[27%] md:h-screen md:overflow-auto md:sticky top-[120px] md:order-2"
+                            class="w-full order-1 md:w-[27%] md:overflow-auto md:sticky bottom-[0px] md:h-[calc(100vh-76px-60px)] md:order-2"
                         >
                             <div>
                                 <h1 class="text-[#010204] text-xl font-medium mb-4">文章排行榜</h1>

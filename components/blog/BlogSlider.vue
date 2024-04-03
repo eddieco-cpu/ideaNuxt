@@ -16,49 +16,16 @@
             >
                 <SwiperSlide v-for="(slide, idx) in slides" :key="idx">
                     <div class="w-[324px] aspect-[324/200] md:w-[1200px] md:aspect-[2.73/1]">
-                        <div class="w-full h-full">
-                            <picture class="block overflow-hidden w-full h-full rounded-lg">
-                                <img
-                                    :src="slide.photo"
-                                    alt="product"
-                                    class="block w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                />
-                            </picture>
-                            <div
-                                class="py-4 px-3 md:py-[30px] md:px-[47px] absolute z-[2] bottom-0 left-0 w-full bg-gradient-to-b from-[#001738]/0 to-[#001738]/80"
-                            >
-                                <div class="flex">
-                                    <div class="bg-white/40 rounded-xl text-sm py-1 px-[10px]">
-                                        <span class="text-white mr-1">＃</span>
-                                        <span class="text-white">{{ slide.tag }}</span>
-                                    </div>
-                                </div>
+                        <div class="w-full h-full md:grid md:grid-cols-[65%_auto] md:grid-row-2 md:gap-5">
+                            <BlogSliderCard :slide="slide" class="row-span-2 h-full" />
 
-                                <p class="mt-2 text-sm md:text-2xl font-medium text-white leading-5 md:leading-[34px]">
-                                    {{ slide.title }}
-                                </p>
-
-                                <div class="hidden md:flex gap-x-3 items-center md:mt-4">
-                                    <div class="text-white text-xs flex items-center">
-                                        <img src="~assets/images/blog/calendar-icon.svg" alt="calendar-icon" />
-                                        <span class="ml-1 font-roboto text-xs">{{ slide.date }}</span>
-                                    </div>
-
-                                    <div class="flex gap-x-2 items-center">
-                                        <UAvatar
-                                            :src="helperPicture()"
-                                            alt="user"
-                                            size="xl"
-                                            :ui="{
-                                                size: {
-                                                    xl: 'w-[14px] h-[14px]',
-                                                },
-                                            }"
-                                        />
-                                        <span class="text-xs text-white"> {{ slide.provider }}</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <BlogSliderCard
+                                class="hidden md:block h-full"
+                                v-for="(subSlide, index) in slide.subSlider"
+                                :key="index"
+                                :slide="subSlide"
+                                :isSubSlide="true"
+                            />
                         </div>
                     </div>
                 </SwiperSlide>
@@ -94,10 +61,9 @@ const pagination = {
 <style scoped lang="scss">
 :deep(.swiper-slide) {
     width: auto;
-    margin: 0 8px;
 }
 :deep(.swiper-slide:not(.swiper-slide-active)) {
-    opacity: 0.6;
+    opacity: 0;
 }
 :deep(.main-slide__pagnation) {
     width: auto;
@@ -128,6 +94,14 @@ const pagination = {
     }
     :deep(.swiper-pagination-bullet-active) {
         width: 24px;
+    }
+
+    :deep(.swiper-slide:not(.swiper-slide-active)) {
+        opacity: 0.6;
+    }
+
+    :deep(.swiper-slide) {
+        margin: 0 8px;
     }
 }
 </style>
