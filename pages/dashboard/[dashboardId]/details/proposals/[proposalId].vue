@@ -408,7 +408,11 @@
                                 name="i-heroicons-check-circle"
                                 class="block text-base w-4 h-4 text-Primary-500-Primary"
                             />
-                            本方案可選超商取貨，運費{{ submissionData.deliveToStore.fee }}元
+                            {{
+                                submissionData.deliveToStore.fee === 0
+                                    ? `本專案享超商取貨免運`
+                                    : `本專案可超商取貨，運費${submissionData.deliveToStore.fee}元`
+                            }}
                         </li>
                         <li
                             class="flex justify-start items-center gap-x-1 text-xs"
@@ -418,20 +422,12 @@
                                 name="i-heroicons-check-circle"
                                 class="block text-base w-4 h-4 text-Primary-500-Primary"
                             />
-                            宅配出貨，運費{{ submissionData.deliveToHouse.fee }}元
-                        </li>
-                        <li
-                            class="flex justify-start items-center gap-x-1 text-xs"
-                            v-if="
-                                (submissionData.deliveToHouse.isAvailable && submissionData.deliveToHouse.fee === 0) ||
-                                (submissionData.deliveToStore.isAvailable && submissionData.deliveToStore.fee === 0)
-                            "
-                        >
-                            <UIcon
-                                name="i-heroicons-check-circle"
-                                class="block text-base w-4 h-4 text-Primary-500-Primary"
-                            />
-                            本專案享免運優惠
+
+                            {{
+                                submissionData.deliveToHouse.fee === 0
+                                    ? `本專案享宅配免運優惠`
+                                    : `本專案宅配出貨，運費${submissionData.deliveToHouse.fee}元`
+                            }}
                         </li>
                         <li
                             class="flex justify-start items-center gap-x-1 text-xs"
@@ -441,7 +437,11 @@
                                 name="i-heroicons-check-circle"
                                 class="block text-base w-4 h-4 text-Primary-500-Primary"
                             />
-                            可寄送國外/離島，運費{{ submissionData.deliveOverseas.fee }}元
+                            {{
+                                submissionData.deliveOverseas.fee === 0
+                                    ? `可寄送國外離島，享免運優惠`
+                                    : `可寄送國外/離島，運費${submissionData.deliveOverseas.fee}元`
+                            }}
                         </li>
                     </ul>
                     <div class="w-full border-t-[1px] border-gray-100">
