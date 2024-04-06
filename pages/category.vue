@@ -77,6 +77,7 @@ watch(typeSelected, async (newValue) => {
             type: newValue.query,
         },
     });
+    getCategory()
 });
 
 watch(

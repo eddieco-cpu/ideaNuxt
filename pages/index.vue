@@ -343,7 +343,7 @@ async function getFundingRaiseListByLast() {
     const queryParam = `?page=${currentPage.value}`;
     const data = await GET(`/frontend/getFrontendProjectByLast${queryParam}`,1);
 
-    if (!!data) {
+    if (!!data.status) {
         fundingRaiseListByLast.value = data.paginateData.data;
         totalPages.value =  data.paginateData.last_page;
     }

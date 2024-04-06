@@ -4,6 +4,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
     }
 
     if (to.name === "category") {
-        return navigateTo("/category/technology-ai");
+        return navigateTo("/category/all");
     }
 });

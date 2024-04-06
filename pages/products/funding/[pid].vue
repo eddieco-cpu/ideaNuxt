@@ -230,13 +230,13 @@ function addToCart(params) {
 
 const pageData = ref([])
 const cards = ref([])
+const groupId = ref(parseInt(route.params.pid))
 
 getDatas()
 async function getDatas() {
 
     const queryParam = `?type=fundraise&product_id=${route.params.pid}`;
     const data = await GET(`/frontend/getProject${queryParam}`,1);
-    console.log(data)
     if (!!data) {
         pageData.value = data.data;
         cards.value = data.data.cards;

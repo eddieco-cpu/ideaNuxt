@@ -2,9 +2,9 @@
     <div class="w-full rounded-lg shadow-card bg-white cursor-pointer relative group" @click="goProductDetailPage">
         <div class="group-hover:shadow-[1px_1px_20px_0px_rgba(0,0,0,0.06)] transition-shadow duration-300">
             <!-- 標籤 -->
-            <div class="flex flex-col items-start gap-y-2 absolute top-2 left-2 z-[2]" v-if="!isExpired">
+            <!-- <div class="flex flex-col items-start gap-y-2 absolute top-2 left-2 z-[2]" v-if="!isExpired">
                 <Tag v-for="(tag, index) in tags" :key="index" :tag="tag" />
-            </div>
+            </div> -->
 
             <div class="flex gap-x-3" :class="[`${isMainPictureShowLeft ? 'max-md:flex-col' : 'md:flex-col'}`]">
                 <!-- 主圖 -->

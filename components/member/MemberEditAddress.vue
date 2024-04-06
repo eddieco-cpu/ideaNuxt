@@ -91,7 +91,7 @@ const toast = useToast();
 const twzipcode = ref(null);
 const zipcode = ref(null);
 
-const { index, defaultAddress, name, phone, email, address, isEditmode } = defineProps({
+const { index, defaultAddress, name, phone, email, address, isEditmode, district, city } = defineProps({
     index: {
         type: Number,
         default: 1,
@@ -120,6 +120,14 @@ const { index, defaultAddress, name, phone, email, address, isEditmode } = defin
         type: Boolean,
         default: false,
     },
+    district: {
+        type: String,
+        default: "",
+    },
+    city: {
+        type: String,
+        default: "",
+    }
 });
 
 const emit = defineEmits(["onSubmit", "onAbort"]);

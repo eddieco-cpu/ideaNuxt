@@ -1,7 +1,7 @@
 <template>
     <div class="max-w-[324px] md:max-w-[1082px] 3xl:max-w-[1300px] mx-auto mt-8">
-        <CartHeader :step="1" v-if="!cart.isCartEmpty" />
-        <div class="pt-6 grid grid-cols-1 md:grid-cols-[76%_auto] items-start gap-6" v-if="!cart.isCartEmpty">
+        <!-- <CartHeader :step="1" v-if="!cart.isCartEmpty" /> -->
+        <div class="pt-6 grid grid-cols-1 md:grid-cols-[76%_auto] items-start gap-6" >
             <!-- 商品資訊 -->
             <div class="flex flex-col gap-6">
                 <CardContainer title="選擇團購">
@@ -9,20 +9,20 @@
                         <div>
                             <UCarousel
                                 v-slot="{ item, index }"
-                                :items="cart.cartList"
+                                :items="allData"
                                 :ui="{
                                     item: 'snap-start basis-[128px]',
                                     container: 'gap-x-3',
                                 }"
                                 class="max-w-[1200px]"
                             >
-                                <div class="cursor-pointer" @click="selectProduct(item)">
+                                <div class="cursor-pointer" @click="selectProduct(item.group.id)">
                                     <img
-                                        :src="item.mainImage"
+                                        :src="item.projects.image"
                                         alt="product"
                                         class="rounded-lg w-[126px] flex-1 h-[81px] object-cover"
                                         :class="{
-                                            'opacity-40': !isProductBeSelected(item.cartId),
+                                            'opacity-40': !isProductBeSelected(item.group.id),
                                         }"
                                     />
                                 </div>
@@ -37,7 +37,7 @@
                             <div class="flex items-center gap-x-1">
                                 <Tag :tag="{ name: '限時團購', color: 'primary', type: 'text' }" />
                                 <p class="text-Primary-500-Primary text-sm font-medium truncate flex-1">
-                                    金秘書 x 藍海饌 美味就像現煮❤️常溫料理包直接買嵌入式通訊系統，危機中的最佳音樂夥伴
+                                    {{ currentData?.projects?.name}}
                                 </p>
                             </div>
                             <div class="md:flex md:gap-x-6">
@@ -47,24 +47,23 @@
                                         alt="shopping"
                                         class="size-[14px]"
                                     />
-                                    <p class="text-xs text-Neutral-800">
-                                        現貨 3-5個工作天，預購 1/29日 開始依訂單順序出貨
+                                    <p class="text-xs text-Neutral-800" v-html="currentData?.group?.ship_remark">
                                     </p>
                                 </div>
-                                <div class="flex items-center gap-x-1">
+                                <!-- <div class="flex items-center gap-x-1">
                                     <img src="~assets/images/icon/car-icon.svg" alt="car" class="size-[14px]" />
                                     <p class="text-xs text-Neutral-800">$100 元 (滿 $1,000 元免運)，限台灣本島配送</p>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </template>
 
                     <template #body>
                         <CardCheckOutProduct
-                            v-for="(item, index) in cart.selectGroupBuyProducts.products"
-                            :cartId="cart.selectGroupBuyProducts.cartId"
+                            v-for="(item, index) in currentData?.productSpecs"
                             :key="index"
                             v-bind="item"
+                            :get-data="getData"
                         />
                     </template>
                 </CardContainer>
@@ -82,8 +81,8 @@
                         >
                             <h1 class="pb-3 text-black/85 font-medium border-b border-b-Neutral-200">總計</h1>
                             <div class="flex justify-between text-Neutral-700 text-sm">
-                                <p>{{ cart.selectGroupBuyProducts?.products?.length ?? 0 }}件商品</p>
-                                <p>NT${{ helperMoneyComma(cart.totalGroupBuyPrice) }}</p>
+                                <p>{{ currentData?.productSpecs?.length ?? 0 }}件商品</p>
+                                <p>NT${{ currentData?.total }}</p>
                             </div>
                             <div
                                 class="flex justify-between text-Neutral-700 text-sm pb-3 border-b border-b-Neutral-200"
@@ -100,7 +99,7 @@
                                 <p
                                     class="text-xs pb-1 text-Neutral-600-Dark-Primary md:hidden flex items-center gap-x-1"
                                 >
-                                    共{{ cart.selectGroupBuyProducts?.products?.length ?? 0 }}商品
+                                    <!-- 共{{ cart.selectGroupBuyProducts?.products?.length ?? 0 }}商品 -->
                                     <UIcon
                                         name="i-heroicons-chevron-up"
                                         class="block w-4 h-4 text-Neutral-600-Dark-Primary cursor-pointer transition-transform duration-300"
@@ -111,7 +110,8 @@
                                 <p
                                     class="text-xl text-Neutral-800 md:text-Primary-500-Primary font-roboto font-medium md:text-right md:pb-3"
                                 >
-                                    NT${{ helperMoneyComma(cart.totalGroupBuyPrice) }}
+                                    NT${{ currentData?.total }}
+                                    <!-- helperMoneyComma -->
                                 </p>
                             </div>
 
@@ -119,7 +119,7 @@
                                 class="px-4 py-2 text-sm bg-Primary-500-Primary text-center rounded-lg w-full text-white flex-1"
                                 @click="goCheckoutPage"
                             >
-                                去結帳 ({{ cart.selectGroupBuyProducts?.products?.length ?? 0 }})
+                                去結帳 ({{ currentData?.productSpecs?.length ?? 0 }})
                             </button>
                         </div>
                     </template>
@@ -134,7 +134,7 @@
             </div>
         </div>
 
-        <div
+        <!-- <div
             class="pt-6 flex flex-wrap items-start gap-6 max-w-[324px] md:max-w-[1082px] 3xl:max-w-[1300px] mx-auto"
             v-else
         >
@@ -153,25 +153,73 @@
                     </div>
                 </template>
             </CardContainer>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script setup>
 import { cartStore } from "@/stores/cart";
 const cart = cartStore();
+const authStore = useAuthStore();
+const token = authStore.token;
+
+const datas = ref([]);
+const groupKey = ref(null)
+
+getData()
+
+async function getData () {
+    const payload = {};
+
+    const data = await POST("/getItemByCartPage", payload, token);
+
+    if(!!data.status) {
+        datas.value = data.data
+
+        groupKey.value = Object.keys(datas.value)[0];
+    }
+}
+
+const allData = computed(() => {
+  const data = datas.value;
+
+  let tempData = [];
+
+  Object.keys(data).forEach(key => {
+    tempData.push(data[key]);
+  });
+
+  return tempData;
+});
+
+const currentData = computed(() => {
+  const key = groupKey.value;
+  let data = datas.value[key];
+
+  if (data && Array.isArray(data.productSpecs)) {
+    const total = data.productSpecs.reduce((sum, item) => {
+      const salesPrice = Number(item.sales_price);
+      const amount = Number(item.amount);
+      return sum + salesPrice * amount;
+    }, 0);
+
+    data = { ...data, total };
+  }
+
+  return data;
+});
 
 const showTotalDetail = ref(false);
 
 function isProductBeSelected(cartId) {
-    return cart.selectGroupBuyProducts.cartId === cartId;
+    return groupKey.value === cartId;
 }
 console.log(" cart.selectGroupBuyProducts", cart.selectGroupBuyProducts);
 function selectProduct(products) {
-    cart.selectGroupBuyProducts = products;
+    groupKey.value = products
 }
 
 function goCheckoutPage() {
-    navigateTo("/cart/checkout");
+    navigateTo(`/cart/checkout?group=${groupKey.value}`);
 }
 </script>

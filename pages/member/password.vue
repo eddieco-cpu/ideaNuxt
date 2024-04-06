@@ -71,6 +71,11 @@
 
 <script setup>
 import { setPasswordSchema } from "~/validation";
+import { useToast } from "vue-toastification";
+const toast = useToast();
+
+const authStore = useAuthStore();
+const token = authStore.token;
 
 const editPassword = reactive({
     password: undefined,
@@ -79,8 +84,22 @@ const editPassword = reactive({
 });
 
 async function onSubmit(event) {
-    console.log("event.data", event.data);
+
+    // console.log("event.data", event.data);
     const { password, newPassword, confirmPassword } = event.data;
+
+    const payload = {oldPassword: password, password: newPassword, password_confirmation: confirmPassword};
+
+    const data = await POST("/changePassword", payload, token);
+
+    if(!!data.status) {
+        toast.success(data.message)
+        editPassword.password = undefined;
+        editPassword.newPassword = undefined;
+        editPassword.confirmPassword = undefined;
+    } else {
+        toast.error(data.message)
+    }
 }
 </script>
 

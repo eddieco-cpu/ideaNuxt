@@ -4,11 +4,11 @@
         <div class="bg-white md:max-w-[20%] md:bg-transparent md:mt-6">
             <div class="w-[137px] mx-auto py-4">
                 <div class="relative">
-                    <img
+                    <!-- <img
                         :src="store.userInfo.image"
                         alt="avatar"
                         class="block rounded-full w-[120px] mx-auto border border-Primary-100"
-                    />
+                    /> -->
 
                     <label
                         class="absolute bg-Primary-500-Primary bottom-0 right-2 w-8 h-8 rounded-full bg-no-repeat bg-center bg-[length:16px] bg-[url('assets/images/icon/camera.svg')] cursor-pointer"

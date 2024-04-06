@@ -71,11 +71,12 @@
                         class="cursor-pointer"
                         @click="goToPage('/cart')"
                     />
-
+                    <ClientOnly>
                     <div
                         class="absolute -right-1 -top-1 bg-Dust-Red-5 rounded-full w-[7.5px] h-[7.5px]"
-                        v-if="!cart.isCartEmpty"
+                        v-if="cart.isHaveCartItem"
                     ></div>
+                    </ClientOnly>
                 </div>
             </div>
             <ClientOnly>
@@ -239,11 +240,11 @@ const hideSideNav = ref(true);
 const navLink = [
     {
         label: "群眾集資",
-        link: "/category/technology-ai?type=fundraise",
+        link: "/category/all?type=fundraise",
     },
     {
         label: "好評團購",
-        link: "/category/technology-ai?type=groupbuying",
+        link: "/category/all?type=groupbuying",
     },
     {
         label: "團主推薦",

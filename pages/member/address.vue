@@ -21,6 +21,7 @@
         <CardMemberAddress
             v-for="(item, index) in addressInfo"
             :key="index"
+            :index="index + 1"
             v-bind="item"
             @setDefaultAddress="setDefaultAddress"
             @editAddress="editAddress"
@@ -34,24 +35,23 @@
 </template>
 
 <script setup>
-const addressInfo = ref([
-    {
-        index: 1,
-        defaultAddress: true,
-        name: "陳大明",
-        phone: "0911123456",
-        email: "fake@hotmail.com",
-        address: "新北市淡水區",
-    },
-    {
-        index: 2,
-        defaultAddress: false,
-        name: "王小美",
-        phone: "0922321123",
-        email: "fake@hotmail.com",
-        address: "台北市信義區",
-    },
-]);
+
+const authStore = useAuthStore();
+const token = authStore.token;
+
+const addressInfo = ref([]);
+
+
+getAddress();
+
+
+async function getAddress () {
+    const data = await POST("/getAddress", {}, token);
+
+    if(!!data.status) {
+        addressInfo.value = data.data
+    }
+}
 
 const isEditmode = ref(false);
 const tempAddress = ref(null);
@@ -65,12 +65,14 @@ function setDefaultAddress(index) {
 }
 
 async function editAddress(index, isEdit) {
+    console.log(index)
     tempAddress.value = null;
     isEditmode.value = isEdit;
 
     await nextTick();
 
     if (isEdit) {
+        console.log(addressInfo.value)
         // 編輯地址
         tempAddress.value = addressInfo.value.find((item, i) => i === index);
     } else {
@@ -88,8 +90,8 @@ function onAbort(payload) {
     tempAddress.value = null;
 }
 
-function onSubmit(data, isEditmode) {
-    const { index, name, phone, email, address, defaultAddress } = data;
+async function onSubmit(data, isEditmode) {
+    const { index, name, phone, email, address, defaultAddress, city, district, zipCode } = data;
 
     const payload = {
         index,
@@ -98,21 +100,38 @@ function onSubmit(data, isEditmode) {
         phone,
         email,
         address,
+        city,
+        district,
+        zipCode
     };
 
+    const check = ref(false);
+
     if (isEditmode) {
+
         // 編輯地址
         console.log("編輯地址");
     } else {
+        
+        const data = await POST("/addAddress", payload, token);
+
+        if(!!data.status) {
+            check.value = true;
+        }
+        
+        console.log(payload)
         // 新增地址
-        addressInfo.value.push(payload);
+        // addressInfo.value.push(payload);
     }
 
     if (defaultAddress) {
         // 是否設預設
         setDefaultAddress(index - 1);
     }
-    tempAddress.value = null;
+
+    if(check.value) {
+        tempAddress.value = null;
+    }
 }
 </script>
 

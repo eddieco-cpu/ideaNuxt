@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import fs from 'fs'
 
 const host = process.env.NUXT_PUBLIC_HOST;
 const port = process.env.NUXT_PUBLIC_PORT;
@@ -43,6 +44,7 @@ export default defineNuxtConfig({
     },
     modules: [
         "@pinia/nuxt",
+        "@pinia-plugin-persistedstate/nuxt",
         "nuxt-swiper",
         "@nuxt/ui",
         [
@@ -74,4 +76,14 @@ export default defineNuxtConfig({
     colorMode: {
         preference: "light",
     },
+    server: {
+        https: {
+            key: fs.readFileSync('/home/kai/.certs/demo.public.test+1-key.pem'),
+            cert: fs.readFileSync('/home/kai/.certs/demo.public.test+1.pem'),
+          }
+
+    },
+    piniaPersistedstate: {
+        sotrage:'sessionStorage'
+    }
 });

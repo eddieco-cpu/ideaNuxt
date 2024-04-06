@@ -118,7 +118,7 @@
                             </UFormGroup>
 
                             <UFormGroup label="訂購人手機" name="phone">
-                                <UInput v-model="checkoutPayload.phone" disabled />
+                                <UInput v-model="checkoutPayload.phone" />
                             </UFormGroup>
                         </div>
 
@@ -308,34 +308,35 @@ const progressTimer = ref(0);
 const showTotalDetail = ref(false);
 
 const invoiceOptions = [
-    { label: "手機條碼載具", value: 1 },
-    { label: "自然人憑證", value: 2 },
+    { label: "一般發票", value: 0 },
+    // { label: "手機條碼載具", value: 1 },
+    // { label: "自然人憑證", value: 2 },
     { label: "公司統編", value: 3 },
-    { label: "捐贈發票", value: 4 },
+    // { label: "捐贈發票", value: 4 },
 ];
 const paymentOptions = [
-    {
-        value: 1,
-        label: "信用卡(3、6期)",
-    },
-    {
-        value: 2,
-        label: "ATM 轉帳",
-    },
+    // {
+    //     value: 1,
+    //     label: "信用卡(3、6期)",
+    // },
+    // {
+    //     value: 2,
+    //     label: "ATM 轉帳",
+    // },
     {
         value: 3,
         label: "貨到付款",
     },
-    {
-        value: 4,
-        label: "LINE Pay",
-    },
+    // {
+    //     value: 4,
+    //     label: "LINE Pay",
+    // },
 ];
 const deliveryOptions = [
-    {
-        value: 1,
-        label: "超商取貨",
-    },
+    // {
+    //     value: 1,
+    //     label: "超商取貨",
+    // },
     {
         value: 2,
         label: "宅配到府",
@@ -357,13 +358,13 @@ const convenienceStoreOptions = [
 
 const checkoutPayload = ref({
     name: "",
-    phone: "0911123456",
+    phone: "",
     invoiceType: invoiceOptions[0].value,
     invoiceCarrier: "",
     citizenDigitalCertificate: "",
     donateInvoice: "",
     orgInvoice: { title: "", taxIdNumber: "", address: "", email: "" },
-    payment: 1,
+    payment: 3,
     deliveryType: 2,
     isAgree: false,
     remark: "",
@@ -392,17 +393,17 @@ const isFundRaiseCheckout = computed(() => {
 
 const productLists = computed(() => {
     if (route.query.type === "fundraise") {
-        return cart.selectFundRaiseProducts;
+        return [];
     } else {
-        return cart.selectGroupBuyProducts.products;
+        return [];
     }
 });
 
 const productListsLength = computed(() => {
     if (route.query.type === "fundraise") {
-        return cart.selectFundRaiseProducts.length;
+        return [];
     } else {
-        return cart.selectGroupBuyProducts.products.length;
+        return [];
     }
 });
 

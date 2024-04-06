@@ -24,14 +24,14 @@
         <template #body>
             <div class="text-sm">
                 <p>{{ name }} / {{ phone }}</p>
-                <p class="mt-[10px]">{{ email }} / {{ address }}</p>
+                <p class="mt-[10px]">{{ email }} / {{ city }}{{ district }}{{ address }}</p>
             </div>
         </template>
     </CardContainer>
 </template>
 
 <script setup>
-const { index, defaultAddress, name, phone, email, address } = defineProps({
+const { index, defaultAddress, name, phone, email, address, district, city } = defineProps({
     index: {
         type: Number,
         default: 1,
@@ -56,6 +56,15 @@ const { index, defaultAddress, name, phone, email, address } = defineProps({
         type: String,
         default: "",
     },
+    district: {
+        type: String,
+        default: "",
+    },
+    city: {
+        type: String,
+        default: "",
+    },
+    
 });
 
 const emit = defineEmits(["setDefaultAddress", "editAddress"]);

@@ -1,14 +1,17 @@
 import { useRuntimeConfig } from '#app'
 
-export const POST = async (endpoint, payload) => {
+export const POST = async (endpoint, payload, token='') => {
     const config   = useRuntimeConfig();
     const baseUrl  = config.public.apiBaseUrl;
     const url      = `${baseUrl}${endpoint}`
-    console.log(url)
+
     try {
         const data = await $fetch(url, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json" ,
+                'Authorization': `Bearer ${token}`,
+            },
             body: payload,
         });
 

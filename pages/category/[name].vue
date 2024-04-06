@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-show = "loadDataDone">
         <!-- 排序 -->
         <template v-if="!isEmptyData">
             <div class="flex justify-between gap-4 items-center mt-8 mb-4 md:mt-0">
@@ -64,16 +64,36 @@ const updateCurrentPage = (newPage) => {
     getFundingRaiseList()
 };
 
-const sort = ["最新", "最熱門", "價格高", "價格低"];
-const sortSelected = ref(sort[0]);
 
-getGroupBuyingList();
-getFundingRaiseList();
+const loadDataDone = ref(false);
+
+
+
+
+
+
+getAllLists();
 
 const categoryName = route.params.name;
 
 const showCard = computed(() => {
     return route.query.type || "fundraise";
+});
+
+const sort = computed(() => {
+
+switch (showCard.value) {
+  case 'fundraise':
+    return ["最新"]; 
+  case 'groupbuying':
+    return ["最新", "價格高", "價格低"]; 
+  default:
+    return ["最新", "價格高", "價格低"];
+}
+});
+const sortSelected = ref("");
+watchEffect(() => {
+  sortSelected.value = sort.value[0];
 });
 
 const isEmptyData = computed(() => {
@@ -95,31 +115,53 @@ const showCardClass = computed(() => {
     }
 });
 
-async function getFundingRaiseList() {
-    const queryParam = `?category_name=${route.params.name}&type=fundraise&page=${currentPage}`;
-    const data = await GET(`/frontend/getCategoryPageData${queryParam}`,1);
+async function getAllLists() {
 
-    if (!!data.status) {
-        fundingRaiseList.value = data.paginateData.data;
-        totalPages.value =  data.paginateData.last_page;
+    const fundingRaiseQueryParam = `?category_name=${route.params.name}&type=fundraise&page=${currentPage}`;
+    const groupBuyingQueryParam = `?category_name=${route.params.name}&type=groupbuying&page=${currentPage}`;
+
+    const [fundingRaiseData, groupBuyingData] = await Promise.all([
+        GET(`/frontend/getCategoryPageData${fundingRaiseQueryParam}`, 1),
+        GET(`/frontend/getGroupCategoryPageData${groupBuyingQueryParam}`, 1),
+    ]);
+
+    if (!!fundingRaiseData.status) {
+        fundingRaiseList.value = fundingRaiseData.paginateData.data;
+        if(showCard.value == 'fundraise') {
+            totalPages.value = fundingRaiseData.paginateData.last_page;
+        }
     }
-}
 
-async function getGroupBuyingList() {
-    const queryParam = `?category_name=${route.params.name}&type=groupbuying&page=${currentPage}`;
-    const data = await GET(`/frontend/getGroupCategoryPageData${queryParam}`,1);
-    // const data = await GET("/api/groupBuying");
-
-    if (!!data.status) {
-        console.log(data)
-        groupBuyingList.value = data.paginateData.data;
-        totalPages.value =  data.paginateData.last_page;
+    if (!!groupBuyingData.status) {
+        groupBuyingList.value = groupBuyingData.paginateData.data;
+        if(showCard.value == 'groupbuying') {
+            totalPages.value = groupBuyingData.paginateData.last_page;
+        }
     }
+
+    loadDataDone.value = true;
 }
 
 const formattedGroupBuyingList = computed(() => {
   if (Array.isArray(groupBuyingList.value)) {
-    return groupBuyingList.value.map(item => ({
+
+    let sortedList = groupBuyingList.value.slice();
+
+    if (sortSelected.value === '價格低') {
+      sortedList.sort((a, b) => {
+        const priceA = Array.isArray(a.price) && a.price.length > 0 ? a.price[0] : Infinity;
+        const priceB = Array.isArray(b.price) && b.price.length > 0 ? b.price[0] : Infinity;
+        return priceA - priceB;
+      });
+    } else if (sortSelected.value === '價格高') {
+      sortedList.sort((a, b) => {
+        const priceA = Array.isArray(a.price) && a.price.length > 0 ? a.price[0] : -Infinity;
+        const priceB = Array.isArray(b.price) && b.price.length > 0 ? b.price[0] : -Infinity;
+        return priceB - priceA;
+      });
+    }
+
+    return sortedList.map(item => ({
       id: item.id,
       name: item.users ? item.users.name : 'Default Name',
       image: item.projects ? item.projects.image : 'Default Image',

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div >
         <picture class="block h-36 w-auto relative z-[-1] banner_photo">
             <img :src="banner" alt="" class="block w-full h-full object-cover" />
         </picture>
@@ -46,10 +46,10 @@
             </div>
 
             <!--  -->
-            <section class="max-md:px-6 mb-10 max-md:mb-5">
+            <section class="max-md:px-6 mb-10 max-md:mb-5" >
                 <section class="p-4 bg-white rounded-lg overflow-hidden">
                     <div class="flex flex-row items-center gap-x-2">
-                        <p
+                        <div
                             class="bg-[#4AACFD] rounded py-1 px-2 text-white flex justify-start items-center gap-x-1 max-md:text-sm"
                         >
                             <UIcon name="i-heroicons-clock" class="w-4 h-4 mr-1" />
@@ -57,7 +57,7 @@
                             <!-- <span>03</span>
                             日<span>04</span>時<span>34</span>分<span>22</span>秒 -->
                             <p>{{ countdownTime }}</p>
-                        </p>
+                        </div>
                         <div class="items-baseline">
                             <b
                                 class="inline-block rounded px-2 py-1 bg-Status-Color-Danger-500-Primary text-white font-light whitespace-nowrap max-md:text-sm"
@@ -71,9 +71,9 @@
                             >
                         </div>
                     </div>
-                    <h2 class="font-medium text-xl py-3">金秘書 x 藍海饌 美味就像現煮❤️常溫料理包直接買</h2>
+                    <h2 class="font-medium text-xl py-3">{{ pageData.projects?.name }}</h2>
                     <h3 class="font-noto text-xs text-Neutral-600-Dark-Primary">
-                        聲震宇宙領域，虛擬現實音效耳罩，嵌入式通訊系統，危機中的最佳音樂夥伴聲震宇宙領域，虛擬現實音效耳罩，嵌入式通訊系統，危機。聲震宇宙領域，虛擬現實音效耳罩，嵌入式通訊系統，危機中的音。
+                        {{ pageData.projects?.description }}
                     </h3>
                 </section>
             </section>
@@ -86,7 +86,7 @@
                 <section
                     class="w-[626px] h-[408px] aspect-[313/204] rounded-lg py-1 max-xl:w-full max-xl:aspect-auto max-xl:py-0 max-md:h-auto max-md:aspect-auto"
                 >
-                    <ProductsSlider />
+                    <ProductsSlider :slides="[pageData.projects?.image]"/>
                 </section>
 
                 <!-- art -->
@@ -97,11 +97,11 @@
                     >
                         <div class="flex justify-start items-center gap-x-3">
                             <picture class="block w-[110px] aspect-[1/1] overflow-hidden rounded-lg flex-shrink-0">
-                                <img :src="avater" class="block w-full h-full object-cover" />
+                                <img :src="pageData.users?.image" class="block w-full h-full object-cover" />
                             </picture>
                             <div>
                                 <p class="text-xs text-gray-400 mb-1">本次開團主</p>
-                                <h1 class="text-base font-medium">媽媽我想嫁去台南媽媽我想嫁去台南</h1>
+                                <h1 class="text-base font-medium">{{ pageData.users?.name }}</h1>
                             </div>
                         </div>
 
@@ -118,25 +118,25 @@
                                 <UIcon name="i-heroicons-clock" />
                                 <span>開團時間</span>
                             </p>
-                            <p class="text-xs leading-relaxed">2023/12/29 00:00 - 2024/01/20 23:59</p>
+                            <p class="text-xs leading-relaxed">{{pageData.start_time}} - {{pageData.end_time}}</p>
                         </li>
                         <li class="mb-2">
                             <p class="flex justify-start items-center text-Primary-500-Primary text-sm gap-x-1 mb-1">
                                 <UIcon name="i-heroicons-shopping-bag" />
                                 <span>出貨時間</span>
                             </p>
-                            <p class="text-xs leading-relaxed">現貨 3-5個工作天，預購 1/29日 開始依訂單順序出貨</p>
+                            <p v-html="pageData.ship_remark" class="text-xs leading-relaxed"></p>
                         </li>
 
-                        <li class="mb-2">
+                        <!-- <li class="mb-2">
                             <p class="flex justify-start items-center text-Primary-500-Primary text-sm gap-x-1 mb-1">
                                 <UIcon name="i-heroicons-truck" />
                                 <span>宅配運費</span>
                             </p>
                             <p class="text-xs leading-relaxed">$100 元 (滿 $1,000 元免運)，限台灣本島配送</p>
-                        </li>
+                        </li> -->
 
-                        <li class="mb-2">
+                        <!-- <li class="mb-2">
                             <p class="flex justify-start items-center text-Primary-500-Primary text-sm gap-x-1 mb-1">
                                 <UIcon name="i-heroicons-gift" />
                                 <span>滿額增品</span>
@@ -146,7 +146,7 @@
                                 <li class="leading-relaxed">滿2600 送和牛肉燥乾拌麵或味噌乾拌麵</li>
                                 <li class="leading-relaxed">滿3000元送麻辣鴨血寬粉</li>
                             </ol>
-                        </li>
+                        </li> -->
                     </ul>
                 </article>
             </section>
@@ -187,28 +187,7 @@
                     </div>
 
                     <template v-if="activeNavItemId === 'a'">
-                        <article class="bg-white p-6 rounded-lg" ref="articleRef">
-                            <h1 class="text-[28px] leading-snug font-medium mb-4">
-                                {{ useState("a", () => helperLorem(20, 40)).value }}
-                            </h1>
-                            <h2 class="text-2xl font-medium mb-4">
-                                {{ useState("b", () => helperLorem(20, 40)).value }}
-                            </h2>
-                            <h3 class="text-xl font-medium mb-4">
-                                {{ useState("c", () => helperLorem(20, 40)).value }}
-                            </h3>
-                            <h4 class="text-base font-medium mb-4">
-                                {{ useState("d", () => helperLorem(20, 40)).value }}
-                            </h4>
-                            <h5 class="text-xs font-normal mb-4 text-[#696969]">
-                                {{ useState("e", () => helperLorem(20, 40)).value }}
-                            </h5>
-
-                            <picture class="block w-full mb-4" v-for="(photo, i) in photos" :key="i">
-                                <img :src="photo" alt="" class="block w-full" />
-                            </picture>
-
-                        </article>
+                        <div v-html="pageData.projects?.content"></div>
                     </template>
                     <template v-if="activeNavItemId === 'b'">
                         <article class="bg-white p-6 rounded-lg">
@@ -233,18 +212,19 @@
                             :key="select.id"
                             :id="select.id"
                             :select="select"
+                            :groupId = "groupId"
                         />
                     </ul>
 
                     <!--  -->
-                    <UiTitle class="!mb-5 mt-8">本團推薦商品</UiTitle>
+                    <!-- <UiTitle class="!mb-5 mt-8">本團推薦商品</UiTitle>
 
                     <section class="grid grid-cols-1 gap-y-4 xl:mr-[5px] xl:mb-4">
                         <ProductsRecommendCard />
                         <ProductsRecommendCard />
                         <ProductsRecommendCard />
                         <ProductsRecommendCard />
-                    </section>
+                    </section> -->
                 </section>
             </section>
         </section>
@@ -254,8 +234,30 @@
 <script setup>
 import { useToast } from "vue-toastification";
 const toast = useToast();
+const route = useRoute();
 
 const isFavorite = ref(false);
+const pageData   = ref([])
+const groupId = route.params.pid;
+
+const recommendationSelects = reactive([]);
+
+getDatas()
+
+async function getDatas() {
+    const queryParam = `?type=group&id=${route.params.pid}`;
+    const data = await GET(`/frontend/getGroup${queryParam}`,1);
+    if (!!data) {
+        pageData.value = data.data;
+        
+        recommendationSelects.splice(0, recommendationSelects.length, ...data.data.product_specs);
+
+        targetTime.value = new Date(`${pageData.value.end_time}`).getTime();
+        startCountdown(targetTime.value)
+        
+    }
+}
+
 
 function setIsFavorite(e, status) {
     e.stopPropagation();
@@ -285,7 +287,8 @@ const photos = [
 ];
 
 //
-const targetTime = new Date('2024-06-20T12:00:00').getTime();
+const targetTime = ref(new Date('2024-06-20T12:00:00').getTime());
+
 const countdownTime = ref("");
 
 function formatCountdown(milliseconds) {
@@ -328,7 +331,7 @@ onMounted(() => {
         //console.log("articleRef 高度:", articleRef.value.offsetHeight);
         articleRefHeight.value = articleRef.value.offsetHeight;
     }
-    startCountdown(targetTime)
+   
 });
 
 const progressMeter = 300;
@@ -353,38 +356,7 @@ const updateNavItemId = (id) => {
 };
 
 //
-const recommendationSelects = reactive([
-    {
-        id: 1,
-        amount: 1,
-        name: "",
-    },
-    {
-        id: 2,
-        amount: 1,
-        name: "",
-    },
-    {
-        id: 3,
-        amount: 1,
-        name: "",
-    },
-    {
-        id: 4,
-        amount: 1,
-        name: "",
-    },
-    {
-        id: 5,
-        amount: 1,
-        name: "",
-    },
-    {
-        id: 6,
-        amount: 1,
-        name: "",
-    },
-]);
+
 </script>
 
 <style scoped>
