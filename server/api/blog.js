@@ -42,12 +42,16 @@ export default defineEventHandler((event) => {
         "Michelle",
     ];
 
-    return Array.from({ length: 6 }, (item, i) => ({
+    return Array.from({ length: 30 }, (item, i) => ({
         id: i + 1,
+        index: i + 1,
+        isFavorite: Math.floor(Math.random() * i) % 2 === 0,
+        title: helperLorem(20, 50),
+        text: helperLorem(50, 100),
+        name: fakeNames[i],
         image: helperPicture(),
         avatar: helperPicture(),
-        isFavorite: Math.floor(Math.random() * i) % 2 === 0,
-        name: fakeNames[i],
-        text: "小花愛吃愛分享推薦！年度必買居家小物開箱，買完好過年度必買居家～",
+        tags: ["生活知識", "家電"],
+        date: "2024/04/03",
     }));
 });

@@ -191,7 +191,7 @@
                     </article>
 
                     <div
-                        class="w-[752px] h-[446px] flex justify-between flex-wrap content-between max-md:mb-12 max-md:w-full max-md:h-auto overflow-x-scroll max-md:flex-nowrap max-md:justify-start max-md:gap-x-3 max-md:items-center none-scrollbar max-md:px-4"
+                        class="w-[752px] h-[446px] grid grid-cols-2 gap-x-12 gap-y-4 max-md:mb-12 max-md:w-full max-md:h-auto overflow-x-scroll max-md:flex max-md:flex-nowrap max-md:justify-start max-md:gap-x-3 max-md:items-center none-scrollbar max-md:px-4"
                     >
                         <CardKolRank v-for="(item, index) in kolList" :key="index" v-bind="item" />
                     </div>

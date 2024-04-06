@@ -35,6 +35,7 @@
 </template>
 
 <script setup>
+<<<<<<< HEAD
 
 const authStore = useAuthStore();
 const token = authStore.token;
@@ -52,6 +53,32 @@ async function getAddress () {
         addressInfo.value = data.data
     }
 }
+=======
+const addressInfo = ref([
+    {
+        index: 1,
+        defaultAddress: true,
+        name: "陳大明",
+        phone: "0911123456",
+        email: "fake@hotmail.com",
+        address: "新北市淡水區",
+        zipCode: "333",
+        city: "桃園市",
+        district: "龜山區",
+    },
+    {
+        index: 2,
+        defaultAddress: false,
+        name: "王小美",
+        phone: "0922321123",
+        email: "fake@hotmail.com",
+        address: "台北市信義區",
+        zipCode: "333",
+        city: "桃園市",
+        district: "龜山區",
+    },
+]);
+>>>>>>> master
 
 const isEditmode = ref(false);
 const tempAddress = ref(null);
@@ -90,8 +117,13 @@ function onAbort(payload) {
     tempAddress.value = null;
 }
 
+<<<<<<< HEAD
 async function onSubmit(data, isEditmode) {
     const { index, name, phone, email, address, defaultAddress, city, district, zipCode } = data;
+=======
+function onSubmit(data, isEditmode) {
+    const { index, name, phone, email, address, defaultAddress, zipCode, city, district } = data;
+>>>>>>> master
 
     const payload = {
         index,
@@ -100,9 +132,15 @@ async function onSubmit(data, isEditmode) {
         phone,
         email,
         address,
+<<<<<<< HEAD
         city,
         district,
         zipCode
+=======
+        zipCode,
+        city,
+        district,
+>>>>>>> master
     };
 
     const check = ref(false);

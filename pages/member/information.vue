@@ -105,7 +105,7 @@
                 </p>
             </div>
 
-            <MemberBeLeader v-show="memberInfo.register" :name="memberInfo.name" />
+            <MemberBeLeader v-show="memberInfo.register" :name="memberInfo.nickName" />
         </div>
     </div>
 </template>

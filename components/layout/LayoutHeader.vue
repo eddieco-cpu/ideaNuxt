@@ -252,7 +252,7 @@ const navLink = [
     },
     {
         label: "好物分享",
-        link: "/good-thing",
+        link: "/blog",
     },
     {
         label: "提案",
@@ -284,8 +284,8 @@ const navAccordionItems = [
         slot: "proposal",
         showOpenIcon: true,
         lists: [
-            { name: "關於我們", link: "/" },
-            { name: "聯絡我們", link: "/" },
+            { name: "關於我們", link: "/proposal" },
+            { name: "聯絡我們", link: "/contact-us" },
         ],
     },
     ...navLink.slice(-1),

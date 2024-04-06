@@ -47,25 +47,27 @@
             <ul class="flex-grow w-full text-xs text-Neutral-800 flex flex-col justify-start items-start gap-1 mb-3">
                 <li class="flex justify-start items-center gap-x-1 text-xs" v-if="item.deliveToStore.isAvailable">
                     <UIcon name="i-heroicons-check-circle" class="block text-base w-4 h-4 text-Primary-500-Primary" />
-                    本方案可選超商取貨，運費{{ item.deliveToStore.fee }}元
+                    {{
+                        item.deliveToStore.fee === 0
+                            ? `本專案享超商取貨免運`
+                            : `本專案可超商取貨，運費${item.deliveToStore.fee}元`
+                    }}
                 </li>
                 <li class="flex justify-start items-center gap-x-1 text-xs" v-if="item.deliveToHouse.isAvailable">
                     <UIcon name="i-heroicons-check-circle" class="block text-base w-4 h-4 text-Primary-500-Primary" />
-                    宅配出貨，運費{{ item.deliveToHouse.fee }}元
-                </li>
-                <li
-                    class="flex justify-start items-center gap-x-1 text-xs"
-                    v-if="
-                        (item.deliveToHouse.isAvailable && !item.deliveToHouse.fee) ||
-                        (item.deliveToStore.isAvailable && !item.deliveToStore.fee)
-                    "
-                >
-                    <UIcon name="i-heroicons-check-circle" class="block text-base w-4 h-4 text-Primary-500-Primary" />
-                    本專案享免運優惠
+                    {{
+                        item.deliveToHouse.fee === 0
+                            ? `本專案享宅配免運優惠`
+                            : `本專案宅配出貨，運費${item.deliveToHouse.fee}元`
+                    }}
                 </li>
                 <li class="flex justify-start items-center gap-x-1 text-xs" v-if="item.deliveOverseas.isAvailable">
                     <UIcon name="i-heroicons-check-circle" class="block text-base w-4 h-4 text-Primary-500-Primary" />
-                    可寄送國外/離島，運費{{ item.deliveOverseas.fee }}元
+                    {{
+                        item.deliveOverseas.fee === 0
+                            ? `可寄送國外離島，享免運優惠`
+                            : `可寄送國外/離島，運費${item.deliveOverseas.fee}元`
+                    }}
                 </li>
             </ul>
             <div class="w-full border-t-[1px] border-gray-100">
