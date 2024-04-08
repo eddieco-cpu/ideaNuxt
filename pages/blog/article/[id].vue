@@ -28,8 +28,8 @@
                         <BlogTag v-for="tag in ['生活', '疫情']" :text="tag" />
                     </div>
 
-                    <div class="flex items-center gap-x-4">
-                        <div class="bg-white p-2 flex gap-x-2 rounded-lg flex-1">
+                    <div class="flex gap-y-4 flex-col md:flex-row items-center gap-x-4">
+                        <div class="bg-white p-2 flex gap-x-2 rounded-lg flex-1 w-full">
                             <span class="text-sm text-Neutral-600-Dark-Primary">文章作者：</span>
 
                             <div class="flex gap-x-2 items-center">
@@ -130,7 +130,9 @@
 
                 <ClientOnly>
                     <Teleport to="#contentSlot" :disabled="isWeb">
-                        <div class="md:w-[27%] md:overflow-auto md:sticky bottom-[0px] md:h-[calc(100vh-76px-60px)]">
+                        <div
+                            class="card_group md:w-[27%] md:sticky bottom-[0px] md:pb-5 md:h-[calc(100vh-76px-60px)] md:overflow-y-auto"
+                        >
                             <div class="flex flex-col gap-y-4">
                                 <h1 class="text-[#010204] text-xl font-medium">推薦給您</h1>
 
@@ -138,7 +140,7 @@
                                     v-for="(item, index) in groupBuyingList"
                                     :key="index"
                                     v-bind="item"
-                                    :isMainPictureShowLeft="true"
+                                    :isMainPictureShowLeft="isMainPictureShowLeft"
                                 />
 
                                 <CardFundraise v-for="(item, index) in fundingRaiseList" :key="index" v-bind="item" />
@@ -162,6 +164,8 @@
 import { useToast } from "vue-toastification";
 
 const toast = useToast();
+
+const isMainPictureShowLeft = ref(true);
 
 const blogList = ref([]);
 const blogTagsList = ref([]);
@@ -229,6 +233,7 @@ const isDisabledTelePort = ref(true);
 
 function checkIsWeb() {
     isDisabledTelePort.value = window.innerWidth >= 768;
+    isMainPictureShowLeft.value = window.innerWidth >= 768;
 }
 checkIsWeb();
 
@@ -244,3 +249,16 @@ onBeforeUnmount(() => {
     window.removeEventListener("resize", checkIsWeb);
 });
 </script>
+
+<style lang="scss" scoped>
+.card_group::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+.card_group::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+}
+.card_group::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+</style>
