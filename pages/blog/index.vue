@@ -56,7 +56,7 @@
                         <div class="w-full order-2 md:w-[68%] mt-9 md:order-1 md:mt-0">
                             <h1 class="text-[#010204] text-xl font-medium mb-4">精選文章</h1>
                             <div class="flex flex-col gap-y-8">
-                                <BlogArticle v-for="item in blogList" v-bind="item" />
+                                <BlogArticle v-for="item in blogList" v-bind="item" :showFavoriteButton="false" />
                                 <div class="text-center pt-8 border-t border-t-Neutral-300">
                                     <NuxtLink
                                         to="/blog/list/technology-ai"

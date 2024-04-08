@@ -26,41 +26,60 @@
                         </div>
 
                         <BlogTag v-for="tag in ['生活', '疫情']" :text="tag" />
-
-                        <div class="ml-auto cursor-pointer" @click="isAddFavorite($event, !addFavorite)">
-                            <img
-                                src="~assets/images/blog/heart-icon.svg"
-                                alt="favorite"
-                                v-show="!addFavorite"
-                                class="w-[24px]"
-                            />
-                            <img
-                                src="~assets/images/blog/heart-active-icon.svg"
-                                alt="favorite"
-                                v-show="addFavorite"
-                                class="w-[24px]"
-                            />
-                        </div>
                     </div>
 
-                    <div class="bg-white p-2 flex gap-x-2 rounded-lg">
-                        <span class="text-sm text-Neutral-600-Dark-Primary">文章作者：</span>
+                    <div class="flex items-center gap-x-4">
+                        <div class="bg-white p-2 flex gap-x-2 rounded-lg flex-1">
+                            <span class="text-sm text-Neutral-600-Dark-Primary">文章作者：</span>
 
-                        <div class="flex gap-x-2 items-center">
-                            <UAvatar
-                                :src="helperPicture()"
-                                alt="user"
-                                size="xl"
-                                :ui="{
-                                    size: {
-                                        xl: 'w-[18px] h-[18px]',
-                                    },
-                                }"
+                            <div class="flex gap-x-2 items-center">
+                                <UAvatar
+                                    :src="helperPicture()"
+                                    alt="user"
+                                    size="xl"
+                                    :ui="{
+                                        size: {
+                                            xl: 'w-[18px] h-[18px]',
+                                        },
+                                    }"
+                                />
+                                <span class="text-sm font-medium">vicky 媽媽</span>
+                            </div>
+
+                            <img
+                                src="~assets/images/blog/right-circle-light.svg"
+                                alt="arrow"
+                                class="ml-auto cursor-pointer"
+                                @click="goToPage"
                             />
-                            <span class="text-sm font-medium">vicky 媽媽</span>
                         </div>
 
-                        <img src="~assets/images/blog/right-circle-light.svg" alt="arrow" class="ml-auto" />
+                        <div class="flex items-center gap-x-2">
+                            <div
+                                class="cursor-pointer flex items-center gap-x-2 bg-white p-2 rounded"
+                                @click="isAddFavorite($event, !addFavorite)"
+                            >
+                                <img
+                                    src="~assets/images/blog/heart-icon.svg"
+                                    alt="favorite"
+                                    v-show="!addFavorite"
+                                    class="w-[18px]"
+                                />
+                                <img
+                                    src="~assets/images/blog/heart-active-icon.svg"
+                                    alt="favorite"
+                                    v-show="addFavorite"
+                                    class="w-[18px]"
+                                />
+                                <span class="text-xs text-Primary-500-Primary">收藏</span>
+                            </div>
+
+                            <div class="cursor-pointer flex items-center gap-x-2 bg-white p-2 rounded">
+                                <img src="~assets/images/blog/share-icon.svg" alt="share" class="w-[18px]" />
+
+                                <span class="text-xs text-Primary-500-Primary">分享</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="mt-4 mb-6 mx-[-26px] md:mx-0">
@@ -175,6 +194,10 @@ async function getBlogTagList() {
     if (!!data) {
         blogTagsList.value = data;
     }
+}
+
+function goToPage() {
+    navigateTo("/kol/1");
 }
 
 const isDisabledTelePort = ref(true);
