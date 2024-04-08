@@ -1,5 +1,8 @@
 <template>
-    <div class="flex flex-col md:flex-row gap-x-5 group cursor-pointer" @click="goToArticle">
+    <div
+        class="flex flex-col md:flex-row gap-x-5 group cursor-pointer bg-white rounded overflow-hidden"
+        @click="goToArticle"
+    >
         <div class="w-full h-[170px] md:w-[348px] md:h-[184px]">
             <img
                 :src="image"
@@ -8,7 +11,7 @@
             />
         </div>
 
-        <div class="flex flex-col gap-y-3 flex-1 py-2">
+        <div class="flex flex-col gap-y-3 flex-1 pb-1 px-2 mt-4">
             <div class="flex gap-x-3 items-center">
                 <div class="text-Neutral-600-Dark-Primary text-xs flex items-center">
                     <img src="~assets/images/icon/calendar-icon.svg" alt="calendar-icon" />
@@ -29,7 +32,11 @@
                     <span class="text-xs text-Neutral-600-Dark-Primary">{{ name }}</span>
                 </div>
 
-                <div class="ml-auto cursor-pointer" @click="isAddFavorite($event, !addFavorite)">
+                <div
+                    class="ml-auto cursor-pointer"
+                    @click="isAddFavorite($event, !addFavorite)"
+                    v-if="showFavoriteButton"
+                >
                     <img
                         src="~assets/images/blog/heart-icon.svg"
                         alt="favorite"
@@ -69,6 +76,10 @@ const { id, isFavorite } = defineProps({
     },
     index: {
         type: Number,
+    },
+    showFavoriteButton: {
+        type: Boolean,
+        default: true,
     },
     isFavorite: {
         type: Boolean,

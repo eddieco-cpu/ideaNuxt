@@ -1,5 +1,5 @@
 <template>
-    <div class="group/tag">
+    <div class="group/tag" @click="goToPage">
         <div
             class="bg-white rounded-xl text-xs py-1 px-2 transition-all duration-300 group-hover/tag:bg-Primary-50 cursor-pointer"
         >
@@ -19,4 +19,10 @@ const { text } = defineProps({
         default: "",
     },
 });
+
+function goToPage(e) {
+    e.stopPropagation();
+
+    navigateTo("/blog/list/technology-ai");
+}
 </script>

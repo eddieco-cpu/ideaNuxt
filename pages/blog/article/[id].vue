@@ -26,41 +26,60 @@
                         </div>
 
                         <BlogTag v-for="tag in ['生活', '疫情']" :text="tag" />
-
-                        <div class="ml-auto cursor-pointer" @click="isAddFavorite($event, !addFavorite)">
-                            <img
-                                src="~assets/images/blog/heart-icon.svg"
-                                alt="favorite"
-                                v-show="!addFavorite"
-                                class="w-[24px]"
-                            />
-                            <img
-                                src="~assets/images/blog/heart-active-icon.svg"
-                                alt="favorite"
-                                v-show="addFavorite"
-                                class="w-[24px]"
-                            />
-                        </div>
                     </div>
 
-                    <div class="bg-white p-2 flex gap-x-2 rounded-lg">
-                        <span class="text-sm text-Neutral-600-Dark-Primary">文章作者：</span>
+                    <div class="flex gap-y-4 flex-col md:flex-row items-center gap-x-4">
+                        <div class="bg-white p-2 flex gap-x-2 rounded-lg flex-1 w-full">
+                            <span class="text-sm text-Neutral-600-Dark-Primary">文章作者：</span>
 
-                        <div class="flex gap-x-2 items-center">
-                            <UAvatar
-                                :src="helperPicture()"
-                                alt="user"
-                                size="xl"
-                                :ui="{
-                                    size: {
-                                        xl: 'w-[18px] h-[18px]',
-                                    },
-                                }"
+                            <div class="flex gap-x-2 items-center">
+                                <UAvatar
+                                    :src="helperPicture()"
+                                    alt="user"
+                                    size="xl"
+                                    :ui="{
+                                        size: {
+                                            xl: 'w-[18px] h-[18px]',
+                                        },
+                                    }"
+                                />
+                                <span class="text-sm font-medium">vicky 媽媽</span>
+                            </div>
+
+                            <img
+                                src="~assets/images/blog/right-circle-light.svg"
+                                alt="arrow"
+                                class="ml-auto cursor-pointer"
+                                @click="goToPage"
                             />
-                            <span class="text-sm font-medium">vicky 媽媽</span>
                         </div>
 
-                        <img src="~assets/images/blog/right-circle-light.svg" alt="arrow" class="ml-auto" />
+                        <div class="flex items-center gap-x-2">
+                            <div
+                                class="cursor-pointer flex items-center gap-x-2 bg-white p-2 rounded"
+                                @click="isAddFavorite($event, !addFavorite)"
+                            >
+                                <img
+                                    src="~assets/images/blog/heart-icon.svg"
+                                    alt="favorite"
+                                    v-show="!addFavorite"
+                                    class="w-[18px]"
+                                />
+                                <img
+                                    src="~assets/images/blog/heart-active-icon.svg"
+                                    alt="favorite"
+                                    v-show="addFavorite"
+                                    class="w-[18px]"
+                                />
+                                <span class="text-xs text-Primary-500-Primary">收藏</span>
+                            </div>
+
+                            <div class="cursor-pointer flex items-center gap-x-2 bg-white p-2 rounded">
+                                <img src="~assets/images/blog/share-icon.svg" alt="share" class="w-[18px]" />
+
+                                <span class="text-xs text-Primary-500-Primary">分享</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="mt-4 mb-6 mx-[-26px] md:mx-0">
@@ -111,12 +130,20 @@
 
                 <ClientOnly>
                     <Teleport to="#contentSlot" :disabled="isWeb">
-                        <div class="md:w-[27%] md:overflow-auto md:sticky bottom-[0px] md:h-[calc(100vh-76px-60px)]">
+                        <div
+                            class="card_group md:w-[27%] md:sticky bottom-[0px] md:pb-5 md:h-[calc(100vh-76px-60px)] md:overflow-y-auto"
+                        >
                             <div class="flex flex-col gap-y-4">
                                 <h1 class="text-[#010204] text-xl font-medium">推薦給您</h1>
-                                <BlogFundraise />
 
-                                <BlogGroupBuying v-for="item in 3" />
+                                <CardGroupBuying
+                                    v-for="(item, index) in groupBuyingList"
+                                    :key="index"
+                                    v-bind="item"
+                                    :isMainPictureShowLeft="isMainPictureShowLeft"
+                                />
+
+                                <CardFundraise v-for="(item, index) in fundingRaiseList" :key="index" v-bind="item" />
                             </div>
 
                             <div class="mt-4 md:mt-9">
@@ -138,9 +165,12 @@ import { useToast } from "vue-toastification";
 
 const toast = useToast();
 
-const render = ref(true);
+const isMainPictureShowLeft = ref(true);
+
 const blogList = ref([]);
 const blogTagsList = ref([]);
+const groupBuyingList = ref([]);
+const fundingRaiseList = ref([]);
 
 const links = [{ label: "Home", to: "/" }, { label: "好物分享", to: "/blog" }, { label: "生活常識" }];
 
@@ -160,6 +190,8 @@ function isAddFavorite(e, status) {
 
 getBlogList();
 getBlogTagList();
+getGroupBuyingList();
+getFundingRaiseList();
 
 async function getBlogList() {
     const data = await GET("/api/blog");
@@ -177,10 +209,31 @@ async function getBlogTagList() {
     }
 }
 
+async function getFundingRaiseList() {
+    const data = await GET("/api/blogFundingRaise");
+
+    if (!!data) {
+        fundingRaiseList.value = data;
+    }
+}
+
+async function getGroupBuyingList() {
+    const data = await GET("/api/blogGroupBuying");
+
+    if (!!data) {
+        groupBuyingList.value = data;
+    }
+}
+
+function goToPage() {
+    navigateTo("/kol/1");
+}
+
 const isDisabledTelePort = ref(true);
 
 function checkIsWeb() {
     isDisabledTelePort.value = window.innerWidth >= 768;
+    isMainPictureShowLeft.value = window.innerWidth >= 768;
 }
 checkIsWeb();
 
@@ -196,3 +249,16 @@ onBeforeUnmount(() => {
     window.removeEventListener("resize", checkIsWeb);
 });
 </script>
+
+<style lang="scss" scoped>
+.card_group::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+.card_group::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+}
+.card_group::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+</style>
