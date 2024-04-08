@@ -133,9 +133,15 @@
                         <div class="md:w-[27%] md:overflow-auto md:sticky bottom-[0px] md:h-[calc(100vh-76px-60px)]">
                             <div class="flex flex-col gap-y-4">
                                 <h1 class="text-[#010204] text-xl font-medium">推薦給您</h1>
-                                <BlogFundraise />
 
-                                <BlogGroupBuying v-for="item in 3" />
+                                <CardGroupBuying
+                                    v-for="(item, index) in groupBuyingList"
+                                    :key="index"
+                                    v-bind="item"
+                                    :isMainPictureShowLeft="true"
+                                />
+
+                                <CardFundraise v-for="(item, index) in fundingRaiseList" :key="index" v-bind="item" />
                             </div>
 
                             <div class="mt-4 md:mt-9">
@@ -157,9 +163,10 @@ import { useToast } from "vue-toastification";
 
 const toast = useToast();
 
-const render = ref(true);
 const blogList = ref([]);
 const blogTagsList = ref([]);
+const groupBuyingList = ref([]);
+const fundingRaiseList = ref([]);
 
 const links = [{ label: "Home", to: "/" }, { label: "好物分享", to: "/blog" }, { label: "生活常識" }];
 
@@ -179,6 +186,8 @@ function isAddFavorite(e, status) {
 
 getBlogList();
 getBlogTagList();
+getGroupBuyingList();
+getFundingRaiseList();
 
 async function getBlogList() {
     const data = await GET("/api/blog");
@@ -193,6 +202,22 @@ async function getBlogTagList() {
 
     if (!!data) {
         blogTagsList.value = data;
+    }
+}
+
+async function getFundingRaiseList() {
+    const data = await GET("/api/blogFundingRaise");
+
+    if (!!data) {
+        fundingRaiseList.value = data;
+    }
+}
+
+async function getGroupBuyingList() {
+    const data = await GET("/api/blogGroupBuying");
+
+    if (!!data) {
+        groupBuyingList.value = data;
     }
 }
 

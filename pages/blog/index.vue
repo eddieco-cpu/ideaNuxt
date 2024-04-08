@@ -54,16 +54,33 @@
                 <UiContainer>
                     <div class="flex justify-between items-end flex-wrap">
                         <div class="w-full order-2 md:w-[68%] mt-9 md:order-1 md:mt-0">
-                            <h1 class="text-[#010204] text-xl font-medium mb-4">精選文章</h1>
-                            <div class="flex flex-col gap-y-8">
-                                <BlogArticle v-for="item in blogList" v-bind="item" :showFavoriteButton="false" />
-                                <div class="text-center pt-8 border-t border-t-Neutral-300">
-                                    <NuxtLink
-                                        to="/blog/list/technology-ai"
-                                        class="w-full text-Primary-400-Hover text-sm max-w-[380px] rounded-lg mx-auto py-2 shadow-[0_1px_10px_0px_rgba(0,0,0,0.02)] border border-Primary-100 bg-white block"
-                                    >
-                                        更多文章</NuxtLink
-                                    >
+                            <div>
+                                <h1 class="text-[#010204] text-xl font-medium mb-4">熱門發燒文章</h1>
+                                <div class="flex flex-col gap-y-8">
+                                    <BlogArticle v-for="item in blogList" v-bind="item" :showFavoriteButton="false" />
+                                    <div class="text-center pt-8 border-t border-t-Neutral-300">
+                                        <NuxtLink
+                                            to="/blog/list/technology-ai"
+                                            class="w-full text-Primary-400-Hover text-sm max-w-[380px] rounded-lg mx-auto py-2 shadow-[0_1px_10px_0px_rgba(0,0,0,0.02)] border border-Primary-100 bg-white block"
+                                        >
+                                            更多文章</NuxtLink
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-9 md:mt-6">
+                                <h1 class="text-[#010204] text-xl font-medium mb-4">店長精選文章</h1>
+                                <div class="flex flex-col gap-y-8">
+                                    <BlogArticle v-for="item in blogList" v-bind="item" :showFavoriteButton="false" />
+                                    <div class="text-center pt-8 border-t border-t-Neutral-300">
+                                        <NuxtLink
+                                            to="/blog/list/technology-ai"
+                                            class="w-full text-Primary-400-Hover text-sm max-w-[380px] rounded-lg mx-auto py-2 shadow-[0_1px_10px_0px_rgba(0,0,0,0.02)] border border-Primary-100 bg-white block"
+                                        >
+                                            更多文章</NuxtLink
+                                        >
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -78,19 +95,20 @@
                                 </div>
                             </div>
 
-                            <ClientOnly
-                                ><Teleport to="#blogTagTeleport" :disabled="isWeb">
-                                    <div class="w-full mt-9 hidden md:block">
+                            <ClientOnly>
+                                <Teleport to="#blogTagTeleport" :disabled="isWeb">
+                                    <div class="w-full mt-9">
                                         <h1 class="text-[#010204] text-xl font-medium mb-4">猜你想看…</h1>
                                         <div class="flex flex-wrap gap-4">
                                             <BlogTag v-for="tag in blogTagsList" :text="tag" />
-                                        </div></div
-                                ></Teleport>
+                                        </div>
+                                    </div>
+                                </Teleport>
                             </ClientOnly>
                         </div>
-
-                        <div id="blogTagTeleport"></div>
                     </div>
+
+                    <div id="blogTagTeleport"></div>
                 </UiContainer>
             </section>
         </div>
