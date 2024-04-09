@@ -269,16 +269,3 @@ const updateNavItemId = (id) => {
     activeNavItemId.value = id;
 };
 </script>
-
-<style scoped>
-.card_group::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-}
-.card_group::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-}
-.card_group::-webkit-scrollbar-track {
-    background-color: transparent;
-}
-</style>
