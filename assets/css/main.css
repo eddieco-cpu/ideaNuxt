@@ -7,7 +7,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+html {
     font-size: 16px;
 }
 
