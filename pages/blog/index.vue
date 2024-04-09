@@ -86,7 +86,7 @@
                         </div>
 
                         <div
-                            class="w-full order-1 md:w-[27%] md:overflow-auto md:sticky bottom-[0px] md:h-[calc(100vh-76px-60px)] md:order-2"
+                            class="w-full card_group order-1 md:w-[27%] md:overflow-auto md:sticky bottom-[0px] md:h-[calc(100vh-76px-60px)] md:order-2"
                         >
                             <div>
                                 <h1 class="text-[#010204] text-xl font-medium mb-4">文章排行榜</h1>
