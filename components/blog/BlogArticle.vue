@@ -11,7 +11,7 @@
             />
         </div>
 
-        <div class="flex flex-col gap-y-3 flex-1 pb-1 pr-2 mt-4">
+        <div class="flex flex-col gap-y-3 flex-1 pb-2 px-2 md:px-0 md:py-3 md:pr-2">
             <div class="flex gap-x-3 items-center">
                 <div class="text-Neutral-600-Dark-Primary text-xs flex items-center">
                     <img src="~assets/images/icon/calendar-icon.svg" alt="calendar-icon" />
