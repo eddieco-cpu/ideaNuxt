@@ -61,7 +61,7 @@
             </p>
 
             <div class="flex flex-wrap gap-2">
-                <BlogTag v-for="item in tags" :text="item" />
+                <BlogTag v-for="item in tags" :text="item" backgroundColor="#F7F5FD" fontSize="12px" />
             </div>
         </div>
     </div>
