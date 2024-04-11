@@ -1,5 +1,8 @@
 <template>
-    <div class="flex flex-col md:flex-row gap-x-5 group cursor-pointer" @click="goToArticle">
+    <div
+        class="flex flex-col md:flex-row gap-x-5 group cursor-pointer bg-white rounded overflow-hidden"
+        @click="goToArticle"
+    >
         <div class="w-full h-[170px] md:w-[348px] md:h-[184px]">
             <img
                 :src="image"
@@ -8,7 +11,7 @@
             />
         </div>
 
-        <div class="flex flex-col gap-y-3 flex-1 py-2">
+        <div class="flex flex-col gap-y-3 flex-1 pt-4 pb-2 px-2 md:px-0 md:py-3 md:pr-2">
             <div class="flex gap-x-3 items-center">
                 <div class="text-Neutral-600-Dark-Primary text-xs flex items-center">
                     <img src="~assets/images/icon/calendar-icon.svg" alt="calendar-icon" />
@@ -29,7 +32,11 @@
                     <span class="text-xs text-Neutral-600-Dark-Primary">{{ name }}</span>
                 </div>
 
-                <div class="ml-auto cursor-pointer" @click="isAddFavorite($event, !addFavorite)">
+                <div
+                    class="ml-auto cursor-pointer"
+                    @click="isAddFavorite($event, !addFavorite)"
+                    v-if="showFavoriteButton"
+                >
                     <img
                         src="~assets/images/blog/heart-icon.svg"
                         alt="favorite"
@@ -45,16 +52,16 @@
                 </div>
             </div>
 
-            <h1 class="text-Neutral-800 font-medium group-hover:underline">
+            <h1 class="text-Neutral-800 font-medium group-hover:underline line-clamp-2">
                 {{ title }}
             </h1>
 
-            <p class="text-xs text-Neutral-600-Dark-Primary">
+            <p class="text-xs text-Neutral-600-Dark-Primary line-clamp-2">
                 {{ text }}
             </p>
 
-            <div class="flex flex-wrap gap-2">
-                <BlogTag v-for="item in tags" :text="item" />
+            <div class="flex flex-wrap gap-2 mt-auto">
+                <BlogTag v-for="item in tags" :text="item" backgroundColor="#F7F5FD" fontSize="12px" />
             </div>
         </div>
     </div>
@@ -69,6 +76,10 @@ const { id, isFavorite } = defineProps({
     },
     index: {
         type: Number,
+    },
+    showFavoriteButton: {
+        type: Boolean,
+        default: true,
     },
     isFavorite: {
         type: Boolean,

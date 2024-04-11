@@ -1,12 +1,12 @@
 <template>
     <div class="flex flex-col gap-y-6">
         <!-- 廣告 -->
-        <div class="w-full max-w-[324px] md:max-w-[1082px] 3xl:max-w-[1300px] mt-8 mx-auto">
+        <div class="w-full max-w-[324px] md:max-w-[1082px] mt-8 mx-auto">
             <CartAds />
         </div>
 
         <!-- 卡片 -->
-        <div class="ml-[calc((100vw-324px)/2)] md:ml-[calc((100vw-1100px)/2)] 3xl:ml-[calc((100vw-1455px)/2)]">
+        <div class="ml-[calc((100vw-324px)/2)] md:ml-[calc((100vw-1100px)/2)]">
             <UCarousel
                 v-slot="{ item }"
                 :items="productList"
@@ -33,7 +33,7 @@
 
         <!-- 結帳 -->
         <div
-            class="w-full flex items-center justify-between py-2 px-4 max-md:bg-white fixed bottom-0 left-0 md:static md:max-w-[1082px] 3xl:max-w-[1300px] md:mx-auto md:px-0 md:pt-[20px] md:border-t md:border-t-Primary-100"
+            class="w-full flex items-center justify-between py-2 px-4 max-md:bg-white fixed bottom-0 left-0 md:static md:max-w-[1082px] md:mx-auto md:px-0 md:pt-[20px] md:border-t md:border-t-Primary-100"
         >
             <p class="text-xl text-Neutral-800 font-medium">NT${{ helperMoneyComma(cart.totalFundRaisePrice) }}</p>
 

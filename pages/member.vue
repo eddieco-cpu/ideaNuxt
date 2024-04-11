@@ -1,5 +1,5 @@
 <template>
-    <div class="md:flex md:gap-x-10 md:max-w-[1082px] 3xl:max-w-[1300px] md:mx-auto md:pt-8">
+    <div class="md:flex md:gap-x-10 md:max-w-[1082px] md:mx-auto md:pt-8">
         <!-- 頭像 -->
         <div class="bg-white md:max-w-[20%] md:bg-transparent md:mt-6">
             <div class="w-[137px] mx-auto py-4">

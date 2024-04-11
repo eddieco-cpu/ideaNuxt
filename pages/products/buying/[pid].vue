@@ -370,14 +370,4 @@ const updateNavItemId = (id) => {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
 }
-.card_group::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-}
-.card_group::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-}
-.card_group::-webkit-scrollbar-track {
-    background-color: transparent;
-}
 </style>

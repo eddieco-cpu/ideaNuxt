@@ -42,16 +42,18 @@ export default defineEventHandler((event) => {
         "Michelle",
     ];
 
-    return Array.from({ length: 10 }, (item, i) => ({
-        id: i + 1,
-        index: i + 1,
-        isFavorite: Math.floor(Math.random() * i) % 2 === 0,
-        title: helperLorem(20, 50),
-        text: helperLorem(50, 100),
-        name: fakeNames[i],
+    return Array.from({ length: 2 }, (item, i) => ({
+        id: i,
         image: helperPicture(),
         avatar: helperPicture(),
-        tags: ["生活知識", "家電"],
-        date: "2024/04/03",
+        isFavorite: Math.floor(Math.random() * i) % 2 === 0,
+        name: fakeNames[i],
+        text: helperLorem(50, 80),
+        price: [Math.floor(Math.random() * 2000) + 2000, Math.floor(Math.random() * 6000) + 6000],
+        tags: [
+            { name: "促銷", color: "danger ", type: "text" },
+            { name: "免運", color: "success", type: "text" },
+            { name: "19日", color: "primary", type: "time" },
+        ],
     }));
 });

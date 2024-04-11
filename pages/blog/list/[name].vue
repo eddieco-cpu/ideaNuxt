@@ -58,7 +58,7 @@
                 </div>
             </div>
 
-            <div class="md:w-[27%] md:overflow-auto md:sticky bottom-[0px] md:h-[calc(100vh-76px-60px)]">
+            <div class="card_group md:w-[27%] md:overflow-auto md:sticky bottom-[0px] md:h-[calc(100vh-76px-60px)]">
                 <h1 class="text-[#010204] text-xl font-medium mb-4">猜你想看…</h1>
                 <div class="flex flex-wrap gap-4">
                     <BlogTag v-for="tag in blogTagsList" :text="tag" />

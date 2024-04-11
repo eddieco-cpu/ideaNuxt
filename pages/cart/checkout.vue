@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-[324px] md:max-w-[1082px] 3xl:max-w-[1300px] mx-auto mt-8">
+    <div class="max-w-[324px] md:max-w-[1082px] mx-auto mt-8">
         <div>
             <CartAds v-if="isFundRaiseCheckout" />
             <CartHeader :step="2" v-else />
