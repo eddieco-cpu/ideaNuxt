@@ -22,7 +22,6 @@
                                     class="w-full"
                                     size="lg"
                                     v-model="submissionData.projectName"
-                                    @input="(e) => (e.target.value = e.target.value.slice(0, 40))"
                                 />
                                 <p class="text-sm text-right text-Neutral-500-Primary absolute bottom-[-20px] right-0">
                                     <span>{{ submissionData.projectName.length }}</span> / <span>40</span>
@@ -39,7 +38,6 @@
                                     class="w-full"
                                     size="lg"
                                     v-model="submissionData.projectDes"
-                                    @input="(e) => (e.target.value = e.target.value.slice(0, 90))"
                                 />
                                 <p class="text-sm text-right text-Neutral-500-Primary absolute bottom-[-20px] right-0">
                                     <span>{{ submissionData.projectDes.length }}</span> / <span>90</span>
@@ -57,22 +55,7 @@
                             <UInput
                                 class="md:max-w-[218px]"
                                 v-model="submissionData.projectWebsiteName"
-                                @input="(e) => (e.target.value = e.target.value.replace(/[^a-zA-Z0-9\-_]/g, ''))"
-                                @keydown="
-                                    (e) => {
-                                        const allowedKeys = /[a-zA-Z0-9\-_]/;
-                                        const isControlKey =
-                                            e.ctrlKey ||
-                                            e.metaKey ||
-                                            e.altKey ||
-                                            e.key === 'Backspace' ||
-                                            e.key === 'Delete' ||
-                                            e.key === 'ArrowLeft' ||
-                                            e.key === 'ArrowRight' ||
-                                            (e.key === 'v' && (e.ctrlKey || e.metaKey));
-                                        if (!allowedKeys.test(e.key) && !isControlKey) e.preventDefault();
-                                    }
-                                "
+                               
                             />
                         </UFormGroup>
 
@@ -107,58 +90,59 @@
                                     size="lg"
                                     v-model="submissionData.projectCate"
                                     :options="cateOpts"
-                                    placeholder="3C 科技"
+                                    placeholder="請選擇分類"
                                     value-attribute="id"
                                     option-attribute="name"
                                 />
                             </div>
                         </UFormGroup>
+                        <ClientOnly>
+                            <UFormGroup
+                                label="預計開始時間"
+                                help="您預計開始本次專案的時間，本站將會為你安排審核順序。請至少需要約七個工作天以上審核你的提案。"
+                                name="startDate"
+                                required
+                                class="mb-3"
+                            >
+                                <div class="max-w-[216px] relative max-lg:max-w-[80%]">
+                                    <!-- :min-date="new Date()" -->
+                                    <VueDatePicker
+                                        position="left"
+                                        auto-apply
+                                        year-first
+                                        placeholder="2020-11-08"
+                                        :format-locale="zhTW"
+                                        :start-date="new Date()"
+                                        :enable-time-picker="false"
+                                        v-model="submissionData.startDate"
+                                        class="date-picker"
+                                    />
+                                </div>
+                            </UFormGroup>
 
-                        <UFormGroup
-                            label="預計開始時間"
-                            help="您預計開始本次專案的時間，本站將會為你安排審核順序。請至少需要約七個工作天以上審核你的提案。"
-                            name="startDate"
-                            required
-                            class="mb-3"
-                        >
-                            <div class="max-w-[216px] relative max-lg:max-w-[80%]">
-                                <!-- :min-date="new Date()" -->
-                                <VueDatePicker
-                                    position="left"
-                                    auto-apply
-                                    year-first
-                                    placeholder="2020-11-08"
-                                    :format-locale="zhTW"
-                                    :start-date="new Date()"
-                                    :enable-time-picker="false"
-                                    v-model="submissionData.startDate"
-                                    class="date-picker"
-                                />
-                            </div>
-                        </UFormGroup>
-
-                        <UFormGroup
-                            label="預計結束時間"
-                            help="根據經驗，建議募資專案應在45-60天內執行完畢，成效最佳。"
-                            name="endDate"
-                            required
-                            class="mb-3"
-                        >
-                            <div class="max-w-[216px] relative max-lg:max-w-[80%]">
-                                <!-- :min-date="new Date()" -->
-                                <VueDatePicker
-                                    position="left"
-                                    auto-apply
-                                    year-first
-                                    placeholder="2020-11-08"
-                                    :format-locale="zhTW"
-                                    :start-date="new Date()"
-                                    :enable-time-picker="false"
-                                    v-model="submissionData.endDate"
-                                    class="date-picker"
-                                />
-                            </div>
-                        </UFormGroup>
+                            <UFormGroup
+                                label="預計結束時間"
+                                help="根據經驗，建議募資專案應在45-60天內執行完畢，成效最佳。"
+                                name="endDate"
+                                required
+                                class="mb-3"
+                            >
+                                <div class="max-w-[216px] relative max-lg:max-w-[80%]">
+                                    <!-- :min-date="new Date()" -->
+                                    <VueDatePicker
+                                        position="left"
+                                        auto-apply
+                                        year-first
+                                        placeholder="2020-11-08"
+                                        :format-locale="zhTW"
+                                        :start-date="new Date()"
+                                        :enable-time-picker="false"
+                                        v-model="submissionData.endDate"
+                                        class="date-picker"
+                                    />
+                                </div>
+                            </UFormGroup>
+                        </ClientOnly>
 
                         <UFormGroup
                             label="封面照片"
@@ -192,16 +176,32 @@ import { zhTW } from "date-fns/locale";
 
 import VueDatePicker from "@vuepic/vue-datepicker";
 
+import { useAuthStore } from "@/stores/auth";
+const authStore = useAuthStore();
+const token     = authStore.token;
+const route = useRoute();
+const dashboardId = route.params.dashboardId;
+
+const cateOpts = ref([]);
+
+getCategory()
+
+async function getCategory() {
+    const queryParam = "?type=fundraise";
+    const data = await GET(`/frontend/getFrontendCategory${queryParam}`,1);
+
+    if (!!data) {
+        cateOpts.value = data.Categorydata;
+    }
+}
+
+
 //
 const pageStatus = ref("edit"); // new, edit, reviewed
 const pageTime = ref("2023/10/27 11:16");
 
 const screenWidth = ref(800);
-onMounted(() => {
-    screenWidth.value = window.innerWidth;
-});
 
-//
 const submissionData = reactive({
     projectName: "",
     projectDes: "",
@@ -213,7 +213,51 @@ const submissionData = reactive({
     imgData: [],
     imgDataQuantity: 0,
 });
-const imgData = ref(); //imgData.value.files
+
+getData();
+
+async function getData() {
+    const data = await POST("/getOneProject", {'project_id' : dashboardId }, token);
+
+    Object.assign(submissionData, {
+        projectName: data.data.name || "",
+        projectDes: data.data.name || "",
+        projectWebsiteName: data.data.keyName || "",
+        projectTargetValue: data.data.goal_price || "",
+        projectCate: data.data.category_id || "",
+        startDate: data.data.start_time || "",
+        endDate: data.data.end_time || "",
+        imgData: data.data.img_data || "",
+        imgDataQuantity: 1,
+});
+    
+    console.log(data)
+}
+
+
+onMounted(() => {
+    screenWidth.value = window.innerWidth;
+});
+
+
+
+// watchEffect(() => {
+//   if (data.value && data.value.data) {
+//     submissionData.projectName = data.value.data.name || "";
+//     submissionData.projectDes = data.value.data.description || "";
+//     // 假设 API 返回的数据中包含 projectWebsiteName 和其他字段
+//     submissionData.projectWebsiteName = data.value.data.websiteName || "long-jing-you";
+//     submissionData.projectTargetValue = data.value.data.goal_price || "";
+//     submissionData.projectCate = data.value.data.category_id || "";
+//     submissionData.startDate = data.value.project.start_time || "";
+//     submissionData.endDate = data.value.project.end_time || "";
+//     // 根据你的数据结构调整以上字段
+//   }
+// });
+
+//
+
+const imgData = ref([]); //imgData.value.files
 const imgDataQuantity = computed(() => imgData.value?.files?.length || 0);
 
 watch(imgDataQuantity, (val) => {
@@ -222,88 +266,7 @@ watch(imgDataQuantity, (val) => {
     submissionData.imgData = imgData.value.files;
 });
 
-const cateOpts = reactive([
-    {
-        id: 1,
-        name: "3C科技",
-    },
-    {
-        id: 2,
-        name: "家電",
-    },
-    {
-        id: 3,
-        name: "生活用品",
-    },
-    {
-        id: 4,
-        name: "食品",
-    },
-    {
-        id: 5,
-        name: "服飾",
-    },
-    {
-        id: 6,
-        name: "美妝",
-    },
-    {
-        id: 7,
-        name: "運動",
-    },
-    {
-        id: 8,
-        name: "寵物",
-    },
-    {
-        id: 9,
-        name: "書籍",
-    },
-    {
-        id: 10,
-        name: "文具",
-    },
-    {
-        id: 11,
-        name: "玩具",
-    },
-    {
-        id: 12,
-        name: "手作",
-    },
-    {
-        id: 13,
-        name: "藝術",
-    },
-    {
-        id: 14,
-        name: "音樂",
-    },
-    {
-        id: 15,
-        name: "影視",
-    },
-    {
-        id: 16,
-        name: "遊戲",
-    },
-    {
-        id: 17,
-        name: "教育",
-    },
-    {
-        id: 18,
-        name: "旅遊",
-    },
-    {
-        id: 19,
-        name: "醫療",
-    },
-    {
-        id: 20,
-        name: "其他",
-    },
-]);
+
 
 //
 function doSubmit() {

@@ -20,8 +20,8 @@
             </USelectMenu>
         </div>
 
-        <div class="md:grid md:grid-cols-3 md:gap-5">
-            <CardFundraise v-for="(item, index) in fundingRaiseList" :key="index" v-bind="item" :isEditMode="true" />
+        <div class="md:grid md:grid-cols-3 md:gap-5" v-if="!pending">
+            <CardFundraise v-for="(item, index) in data.projects.data" :key="index" v-bind="item" :isEditMode="true" />
         </div>
 
         <UiPagination
@@ -34,14 +34,24 @@
 </template>
 
 <script setup>
+const authStore = useAuthStore();
+const token = authStore.token;
+
 const proposalSortType = ["新到舊", "舊到新", "優先成功專案", "優先失敗專案"];
 const proposalSortTypeSelected = ref(proposalSortType[0]);
 
-const currentPage = ref(1);
+const currentPage = ref(1);``
 const totalPages = ref(20);
 const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
 };
+
+await nextTick()
+
+const { data, error, pending, refresh } = useCustomFetch("/getProjectByUser", {}, token);
+
+
+// totalPages.value = data.data.last_page;
 
 const fundingRaiseList = ref([]);
 

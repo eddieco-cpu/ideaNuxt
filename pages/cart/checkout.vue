@@ -118,7 +118,7 @@
                             </UFormGroup>
 
                             <UFormGroup label="訂購人手機" name="phone">
-                                <UInput v-model="checkoutPayload.phone" />
+                                <UInput placeholder="請輸入訂購人" v-model="checkoutPayload.phone" />
                             </UFormGroup>
                         </div>
 
@@ -219,7 +219,7 @@
                             <h1 class="pb-3 text-black/85 font-medium border-b border-b-Neutral-200">總計</h1>
                             <div class="flex justify-between text-Neutral-700 text-sm">
                                 <p>{{ productListsLength }}件商品</p>
-                                <p>NT${{ helperMoneyComma(totalPrice) }}</p>
+                                <p>NT${{ helperMoneyComma(total) }}</p>
                             </div>
                             <div
                                 class="flex justify-between text-Neutral-700 text-sm pb-3 border-b border-b-Neutral-200"
@@ -247,7 +247,7 @@
                                 <p
                                     class="text-xl text-Neutral-800 md:text-Primary-500-Primary font-roboto font-medium md:text-right md:pb-3"
                                 >
-                                    NT${{ helperMoneyComma(totalPrice) }}
+                                    NT${{ helperMoneyComma(total) }}
                                 </p>
                             </div>
 
@@ -299,6 +299,9 @@
 import { checkOutSchema } from "~/validation";
 import { cartStore } from "@/stores/cart";
 import Icon from "assets/images/";
+
+const authStore = useAuthStore();
+const token = authStore.token;
 const cart = cartStore();
 const route = useRoute();
 
@@ -342,6 +345,22 @@ const deliveryOptions = [
         label: "宅配到府",
     },
 ];
+
+const deliveryAddress = ref();
+
+const addressInfo = ref([]);
+
+getAddress();
+
+async function getAddress () {
+    const data = await POST("/getAddress", {}, token);
+
+    if(!!data.status) {
+        addressInfo.value = data.data
+        deliveryAddress.value = addressInfo.value[0]
+    }
+}
+
 
 const convenienceStoreOptions = [
     {
@@ -391,20 +410,50 @@ const isFundRaiseCheckout = computed(() => {
     return route.query.type === "fundraise";
 });
 
-const productLists = computed(() => {
-    if (route.query.type === "fundraise") {
-        return [];
-    } else {
-        return [];
+const group_id = ref(route.query.group);
+
+const cartData = ref([]);
+
+getCartData()
+
+async function getCartData () {
+    const payload = {'group_id': route.query.group};
+
+    const data = await POST("/getItemByCheckoutPage", payload, token);
+    if(!!data.status) {
+        cartData.value = data.data
+        console.log(cartData.value)
     }
+}
+
+const productLists = computed(() => {
+  if (Array.isArray(cartData.value.items)) {
+    return cartData.value.items.reduce((accumulator, item) => {
+        const productSpecsWithItemId = item.product_specs.map(spec => ({
+        ...spec, // 複製現有的 product_specs 屬性
+        cartItemId: 0 // 添加 itemId 屬性，設置其值為當前 item 的 id
+      }));
+      // 將修改後的 product_specs 數組合併到累加器中
+      return [...accumulator, ...productSpecsWithItemId];
+    }, []);
+  } else {
+    return [];
+  }
+});
+
+const total = computed(() => {
+  return productLists.value.reduce((accumulator, spec) => {
+    // 對每個 product_spec，計算其價值（sales_price * amount）並加到累加器上
+    return accumulator + (spec.sales_price * spec.amount);
+  }, 0); // 初始累加器值為 0
 });
 
 const productListsLength = computed(() => {
-    if (route.query.type === "fundraise") {
-        return [];
-    } else {
-        return [];
-    }
+    if (Array.isArray(cartData.value.items)) {
+    return cartData.value.items.length;
+  } else {
+    return 0;
+  }
 });
 
 const totalPrice = computed(() => {
@@ -416,34 +465,15 @@ const totalPrice = computed(() => {
 });
 
 const tempAddress = ref(null);
-const addressInfo = ref([
-    {
-        index: 1,
-        defaultAddress: true,
-        name: "陳大明",
-        phone: "0911123456",
-        email: "fake@hotmail.com",
-        address: "新北市淡水區",
-    },
-    {
-        index: 2,
-        defaultAddress: false,
-        name: "王小美",
-        phone: "0922321123",
-        email: "fake@hotmail.com",
-        address: "台北市信義區",
-    },
-]);
-const deliveryAddress = ref(addressInfo.value[0]);
+
 const storeType = ref(null);
 
 async function editAddress() {
     tempAddress.value = null;
 
     await nextTick();
-    // 新增地址
     tempAddress.value = {
-        index: Math.max(Math.max(...addressInfo.value.map((item) => item.index)), 0) + 1,
+        index: Object.keys(addressInfo.value).length + 1,
     };
 }
 
@@ -451,8 +481,9 @@ function addressOnAbort() {
     tempAddress.value = null;
 }
 
-function addressOnSubmit(data) {
-    const { index, name, phone, email, address, defaultAddress } = data;
+async function addressOnSubmit(addressData) {
+
+    const { index, name, phone, email, address, defaultAddress, zipCode, city, district } = addressData;
 
     const payload = {
         index,
@@ -461,26 +492,55 @@ function addressOnSubmit(data) {
         phone,
         email,
         address,
+        zipCode,
+        city,
+        district,
+        
     };
 
-    // 新增地址
-    addressInfo.value.push(payload);
+    const data = await POST("/addAddress", payload, token);
 
-    tempAddress.value = null;
+    if(!!data.status) {
+        getAddress();
+        tempAddress.value = null;
+    }
 }
 
 function goBack() {
     navigateTo("/cart");
 }
 
-function goFinishedPage() {
-    inProcessing.value = true;
-    progressTimer.value = setInterval(() => {
-        progress.value += 10;
-        if (progress.value >= 80) {
-            navigateTo("/cart/finished");
+async function goFinishedPage() {
+
+    checkoutPayload.value.deliveryAddress = deliveryAddress.value;
+    checkoutPayload.value.group_id = group_id.value;
+    console.log(checkoutPayload.value)
+
+    const data = await POST("/createOrder", checkoutPayload.value, token);
+
+    console.log(data)
+
+    if(!!data.status) {
+        if(data.isCartEmpty) {
+            cart.isHaveCartItem = false
         }
-    }, 500);
+
+        inProcessing.value = true;
+        progressTimer.value = setInterval(() => {
+            progress.value += 10;
+            if (progress.value >= 80) {
+                navigateTo("/cart/finished");
+            }
+        }, 500);
+    }
+
+    // inProcessing.value = true;
+    // progressTimer.value = setInterval(() => {
+    //     progress.value += 10;
+    //     if (progress.value >= 80) {
+    //         navigateTo("/cart/finished");
+    //     }
+    // }, 500);
 }
 
 onBeforeUnmount(() => {

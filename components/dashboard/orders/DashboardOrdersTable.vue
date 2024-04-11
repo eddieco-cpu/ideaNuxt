@@ -45,7 +45,7 @@
                 </UInput>
             </div>
         </div>
-        <UCarousel v-slot="{ item }" :items="['1']" :ui="{ item: 'snap-start' }" class="max-w-[800px] mx-auto">
+        <UCarousel v-slot="{ item }" :items="['1']" :ui="{ item: 'snap-start' }" class="max-w-[800px] mx-auto" v-if= "!pending">
             <div>
                 <UTable
                     :rows="datas"
@@ -112,7 +112,15 @@
 </template>
 <script setup>
 //
+const authStore = useAuthStore();
+const token     = authStore.token;
+
+
 const route = useRoute();
+const dashboardId = route.params.dashboardId;
+
+await nextTick();
+const { data:allDatas, error, pending } = useCustomFetch("/getProjectForDashborad", {'project_id' : dashboardId }, token);
 
 //
 const selectOfTable = ref(null);
@@ -162,65 +170,101 @@ const columns = [
         label: "狀態",
     },
 ];
-const allDatas = ref([
-    // {
-    //     id: "ID22092313548",
-    //     time: "2022/06/16 14:00",
-    //     name: "Lindsay Walton",
-    //     amount: "NT$ 1,000",
-    //     payment: "ATM 轉帳付款",
-    //     status: "已成立",
-    // },
-]);
+// const allDatas = ref([
+//     // {
+//     //     id: "ID22092313548",
+//     //     time: "2022/06/16 14:00",
+//     //     name: "Lindsay Walton",
+//     //     amount: "NT$ 1,000",
+//     //     payment: "ATM 轉帳付款",
+//     //     status: "已成立",
+//     // },
+// ]);
+
+
 const datas = computed(() => {
     const start = (currentPage.value - 1) * 10;
     const end = start + 10;
-    return allDatas.value.length
-        ? allDatas.value.slice(start, end).map((el) => ({
-              ...el,
+    return allDatas.value.detail.orders.length
+        ? allDatas.value.detail.orders.slice(start, end).map((el) => ({
               id: {
-                  val: el.id,
-                  class: " min-w-[150px] max-w-[150px]",
-              },
-              time: {
-                  val: el.time,
+                  val: el.number,
                   class: "min-w-[150px] max-w-[150px]",
               },
-              name: {
-                  val: el.name,
+              time: { // 对应created_at
+                  val: el.created_at,
                   class: "min-w-[150px] max-w-[150px]",
               },
-              amount: {
-                  val: el.amount,
+              name: { // 对应userInfo的name
+                  val: el.user_info.name,
                   class: "min-w-[150px] max-w-[150px]",
               },
-              payment: {
-                  val: el.payment,
+              amount: { // 对应total+ship
+                  val: '$ ' + el.total + el.ship,
+                  class: "min-w-[150px] max-w-[150px]",
+              },
+              payment: { // 固定字符串: 信用卡支付
+                  val: '信用卡支付',
                   class: "min-w-[130px] max-w-[130px]",
               },
-              status: {
-                  val: el.status,
+              status: { // 判断pay_status, pay_status == 1 为已成立，其他为不成立
+                  val: el.pay_status === 1 ? '已成立' : '不成立',
                   class: "min-w-[70px] max-w-[70px]",
               },
           }))
         : [];
-});
+})
+
+
+// const datas = computed(() => {
+//     const start = (currentPage.value - 1) * 10;
+//     const end = start + 10;
+//     return allDatas.value.detail.orders.length
+//         ? allDatas.value.detail.orders.slice(start, end).map((el) => ({
+//               ...el,
+//               id: {
+//                   val: el.id,
+//                   class: " min-w-[150px] max-w-[150px]",
+//               },
+//               time: {
+//                   val: el.time,
+//                   class: "min-w-[150px] max-w-[150px]",
+//               },
+//               name: {
+//                   val: el.name,
+//                   class: "min-w-[150px] max-w-[150px]",
+//               },
+//               amount: {
+//                   val: el.amount,
+//                   class: "min-w-[150px] max-w-[150px]",
+//               },
+//               payment: {
+//                   val: el.payment,
+//                   class: "min-w-[130px] max-w-[130px]",
+//               },
+//               status: {
+//                   val: el.status,
+//                   class: "min-w-[70px] max-w-[70px]",
+//               },
+//           }))
+//         : [];
+// });
 
 //
 const currentPage = ref(1);
-const totalPages = computed(() => Math.ceil(allDatas.value.length / 10));
+const totalPages = computed(() => Math.ceil(allDatas.value.detail.orders.length / 10));
 const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
 };
 
-//
-async function getReviewedOrdersData() {
-    const data = await GET(`/api/dashboard/details/reviewed/orders`);
-    if (!!data) {
-        allDatas.value = data.orders;
-    }
-}
-getReviewedOrdersData();
+// //
+// async function getReviewedOrdersData() {
+//     const data = await GET(`/api/dashboard/details/reviewed/orders`);
+//     if (!!data) {
+//         allDatas.value.detail.orders = data.orders;
+//     }
+// }
+// getReviewedOrdersData();
 </script>
 <style scoped>
 .pagenation {

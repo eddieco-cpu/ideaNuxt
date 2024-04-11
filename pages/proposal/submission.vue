@@ -79,7 +79,6 @@
                                 class="w-full"
                                 size="lg"
                                 v-model="submissionData.projectName"
-                                @input="(e) => (e.target.value = e.target.value.slice(0, 40))"
                             />
                             <p class="text-sm text-right text-Neutral-500-Primary absolute bottom-[-20px] right-0">
                                 <span>{{ submissionData.projectName.length }}</span> / <span>40</span>
@@ -96,7 +95,6 @@
                                 class="w-full"
                                 size="lg"
                                 v-model="submissionData.projectDes"
-                                @input="(e) => (e.target.value = e.target.value.slice(0, 90))"
                             />
                             <p class="text-sm text-right text-Neutral-500-Primary absolute bottom-[-20px] right-0">
                                 <span>{{ submissionData.projectDes.length }}</span> / <span>90</span>
@@ -149,7 +147,8 @@
                         class="mb-3"
                     >
                         <div class="max-w-64 relative">
-                            <VueDatePicker
+                            <ClientOnly>
+                                <VueDatePicker
                                 position="right"
                                 auto-apply
                                 year-first
@@ -161,6 +160,8 @@
                                 v-model="submissionData.startDate"
                                 class="submission_date-picker"
                             />
+                            </ClientOnly>
+
                         </div>
                     </UFormGroup>
 
@@ -172,18 +173,21 @@
                         class="mb-3"
                     >
                         <div class="max-w-64 relative">
-                            <VueDatePicker
-                                position="right"
-                                auto-apply
-                                year-first
-                                placeholder="選擇時間"
-                                :format-locale="zhTW"
-                                :min-date="new Date()"
-                                :start-date="new Date()"
-                                :enable-time-picker="false"
-                                v-model="submissionData.endDate"
-                                class="submission_date-picker"
-                            />
+                            <ClientOnly>
+                                <VueDatePicker
+                                    position="right"
+                                    auto-apply
+                                    year-first
+                                    placeholder="選擇時間"
+                                    :format-locale="zhTW"
+                                    :min-date="new Date()"
+                                    :start-date="new Date()"
+                                    :enable-time-picker="false"
+                                    v-model="submissionData.endDate"
+                                    class="submission_date-picker"
+                                />
+                            </ClientOnly>
+                            
                         </div>
                     </UFormGroup>
 
@@ -209,7 +213,6 @@
                                 class="w-full"
                                 size="lg"
                                 v-model="submissionData.projectDetailsDes"
-                                @input="(e) => (e.target.value = e.target.value.slice(0, 300))"
                             />
                             <p class="text-sm text-right text-Neutral-500-Primary absolute bottom-[-20px] right-0">
                                 <span>{{ submissionData.projectDetailsDes.length }}</span> / <span>300</span>
@@ -438,9 +441,30 @@ import { submissionSchema } from "~/validation";
 import { zhTW } from "date-fns/locale";
 
 import VueDatePicker from "@vuepic/vue-datepicker";
+import { useToast } from "vue-toastification";
+const toast = useToast();
 //import "/public/css/vue-datepicker.css";
 
+const authStore = useAuthStore();
+const token = authStore.token;
+
+
+
 //
+
+const categoryOpts = ref([])
+
+getCategory()
+
+async function getCategory() {
+    const queryParam = "?type=fundraise";
+    const data = await GET(`/frontend/getFrontendCategory${queryParam}`,1);
+    if (!!data) {
+        categoryOpts.value = data.Categorydata;
+    }
+}
+
+
 const submissionData = reactive({
     name: "",
     email: "",
@@ -469,7 +493,7 @@ const imgData = ref(); //imgData.value.files
 const imgDataQuantity = computed(() => imgData.value?.files?.length || 0);
 
 watch(imgDataQuantity, (val) => {
-    //console.log(val);
+    console.log(val);
     submissionData.imgDataQuantity = val;
     submissionData.imgData = imgData.value.files;
 });
@@ -486,27 +510,23 @@ const ytSwitcher = ref(false);
 const fbSwitcher = ref(false);
 
 //
-const categoryOpts = [
-    {
-        id: "A",
-        name: "A category",
-    },
-    {
-        id: "B",
-        name: "B category",
-    },
-    {
-        id: "C",
-        name: "C category",
-    },
-];
+
 
 //
-function doSubmit() {
+async function doSubmit() {
     if (!submissionData.agree.contract || !submissionData.agree.understand) {
         return alert("請同意提案契約書");
     }
-    alert("doSubmit");
+
+    const data = await POST("/stepOneProject", submissionData, token);
+    console.log(data);
+    if(!!data) {
+        // orderData.value = data.order;
+        // loaded.value = true;
+    }
+    
+    
+
 }
 </script>
 <style>

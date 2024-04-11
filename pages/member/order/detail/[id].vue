@@ -8,6 +8,7 @@
         </div>
 
         <!-- 訂單排程 -->
+        
         <ul class="bg-white py-4 px-3 flex items-start rounded-lg mb-3">
             <li
                 class="flex flex-col gap-y-2 items-center text-xs font-medium text-Primary-500-Primary text-center step flex-1"
@@ -16,7 +17,6 @@
                 <img src="~assets/images/icon/circle-icon.svg" alt="circle " v-show="!orderBuild" />
                 <img src="~assets/images/icon/circle-check-icon.svg" alt="circle " v-show="orderBuild" />
                 <p :class="{ 'text-Neutral-500-Primary': !orderBuild }">已成立</p>
-                <p v-show="orderBuild">08-16 11:32</p>
             </li>
             <li
                 class="flex flex-col gap-y-2 items-center text-xs font-medium text-Primary-500-Primary text-center step flex-1"
@@ -25,7 +25,6 @@
                 <img src="~assets/images/icon/circle-icon.svg" alt="circle " v-show="!orderPrepare" />
                 <img src="~assets/images/icon/circle-check-icon.svg" alt="circle " v-show="orderPrepare" />
                 <p :class="{ 'text-Neutral-500-Primary': !orderPrepare }">備貨中</p>
-                <p v-show="orderPrepare">08-16 11:32</p>
             </li>
             <li
                 class="flex flex-col gap-y-2 items-center text-xs font-medium text-Primary-500-Primary text-center step flex-1"
@@ -34,7 +33,6 @@
                 <img src="~assets/images/icon/circle-icon.svg" alt="circle " v-show="!orderDelivery" />
                 <img src="~assets/images/icon/circle-check-icon.svg" alt="circle " v-show="orderDelivery" />
                 <p :class="{ 'text-Neutral-500-Primary': !orderDelivery }">出貨中</p>
-                <p v-show="orderDelivery">08-16 11:32</p>
             </li>
             <li
                 class="flex flex-col gap-y-2 items-center text-xs font-medium text-Primary-500-Primary text-center step flex-1"
@@ -43,36 +41,64 @@
                 <img src="~assets/images/icon/circle-icon.svg" alt="circle " v-show="!orderFinished" />
                 <img src="~assets/images/icon/circle-check-icon.svg" alt="circle " v-show="orderFinished" />
                 <p :class="{ 'text-Neutral-500-Primary': !orderFinished }">已完成</p>
-                <p v-show="orderFinished">08-16 11:32</p>
             </li>
         </ul>
 
-        <div class="flex flex-col flex-wrap gap-y-3 md:flex-row md:gap-x-3 mb-3">
-            <CardOrderInformation class="w-full md:w-[40%]" />
-            <CardProductInformation class="w-full md:flex-1" />
-            <CardBuyerInformation class="w-full md:w-[calc(50%_-_6px)]" />
-            <CardReceiverInformation class="w-full md:w-[calc(50%_-_6px)]" />
+
+        <div class="flex flex-col flex-wrap gap-y-3 md:flex-row md:gap-x-3 mb-3" v-if="loaded">
+            <CardOrderInformation class="w-full md:w-[40%]"  v-bind="orderData"/>
+            <CardProductInformation class="w-full md:flex-1" :total="orderData.total" :ship="orderData.ship" :productSpecs="orderItem"/>
+            <!-- <CardBuyerInformation class="w-full md:w-[calc(50%_-_6px)]" /> -->
+            <CardReceiverInformation class="w-full md:w-[calc(50%_-_6px)]" v-bind="orderData" />
         </div>
     </div>
 </template>
 
 <script setup>
+import { useRuntimeConfig } from '#app'
 const router = useRouter();
+const route = useRoute();
+const authStore = useAuthStore();
+const token = authStore.token;
 
-const orderStatus = ref("出貨中");
 
-const orderBuild = computed(() => {
-    return ["已成立", "備貨中", "出貨中", "已完成"].includes(orderStatus.value);
-});
-const orderPrepare = computed(() => {
-    return ["備貨中", "出貨中", "已完成"].includes(orderStatus.value);
-});
-const orderDelivery = computed(() => {
-    return ["出貨中", "已完成"].includes(orderStatus.value);
-});
-const orderFinished = computed(() => {
-    return ["已完成"].includes(orderStatus.value);
-});
+const config   = useRuntimeConfig();
+const baseUrl  = config.public.apiBaseUrl;
+
+const orderNumber = ref(route.params.id)
+const orderData = ref([]);
+
+const loaded = ref(false);
+
+getData()
+
+async function getData () {
+
+    const data = await POST("/getOrder", {'orderNumber':orderNumber.value}, token);
+
+    if(!!data.status) {
+        orderData.value = data.order;
+        loaded.value = true;
+    }
+}
+
+const orderItem = computed(() => {
+  return orderData.value.order_items.map(item => ({
+    id: item.product_spec_id, 
+    sales_price: item.price, 
+    amount: item.quantity, 
+    img: item.product_image, 
+    name: item.product_name,
+    cartItemId: 0
+  }))
+})
+
+
+
+const orderBuild = computed(() => [1, 2, 3, 4].includes(orderData.value.status));
+const orderPrepare = computed(() => [2, 3, 4].includes(orderData.value.status));
+const orderDelivery = computed(() => [3, 4].includes(orderData.value.status));
+const orderFinished = computed(() => [4].includes(orderData.value.status));
 
 function goBack() {
     router.go(-1);

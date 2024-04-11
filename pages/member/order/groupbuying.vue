@@ -34,11 +34,33 @@
             </div>
         </div>
 
-        <CardOrder />
+        <CardOrder  v-for="(item) in filteredOrders"
+                            :key="item.id"
+                            v-bind="item"/>
     </div>
 </template>
 
 <script setup>
+
+const authStore = useAuthStore();
+const token = authStore.token;
+
+
+
+const orderList = ref([]);
+
+getData()
+
+async function getData () {
+    const payload = {};
+
+    const data = await POST("/getOrderForGroup", {}, token);
+
+    if(!!data.status) {
+        orderList.value = data.orders;
+    }
+}
+
 const orderSortType = ["全部", "已成立", "備貨中", "出貨中", "已完成", "取消"];
 const orderSortTypeSelected = ref(orderSortType[0]);
 
@@ -53,6 +75,26 @@ function showClass(name) {
 function switchSort(name) {
     orderSortTypeSelected.value = name;
 }
+
+const filteredOrders = computed(() => {
+
+  switch (orderSortTypeSelected.value) {
+    case '全部':
+      return orderList.value;
+    case '已成立':
+      return orderList.value.filter(order => order.status === 1);
+    case '備貨中':
+      return orderList.value.filter(order => order.status === 2);
+    case '出貨中':
+      return orderList.value.filter(order => order.status === 3);
+    case '已完成':
+      return orderList.value.filter(order => order.status === 4);
+    case '取消':
+      return orderList.value.filter(order => order.status === 99);
+    default:
+      return orderList.value; 
+  }
+});
 
 function goBack() {
     navigateTo("/member/order");

@@ -4,25 +4,25 @@
             <ul class="flex flex-col gap-y-3">
                 <li class="flex items-center gap-x-4">
                     <h5 class="text-Neutral-600-Dark-Primary text-sm min-w-[70px]">收件人姓名</h5>
-                    <p class="text-Neutral-900 text-sm">陳佑瑋</p>
+                    <p class="text-Neutral-900 text-sm">{{ receive_name }}</p>
                 </li>
 
                 <li class="flex items-center gap-x-4">
                     <h5 class="text-Neutral-600-Dark-Primary text-sm min-w-[70px]">聯絡地址</h5>
-                    <p class="text-Neutral-900 text-sm">114 台北市內湖區成功路五段450巷4號4樓</p>
+                    <p class="text-Neutral-900 text-sm">{{ receive_full_address }}</p>
                 </li>
 
                 <li class="flex items-center gap-x-4">
                     <h5 class="text-Neutral-600-Dark-Primary text-sm min-w-[70px]">聯絡電話</h5>
-                    <p class="text-Neutral-900 text-sm">+8860926390926</p>
+                    <p class="text-Neutral-900 text-sm">{{ receive_phone }}</p>
                 </li>
 
                 <li class="flex items-center gap-x-4">
                     <h5 class="text-Neutral-600-Dark-Primary text-sm min-w-[70px]">電子郵件</h5>
-                    <p class="text-Neutral-900 text-sm">baby.c.a.t@yahoo.com.tw</p>
+                    <p class="text-Neutral-900 text-sm">{{ receive_email }}</p>
                 </li>
 
-                <li class="flex items-center gap-x-4">
+                <!-- <li class="flex items-center gap-x-4">
                     <h5 class="text-Neutral-600-Dark-Primary text-sm min-w-[70px]">配送方式</h5>
                     <p class="text-Neutral-900 text-sm">宅配到府</p>
                 </li>
@@ -43,7 +43,7 @@
                         </p>
                         <p class="text-xs text-neutral-third-hint">2023-08-16 11:32</p>
                     </div>
-                </li>
+                </li> -->
             </ul>
         </template>
     </CardContainer>
@@ -53,6 +53,21 @@
 import { useToast } from "vue-toastification";
 
 const toast = useToast();
+
+const { receive_name, receive_full_address, receive_phone, receive_email } = defineProps({
+    receive_name: {
+        type: String,
+    },
+    receive_full_address: {
+        type: String,
+    },
+    receive_phone: {
+        type: String,
+    },
+    receive_email: {
+        type: String,
+    }
+});
 
 const deliveryNumber = ref("804148783468");
 

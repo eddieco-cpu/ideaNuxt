@@ -2,18 +2,18 @@
     <CardContainer>
         <template #body>
             <div class="flex">
-                <p class="text-Secondary-400-Hover" v-show="addressInfo.defaultAddress">預設 -</p>
+                <p class="text-Secondary-400-Hover" >預設 -</p>
                 <h2 class="font-medium text-black/[0.85] mb-5">
                     {{ isEditmode ? `編輯地址${index}` : `新增地址${index}` }}
                 </h2>
-
+<!-- 
                 <button
                     class="underline text-Primary-500-Primary text-sm ml-auto"
                     v-show="!isEditmode && index > 1"
                     @click="setDefaultAddress"
                 >
                     設為預設地址
-                </button>
+                </button> -->
             </div>
 
             <UForm :schema="addressSchema" :state="addressInfo" class="flex flex-col gap-y-3" @submit="onSubmit">
@@ -91,11 +91,7 @@ const toast = useToast();
 const twzipcode = ref(null);
 const zipcode = ref(null);
 
-<<<<<<< HEAD
-const { index, defaultAddress, name, phone, email, address, isEditmode, district, city } = defineProps({
-=======
 const { index, defaultAddress, name, phone, email, address, zipCode, city, district, isEditmode } = defineProps({
->>>>>>> master
     index: {
         type: Number,
         default: 1,

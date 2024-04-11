@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- <input type="number" v-model="stepsStatus" /> -->
         <section
             class="max-w-[1082px] mx-auto py-4 mt-8 rounded-lg bg-white max-md:max-w-[100%-24px] max-md:mt-6 max-xl:mx-3 max-xl:max-w-[100%]"
         >
@@ -40,21 +39,21 @@
                 ></li>
             </ul>
         </section>
-        <section
+        <section v-if = "!pending"
             class="max-w-[1082px] mx-auto p-3 mt-8 rounded-lg bg-white max-md:max-w-[100%-24px] max-md:mt-3 max-xl:mx-3 max-xl:max-w-[100%]"
         >
             <div class="flex justify-between items-center gap-x-2">
                 <div class="flex justify-start items-center">
                     <picture class="block w-24 h-16 rounded-lg overflow-hidden flex-shrink-0 max-md:w-16 max-md:h-10">
-                        <img :src="helperPicture()" alt="" class="block w-full h-full object-cover" />
+                        <img :src="data.data.image" alt="" class="block w-full h-full object-cover" />
                     </picture>
                     <article class="ml-2">
                         <p class="text-Primary-500-Primary flex justify-start items-center text-sm">
                             <span class="px-2 py-1 bg-Primary-100 rounded mr-3">群眾集資</span>
-                            <span>#C00001</span>
+                            <!-- <span>#C00001</span> -->
                         </p>
                         <p class="line-clamp-2 max-md:text-sm">
-                            聲震宇宙領域，虛擬現實音效耳罩，嵌入式通訊系統，危機中的最佳音樂夥伴
+                            {{ data.data.name }}
                         </p>
                     </article>
                 </div>
@@ -123,7 +122,7 @@
                 </nav>
             </div>
 
-            <div class="md:max-w-[calc(100%-256px-28px)] md:flex-grow">
+            <div class="md:max-w-[calc(100%-256px-28px)] md:flex-grow" v-if = "!pending">
                 <!-- 導航列顯示內容 -->
                 <NuxtPage class="max-md:max-w-[323px] mx-auto max-w-full md:flex-1 max-md:mt-6" />
             </div>
@@ -132,11 +131,19 @@
 </template>
 
 <script setup>
-//
-const route = useRoute();
-console.log(route.params.dashboardId);
+// dinefePageMeta({
+//   middleware: 'test'
+// })
+const authStore = useAuthStore();
+const token     = authStore.token;
 
+
+const route = useRoute();
 const dashboardId = route.params.dashboardId;
+
+await nextTick();
+
+const { data, error, pending } = useCustomFetch("/getOneProject", {'project_id' : dashboardId }, token);
 
 //
 const dataStatus = ref("inProgress");

@@ -29,7 +29,7 @@
                             help="手機已驗證成功。若您需修改手機，請聯繫官方客服中心。"
                             required
                         >
-                            <UInput placeholder="0902123123" v-model="memberInfo.phone" disabled />
+                            <UInput placeholder="0902123123" v-model="memberInfo.account" disabled />
                         </UFormGroup>
 
                         <UFormGroup label="電子信箱" name="email" help="請填寫您個人真實信箱，便於通知使用。" required>
@@ -38,6 +38,7 @@
 
                         <!-- 出生日 -->
                         <UFormGroup label="出生日" name="birth">
+                            <ClientOnly>
                             <VueDatePicker
                                 position="left"
                                 auto-apply
@@ -47,7 +48,10 @@
                                 :max-date="new Date()"
                                 :start-date="new Date(1988, 9)"
                                 :enable-time-picker="false"
+                                :format="'yyyy-MM-dd'"
+                                v-model="memberInfo.birth"
                             />
+                            </ClientOnly>
                         </UFormGroup>
 
                         <URadioGroup
@@ -127,14 +131,13 @@ const memberInfo = ref({
     name: undefined,
     phone: undefined,
     email: undefined,
-    birthDay: undefined,
+    birth: undefined,
     sex: "0",
     notification: true,
     subscription: true,
     register: false,
 });
 
-console.log(authStore.userInfo)
 
 
 onMounted(() => {
@@ -158,13 +161,13 @@ const sexOptions = [
 
 async function onSubmit(event) {
 
-    const { nick_name, name, email, birthDay, sex, notification, subscription } = event.data;
+    const { nick_name, name, email, birth, sex, notification, subscription } = event.data;
 
     const payload = {
         nick_name: nick_name,
         name: name,
         email: email,
-        birthDay: birthDay,
+        birth: birth,
         sex: sex,
         notification: notification,
         subscription: subscription,

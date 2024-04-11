@@ -6,7 +6,8 @@ export default function (status, message) {
     switch (status) {
         case 400:
         case 401:
-            toast.error(message);
+            toast.error('請登入會員');
+            navigateTo("/");
             break;
         case 422:
             toast.error(message);
