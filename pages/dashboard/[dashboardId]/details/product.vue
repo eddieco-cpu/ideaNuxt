@@ -19,6 +19,17 @@ const pageTime = ref("2023/10/27 11:16");
 
 const fullContext = ref();
 
+async function getHtmlContext() {
+    const data = await GET(`/api/dashboard/details/product/fakeHtml`);
+    if (!!data) {
+        console.log("data.data", data.data);
+        if (data.data) fullContext.value.editorContent = data.data;
+    }
+}
+onMounted(() => {
+    getHtmlContext();
+});
+
 function doSave() {
     console.log("doSubmit");
     console.log("fullContext", fullContext.value.editorContent);
