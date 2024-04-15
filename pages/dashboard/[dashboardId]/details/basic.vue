@@ -154,7 +154,7 @@
                             <div class="h-0 overflow-hidden opacity-0">
                                 <UInput type="number" v-model="submissionData.imgDataQuantity" />
                             </div>
-                            <ModalDropImg ref="imgData" />
+                            <ModalDropImg ref="imgData" :files="imgFilesFetched" />
                         </UFormGroup>
 
                         <UiButton
@@ -177,12 +177,14 @@ import { zhTW } from "date-fns/locale";
 import VueDatePicker from "@vuepic/vue-datepicker";
 
 import { useAuthStore } from "@/stores/auth";
+
 const authStore = useAuthStore();
 const token     = authStore.token;
 const route = useRoute();
 const dashboardId = route.params.dashboardId;
 
 const cateOpts = ref([]);
+
 
 getCategory()
 
@@ -192,12 +194,13 @@ async function getCategory() {
 
     if (!!data) {
         cateOpts.value = data.Categorydata;
+        
     }
 }
 
 
 //
-const pageStatus = ref("edit"); // new, edit, reviewed
+const pageStatus = ref("reviewed"); // new, edit, reviewed
 const pageTime = ref("2023/10/27 11:16");
 
 const screenWidth = ref(800);
@@ -216,22 +219,33 @@ const submissionData = reactive({
 
 getData();
 
+
+const imgFilesFetched = reactive([
+    // {},
+]);
+
+
+
+
 async function getData() {
     const data = await POST("/getOneProject", {'project_id' : dashboardId }, token);
 
     Object.assign(submissionData, {
-        projectName: data.data.name || "",
-        projectDes: data.data.name || "",
-        projectWebsiteName: data.data.keyName || "",
-        projectTargetValue: data.data.goal_price || "",
-        projectCate: data.data.category_id || "",
-        startDate: data.data.start_time || "",
-        endDate: data.data.end_time || "",
-        imgData: data.data.img_data || "",
-        imgDataQuantity: 1,
-});
-    
-    console.log(data)
+            projectName: data.data.name || "",
+            projectDes: data.data.over_view || "",
+            projectWebsiteName: data.data.keyName || "",
+            projectTargetValue: data.data.goal_price || "",
+            projectCate: data.data.category_id || "",
+            startDate: data.data.start_time || "",
+            endDate: data.data.end_time || "",
+            imgData: data.data.img_data || "",
+    });
+    data.data.img_data.forEach(imgPath => {
+        let imgFile = {
+            preview: imgPath,
+        };
+        imgFilesFetched.push(imgFile);
+    });
 }
 
 
@@ -239,23 +253,6 @@ onMounted(() => {
     screenWidth.value = window.innerWidth;
 });
 
-
-
-// watchEffect(() => {
-//   if (data.value && data.value.data) {
-//     submissionData.projectName = data.value.data.name || "";
-//     submissionData.projectDes = data.value.data.description || "";
-//     // 假设 API 返回的数据中包含 projectWebsiteName 和其他字段
-//     submissionData.projectWebsiteName = data.value.data.websiteName || "long-jing-you";
-//     submissionData.projectTargetValue = data.value.data.goal_price || "";
-//     submissionData.projectCate = data.value.data.category_id || "";
-//     submissionData.startDate = data.value.project.start_time || "";
-//     submissionData.endDate = data.value.project.end_time || "";
-//     // 根据你的数据结构调整以上字段
-//   }
-// });
-
-//
 
 const imgData = ref([]); //imgData.value.files
 const imgDataQuantity = computed(() => imgData.value?.files?.length || 0);
@@ -269,8 +266,18 @@ watch(imgDataQuantity, (val) => {
 
 
 //
-function doSubmit() {
-    alert("doSubmit");
+async function doSubmit() {
+
+    const payload = {...submissionData,'project_id': dashboardId};
+
+    const data = await POST("/updateProject", payload, token);
+    console.log(data);
+    if(!!data) {
+        // orderData.value = data.order;
+        // loaded.value = true;
+    }
+   
+    // alert("doSubmit");
 }
 </script>
 <style>

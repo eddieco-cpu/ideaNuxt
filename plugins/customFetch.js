@@ -22,8 +22,7 @@ export default defineNuxtPlugin(() => {
       },
       onResponseError({ response }) {
         if (response.status === 401) {
-            authStore.clearToken();
-            toast.error('請登入會員');
+          authStore.clearToken();
           return navigateTo('/')
         }
       }

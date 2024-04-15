@@ -135,6 +135,7 @@
 //   middleware: 'test'
 // })
 const authStore = useAuthStore();
+const projectStore = useProjectStore();
 const token     = authStore.token;
 
 
@@ -145,8 +146,12 @@ await nextTick();
 
 const { data, error, pending } = useCustomFetch("/getOneProject", {'project_id' : dashboardId }, token);
 
+watch( data, () => {
+    projectStore.setData(data.value.data);
+} )
+// projectStore.setData(data.value.data);
 //
-const dataStatus = ref("inProgress");
+const dataStatus = ref("completed");
 const dataStatusOptions = ref(["start", "completed", "inProgress"]);
 
 //

@@ -1,13 +1,7 @@
 <template>
-<<<<<<< HEAD
     <div class="max-w-[324px] md:max-w-[1082px] 3xl:max-w-[1300px] mx-auto mt-8">
         <CartHeader :step="1" v-if="cart.isHaveCartItem" />
         <div class="pt-6 grid grid-cols-1 md:grid-cols-[76%_auto] items-start gap-6" v-if="cart.isHaveCartItem">
-=======
-    <div class="max-w-[324px] md:max-w-[1082px] mx-auto mt-8">
-        <CartHeader :step="1" v-if="!cart.isCartEmpty" />
-        <div class="pt-6 grid grid-cols-1 md:grid-cols-[76%_auto] items-start gap-6" v-if="!cart.isCartEmpty">
->>>>>>> master
             <!-- 商品資訊 -->
             <div class="flex flex-col gap-6">
                 <CardContainer title="選擇團購">
