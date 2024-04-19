@@ -210,64 +210,7 @@
 
                         <section class="mb-10">
                             <!-- deliveToStore -->
-                            <div class="flex justify-start items-center gap-x-3 max-md:items-start max-md:gap-x-0">
-                                <UCheckbox
-                                    label="超商取貨"
-                                    class="whitespace-nowrap"
-                                    v-model="submissionData.deliveToStore.isAvailable"
-                                    @change="cancelFeeIfNotAvailable(submissionData.deliveToStore, 'deliveToStore')"
-                                />
-                                <div class="flex justify-start items-end gap-x-2 flex-wrap">
-                                    <UInput
-                                        class="w-44 m-auto max-md:h-[32px] mb-2 max-md:ml-3"
-                                        type="number"
-                                        placeholder="輸入運費金額"
-                                        inputClass="!pl-[55px]"
-                                        size="sm"
-                                        @input="(e) => (e.target.value = Math.max(0, e.target.value))"
-                                        :disabled="!submissionData.deliveToStore.isAvailable"
-                                        v-model="submissionData.deliveToStore.fee"
-                                    >
-                                        <template #leading>
-                                            <div
-                                                class="flex justify-center items-center h-full px-2 bg-gray-50 relative left-[-14px] border-[1px] border-[rgb(221,222,224)] rounded-s-md"
-                                            >
-                                                NT$
-                                            </div>
-                                        </template>
-                                    </UInput>
-                                    <p
-                                        class="dark:text-red-400 mt-0 text-Status-Color-Danger-500-Primary text-sm max-md:pl-4 max-md:mt-[-8px]"
-                                        v-if="submitedError.deliveToStoreFee"
-                                    >
-                                        請輸入金額
-                                    </p>
-                                </div>
-                            </div>
-                            <div
-                                class="flex justify-start items-center ml-8 gap-x-8 max-md:flex-col max-md:items-start max-md:gap-y-3"
-                            >
-                                <UCheckbox
-                                    label="7-Eleven"
-                                    :disabled="!submissionData.deliveToStore.isAvailable"
-                                    :checked="submissionData.deliveToStore.stores.includes('711')"
-                                    @change="($event) => setStoresInDeliveToStore($event, '711')"
-                                />
-                                <UCheckbox
-                                    label="全家便利商店"
-                                    :disabled="!submissionData.deliveToStore.isAvailable"
-                                    :checked="submissionData.deliveToStore.stores.includes('family')"
-                                    @change="($event) => setStoresInDeliveToStore($event, 'family')"
-                                />
-                            </div>
-                            <div class="mb-5">
-                                <p
-                                    class="dark:text-red-400 mt-0 text-Status-Color-Danger-500-Primary text-sm ml-8"
-                                    v-if="submitedError.deliveToStoreStores"
-                                >
-                                    請選擇 1 個以上超商
-                                </p>
-                            </div>
+                            
 
                             <!-- deliveToHouse -->
                             <div class="flex justify-start items-center gap-x-3 mb-5 max-md:items-start max-md:gap-x-0">
@@ -462,18 +405,32 @@
 <script setup>
 import { proposalSchema } from "~/validation";
 import { zhTW } from "date-fns/locale";
+import { useToast } from "vue-toastification";
 
 import VueDatePicker from "@vuepic/vue-datepicker";
 
+const toast = useToast();
+
+
 //
 const route = useRoute();
+const authStore = useAuthStore();
+
+const token     = authStore.token;
 const proposalId = route.params.proposalId;
+const dashboardId = route.params.dashboardId;
+
 
 async function getEditedProposalData() {
-    const data = await GET(`/api/dashboard/details/proposals/${proposalId}`);
+    
+
+    const data = await POST("/getEditedProposalData", {'project_id' : dashboardId, 'spec_id' : proposalId }, token);
+
+
+    // const data = await GET(`/api/dashboard/details/proposals/${proposalId}`);
     if (!!data) {
         console.log("data", data);
-        pageStatus.value = data.proposalStatus;
+        pageStatus.value = 'edit';
 
         if (data.proposalData) {
             //
@@ -485,7 +442,7 @@ async function getEditedProposalData() {
             //
             let imgFile = {
                 path: "",
-                preview: data.proposalData.imgData,
+                preview: data.proposalData.projectPreview,
                 sizeKB: "",
                 dimensions: "",
             };
@@ -604,8 +561,10 @@ function formatDateToYearMonth(dateInput) {
     return `${year}/${month}`;
 }
 
+const check = ref(false);
+
 //
-function doSave() {
+async function doSave() {
     //
     submitedError.value = {
         salesLimitedQuantity: submissionData.value.salesLimit && !submissionData.value.salesLimitedQuantity,
@@ -619,13 +578,57 @@ function doSave() {
             submissionData.value.deliveToHouse.isAvailable && submissionData.value.deliveToHouse.fee === null,
     };
 
-    //
-    if (Object.keys(submitedError.value).find((el) => submitedError.value[el])) {
-        return console.log("error in submitedError");
+
+    const payload = {
+        'image':submissionData.value.imgData,
+        'title':submissionData.value.projectName,
+        'original_price':submissionData.value.originalPrice,
+        'sell_price':submissionData.value.specialOffer,
+        'content' :submissionData.value.content,
+        'limit_qty':submissionData.value.salesLimitedQuantity,
+        'ship_date': submissionData.value.deliveryTime,
+        'deliveOverseas':submissionData.value.deliveOverseas,
+        'deliveToHouse': submissionData.value.deliveToHouse,
+        'deliveryWays':submissionData.value.deliveryWays,
+        'project_id':dashboardId,
+        'spec_id': proposalId
     }
 
+    console.log(pageStatus.value)
+
+    if(pageStatus.value == 'edit') {
+        const data = await POST("/updateProjectSpec", payload, token);
+
+        console.log(data)
+        if(!!data) {
+            check.value = true
+            toast.success(data.message)
+
+        }
+        
+        
+    } else {
+        const data = await POST("/addProjectSpec", payload, token);
+        if(!!data) {
+            check.value = true
+            toast.success(data.message)
+
+        }
+    }
+
+    if(check.value) {
+        navigateTo(`/dashboard/${dashboardId}/details/proposals`);
+    }
+    
+    
+
     //
-    alert("doSave");
+    // if (Object.keys(submitedError.value).find((el) => submitedError.value[el])) {
+    //     return console.log("error in submitedError");
+    // }
+
+    // //
+    // alert("doSave");
 }
 function doDel(event) {
     event.preventDefault();

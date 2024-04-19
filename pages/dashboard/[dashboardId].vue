@@ -1,45 +1,50 @@
 <template>
-    <div>
+    <div v-if = "data && data.data">
+        <ClientOnly>
         <section
             class="max-w-[1082px] mx-auto py-4 mt-8 rounded-lg bg-white max-md:max-w-[100%-24px] max-md:mt-6 max-xl:mx-3 max-xl:max-w-[100%]"
-        >
-            <ul
-                class="w-[calc(100%-200px)] max-md:w-[calc(100%-20px)] mx-auto flex justify-between items-start relative"
-            >
-                <li
-                    :key="step.id"
-                    v-for="(step, stepIndex) in stepsData"
-                    class="w-16 flex flex-col justify-center items-center gap-y-2 relative z-[1]"
+        >   
+            
+                <ul
+                    class="w-[calc(100%-200px)] max-md:w-[calc(100%-20px)] mx-auto flex justify-between items-start relative"
                 >
-                    <div
-                        class="w-4 h-4 rounded-full flex justify-center items-center"
-                        :class="stepIndex > stepsStatus ? ' bg-Primary-400-Hover' : ' bg-Primary-500-Primary'"
+                    <li
+                        :key="step.id"
+                        v-for="(step, stepIndex) in stepsData"
+                        class="w-16 flex flex-col justify-center items-center gap-y-2 relative z-[1]"
                     >
-                        <template v-if="stepIndex >= stepsStatus">
-                            <div class="w-2 h-2 rounded-full bg-white"></div>
-                        </template>
-                        <template v-else>
-                            <UIcon name="i-heroicons-check" class="block size-[13px] font-black text-white" />
-                        </template>
-                    </div>
-                    <p
-                        class="text-xs font-medium"
-                        :class="stepIndex > stepsStatus ? ' text-Neutral-500-Primary' : 'text-Primary-500-Primary'"
-                    >
-                        {{ step.name }}
-                    </p>
-                </li>
-                <li
-                    class="mx-auto absolute top-[7px] left-0 right-0 w-[calc(100%-64px)] h-[2px] bg-Primary-500-Primary"
-                    :style="
-                        stepsStatus < 3
-                            ? ` background-image: linear-gradient(to right, rgb(107,86,202) ${stepsStatus * 33.3333}%, rgb(145,127,221) ${stepsStatus * 33.3333}%);`
-                            : ''
-                    "
-                ></li>
-            </ul>
+                        <div
+                            class="w-4 h-4 rounded-full flex justify-center items-center"
+                            :class="stepIndex > stepsStatus ? ' bg-Primary-400-Hover' : ' bg-Primary-500-Primary'"
+                        >
+                            <template v-if="stepIndex >= stepsStatus">
+                                <div class="w-2 h-2 rounded-full bg-white"></div>
+                            </template>
+                            <template v-else>
+                                <UIcon name="i-heroicons-check" class="block size-[13px] font-black text-white" />
+                            </template>
+                        </div>
+                        <p
+                            class="text-xs font-medium"
+                            :class="stepIndex > stepsStatus ? ' text-Neutral-500-Primary' : 'text-Primary-500-Primary'"
+                        >
+                            {{ step.name }}
+                        </p>
+                    </li>
+                    <li
+                        class="mx-auto absolute top-[7px] left-0 right-0 w-[calc(100%-64px)] h-[2px] bg-Primary-500-Primary"
+                        :style="
+                            stepsStatus < 3
+                                ? ` background-image: linear-gradient(to right, rgb(107,86,202) ${stepsStatus * 33.3333}%, rgb(145,127,221) ${stepsStatus * 33.3333}%);`
+                                : ''
+                        "
+                    ></li>
+                </ul>
+
+           
+            
         </section>
-        <section v-if = "!pending"
+        <section 
             class="max-w-[1082px] mx-auto p-3 mt-8 rounded-lg bg-white max-md:max-w-[100%-24px] max-md:mt-3 max-xl:mx-3 max-xl:max-w-[100%]"
         >
             <div class="flex justify-between items-center gap-x-2">
@@ -82,13 +87,14 @@
                 </button>
             </div>
         </section>
-        <div
+        <div 
             class="md:flex md:gap-x-7 md:mx-auto md:pt-10 max-md:mt-3 xl:max-w-[1082px] max-xl:max-w-[calc(100%-24px)] max-md:max-w-[100%]"
         >
             <!--  -->
             <div class="md:max-w-[256px]">
                 <!-- 導航列 -->
-                <nav
+                <ClientOnly>
+                    <nav
                     ref="dashboardNav"
                     class="dashboard-nav flex flex-nowrap gap-x-8 overflow-x-auto bg-white max-md:px-3 md:px-0 md:flex-col md:gap-y-2 md:rounded-lg md:overflow-hidden md:w-[256px]"
                 >
@@ -120,43 +126,27 @@
                         </template>
                     </template>
                 </nav>
+
+
+                </ClientOnly>
+               
             </div>
 
-            <div class="md:max-w-[calc(100%-256px-28px)] md:flex-grow" v-if = "!pending">
+            <div class="md:max-w-[calc(100%-256px-28px)] md:flex-grow" >
                 <!-- 導航列顯示內容 -->
                 <NuxtPage class="max-md:max-w-[323px] mx-auto max-w-full md:flex-1 max-md:mt-6" />
             </div>
         </div>
+    </ClientOnly>
     </div>
 </template>
 
 <script setup>
-// dinefePageMeta({
-//   middleware: 'test'
-// })
-const authStore = useAuthStore();
-const projectStore = useProjectStore();
-const token     = authStore.token;
 
-
-const route = useRoute();
-const dashboardId = route.params.dashboardId;
-
-await nextTick();
-
-const { data, error, pending } = useCustomFetch("/getOneProject", {'project_id' : dashboardId }, token);
-
-watch( data, () => {
-    projectStore.setData(data.value.data);
-} )
-// projectStore.setData(data.value.data);
-//
-const dataStatus = ref("completed");
-const dataStatusOptions = ref(["start", "completed", "inProgress"]);
-
-//
-const stepsStatus = ref(4); //0~4
-const stepsData = ref([
+const route             = useRoute();
+const dashboardId       = route.params.dashboardId;
+const stepsStatus       = ref(1);
+const stepsData         = ref([
     {
         id: "1",
         name: "提案準備",
@@ -175,8 +165,17 @@ const stepsData = ref([
     },
 ]);
 
-//
-const dashboardNav = ref(null);
+const { data }          = useCustomFetch("/getOneProject", {'project_id' : dashboardId }, '');
+
+if(data && data.value?.data) {
+    stepsStatus.value = data.value.data?.review_status
+}
+
+const dataStatus        = ref("start");
+const dataStatusOptions = ref(["start", "completed", "inProgress"]);
+
+
+const dashboardNav        = ref(null);
 const dashboardNavListDep = [
     {
         id: "/",
@@ -192,13 +191,13 @@ const dashboardNavListDep = [
         link: "/dashboard/" + dashboardId + "/details/basic",
         pathName: "details",
     },
-    {
-        id: "/progress",
-        name: "募資進度更新",
-        imgUrl: "i-heroicons-newspaper",
-        link: "/dashboard/" + dashboardId + "/progress",
-        pathName: "progress",
-    },
+    // {
+    //     id: "/progress",
+    //     name: "募資進度更新",
+    //     imgUrl: "i-heroicons-newspaper",
+    //     link: "/dashboard/" + dashboardId + "/progress",
+    //     pathName: "progress",
+    // },
     {
         id: "/orders",
         name: "訂單總覽",

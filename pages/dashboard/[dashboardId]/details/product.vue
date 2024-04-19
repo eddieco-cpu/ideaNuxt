@@ -13,26 +13,31 @@
     </div>
 </template>
 <script setup>
-//
-const pageStatus = ref("edit"); // edit, reviewed
-const pageTime = ref("2023/10/27 11:16");
-
+import { useToast } from "vue-toastification";
+const toast       = useToast();
+const route       = useRoute();
+const dashboardId = route.params.dashboardId;
+const pageStatus  = ref("edit"); // edit, reviewed
+const pageTime    = ref("2023/10/27 11:16");
 const fullContext = ref();
 
 async function getHtmlContext() {
-    const data = await GET(`/api/dashboard/details/product/fakeHtml`);
+    const data = await POST("/getOneProjectNew", {'project_id' : dashboardId }, '');
     if (!!data) {
-        console.log("data.data", data.data);
-        if (data.data) fullContext.value.editorContent = data.data;
+        if (data.data) fullContext.value.editorContent = data.data.content;
     }
 }
 onMounted(() => {
     getHtmlContext();
 });
 
-function doSave() {
-    console.log("doSubmit");
-    console.log("fullContext", fullContext.value.editorContent);
-    fullContext.value.quillEditorBody.setHTML("");
+async function doSave() {
+    const payload = {'content': fullContext.value.editorContent,'project_id': dashboardId};
+
+    const data = await POST("/updateProject", payload, '');
+    if(!!data) {
+        toast.success(data.message)
+    }
 }
 </script>
+

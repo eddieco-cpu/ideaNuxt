@@ -19,7 +19,6 @@
         </section>
 
         <UForm :schema="submissionSchema" :state="submissionData" @submit="doSubmit">
-            <!--  -->
             <SubmissionLayout>
                 <template #des>
                     <SubmissionDes
@@ -46,22 +45,25 @@
                         class="mb-3"
                     >
                         <UInput class="max-w-[400px]" v-model="submissionData.email" />
-                    </UFormGroup>
 
-                    <UFormGroup
-                        label="聯絡電話"
-                        name="phone"
-                        required
-                        disabled
-                        help="手機已驗證成功。若需修改手機，請聯繫客服中心。"
-                        class="mb-3"
-                    >
-                        <UInput class="max-w-[276px]" disabled v-model="submissionData.phone" readonly />
+                  
                     </UFormGroup>
+                    <div v-if ="userData && userData.data.account">
+                        <UFormGroup
+                            label="聯絡電話"
+                            name="phone"
+                            required
+                            disabled
+                            help="手機已驗證成功。若需修改手機，請聯繫客服中心。"
+                            class="mb-3"
+                        >
+                            <UInput class="max-w-[276px]" v-model = "userData.data.account"  disabled  readonly />
+                        </UFormGroup>
+                    
+                    </div>
                 </template>
             </SubmissionLayout>
 
-            <!--  -->
             <SubmissionLayout>
                 <template #des>
                     <SubmissionDes
@@ -125,19 +127,23 @@
                         </UInput>
                     </UFormGroup>
 
-                    <UFormGroup label="專案分類" help="請選擇適合您本次計畫的商品分類/屬性。" class="mb-3">
-                        <div class="flex justify-start items-center w-[210px]">
-                            <USelectMenu
-                                class="w-full h-11 lg:h-10"
-                                size="lg"
-                                v-model="submissionData.category"
-                                :options="categoryOpts"
-                                placeholder="請選擇"
-                                value-attribute="id"
-                                option-attribute="name"
-                            />
-                        </div>
-                    </UFormGroup>
+                    <div v-if = "categoryData && categoryData.data.length > 0">
+                        
+                        <UFormGroup label="專案分類" help="請選擇適合您本次計畫的商品分類/屬性。" class="mb-3">
+                            <div class="flex justify-start items-center w-[210px]">
+                                <USelectMenu
+                                    class="w-full h-11 lg:h-10"
+                                    size="lg"
+                                    v-model="submissionData.category"
+                                    :options="categoryData.data"
+                                    placeholder="請選擇"
+                                    value-attribute="id"
+                                    option-attribute="name"
+                                />
+                            </div>
+                        </UFormGroup>
+                    </div>
+                   
 
                     <UFormGroup
                         label="預計開始時間"
@@ -222,7 +228,6 @@
                 </template>
             </SubmissionLayout>
 
-            <!--  -->
             <SubmissionLayout>
                 <template #des>
                     <SubmissionDes
@@ -369,7 +374,6 @@
                 </template>
             </SubmissionLayout>
 
-            <!--  -->
             <SubmissionLayout>
                 <template #des>
                     <SubmissionDes
@@ -414,7 +418,6 @@
                 </template>
             </SubmissionLayout>
 
-            <!--  -->
             <SubmissionLayout formClass="!bg-transparent !p-0">
                 <template #des>
                     <SubmissionDes
@@ -435,104 +438,73 @@
 </template>
 <script setup>
 import { descriptionDatas } from "@/assets/others/submission/data";
-//import { descriptionDatas } from "@/data/submission/data";
-
 import { submissionSchema } from "~/validation";
-import { zhTW } from "date-fns/locale";
+import { zhTW }             from "date-fns/locale";
+import { useToast }         from "vue-toastification";
+import VueDatePicker        from "@vuepic/vue-datepicker";
 
-import VueDatePicker from "@vuepic/vue-datepicker";
-import { useToast } from "vue-toastification";
-const toast = useToast();
-//import "/public/css/vue-datepicker.css";
-
+const toast     = useToast();
 const authStore = useAuthStore();
-const token = authStore.token;
+const token     = authStore.token;
 
-
-
-//
-
-const categoryOpts = ref([])
-
-getCategory()
-
-async function getCategory() {
-    const queryParam = "?type=fundraise";
-    const data = await GET(`/frontend/getFrontendCategory${queryParam}`,1);
-    if (!!data) {
-        categoryOpts.value = data.Categorydata;
-    }
-}
-
+const { data:categoryData }  = useCustomGetFetch('/frontend/getCategory?type=fundraise');
+const { data:userData }      = useCustomGetFetch('/getUserData');
 
 const submissionData = reactive({
-    name: "",
-    email: "",
-    phone: "0987654321",
-    projectName: "",
-    projectDes: "",
-    projectDetailsDes: "",
-    projectTargetValue: "",
-    category: "",
-    startDate: "",
-    endDate: "",
+    name               : "",
+    email              : "",
+    projectName        : "",
+    projectDes         : "",
+    projectDetailsDes  : "",
+    projectTargetValue : "",
+    category           : "",
+    startDate          : "",
+    endDate            : "",
+    relatedWebsite     : "",
+    imgData            : [],
+    imgDataQuantity    : 0,
     agree: {
         contract: false,
         understand: false,
     },
-    relatedWebsite: "",
     website: {
         ig: "",
         fb: "",
         yt: "",
     },
-    imgData: [],
-    imgDataQuantity: 0,
+   
 });
-const imgData = ref(); //imgData.value.files
+const imgData = ref(); 
 const imgDataQuantity = computed(() => imgData.value?.files?.length || 0);
 
 watch(imgDataQuantity, (val) => {
-    console.log(val);
     submissionData.imgDataQuantity = val;
     submissionData.imgData = imgData.value.files;
 });
 
-//
 const screenWidth = ref(800);
 onMounted(() => {
     screenWidth.value = window.innerWidth;
 });
 
-//
 const igSwitcher = ref(false);
 const ytSwitcher = ref(false);
 const fbSwitcher = ref(false);
 
-//
-
-
-//
 async function doSubmit() {
     if (!submissionData.agree.contract || !submissionData.agree.understand) {
         return alert("請同意提案契約書");
     }
 
     const data = await POST("/stepOneProject", submissionData, token);
-    console.log(data);
-    if(!!data) {
-        // orderData.value = data.order;
-        // loaded.value = true;
-    }
-    
-    
 
+    if(!!data) {
+        // toast.success(data.message);
+    }
 }
 </script>
 <style>
-/* .banner {
-    background-image: linear-gradient(to bottom, #917fdd 50%, transparent 50%);
-} */
+
 .submission .scroll-container::-webkit-scrollbar {
     width: 4px;
     height: 4px;

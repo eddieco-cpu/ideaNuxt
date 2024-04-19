@@ -1,6 +1,6 @@
 <template>
-    <section>
-        <section class="mb-7" v-if="!pending">
+    <section v-if="data">
+        <section class="mb-7" >
             <div class="flex gap-x-4 justify-center items-center mb-2 max-lg:flex-wrap">
                 <DashboardIndexCard
                     :contentObj="price"
@@ -42,63 +42,77 @@
 <script setup>
 
 
-const authStore = useAuthStore();
-const token     = authStore.token;
-
-
 const route = useRoute();
 const dashboardId = route.params.dashboardId;
 
-await nextTick();
 
-const { data, error, pending } = useCustomFetch("/getProjectForDashborad", {'project_id' : dashboardId }, token);
+const { data, error } = useCustomFetch("/getProjectForDashborad", {'project_id' : dashboardId }, '');
+console.log(data.value)
 
 const price = computed( () => {
-    return {
+    if(data.value?.project) {
+        return {
         'label': '累積集資金額',
-        'amount': '$' + data.value.detail.price,
-        'description': '$' + data.value.project.goal_price
+        'amount': '$' + data.value?.detail.price,
+        'description': '$' + data.value.project?.goal_price
+    }
+    } else {
+        return [];
     }
 })
 
 
 const time = computed( () => {
-    const startDate = new Date(data.value.project.start_time);
-  const endDate = new Date(data.value.project.end_time);
-  const duration = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)); // 毫秒转换为天
+    if(data.value?.project) {
+        const startDate = new Date(data.value.project.start_time);
+        const endDate = new Date(data.value.project.end_time);
+        const duration = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)); // 毫秒转换为天
 
-  return {
-    label: '專案執行時間',
-    amount: `${duration} 天`,
-    description: `${data.value.project.start_time} - ${data.value.project.end_time}`,
-  };
-
+        return {
+            label: '專案執行時間',
+            amount: `${duration} 天`,
+            description: `${data.value.project?.start_time} - ${data.value.project?.end_time}`,
+        };
+    } else {
+        return []
+    }
 })
 
 
 const orderCount = computed (() => {
-    return {
+    if(data.value?.project) {
+        return {
         'label' : '累積訂單數',
         'amount' : data.value.detail.count
+    }
+    } else {
+        return []
     }
 })
 
 const peopleCount = computed (() => {
-    return {
+    if(data.value?.project) {
+        return {
         'label' : '總贊助人數',
         'amount' : data.value.detail.count
+    }
+    } else {
+        return []
     }
 })
 
 const average = computed (() => {
-
-    const amount = data.value.detail.price > 0 
+    if(data.value?.project) {
+        const amount = data.value.detail.price > 0 
         ? Math.floor(data.value.detail.price / data.value.detail.count)
         : 0;
         
     return {
         'label': '平均贊助金額',
         'amount': '$' + amount,
+    }
+    } else {
+        return []
     }
 })
         

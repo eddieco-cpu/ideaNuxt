@@ -172,37 +172,31 @@
 
 <script setup>
 import { basicProjectDataSchema } from "~/validation";
-import { zhTW } from "date-fns/locale";
+import { zhTW }                   from "date-fns/locale";
+import { useAuthStore }           from "@/stores/auth";
+import { useToast }               from "vue-toastification";
+import VueDatePicker              from "@vuepic/vue-datepicker";
 
-import VueDatePicker from "@vuepic/vue-datepicker";
-
-import { useAuthStore } from "@/stores/auth";
-
-const authStore = useAuthStore();
-const token     = authStore.token;
-const route = useRoute();
+const toast       = useToast();
+const authStore   = useAuthStore();
+const token       = authStore.token;
+const route       = useRoute();
 const dashboardId = route.params.dashboardId;
 
 const cateOpts = ref([]);
 
-
 getCategory()
 
 async function getCategory() {
-    const queryParam = "?type=fundraise";
-    const data = await GET(`/frontend/getFrontendCategory${queryParam}`,1);
-
+    const data = await GET(`/frontend/getCategory?type=fundraise`,1);
+    
     if (!!data) {
-        cateOpts.value = data.Categorydata;
-        
+        cateOpts.value = data.data;
     }
 }
 
-
-//
-const pageStatus = ref("reviewed"); // new, edit, reviewed
-const pageTime = ref("2023/10/27 11:16");
-
+const pageStatus  = ref("edit"); // new, edit, reviewed
+const pageTime    = ref("2023/10/27 11:16");
 const screenWidth = ref(800);
 
 const submissionData = reactive({
@@ -219,21 +213,15 @@ const submissionData = reactive({
 
 getData();
 
-
-const imgFilesFetched = reactive([
-    // {},
-]);
-
-
-
+const imgFilesFetched = reactive([]);
 
 async function getData() {
-    const data = await POST("/getOneProject", {'project_id' : dashboardId }, token);
+    const data = await POST("/getOneProjectNew", {'project_id' : dashboardId }, token);
 
     Object.assign(submissionData, {
             projectName: data.data.name || "",
-            projectDes: data.data.over_view || "",
-            projectWebsiteName: data.data.keyName || "",
+            projectDes: data.data.overview || "",
+            projectWebsiteName: data.data.url_key || "",
             projectTargetValue: data.data.goal_price || "",
             projectCate: data.data.category_id || "",
             startDate: data.data.start_time || "",
@@ -248,38 +236,29 @@ async function getData() {
     });
 }
 
-
 onMounted(() => {
     screenWidth.value = window.innerWidth;
 });
 
-
-const imgData = ref([]); //imgData.value.files
+const imgData = ref([]); 
 const imgDataQuantity = computed(() => imgData.value?.files?.length || 0);
 
 watch(imgDataQuantity, (val) => {
-    //console.log(val);
     submissionData.imgDataQuantity = val;
     submissionData.imgData = imgData.value.files;
 });
 
-
-
-//
 async function doSubmit() {
 
     const payload = {...submissionData,'project_id': dashboardId};
+    const data    = await POST("/updateProject", payload, token);
 
-    const data = await POST("/updateProject", payload, token);
-    console.log(data);
     if(!!data) {
-        // orderData.value = data.order;
-        // loaded.value = true;
+        toast.success(data.message)
     }
-   
-    // alert("doSubmit");
 }
 </script>
+
 <style>
 .date-picker .dp__input {
     height: 40px;

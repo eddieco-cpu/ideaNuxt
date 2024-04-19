@@ -118,8 +118,8 @@ export const basicProjectDataSchema = z.object({
                     return num;
                 }),
         ),
-    startDate: dateSchema,
-    endDate: dateSchema,
+    // startDate: dateSchema,
+    // endDate: dateSchema,
     projectDetailsDes: z.string(commonErrorMessage).min(1, "必填"),
     imgDataQuantity: z.number().min(1, { message: "必須大於等於 1 張" }).max(5, { message: "數值必須小於等於 5 張" }),
 });

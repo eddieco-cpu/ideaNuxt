@@ -35,23 +35,14 @@
         <p class="text-Status-Color-Danger-500-Primary text-xl font-medium mb-2">
             NT${{ prod.specialOffer }}
             <span class="text-xs font-normal opacity-80 line-through">定價 ${{ prod.originalPrice }}</span>
-            <span class="text-xs font-normal opacity-80">，限省 ${{ prod.originalPrice - prod.specialOffer }}</span>
+            <span class="text-xs font-normal opacity-80">，現省 ${{ prod.originalPrice - prod.specialOffer }}</span>
         </p>
         <div class="h-[1px] bg-gray-300 mb-2"></div>
         <div class="mb-4">
             <p class="text-xs font-medium text-gray-700 leading-5">商品內容：</p>
-            <ul class="text-xs font-medium text-gray-700 leading-5 list-disc pl-8">
-                <li v-for="(content, contentI) in prod.content" :key="contentI">{{ content }}</li>
-            </ul>
+            <p v-html = "prod.content"></p>
         </div>
-        <div class="mb-2">
-            <p class="text-xs font-medium text-gray-700 leading-5">商品規格：</p>
-            <ul class="text-xs font-medium text-gray-700 leading-5 list-disc pl-8">
-                <li v-for="(specification, specificationI) in prod.specification" :key="specificationI">
-                    {{ specification }}
-                </li>
-            </ul>
-        </div>
+      
         <div class="h-[1px] bg-gray-300 mb-2"></div>
         <p></p>
     </li>
@@ -75,4 +66,10 @@ const props = defineProps({
         }),
     },
 });
+
+// const emit = defineEmits(["setDefaultAddress", "editAddress"]);
+
+// function () {
+//     emit("setDefaultAddress", index - 1);
+// }
 </script>

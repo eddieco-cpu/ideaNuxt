@@ -48,6 +48,8 @@
 </template>
 <script setup>
 const route = useRoute();
+const authStore = useAuthStore();
+const token     = authStore.token;
 const dashboardId = route.params.dashboardId;
 
 //
@@ -61,15 +63,16 @@ function toNewProposal() {
 const proposals = ref([]);
 
 //
-async function getReviewedProposalsData() {
-    const data = await GET(`/api/dashboard/details/reviewed/proposals`);
-    if (!!data) {
-        proposals.value = data.proposals.map((el, i) => ({
-            ...el,
 
-            //
-            linkProposalsId: "fakeDataOfDetailsProposal" + (i + 1), //fake use //fakeDataOfDetailsProposal6
-        }));
+
+async function getReviewedProposalsData() {
+
+    const data = await POST("/getProjectCardData", {'project_id' : dashboardId }, token);
+    // const data = await GET(`/api/dashboard/details/reviewed/proposals`);
+    console.log(data)
+    if (!!data) {
+        proposals.value = data
+      
     }
 }
 getReviewedProposalsData();

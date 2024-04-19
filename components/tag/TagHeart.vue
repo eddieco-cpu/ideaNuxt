@@ -1,6 +1,6 @@
 <template>
     <!-- 愛心模式 -->
-    <div v-if="!isEditMode" class="cursor-pointer">
+    <div v-if="false" class="cursor-pointer">
         <!-- 收藏卡片 -->
         <div v-if="!isAddKol" @click="isAddFavorite($event, !addFavorite)">
             <img src="~assets/images/icon/heart-icon.svg" alt="favorite" v-show="!addFavorite" class="w-6" />

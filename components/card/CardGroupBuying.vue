@@ -20,9 +20,9 @@
                         ]"
                     />
                     <!-- 愛心 -->
-                    <div class="absolute top-2 right-2">
+                    <!-- <div class="absolute top-2 right-2">
                         <TagHeart :isFavorite="isFavorite" :id="id" />
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- 文字 -->

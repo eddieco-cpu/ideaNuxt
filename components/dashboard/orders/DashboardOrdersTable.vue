@@ -112,15 +112,12 @@
 </template>
 <script setup>
 //
-const authStore = useAuthStore();
-const token     = authStore.token;
 
 
 const route = useRoute();
 const dashboardId = route.params.dashboardId;
 
-await nextTick();
-const { data:allDatas, error, pending } = useCustomFetch("/getProjectForDashborad", {'project_id' : dashboardId }, token);
+const { data:allDatas, error, pending } = useCustomFetch("/getProjectForDashborad", {'project_id' : dashboardId }, '');
 
 //
 const selectOfTable = ref(null);
@@ -183,36 +180,40 @@ const columns = [
 
 
 const datas = computed(() => {
-    const start = (currentPage.value - 1) * 10;
-    const end = start + 10;
-    return allDatas.value.detail.orders.length
-        ? allDatas.value.detail.orders.slice(start, end).map((el) => ({
-              id: {
-                  val: el.number,
-                  class: "min-w-[150px] max-w-[150px]",
-              },
-              time: { // 对应created_at
-                  val: el.created_at,
-                  class: "min-w-[150px] max-w-[150px]",
-              },
-              name: { // 对应userInfo的name
-                  val: el.user_info.name,
-                  class: "min-w-[150px] max-w-[150px]",
-              },
-              amount: { // 对应total+ship
-                  val: '$ ' + el.total + el.ship,
-                  class: "min-w-[150px] max-w-[150px]",
-              },
-              payment: { // 固定字符串: 信用卡支付
-                  val: '信用卡支付',
-                  class: "min-w-[130px] max-w-[130px]",
-              },
-              status: { // 判断pay_status, pay_status == 1 为已成立，其他为不成立
-                  val: el.pay_status === 1 ? '已成立' : '不成立',
-                  class: "min-w-[70px] max-w-[70px]",
-              },
-          }))
-        : [];
+    if(allDatas.value) {
+        const start = (currentPage.value - 1) * 10;
+        const end = start + 10;
+        return 
+             allDatas.value.detail.orders.slice(start, end).map((el) => ({
+                id: {
+                    val: el.number,
+                    class: "min-w-[150px] max-w-[150px]",
+                },
+                time: { // 对应created_at
+                    val: el.created_at,
+                    class: "min-w-[150px] max-w-[150px]",
+                },
+                name: { // 对应userInfo的name
+                    val: el.user_info.name,
+                    class: "min-w-[150px] max-w-[150px]",
+                },
+                amount: { // 对应total+ship
+                    val: '$ ' + el.total + el.ship,
+                    class: "min-w-[150px] max-w-[150px]",
+                },
+                payment: { // 固定字符串: 信用卡支付
+                    val: '信用卡支付',
+                    class: "min-w-[130px] max-w-[130px]",
+                },
+                status: { // 判断pay_status, pay_status == 1 为已成立，其他为不成立
+                    val: el.pay_status === 1 ? '已成立' : '不成立',
+                    class: "min-w-[70px] max-w-[70px]",
+                },
+            }))
+    } else {
+        return []
+    }
+    
 })
 
 
@@ -252,7 +253,15 @@ const datas = computed(() => {
 
 //
 const currentPage = ref(1);
-const totalPages = computed(() => Math.ceil(allDatas.value.detail.orders.length / 10));
+const totalPages = computed(() => {
+    if(allDatas.value){
+        Math.ceil(allDatas.value.detail.orders.length / 10)
+    
+    } else {
+        return []
+    }
+})
+  
 const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
 };

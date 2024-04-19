@@ -16,7 +16,7 @@
 
                 <!-- 愛心 -->
                 <div class="absolute top-2 right-2">
-                    <TagHeart :isEditMode="isEditMode" :isFavorite="isFavorite" :id="id" />
+                    <TagHeart :isEditMode="isEditMode" :isFavorite="false" :id="id" />
                 </div>
             </div>
 
@@ -57,7 +57,7 @@
 </template>
 
 <script setup>
-const { isEditMode, isExpired, id } = defineProps({
+const { isEditMode, isExpired, id, hash_id } = defineProps({
     isEditMode: {
         type: Boolean,
         default: false,
@@ -97,6 +97,10 @@ const { isEditMode, isExpired, id } = defineProps({
         type: Array,
         default: () => [],
     },
+    hash_id: {
+        type: String,
+        default: "",
+    }
 });
 
 function isExpiredClass(type) {
@@ -124,7 +128,7 @@ function isExpiredClass(type) {
 }
 
 function goProductDetailPage() {
-    navigateTo(`/products/funding/${id}`);
+    navigateTo(`/products/funding/${hash_id}`);
 }
 </script>
 

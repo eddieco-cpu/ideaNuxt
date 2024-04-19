@@ -20,8 +20,8 @@
             </USelectMenu>
         </div>
 
-        <div class="md:grid md:grid-cols-3 md:gap-5" v-if="!pending">
-            <CardFundraise v-for="(item, index) in data.projects.data" :key="index" v-bind="item" :isEditMode="true" />
+        <div class="md:grid md:grid-cols-3 md:gap-5" v-if="data && data.data.data.length > 0 ">
+            <CardFundraise v-for="(item, index) in data.data.data" :key="index" v-bind="item" :isEditMode="true" />
         </div>
 
         <UiPagination
@@ -34,36 +34,21 @@
 </template>
 
 <script setup>
-const authStore = useAuthStore();
-const token = authStore.token;
 
-const proposalSortType = ["新到舊", "舊到新", "優先成功專案", "優先失敗專案"];
+const proposalSortType         = ["新到舊", "舊到新"];
 const proposalSortTypeSelected = ref(proposalSortType[0]);
+const currentPage              = ref(1);
+const totalPages               = ref(20);
 
-const currentPage = ref(1);``
-const totalPages = ref(20);
 const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
+    refresh();
 };
 
-await nextTick()
+const { data, refresh } = useCustomFetch("/getProjectByUser", {'page': currentPage.value}, '');
+console.log(data.value)
 
-const { data, error, pending, refresh } = useCustomFetch("/getProjectByUser", {}, token);
-
-
-// totalPages.value = data.data.last_page;
-
-const fundingRaiseList = ref([]);
-
-getFundingRaiseList();
-
-async function getFundingRaiseList() {
-    const data = await GET("/api/fundingRaise");
-
-    if (!!data) {
-        fundingRaiseList.value = data;
-    }
-}
+// totalPages.value = data.value.last_page;
 
 function goBack() {
     navigateTo("/member/proposal");

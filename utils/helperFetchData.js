@@ -6,13 +6,15 @@ export const POST = async (endpoint, payload, token='') => {
     const baseUrl  = config.public.apiBaseUrl;
     const url      = `${baseUrl}${endpoint}`
     const store    = useAuthStore();
+    const cookie   = useCookie('jwt-token')
+    const jwtToken = cookie.value;
 
     try {
         const data = await $fetch(url, {
             method: "POST",
             headers: { 
                 "Content-Type": "application/json" ,
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `Bearer ${jwtToken}`,
             },
             body: payload,
         });

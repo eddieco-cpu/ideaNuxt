@@ -59,39 +59,19 @@
 <script setup>
 import UiAccordion from "~/components/ui/UiAccordion.vue";
 
-const route = useRoute();
+const route       = useRoute();
 const dashboardId = route.params.dashboardId;
+const faqs        = ref([]);
 
-//
-const faqs = ref([
-    /**
-        {
-            id: "",
-            label: "",
-            defaultOpen: false,
-            content: [],
-        }
-     */
-]);
-
-//
 async function getReviewedFaqData() {
-    const data = await GET(`/api/dashboard/details/reviewed/faq`);
-    if (!!data) {
-        faqs.value = data.faqs.map(({ label, content, id }, i) => ({
-            id,
-            label,
-            content,
-            defaultOpen: i === 0 ? true : false,
 
-            //
-            linkFaqsId: "fakeDataOfDetailsFaq" + (i + 1), //fake use
-        }));
+    const data = await POST("/getProjectFaqs", {'project_id' : dashboardId }, '');
+    if (!!data) {
+        faqs.value = data
     }
 }
 getReviewedFaqData();
 
-//
 let draggingIndex = ref(-1); // -1 表示没有元素正在被拖拽
 
 function dragStart(event) {
@@ -106,7 +86,6 @@ function dragEnd() {
 function exchangePrev(item, index) {
     if (index <= 0) return;
 
-    //
     faqs.value[index] = faqs.value[index - 1];
     faqs.value[index - 1] = item;
 }
@@ -114,7 +93,6 @@ function exchangePrev(item, index) {
 function exchangeNext(item, index) {
     if (index === faqs.value.length - 1) return;
 
-    //
     faqs.value[index] = faqs.value[index + 1];
     faqs.value[index + 1] = item;
 }

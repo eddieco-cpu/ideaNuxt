@@ -11,6 +11,7 @@ export default defineNuxtPlugin(() => {
     const $customFetch = $fetch.create({
     //   baseURL: config.public.apiBaseUrl,
       onRequest({ request, options, error }) {
+        console.log(request)
         // if (token) {
         //   // Add Authorization header
         //   options.headers = options.headers || {}
@@ -21,10 +22,11 @@ export default defineNuxtPlugin(() => {
         // response._data = new myBusinessResponse(response._data)
       },
       onResponseError({ response }) {
-        if (response.status === 401) {
-          authStore.clearToken();
-          return navigateTo('/')
-        }
+        console.log(response)
+        // if (response.status === 401) {
+        //   authStore.clearToken();
+        //   return navigateTo('/')
+        // }
       }
     })
     // Expose to useNuxtApp().$customFetch

@@ -74,48 +74,82 @@
 </template>
 <script setup>
 import { basicFaqSchema } from "~/validation";
+import { useToast } from "vue-toastification";
 
-//
+const toast = useToast();
+
 const submissionFaq = ref({
     id: "",
     qus: "",
     ans: "",
 });
 
-//
-const route = useRoute();
-const faqId = route.params.faqId;
+const route       = useRoute();
+const faqId       = route.params.faqId;
+const dashboardId = route.params.dashboardId;
 
 async function getEditedFaqData() {
-    const data = await GET(`/api/dashboard/details/faq/${faqId}`);
+
+    const data = await POST("/getProjectFaq", {'id' : faqId }, '');
     if (!!data) {
-        console.log("data", data);
-        if (data.faqData) submissionFaq.value = data.faqData;
+        submissionFaq.value = data
     }
 }
 getEditedFaqData();
 
-//
 const qusPlaceholder =
     "請優先針對您的產品 / 服務建立簡短有力的問答，多數消費者期望透過常見問答獲得更多關於 產品功能 / 服務、規格、配件、保固、安裝、服務特點等資訊。您也可針對常常被詢問的問題建立問答。 消費者對產品的疑問越快獲得滿意的答覆，訂單成交的機會就越大。";
 const ansPlaceholder = "寫下對於問題的最佳回答...";
 
-//
 const qusMaxLength = 100;
 const ansMaxLength = 200;
+const screenWidth  = ref(800);
 
-//
-const screenWidth = ref(800);
 onMounted(() => {
     screenWidth.value = window.innerWidth;
 });
 
-//
-function doSubmit() {
-    // if data not valid, no happen automatically   //as zod
-    alert("doSubmit");
+const check = ref(false)
+
+async function doSubmit() {
+
+    const payload = {
+        ...submissionFaq.value,
+        'project_id' : dashboardId
+    }
+
+    if(submissionFaq.value.id == '') {
+
+        const data = await POST("/addProjectFaq", payload, '');
+
+        if(!!data) {
+            check.value = true
+            toast.success(data.message)
+        }
+
+    } else {
+        
+        const data = await POST("/updateProjectFaq", payload, '');
+
+        if(!!data) {
+            check.value = true
+            toast.success(data.message)
+        }
+    }
+
+    if(check.value) {
+        navigateTo(`/dashboard/${dashboardId}/details/faq`);
+    }
 }
-function doCancel() {
-    alert("doCancel");
+async function doCancel() {
+    
+    const id = submissionFaq.value.id;
+
+    const data = await POST("/deleteProjectFaq", {'id':id}, '');
+
+        if(!!data) {
+            toast.success(data.message)
+            navigateTo(`/dashboard/${dashboardId}/details/faq`);
+        }
 }
 </script>
