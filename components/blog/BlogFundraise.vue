@@ -53,6 +53,6 @@
 
 <script setup>
 function goToPage() {
-    navigateTo(`/products/funding/${1}`);
+    navigateTo(`/project/${1}`);
 }
 </script>

@@ -65,8 +65,8 @@ const footerLinks = reactive([
     {
         name: "來逛逛",
         links: [
-            { name: "創意集資", url: "/category/all?type=fundraise" },
-            { name: "好評團購", url: "/category/all?type=groupbuying" },
+            { name: "創意集資", url: "/category/全部?type=fundraise" },
+            { name: "好評團購", url: "/category/全部?type=groupbuying" },
             { name: "團主推薦", url: "/kol" },
             { name: "好物分享", url: "/" },
         ],

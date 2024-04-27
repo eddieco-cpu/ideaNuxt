@@ -72,7 +72,8 @@ async function editAddress(index, isEdit) {
     await nextTick();
 
     if (isEdit) {
-        tempAddress.value = addressInfo.value.find((item, i) => i === index);
+        tempAddress.value = { ...addressInfo.value.find((item, i) => i === index), index };
+        
     } else {
         // 新增地址
         tempAddress.value = {
@@ -89,6 +90,7 @@ function onAbort(payload) {
 }
 
 async function onSubmit(data, isEditmode) {
+    console.log(data)
     const { index, name, phone, email, address, defaultAddress, zipCode, city, district } = data;
 
     const payload = {
@@ -107,8 +109,8 @@ async function onSubmit(data, isEditmode) {
     const check = ref(false);
 
     if (isEditmode) {
-
-        const addressId = addressInfo.value[index-1].id;
+        
+        const addressId = addressInfo.value[index].id;
 
         payload.id = addressId;
         

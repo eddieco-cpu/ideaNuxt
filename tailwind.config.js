@@ -11,6 +11,9 @@ export default {
     ],
     theme: {
         extend: {
+            whiteSpace: {
+                'pre-wrap': 'pre-wrap',
+            },
             minHeight: {
                 "80vh": "80vh",
             },

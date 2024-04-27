@@ -185,7 +185,6 @@ export const proposalSchema = z.object({
                 }),
         ),
 
-    deliveryTime: dateSchema,
 
     content: z.string(commonErrorMessage).min(1, "必填"),
 

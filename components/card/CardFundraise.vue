@@ -57,7 +57,11 @@
 </template>
 
 <script setup>
+<<<<<<< HEAD
 const { isEditMode, isExpired, id, hash_id } = defineProps({
+=======
+const { isEditMode, isExpired, id, hash_id, url_key } = defineProps({
+>>>>>>> 1cdb0af (0427)
     isEditMode: {
         type: Boolean,
         default: false,
@@ -100,6 +104,13 @@ const { isEditMode, isExpired, id, hash_id } = defineProps({
     hash_id: {
         type: String,
         default: "",
+<<<<<<< HEAD
+=======
+    },
+    url_key: {
+        type: String,
+        default: "募資",
+>>>>>>> 1cdb0af (0427)
     }
 });
 
@@ -128,7 +139,11 @@ function isExpiredClass(type) {
 }
 
 function goProductDetailPage() {
+<<<<<<< HEAD
     navigateTo(`/products/funding/${hash_id}`);
+=======
+    navigateTo(`/project/${hash_id}?${url_key}`);
+>>>>>>> 1cdb0af (0427)
 }
 </script>
 

@@ -131,14 +131,6 @@ const { index, defaultAddress, name, phone, email, address, zipCode, city, distr
     isEditmode: {
         type: Boolean,
         default: false,
-    },
-    district: {
-        type: String,
-        default: "",
-    },
-    city: {
-        type: String,
-        default: "",
     }
 });
 

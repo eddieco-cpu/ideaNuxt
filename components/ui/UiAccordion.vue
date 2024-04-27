@@ -1,5 +1,5 @@
 <template>
-    <UAccordion :items="items" :class="class">
+    <UAccordion :items="items" :class="class" multiple>
         <template #default="{ item, index, open }">
             <UButton
                 class="bg-Primary-50 hover:bg-Primary-100 active:bg-Primary-100 mb-4 py-[10px] items-start"
@@ -31,7 +31,11 @@
             </UButton>
         </template>
         <template #item="{ item }">
+<<<<<<< HEAD
             <p class="text-sm mb-2 mx-3 mt-[-6px]"  v-html="item.content"></p>
+=======
+            <pre class="text-sm mb-2 mx-3 mt-[-6px]" style="white-space: pre-wrap;">{{ item.content }}</pre>
+>>>>>>> 1cdb0af (0427)
         </template>
     </UAccordion>
 </template>

@@ -1,6 +1,7 @@
 import { useRuntimeConfig } from "#app";
 import { useAuthStore } from "@/stores/auth";
 
+<<<<<<< HEAD
 export const POST = async (endpoint, payload, token = "") => {
   const config = useRuntimeConfig();
   const baseUrl = config.public.apiBaseUrl;
@@ -18,6 +19,25 @@ export const POST = async (endpoint, payload, token = "") => {
       },
       body: payload,
     });
+=======
+export const POST = async (endpoint, payload, token='') => {
+    const config   = useRuntimeConfig();
+    const baseUrl  = config.public.apiBaseUrl;
+    const url      = `${baseUrl}${endpoint}`
+    const store    = useAuthStore();
+    const cookie   = useCookie('jwt-token')
+    const jwtToken = cookie.value;
+
+    try {
+        const data = await $fetch(url, {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json" ,
+                'Authorization': `Bearer ${jwtToken}`,
+            },
+            body: payload,
+        });
+>>>>>>> 1cdb0af (0427)
 
     return data;
   } catch (error) {

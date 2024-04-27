@@ -240,11 +240,11 @@ const hideSideNav = ref(true);
 const navLink = [
     {
         label: "群眾集資",
-        link: "/category/all?type=fundraise",
+        link: "/category/全部?type=fundraise&&page=category",
     },
     {
         label: "好評團購",
-        link: "/category/all?type=groupbuying",
+        link: "/category/全部?type=groupbuying&&page=category",
     },
     {
         label: "團主推薦",

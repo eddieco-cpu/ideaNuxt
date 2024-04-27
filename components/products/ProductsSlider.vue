@@ -6,7 +6,7 @@
             :modules="[SwiperAutoplay, SwiperPagination, SwiperNavigation]"
             :slides-per-view="'auto'"
             :centered-slides="true"
-            :loop="true"
+            :loop="false"
             :navigation="{
                 nextEl: '.main-slide__btn-next',
                 prevEl: '.main-slide__btn-pre',

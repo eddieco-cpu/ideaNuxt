@@ -82,12 +82,12 @@ const memberNavList = ref([
         imgActiveUrl: Icon.orderActive,
         link: "/member/order",
     },
-    {
-        name: "我的追蹤",
-        imgUrl: Icon.heart,
-        imgActiveUrl: Icon.heartActive,
-        link: "/member/follow",
-    },
+    // {
+    //     name: "我的追蹤",
+    //     imgUrl: Icon.heart,
+    //     imgActiveUrl: Icon.heartActive,
+    //     link: "/member/follow",
+    // },
     {
         name: "提案管理",
         imgUrl: Icon.rocket,

@@ -4,6 +4,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
     }
 
     if (to.name === "category") {
-        return navigateTo("/category/all");
+        return navigateTo("/category/全部");
     }
 });

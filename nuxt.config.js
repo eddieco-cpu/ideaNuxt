@@ -3,7 +3,7 @@ import fs from 'fs'
 
 const host = process.env.NUXT_PUBLIC_HOST;
 const port = process.env.NUXT_PUBLIC_PORT;
-const baseUrl = process.env.NODE_ENV === "development" ? `http://${host}:${port}` : ``;
+const baseUrl = process.env.NODE_ENV === "development" ? `http://${host}:${port}` : `http://idea2gether.com/`;
 
 export default defineNuxtConfig({
     devtools: { enabled: true },
@@ -41,6 +41,7 @@ export default defineNuxtConfig({
     },
     build: {
         transpile: ["@vuepic/vue-datepicker", "vue-toastification"],
+        sourcemap: true,
     },
     modules: [
         "@pinia/nuxt",
@@ -76,14 +77,8 @@ export default defineNuxtConfig({
     colorMode: {
         preference: "light",
     },
-    server: {
-        https: {
-            key: fs.readFileSync('/home/kai/.certs/demo.public.test+1-key.pem'),
-            cert: fs.readFileSync('/home/kai/.certs/demo.public.test+1.pem'),
-          }
-
-    },
     piniaPersistedstate: {
         sotrage:'sessionStorage'
-    }
+    },
+    ssr: false
 });

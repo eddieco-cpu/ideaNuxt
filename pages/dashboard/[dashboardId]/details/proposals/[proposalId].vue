@@ -33,7 +33,6 @@
                                     class="w-full"
                                     size="lg"
                                     v-model="submissionData.projectName"
-                                    @input="(e) => (e.target.value = e.target.value.slice(0, 25))"
                                 />
                                 <p class="text-sm text-right text-Neutral-500-Primary absolute bottom-[-20px] right-0">
                                     <span>{{ submissionData.projectName.length }}</span> / <span>25</span>
@@ -105,7 +104,6 @@
                             <UFormGroup label="銷售規則" required class="mb-3" name="salesLimit">
                                 <URadioGroup
                                     :options="[
-                                        { value: false, label: '無限制' },
                                         { value: true, label: '限制數量' },
                                     ]"
                                     v-model="submissionData.salesLimit"
@@ -227,7 +225,6 @@
                                         placeholder="輸入運費金額"
                                         inputClass="!pl-[55px]"
                                         size="sm"
-                                        @input="(e) => (e.target.value = Math.max(0, e.target.value))"
                                         :disabled="!submissionData.deliveToHouse.isAvailable"
                                         v-model="submissionData.deliveToHouse.fee"
                                     >
@@ -288,7 +285,7 @@
 
                     <!--  -->
                     <div class="flex justify-start items-center">
-                        <UiButton type="primary" class="max-md:w-16 md:w-16 mr-2" @click="doSave"> 儲存 </UiButton>
+                        <UiButton type="primary" class="max-md:w-16 md:w-16 mr-2"> 儲存 </UiButton>
                         <UiButton type="secondary" class="max-md:w-[104px] md:w-[104px]" @click="doDel($event)">
                             刪除此方案
                         </UiButton>
@@ -404,6 +401,7 @@
 </template>
 <script setup>
 import { proposalSchema } from "~/validation";
+<<<<<<< HEAD
 import { zhTW } from "date-fns/locale";
 import { useToast } from "vue-toastification";
 
@@ -431,15 +429,34 @@ async function getEditedProposalData() {
     if (!!data) {
         console.log("data", data);
         pageStatus.value = 'edit';
+=======
+import { zhTW }           from "date-fns/locale";
+import { useToast }       from "vue-toastification";
+import VueDatePicker      from "@vuepic/vue-datepicker";
 
+const toast       = useToast();
+const route       = useRoute();
+const authStore   = useAuthStore();
+const token       = authStore.token;
+const proposalId  = route.params.proposalId;
+const dashboardId = route.params.dashboardId;
+const pageStatus  = ref("new"); // new, edit
+
+async function getEditedProposalData() {
+>>>>>>> 1cdb0af (0427)
+
+    const data = await POST("/getEditedProposalData", {'project_id' : dashboardId, 'spec_id' : proposalId }, token);
+
+    if (!!data) {
+        pageStatus.value = 'edit';
+        console.log(data.proposalData)
         if (data.proposalData) {
-            //
             let editedSubmissionData = {
                 ...data.proposalData,
             };
-            submissionData.value = editedSubmissionData;
 
-            //
+            submissionData.value = Object.assign({}, submissionData.value, editedSubmissionData);
+
             let imgFile = {
                 path: "",
                 preview: data.proposalData.projectPreview,
@@ -455,34 +472,30 @@ onMounted(() => {
     getEditedProposalData();
 });
 
-//
-const pageStatus = ref("new"); // new, edit
-//const pageTime;
+
 
 const screenWidth = ref(800);
 onMounted(() => {
     screenWidth.value = window.innerWidth;
 });
 
-//
 const submitedError = ref({
-    salesLimitedQuantity: false,
-    deliveToStoreStores: false,
-    deliveToStoreFee: false,
-    deliveOverseasFee: false,
-    deliveToHouseFee: false,
+    salesLimitedQuantity : false,
+    deliveToStoreStores  : false,
+    deliveToStoreFee     : false,
+    deliveOverseasFee    : false,
+    deliveToHouseFee     : false,
 });
 const submissionData = ref({
-    projectName: "",
-    originalPrice: null,
-    specialOffer: null,
-    salesLimit: null, //boolean
-    salesLimitedQuantity: null,
-    deliveryTime: null,
-    content: "",
-    specification: "",
+    projectName          : "",
+    originalPrice        : null,
+    specialOffer         : null,
+    salesLimit           : null, 
+    salesLimitedQuantity : null,
+    deliveryTime         : null,
+    content              : "",
+    specification        : "",
 
-    //
     deliveryWays: [],
 
     deliveOverseas: {
@@ -503,25 +516,22 @@ const submissionData = ref({
     imgDataQuantity: 0,
 });
 
-const imgFilesFetched = reactive([
-    // {},
-]);
+const imgFilesFetched = reactive([]);
 
-const imgData = ref(); //imgData.value.files
+const imgData         = ref(); 
 const imgDataQuantity = computed(() => imgData.value?.files?.length || 0);
 
 watch(imgDataQuantity, (val) => {
-    //console.log(val);
-    console.log(imgData.value.files);
     submissionData.value.imgDataQuantity = val;
     submissionData.value.imgData = imgData.value.files[0];
 });
 
-//
 const deliveryWays = ref(["deliveToStore", "deliveToHouse", "deliveOverseas"]);
 
 const updateDeliveryWays = (deliveryWaysData) => {
+    console.log(deliveryWaysData)
     deliveryWays.value.map((el) => {
+        
         submissionData.value[el].isAvailable = deliveryWaysData.includes(el);
     });
 };
@@ -546,26 +556,40 @@ const setStoresInDeliveToStore = (e, store) => {
 };
 
 function textToHtml(text) {
-    // 將文本中的換行符轉換為<br>標籤
     return text.replace(/\n/g, "<br>");
 }
 function formatDateToYearMonth(dateInput) {
-    // 將輸入的日期字符串轉換成Date物件
     const date = new Date(dateInput);
 
-    // 獲取年份和月份，並確保月份為兩位數格式
     const year = date.getFullYear();
     const month = ("0" + (date.getMonth() + 1)).slice(-2);
 
-    // 組合年份和月份成"yyyy/mm"格式
     return `${year}/${month}`;
 }
 
 const check = ref(false);
 
+<<<<<<< HEAD
 //
 async function doSave() {
     //
+=======
+async function doSave() {
+
+    if(submissionData.value.specialOffer > submissionData.value.originalPrice){
+        toast.error('方案價格不可高於原價');
+        return;
+    }
+    if(submissionData.value.deliveToHouse.isAvailable && submissionData.value.deliveToHouse.fee == null) {
+        toast.error('請輸入運費金額');
+        return;
+    }
+    if(submissionData.value.deliveOverseas.isAvailable && submissionData.value.deliveOverseas.fee == null) {
+        toast.error('請輸入運費金額');
+        return;
+    }
+
+>>>>>>> 1cdb0af (0427)
     submitedError.value = {
         salesLimitedQuantity: submissionData.value.salesLimit && !submissionData.value.salesLimitedQuantity,
         deliveToStoreStores:
@@ -578,6 +602,7 @@ async function doSave() {
             submissionData.value.deliveToHouse.isAvailable && submissionData.value.deliveToHouse.fee === null,
     };
 
+<<<<<<< HEAD
 
     const payload = {
         'image':submissionData.value.imgData,
@@ -629,10 +654,53 @@ async function doSave() {
 
     // //
     // alert("doSave");
+=======
+    const payload = {
+        'image'            : submissionData.value.imgData,
+        'title'            : submissionData.value.projectName,
+        'original_price'   : submissionData.value.originalPrice,
+        'sell_price'       : submissionData.value.specialOffer,
+        'content'          : submissionData.value.content,
+        'limit_qty'        : submissionData.value.salesLimitedQuantity,
+        'ship_date'        : submissionData.value.deliveryTime,
+        'deliveOverseas'   : submissionData.value.deliveOverseas,
+        'deliveToHouse'    : submissionData.value.deliveToHouse,
+        'deliveryWays'     : submissionData.value.deliveryWays,
+        'project_id'       : dashboardId,
+        'spec_id'          : proposalId
+    }
+
+
+    if(pageStatus.value == 'edit') {
+        console.log(payload)
+        const data = await POST("/updateProjectSpec", payload, token);
+
+        if(!!data) {
+            check.value = true
+            toast.success(data.message)
+        }
+    } else {
+        const data = await POST("/addProjectSpec", payload, token);
+
+        if(!!data) {
+            check.value = true
+            toast.success(data.message)
+        } 
+    }
+    if(check.value) {
+        navigateTo(`/dashboard/${dashboardId}/details/proposals`);
+    }
+>>>>>>> 1cdb0af (0427)
 }
-function doDel(event) {
-    event.preventDefault();
-    alert("doDel");
-    console.log(imgData.value.files);
+async function doDel() {
+
+    const id = proposalId;
+
+    const data = await POST("/deleteProjectSpec", {'id':id}, '');
+
+    if(!!data) {
+        toast.success(data.message)
+        navigateTo(`/dashboard/${dashboardId}/details/proposals`);
+    }
 }
 </script>

@@ -428,7 +428,7 @@
                 </template>
                 <template #form>
                     <div class="max-md:text-center">
-                        <UiButton class="max-w-[90px] mr-2" @click="doSubmit">送出提案</UiButton>
+                        <UiButton class="max-w-[90px] mr-2">送出提案</UiButton>
                         <UiButton class="max-w-[62px]" type="secondary">取消</UiButton>
                     </div>
                 </template>
@@ -499,7 +499,12 @@ async function doSubmit() {
     const data = await POST("/stepOneProject", submissionData, token);
 
     if(!!data) {
+<<<<<<< HEAD
         // toast.success(data.message);
+=======
+        toast.success(data.message);
+        navigateTo(`/member/information`);
+>>>>>>> 1cdb0af (0427)
     }
 }
 </script>

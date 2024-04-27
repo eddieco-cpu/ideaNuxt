@@ -1,6 +1,10 @@
 <template>
+<<<<<<< HEAD
     <div v-if = "data && data.data">
         <ClientOnly>
+=======
+    <div >
+>>>>>>> 1cdb0af (0427)
         <section
             class="max-w-[1082px] mx-auto py-4 mt-8 rounded-lg bg-white max-md:max-w-[100%-24px] max-md:mt-6 max-xl:mx-3 max-xl:max-w-[100%]"
         >   
@@ -44,7 +48,11 @@
            
             
         </section>
+<<<<<<< HEAD
         <section 
+=======
+        <section v-if = "data && data.data"
+>>>>>>> 1cdb0af (0427)
             class="max-w-[1082px] mx-auto p-3 mt-8 rounded-lg bg-white max-md:max-w-[100%-24px] max-md:mt-3 max-xl:mx-3 max-xl:max-w-[100%]"
         >
             <div class="flex justify-between items-center gap-x-2">
@@ -65,6 +73,7 @@
 
                 <!-- start -->
                 <UiButton class="max-w-[156px] max-md:max-w-[70px] max-md:text-sm" v-if="dataStatus === 'start'"
+                     @click = "project_step_two()"
                     >提交送審</UiButton
                 >
 
@@ -77,14 +86,18 @@
                 >
 
                 <!-- completed -->
-                <button
-                    class="w-8 h-8 border-2 border-Primary-100 rounded-lg flex justify-center items-center flex-shrink-0"
-                >
-                    <UIcon
-                        name="i-heroicons-arrow-top-right-on-square"
-                        class="block size-[14px] text-Primary-500-Primary"
-                    />
-                </button>
+                <nuxt-link 
+                    :to="`/preview/${data.data.hash_id}`">
+                    <button
+                        class="w-8 h-8 border-2 border-Primary-100 rounded-lg flex justify-center items-center flex-shrink-0"
+                    >   
+                        <UIcon
+                            
+                            name="i-heroicons-arrow-top-right-on-square"
+                            class="block size-[14px] text-Primary-500-Primary"
+                        />
+                    </button>
+                </nuxt-link>
             </div>
         </section>
         <div 
@@ -142,11 +155,20 @@
 </template>
 
 <script setup>
+<<<<<<< HEAD
 
 const route             = useRoute();
 const dashboardId       = route.params.dashboardId;
 const stepsStatus       = ref(1);
 const stepsData         = ref([
+=======
+import { useToast }   from "vue-toastification";
+const toast           = useToast();
+const route           = useRoute();
+const dashboardId     = route.params.dashboardId;
+const stepsStatus     = ref(1);
+const stepsData       = ref([
+>>>>>>> 1cdb0af (0427)
     {
         id: "1",
         name: "提案準備",
@@ -165,6 +187,7 @@ const stepsData         = ref([
     },
 ]);
 
+<<<<<<< HEAD
 const { data }          = useCustomFetch("/getOneProject", {'project_id' : dashboardId }, '');
 
 if(data && data.value?.data) {
@@ -174,6 +197,39 @@ if(data && data.value?.data) {
 const dataStatus        = ref("start");
 const dataStatusOptions = ref(["start", "completed", "inProgress"]);
 
+=======
+const dataStatus        = ref("start");
+const dataStatusOptions = ref(["start", "completed", "inProgress"]);
+
+const { data, refresh }  = useCustomFetch("/getOneProject", {'project_id' : dashboardId }, '');
+
+
+watchEffect( () => {
+    if(data && data.value?.data) {
+    stepsStatus.value = data.value.data?.review_status
+    console.log(data.value.data?.review_status)
+
+    if(data.value.data?.review_status == 4 ) {
+        stepsStatus.value = 3
+    }
+
+    if(data.value.data?.review_status == 0 ) {
+        stepsStatus.value = 4
+    }
+
+    if(data.value.data?.review_status == 2 || data.value.data?.review_status == 4) {
+        dataStatus.value = 'start'
+        
+    } else if(data.value.data?.review_status == 3 ) {
+        dataStatus.value = 'inProgress'
+    } else {
+        dataStatus.value = 'completed'
+    }
+}
+})
+
+
+>>>>>>> 1cdb0af (0427)
 
 const dashboardNav        = ref(null);
 const dashboardNavListDep = [
@@ -240,6 +296,17 @@ function memberTypeChoose(index) {
         left: 122 * index,
         behavior: "smooth",
     });
+}
+
+async function project_step_two() {
+
+    const payload = {'id': dashboardId};
+
+    const data = await POST("/stepTwoProject", payload, '');
+    if(!!data) {
+        toast.success(data.message)
+        dataStatus.value = 'inProgress'
+    }
 }
 </script>
 

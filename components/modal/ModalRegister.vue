@@ -30,9 +30,12 @@
                         </UFormGroup>
 
                         <button
+                            :disabled="timeLeft > 0"
+                            @click="sendSMS"
                             class="hover:opacity-70 transition duration-500 rounded-lg flex-1 px-4 py-1 justify-center bg-Primary-500-Primary text-sm text-white"
                         >
-                            發送驗證碼
+                            
+                            {{ timeLeft > 0 ? `再次發送(${timeLeft})` : '發送驗證碼' }}
                         </button>
                     </UButtonGroup>
                 </UFormGroup>
@@ -82,7 +85,7 @@
 </template>
 
 <script setup>
-import { useToast } from "vue-toastification";
+import { useToast }     from "vue-toastification";
 import { useAuthStore } from "@/stores/auth";
 
 const { modelValue } = defineProps(["modelValue"]);
@@ -91,24 +94,91 @@ const toast = useToast();
 const store = useAuthStore();
 
 const registerData = ref({
-    account: undefined,
-    password: undefined,
-    password_confirmation: undefined,
-    captcha:undefined
+    account  : undefined,
+    password : undefined,
+    captcha  : undefined,
+    password_confirmation: undefined
 });
 
 const registerStep = ref(1);
 
 function registerStepHandler(step) {
+
+    if(step == 2) {
+        if(registerData.value.captcha !=  tempSMS.value) {
+            toast.error('驗證碼錯誤');
+            return;
+        }
+
+        if(registerData.value.account !=  tempPhone.value) {
+            toast.error('手機與傳送驗證碼手機不一致');
+            return;
+        }
+    }
     registerStep.value = step;
 }
 
+const timeLeft = ref(0);
+
+const updateTimer = () => {
+  const interval = setInterval(() => {
+
+        const endTime     = localStorage.getItem('endTime');
+        const secondsLeft = (endTime - Date.now()) / 1000;
+
+        if (secondsLeft > 0) {
+            timeLeft.value = Math.round(secondsLeft);
+        } else {
+            clearInterval(interval);
+            timeLeft.value = 0;
+            localStorage.removeItem('endTime'); 
+        }
+  }, 1000);
+};
+
+onMounted(() => {
+  if (localStorage.getItem('endTime')) {
+    updateTimer();
+  }
+});
+
+const tempPhone = ref();
+const tempSMS   = ref();
+
+async function sendSMS() {
+
+    const account = registerData.value.account;
+    const regex   = /^09\d{8}$/;
+
+    if(!regex.test(account)) {
+        toast.error('手機格式錯誤');
+        return;
+    }
+
+    if(!account) {
+        toast.error('請輸入帳號後傳送驗證碼');
+        return;
+    }
+
+    const data = await POST("/sendSMS", { 'account' : account }, '');
+
+    if(!!data) {
+        console.log(data)
+        tempPhone.value = data.account;
+        tempSMS.value   = data.sms;
+
+        const duration = 60;
+        const endTime  = Date.now() + duration * 1000;
+        localStorage.setItem('endTime', endTime);
+        updateTimer();
+    }
+}
+
 async function register() {
-    console.log(registerData.value.account)
 
     const payload = { 
-        account: registerData.value.account, 
-        password: registerData.value.password,
+        account  : registerData.value.account, 
+        password : registerData.value.password,
         password_confirmation: registerData.value.password_confirmation,
     };
 
@@ -117,13 +187,12 @@ async function register() {
     if (!!data) {
         toast.success("註冊成功");
 
-        store.isLogin = true;
+        store.isLogin  = true;
+        store.userInfo = data.user;
         store.setToken(data.access_token)
-        // store.userInfo = data;
 
         openModal("close");
     }
-
 }
 
 function openModal() {

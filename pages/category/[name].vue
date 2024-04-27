@@ -61,16 +61,10 @@ const currentPage = ref(1);
 const totalPages = ref(20);
 const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
-    getFundingRaiseList()
+    getAllLists()
 };
 
-
 const loadDataDone = ref(false);
-
-
-
-
-
 
 getAllLists();
 

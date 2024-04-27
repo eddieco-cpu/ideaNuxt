@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="data && data.data.data.length > 0 ">
         <div class="flex gap-4 items-center justify-between mt-8 mb-4 md:mt-0">
             <h1 class="text-black text-xl font-medium flex items-center gap-x-2">
                 <UIcon name="i-heroicons-chevron-left" class="block w-4 h-4 cursor-pointer" @click="goBack" />
@@ -20,16 +20,21 @@
             </USelectMenu>
         </div>
 
+<<<<<<< HEAD
         <div class="md:grid md:grid-cols-3 md:gap-5" v-if="data && data.data.data.length > 0 ">
+=======
+        <div class="md:grid md:grid-cols-3 md:gap-5" >
+>>>>>>> 1cdb0af (0427)
             <CardFundraise v-for="(item, index) in data.data.data" :key="index" v-bind="item" :isEditMode="true" />
         </div>
-
-        <UiPagination
-            class="mt-6"
-            :currentPage="currentPage"
-            :totalPages="totalPages"
-            @updateCurrentPage="updateCurrentPage"
-        />
+        <ClientOnly>
+            <UiPagination
+                class="mt-6"
+                :currentPage="currentPage"
+                :totalPages="totalPages"
+                @updateCurrentPage="updateCurrentPage"
+            />
+        </ClientOnly>
     </div>
 </template>
 
@@ -46,9 +51,16 @@ const updateCurrentPage = (newPage) => {
 };
 
 const { data, refresh } = useCustomFetch("/getProjectByUser", {'page': currentPage.value}, '');
+<<<<<<< HEAD
 console.log(data.value)
 
 // totalPages.value = data.value.last_page;
+=======
+
+if(data && data.value?.data?.data.length > 0) {
+    totalPages.value = data.value?.data?.last_page;
+}
+>>>>>>> 1cdb0af (0427)
 
 function goBack() {
     navigateTo("/member/proposal");

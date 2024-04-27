@@ -43,7 +43,7 @@
                         {{ projectData.data.name }}
                     </h1>
                     <p class="text-Neutral-600-Dark-Primary text-sm font-normal mb-6">
-                        {{ projectData.data.description }}
+                        {{ projectData.data.overview }}
                     </p>
                     <div class="flex justify-between items-end mb-2">
                         <h2 class="text-3xl font-bold max-md:text-xl">$ {{ projectData.data.price }}</h2>
@@ -146,15 +146,14 @@
 
                     <template v-if="activeNavItemId === 'a'">
                         <article class="bg-white p-6 rounded-lg" ref="articleRef">
-                            <div class="ql-editor" v-html="projectData.data.content" >
-                            </div>
+                            <div v-html="projectData.data.content"></div>
                         </article>
                     </template>
-                    <template v-if="activeNavItemId === 'b'">
+                    <!-- <template v-if="activeNavItemId === 'b'">
                         <article class="bg-white p-6 rounded-lg">
                             <ProductsAccordionTypeB />
                         </article>
-                    </template>
+                    </template> -->
                     <template v-if="activeNavItemId === 'c'">
                         <article class="bg-white p-6 rounded-lg">
                             <UiAccordion :items="projectData.data.questions" />
@@ -226,7 +225,6 @@
 </template>
 
 <script setup>
-import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { useToast } from "vue-toastification";
 const toast = useToast();
 const route = useRoute();
@@ -236,29 +234,32 @@ const isDisabled = ref(true);
 
 const { data:projectData }   = useCustomGetFetch(`/frontend/getProject?product_id=${route.params.pid}`);
 
+console.log(projectData.value)
 
-  //     toast.error('請先登入會員');
-  //     return;
-  // }
+const isFavorite = ref(false);
+
+function addToCart(params) {
 
     if(!authStore.isLogin) {
         toast.error('請先登入會員');
         return;
     }
     navigateTo(`/cart/cart-fundraise?id=${route.params.pid}`);
+}
 
-const pageData = ref([]);
-const cards = ref([]);
-const groupId = ref(parseInt(route.params.pid));
+const pageData = ref([])
+const cards = ref([])
+const groupId = ref(parseInt(route.params.pid))
 
 // getDatas()
 async function getDatas() {
-  const queryParam = `?type=fundraise&product_id=${route.params.pid}`;
-  const data = await GET(`/frontend/getProject${queryParam}`, 1);
-  if (!!data) {
-    pageData.value = data.data;
-    cards.value = data.data.cards;
-  }
+
+    const queryParam = `?type=fundraise&product_id=${route.params.pid}`;
+    const data = await GET(`/frontend/getProject${queryParam}`,1);
+    if (!!data) {
+        pageData.value = data.data;
+        cards.value = data.data.cards;
+    }
 }
 
 const productsWithSoldOut = computed(() =>
@@ -279,15 +280,15 @@ const productsWithSoldOut = computed(() =>
 );
 
 function setIsFavorite(e, status) {
-  e.stopPropagation();
+    e.stopPropagation();
 
-  isFavorite.value = status;
+    isFavorite.value = status;
 
-  if (status) {
-    toast.success("已加入購物車");
-  } else {
-    toast.error("已取消加入購物車");
-  }
+    if (status) {
+        toast.success("已加入購物車");
+    } else {
+        toast.error("已取消加入購物車");
+    }
 }
 
 const lockMaxHeightInMobile = ref(true);
@@ -297,9 +298,9 @@ const articleRefHeight = ref(0);
 
 //
 onMounted(() => {
-  if (articleRef.value) {
-    articleRefHeight.value = articleRef.value.offsetHeight;
-  }
+    if (articleRef.value) {
+        articleRefHeight.value = articleRef.value.offsetHeight;
+    }
 });
 
 //
@@ -334,7 +335,7 @@ const navItems = [
     },
 ];
 const activeNavItemId = ref("a");
-const updateNavItemId = id => {
-  activeNavItemId.value = id;
+const updateNavItemId = (id) => {
+    activeNavItemId.value = id;
 };
 </script>
