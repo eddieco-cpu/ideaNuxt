@@ -25,14 +25,11 @@ async function getHtmlContext() {
     const data = await POST("/getOneProjectNew", {'project_id' : dashboardId }, '');
     if (!!data) {
         if (data.data) fullContext.value.editorContent = data.data.content;
-<<<<<<< HEAD
-=======
 
         console.log(data.data)
         if(data.data.review_status == 0 || data.data.review_status == 3) {
             pageStatus.value = 'reviewed';
         }
->>>>>>> 1cdb0af (0427)
     }
 }
 onMounted(() => {
@@ -40,16 +37,10 @@ onMounted(() => {
 });
 
 async function doSave() {
-<<<<<<< HEAD
-    const payload = {'content': fullContext.value.editorContent,'project_id': dashboardId};
-
-    const data = await POST("/updateProject", payload, '');
-=======
     
     const payload = {'content': fullContext.value.editorContent,'project_id': dashboardId};
 
     const data = await POST("/updateProjectContent", payload, '');
->>>>>>> 1cdb0af (0427)
     if(!!data) {
         toast.success(data.message)
     }

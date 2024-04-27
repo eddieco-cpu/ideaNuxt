@@ -147,16 +147,9 @@ async function doCancel() {
 
     const data = await POST("/deleteProjectFaq", {'id':id}, '');
 
-<<<<<<< HEAD
-        if(!!data) {
-            toast.success(data.message)
-            navigateTo(`/dashboard/${dashboardId}/details/faq`);
-        }
-=======
     if(!!data) {
         toast.success(data.message)
         navigateTo(`/dashboard/${dashboardId}/details/faq`);
     }
->>>>>>> 1cdb0af (0427)
 }
 </script>

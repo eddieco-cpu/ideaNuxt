@@ -499,12 +499,8 @@ async function doSubmit() {
     const data = await POST("/stepOneProject", submissionData, token);
 
     if(!!data) {
-<<<<<<< HEAD
-        // toast.success(data.message);
-=======
         toast.success(data.message);
         navigateTo(`/member/information`);
->>>>>>> 1cdb0af (0427)
     }
 }
 </script>

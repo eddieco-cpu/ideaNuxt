@@ -117,11 +117,7 @@
                         type="secondary"
                         class="max-w-[120px] !text-sm max-md:max-w-auto max-md:min-w-[calc(100%-48px)]"
                     >
-<<<<<<< HEAD
-                        <NuxtLink to="/category/all?type=groupbuying">查看更多團購</NuxtLink>
-=======
                         <NuxtLink to="/category/全部?type=groupbuying&&page=category">查看更多團購</NuxtLink>
->>>>>>> 1cdb0af (0427)
                     </UiButton>
                 </div>
                 <!--  -->
@@ -210,10 +206,6 @@ const { data:fundingRaisePageData, refresh:fundingRaisePageRefresh }     = useCu
 const { data:groupListData,        refresh:groupListDataRefresh }        = useCustomGetFetch('/frontend/getGroupList');
 const { data:kolHotData,           refresh:kolHotDataRefresh }           = useCustomGetFetch('/frontend/getHotKols');
 const { data:NotStartGroupList,    refresh:NotStartGroupListRefresh }    = useCustomGetFetch('/frontend/getNotStartGroupList');
-<<<<<<< HEAD
-=======
-console.log(fundingRaisePageData.value)
->>>>>>> 1cdb0af (0427)
 
 const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
@@ -291,15 +283,6 @@ const filteredNotStartGroups = computed(() => {
 
 let oldScrollY = 0;
 function scrollDirection() {
-<<<<<<< HEAD
-    document.querySelector(".header-links").style.transition = "top 0.5s";
-    if (oldScrollY < window.scrollY) {
-        document.querySelector(".header-links").style.top = "0px";
-    } else {
-        document.querySelector(".header-links").style.top = "74px";
-    }
-    oldScrollY = window.scrollY;
-=======
     // document.querySelector(".header-links").style.transition = "top 0.5s";
     // if (oldScrollY < window.scrollY) {
     //     document.querySelector(".header-links").style.top = "0px";
@@ -307,7 +290,6 @@ function scrollDirection() {
     //     document.querySelector(".header-links").style.top = "74px";
     // }
     // oldScrollY = window.scrollY;
->>>>>>> 1cdb0af (0427)
 }
 
 onMounted(() => {

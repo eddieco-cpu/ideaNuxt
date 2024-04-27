@@ -40,11 +40,7 @@
         <div class="h-[1px] bg-gray-300 mb-2"></div>
         <div class="mb-4 overflow-auto-y">
             <p class="text-xs font-medium text-gray-700 leading-5">商品內容：</p>
-<<<<<<< HEAD
-            <p v-html = "prod.content"></p>
-=======
             <pre style="white-space: pre-wrap;" class="text-xs ">{{ prod.content }}</pre>
->>>>>>> 1cdb0af (0427)
         </div>
       
         <div class="h-[1px] bg-gray-300 mb-2"></div>

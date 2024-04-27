@@ -22,18 +22,12 @@
           <span class="text-sm text-Primary-600-Dark-Primary underline cursor-pointer" @click="openModal('forgotPassword')">忘記密碼</span>
         </div>
 
-<<<<<<< HEAD
-        <button type="submit" class="w-full bg-Primary-500-Primary block p-2 rounded-lg text-white mt-3 text-sm">登入</button>
-      </UForm>
-    </ModalContainer>
-  </Transition>
-=======
                     <!-- <span
                         class="text-sm text-Primary-600-Dark-Primary underline cursor-pointer"
                         @click="openModal('forgotPassword')"
                         >忘記密碼</span
                     > -->
-                </div>
+                <!-- </div> -->
 
                 <button
                     type="submit"
@@ -44,7 +38,6 @@
             </UForm>
         </ModalContainer>
     </Transition>
->>>>>>> 1cdb0af (0427)
 </template>
 
 <script setup>
@@ -63,18 +56,6 @@ function openModal(value = "") {
 }
 
 const state = reactive({
-<<<<<<< HEAD
-  phone: "kminchelle",
-  password: "0lelplR",
-});
-
-async function onSubmit(event) {
-  const { phone, password } = event.data;
-
-  const payload = { account: phone, password: password };
-
-  const data = await POST("/login", payload);
-=======
     phone    : "kminchelle",
     password : "0lelplR",
 });
@@ -84,7 +65,6 @@ async function onSubmit(event) {
     const { phone, password } = event.data;
 
     const data = await POST("/login", { account: phone, password: password });
->>>>>>> 1cdb0af (0427)
 
   if (!!data) {
     toast.success("登入成功");

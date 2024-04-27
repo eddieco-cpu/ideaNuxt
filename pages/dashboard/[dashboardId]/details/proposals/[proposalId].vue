@@ -401,35 +401,6 @@
 </template>
 <script setup>
 import { proposalSchema } from "~/validation";
-<<<<<<< HEAD
-import { zhTW } from "date-fns/locale";
-import { useToast } from "vue-toastification";
-
-import VueDatePicker from "@vuepic/vue-datepicker";
-
-const toast = useToast();
-
-
-//
-const route = useRoute();
-const authStore = useAuthStore();
-
-const token     = authStore.token;
-const proposalId = route.params.proposalId;
-const dashboardId = route.params.dashboardId;
-
-
-async function getEditedProposalData() {
-    
-
-    const data = await POST("/getEditedProposalData", {'project_id' : dashboardId, 'spec_id' : proposalId }, token);
-
-
-    // const data = await GET(`/api/dashboard/details/proposals/${proposalId}`);
-    if (!!data) {
-        console.log("data", data);
-        pageStatus.value = 'edit';
-=======
 import { zhTW }           from "date-fns/locale";
 import { useToast }       from "vue-toastification";
 import VueDatePicker      from "@vuepic/vue-datepicker";
@@ -443,7 +414,6 @@ const dashboardId = route.params.dashboardId;
 const pageStatus  = ref("new"); // new, edit
 
 async function getEditedProposalData() {
->>>>>>> 1cdb0af (0427)
 
     const data = await POST("/getEditedProposalData", {'project_id' : dashboardId, 'spec_id' : proposalId }, token);
 
@@ -569,11 +539,6 @@ function formatDateToYearMonth(dateInput) {
 
 const check = ref(false);
 
-<<<<<<< HEAD
-//
-async function doSave() {
-    //
-=======
 async function doSave() {
 
     if(submissionData.value.specialOffer > submissionData.value.originalPrice){
@@ -589,7 +554,6 @@ async function doSave() {
         return;
     }
 
->>>>>>> 1cdb0af (0427)
     submitedError.value = {
         salesLimitedQuantity: submissionData.value.salesLimit && !submissionData.value.salesLimitedQuantity,
         deliveToStoreStores:
@@ -602,59 +566,6 @@ async function doSave() {
             submissionData.value.deliveToHouse.isAvailable && submissionData.value.deliveToHouse.fee === null,
     };
 
-<<<<<<< HEAD
-
-    const payload = {
-        'image':submissionData.value.imgData,
-        'title':submissionData.value.projectName,
-        'original_price':submissionData.value.originalPrice,
-        'sell_price':submissionData.value.specialOffer,
-        'content' :submissionData.value.content,
-        'limit_qty':submissionData.value.salesLimitedQuantity,
-        'ship_date': submissionData.value.deliveryTime,
-        'deliveOverseas':submissionData.value.deliveOverseas,
-        'deliveToHouse': submissionData.value.deliveToHouse,
-        'deliveryWays':submissionData.value.deliveryWays,
-        'project_id':dashboardId,
-        'spec_id': proposalId
-    }
-
-    console.log(pageStatus.value)
-
-    if(pageStatus.value == 'edit') {
-        const data = await POST("/updateProjectSpec", payload, token);
-
-        console.log(data)
-        if(!!data) {
-            check.value = true
-            toast.success(data.message)
-
-        }
-        
-        
-    } else {
-        const data = await POST("/addProjectSpec", payload, token);
-        if(!!data) {
-            check.value = true
-            toast.success(data.message)
-
-        }
-    }
-
-    if(check.value) {
-        navigateTo(`/dashboard/${dashboardId}/details/proposals`);
-    }
-    
-    
-
-    //
-    // if (Object.keys(submitedError.value).find((el) => submitedError.value[el])) {
-    //     return console.log("error in submitedError");
-    // }
-
-    // //
-    // alert("doSave");
-=======
     const payload = {
         'image'            : submissionData.value.imgData,
         'title'            : submissionData.value.projectName,
@@ -690,7 +601,6 @@ async function doSave() {
     if(check.value) {
         navigateTo(`/dashboard/${dashboardId}/details/proposals`);
     }
->>>>>>> 1cdb0af (0427)
 }
 async function doDel() {
 

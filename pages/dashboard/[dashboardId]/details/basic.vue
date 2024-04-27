@@ -235,14 +235,11 @@ async function getData() {
         imgFilesFetched.push(imgFile);
     });
 
-<<<<<<< HEAD
-=======
     if(data.data.review_status == 0 || data.data.review_status == 3) {
         pageStatus.value = 'reviewed';
     }
 }
 
->>>>>>> 1cdb0af (0427)
 onMounted(() => {
     screenWidth.value = window.innerWidth;
 });

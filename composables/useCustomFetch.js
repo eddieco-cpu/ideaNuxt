@@ -1,18 +1,11 @@
 
 export function useCustomFetch(endpoint, payload, token) {
 
-<<<<<<< HEAD
-    const config   = useRuntimeConfig();
-    const url      = `${config.public.apiBaseUrl}${endpoint}`;
-    const cookie   = useCookie('jwt-token')
-    const jwtToken = cookie.value;
-=======
     const config    = useRuntimeConfig();
     const url       = `${config.public.apiBaseUrl}${endpoint}`;
     const cookie    = useCookie('jwt-token')
     const jwtToken  = cookie.value;
     const authStore = useAuthStore();
->>>>>>> 1cdb0af (0427)
 
     const fetchOptions = {
         method: 'POST',
@@ -37,12 +30,6 @@ export function useCustomFetch(endpoint, payload, token) {
   }
 
 export function useCustomGetFetch(endpoint) {
-<<<<<<< HEAD
-    const config   = useRuntimeConfig();
-    const url      = `${config.public.apiBaseUrl}${endpoint}`;
-    const cookie   = useCookie('jwt-token')
-    const jwtToken = cookie.value;
-=======
     
     const config    = useRuntimeConfig();
     const url       = `${config.public.apiBaseUrl}${endpoint}`;
@@ -50,7 +37,6 @@ export function useCustomGetFetch(endpoint) {
     const jwtToken  = cookie.value;
     const authStore = useAuthStore();
     
->>>>>>> 1cdb0af (0427)
 
     const fetchOptions = {
         method: 'GET',
@@ -70,11 +56,7 @@ export function useCustomGetFetch(endpoint) {
     };
 
     const { data, error, pending, refresh } = useFetch(url, fetchOptions);
-<<<<<<< HEAD
-    
-=======
     console.log(data)
     console.log(error)
->>>>>>> 1cdb0af (0427)
     return { data, error, pending, refresh }
 }

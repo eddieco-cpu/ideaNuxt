@@ -20,11 +20,7 @@
             </USelectMenu>
         </div>
 
-<<<<<<< HEAD
-        <div class="md:grid md:grid-cols-3 md:gap-5" v-if="data && data.data.data.length > 0 ">
-=======
         <div class="md:grid md:grid-cols-3 md:gap-5" >
->>>>>>> 1cdb0af (0427)
             <CardFundraise v-for="(item, index) in data.data.data" :key="index" v-bind="item" :isEditMode="true" />
         </div>
         <ClientOnly>
@@ -51,16 +47,10 @@ const updateCurrentPage = (newPage) => {
 };
 
 const { data, refresh } = useCustomFetch("/getProjectByUser", {'page': currentPage.value}, '');
-<<<<<<< HEAD
-console.log(data.value)
-
-// totalPages.value = data.value.last_page;
-=======
 
 if(data && data.value?.data?.data.length > 0) {
     totalPages.value = data.value?.data?.last_page;
 }
->>>>>>> 1cdb0af (0427)
 
 function goBack() {
     navigateTo("/member/proposal");

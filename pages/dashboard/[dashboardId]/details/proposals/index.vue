@@ -44,15 +44,9 @@
     </div>
 </template>
 <script setup>
-<<<<<<< HEAD
-const route = useRoute();
-const authStore = useAuthStore();
-const token     = authStore.token;
-=======
 const route       = useRoute();
 const authStore   = useAuthStore();
 const token       = authStore.token;
->>>>>>> 1cdb0af (0427)
 const dashboardId = route.params.dashboardId;
 const pageStatus  = ref("edit"); // new, edit, reviewed
 
@@ -63,19 +57,6 @@ function toNewProposal() {
 
 const proposals = ref([]);
 
-<<<<<<< HEAD
-//
-
-
-async function getReviewedProposalsData() {
-
-    const data = await POST("/getProjectCardData", {'project_id' : dashboardId }, token);
-    // const data = await GET(`/api/dashboard/details/reviewed/proposals`);
-    console.log(data)
-    if (!!data) {
-        proposals.value = data
-      
-=======
 async function getReviewedProposalsData() {
 
     const data = await POST("/getProjectCardData", {'project_id' : dashboardId }, token);
@@ -85,7 +66,6 @@ async function getReviewedProposalsData() {
         if(data.project?.review_status == 0 || data.project.review_status == 3) {
             pageStatus.value = 'reviewed'
         }
->>>>>>> 1cdb0af (0427)
     }
 }
 getReviewedProposalsData();

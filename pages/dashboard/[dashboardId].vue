@@ -1,10 +1,5 @@
 <template>
-<<<<<<< HEAD
-    <div v-if = "data && data.data">
-        <ClientOnly>
-=======
     <div >
->>>>>>> 1cdb0af (0427)
         <section
             class="max-w-[1082px] mx-auto py-4 mt-8 rounded-lg bg-white max-md:max-w-[100%-24px] max-md:mt-6 max-xl:mx-3 max-xl:max-w-[100%]"
         >   
@@ -48,11 +43,7 @@
            
             
         </section>
-<<<<<<< HEAD
-        <section 
-=======
         <section v-if = "data && data.data"
->>>>>>> 1cdb0af (0427)
             class="max-w-[1082px] mx-auto p-3 mt-8 rounded-lg bg-white max-md:max-w-[100%-24px] max-md:mt-3 max-xl:mx-3 max-xl:max-w-[100%]"
         >
             <div class="flex justify-between items-center gap-x-2">
@@ -155,20 +146,12 @@
 </template>
 
 <script setup>
-<<<<<<< HEAD
-
-const route             = useRoute();
-const dashboardId       = route.params.dashboardId;
-const stepsStatus       = ref(1);
-const stepsData         = ref([
-=======
 import { useToast }   from "vue-toastification";
 const toast           = useToast();
 const route           = useRoute();
 const dashboardId     = route.params.dashboardId;
 const stepsStatus     = ref(1);
 const stepsData       = ref([
->>>>>>> 1cdb0af (0427)
     {
         id: "1",
         name: "提案準備",
@@ -187,17 +170,6 @@ const stepsData       = ref([
     },
 ]);
 
-<<<<<<< HEAD
-const { data }          = useCustomFetch("/getOneProject", {'project_id' : dashboardId }, '');
-
-if(data && data.value?.data) {
-    stepsStatus.value = data.value.data?.review_status
-}
-
-const dataStatus        = ref("start");
-const dataStatusOptions = ref(["start", "completed", "inProgress"]);
-
-=======
 const dataStatus        = ref("start");
 const dataStatusOptions = ref(["start", "completed", "inProgress"]);
 
@@ -229,7 +201,6 @@ watchEffect( () => {
 })
 
 
->>>>>>> 1cdb0af (0427)
 
 const dashboardNav        = ref(null);
 const dashboardNavListDep = [
