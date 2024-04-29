@@ -55,7 +55,6 @@ const editorOptions = {
 
 function onEditorChange(quill) {
     console.log("editor change!");
-    //console.log("quill", quill);
 }
 
 // export files to parent component

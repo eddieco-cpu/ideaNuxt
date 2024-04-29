@@ -56,7 +56,6 @@ export function useCustomGetFetch(endpoint) {
     };
 
     const { data, error, pending, refresh } = useFetch(url, fetchOptions);
-    console.log(data)
-    console.log(error)
+    
     return { data, error, pending, refresh }
 }

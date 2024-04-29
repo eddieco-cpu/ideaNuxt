@@ -92,17 +92,13 @@
                         </button> -->
 
                        
-                        <UiButton v-if="authStore.isLogin"
+                        <UiButton 
                             class="min-w-[370px] min-h-12 max-md:min-w-40 max-md:flex-grow max-xl:min-h-9 max-xl:h-9"
                             @click="addToCart"
                         >
                             立即贊助
                         </UiButton>
-                        <UiButton v-else
-                            class="min-w-[370px] min-h-12 max-md:min-w-40 max-md:flex-grow max-xl:min-h-9 max-xl:h-9 bg-gray"
-                        >
-                            啥
-                        </UiButton>
+                      
                     </div>
 
                      <!-- @click="() => $router.push('/products/funding/1')" -->
@@ -234,16 +230,15 @@ const isDisabled = ref(true);
 
 const { data:projectData }   = useCustomGetFetch(`/frontend/getProject?product_id=${route.params.pid}`);
 
-console.log(projectData.value)
 
 const isFavorite = ref(false);
 
 function addToCart(params) {
 
-    if(!authStore.isLogin) {
-        toast.error('請先登入會員');
-        return;
-    }
+    // if(!authStore.isLogin) {
+    //     toast.error('請先登入會員');
+    //     return;
+    // }
     navigateTo(`/cart/cart-fundraise?id=${route.params.pid}`);
 }
 

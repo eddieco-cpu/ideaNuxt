@@ -428,7 +428,7 @@
                 </template>
                 <template #form>
                     <div class="max-md:text-center">
-                        <UiButton class="max-w-[90px] mr-2">送出提案</UiButton>
+                        <UiButton class="max-w-[90px] mr-2" :disabled="isLoading" >送出提案</UiButton>
                         <UiButton class="max-w-[62px]" type="secondary">取消</UiButton>
                     </div>
                 </template>
@@ -490,17 +490,25 @@ onMounted(() => {
 const igSwitcher = ref(false);
 const ytSwitcher = ref(false);
 const fbSwitcher = ref(false);
+const isLoading  = ref(false);
 
 async function doSubmit() {
     if (!submissionData.agree.contract || !submissionData.agree.understand) {
         return alert("請同意提案契約書");
     }
+    isLoading.value = true;
+    x
+    try {
+        const data = await POST("/stepOneProject", submissionData, '');
 
-    const data = await POST("/stepOneProject", submissionData, token);
-
-    if(!!data) {
-        toast.success(data.message);
-        navigateTo(`/member/information`);
+        if(!!data) {
+            toast.success(data.message);
+            navigateTo(`/member/information`);
+        }
+    } finally {
+        setTimeout(() => {
+            isLoading.value = false;
+        }, 1000);
     }
 }
 </script>

@@ -77,8 +77,7 @@
                 >
 
                 <!-- completed -->
-                <nuxt-link 
-                    :to="`/preview/${data.data.hash_id}`">
+                <a :href="`/preview/${data.data.hash_id}`" target="_blank">
                     <button
                         class="w-8 h-8 border-2 border-Primary-100 rounded-lg flex justify-center items-center flex-shrink-0"
                     >   
@@ -88,7 +87,8 @@
                             class="block size-[14px] text-Primary-500-Primary"
                         />
                     </button>
-                </nuxt-link>
+                </a>
+                    
             </div>
         </section>
         <div 
@@ -141,7 +141,7 @@
                 <NuxtPage class="max-md:max-w-[323px] mx-auto max-w-full md:flex-1 max-md:mt-6" />
             </div>
         </div>
-    </ClientOnly>
+    
     </div>
 </template>
 

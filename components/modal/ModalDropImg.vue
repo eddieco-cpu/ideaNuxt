@@ -21,7 +21,7 @@ const props = defineProps({
 });
 
 const maxFilesLength = props.max;
-const maxFileSize = 500; // KB
+const maxFileSize = 1000; // KB
 
 const clg = () => console.log(state.files);
 
@@ -60,7 +60,7 @@ function onDrop(acceptedFiles, rejectReasons) {
     }
 
     if (acceptedFiles.find((file) => file.size / 1024 > maxFileSize)) {
-        return alert(`File size should be less than ${maxFileSize}KB.`);
+        return alert(`檔案大小必須小於 ${maxFileSize}KB.`);
     }
 
     //

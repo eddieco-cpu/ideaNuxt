@@ -241,11 +241,11 @@ const { data:projectData }   = useCustomGetFetch(`/frontend/getProject?product_i
   //     return;
   // }
 
-    if(!authStore.isLogin) {
-        toast.error('請先登入會員');
-        return;
-    }
-    navigateTo(`/cart/cart-fundraise?id=${route.params.pid}`);
+    // if(!authStore.isLogin) {
+    //     toast.error('請先登入會員');
+    //     return;
+    // }
+    // navigateTo(`/cart/cart-fundraise?id=${route.params.pid}`);
 
 const pageData = ref([]);
 const cards = ref([]);

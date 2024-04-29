@@ -5,6 +5,5 @@
     "printWidth": 350,
     "tabWidth": 2,
     "bracketSpacing": true,
-    "useTabs": false,
-    "arrowParens": "avoid"
+    "useTabs": false
 }
