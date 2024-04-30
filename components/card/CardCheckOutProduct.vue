@@ -48,6 +48,7 @@ const props = defineProps({
     },
     qty: {
         type: Number,
+        default: 1,
     },
     image: {
         type: String,

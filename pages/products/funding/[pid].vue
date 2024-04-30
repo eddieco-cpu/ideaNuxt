@@ -95,7 +95,7 @@
                     <!-- @click="() => $router.push('/products/funding/1')" -->
                     <UiButton
                         class="min-w-[370px] min-h-12 max-md:min-w-40 max-md:flex-grow max-xl:min-h-9 max-xl:h-9"
-                        @click="addToCart"
+                        @click="addToCart()"
                     >
                         立即贊助
                     </UiButton>
@@ -194,7 +194,7 @@
                 class="card_group xl:sticky xl:mt-auto bottom-0 xl:h-[calc(100vh-48px-75px)] xl:overflow-y-auto max-md:px-6"
             >
                 <template v-for="(prod, i) in prods" :key="prod.id">
-                    <ProductsFundraise :prod="prod" @click="addToCart" />
+                    <ProductsFundraise :prod="prod" @click="addToCart(prod)" />
                 </template>
             </ul>
         </section>
@@ -204,11 +204,15 @@
 <script setup>
 import { useToast } from "vue-toastification";
 const toast = useToast();
+const route = useRoute();
+const projectId = route.params.pid;
 
 const isFavorite = ref(false);
 
-function addToCart(params) {
-    navigateTo("/cart/cart-fundraise");
+function addToCart(prod) {
+    let card = prod || prods.value.filter((item) => !item.soldOut)[0];
+
+    navigateTo(`/cart/cart-fundraise?project_id=${projectId}&project_card_id=${card.id}`);
 }
 
 function setIsFavorite(e, status) {
