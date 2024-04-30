@@ -77,7 +77,7 @@ async function getProdsData() {
 getProdsData();
 
 function goCheckoutPage() {
-    navigateTo("/cart/checkout?type=fundraise");
+    navigateTo("/cart/checkout-fundraise");
 }
 
 function addToCart(item) {

@@ -1,8 +1,7 @@
 <template>
     <div class="max-w-[324px] md:max-w-[1082px] mx-auto mt-8">
         <div>
-            <CartAds v-if="isFundRaiseCheckout" />
-            <CartHeader :step="2" v-else />
+            <CartAds />
         </div>
 
         <!-- 商品資訊 -->
@@ -386,20 +385,16 @@ const invoiceHint = computed(() => {
     }
 });
 
-const isFundRaiseCheckout = computed(() => {
-    return route.query.type === "fundraise";
-});
-
 const productLists = computed(() => {
-    return cart.selectGroupBuyProducts.products;
+    return cart.selectFundRaiseProducts;
 });
 
 const productListsLength = computed(() => {
-    return cart.selectGroupBuyProducts.products.length;
+    return cart.selectFundRaiseProducts.length;
 });
 
 const totalPrice = computed(() => {
-    return cart.totalGroupBuyPrice;
+    return cart.totalFundRaisePrice;
 });
 
 const tempAddress = ref(null);
