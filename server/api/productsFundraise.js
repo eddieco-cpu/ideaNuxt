@@ -20,13 +20,17 @@ function generateRandomArray(minLength, maxLength) {
 }
 
 export default defineEventHandler(() => {
-    let prods = Array.from({ length: 4 }, () => ({
-        id: generateUniqueId(),
+    let originalPrice = helperRandomNumber(500, 4999);
+    let discount = 0.8;
+    let prods = Array.from({ length: 4 }, (item, i) => ({
+        id: i + 1,
 
-        projectName: helperLorem(5, 20),
+        title: helperLorem(5, 20),
 
-        originalPrice: helperRandomNumber(5000, 9000),
-        specialOffer: helperRandomNumber(500, 4999),
+        originalPrice: originalPrice,
+        discount: discount,
+        price: Math.ceil(originalPrice * discount),
+        qty: 1,
 
         salesLimit: true,
         salesLimitedQuantity: helperRandomNumber(10, 100),
@@ -36,7 +40,7 @@ export default defineEventHandler(() => {
         content: generateRandomArray(1, 3),
         specification: generateRandomArray(1, 3),
 
-        imgData: helperPicture(),
+        image: helperPicture(),
 
         soldOut: false,
     }));
