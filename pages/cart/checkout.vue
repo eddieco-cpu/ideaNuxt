@@ -392,10 +392,8 @@ const isFundRaiseCheckout = computed(() => {
 
 const productLists = computed(() => {
     if (route.query.type === "fundraise") {
-        console.log("cart.selectFundRaiseProducts", cart.selectFundRaiseProducts);
         return cart.selectFundRaiseProducts;
     } else {
-        console.log("cart.selectGroupBuyProducts.products", cart.selectGroupBuyProducts.products);
         return cart.selectGroupBuyProducts.products;
     }
 });
