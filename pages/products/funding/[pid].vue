@@ -95,7 +95,7 @@
                     <!-- @click="() => $router.push('/products/funding/1')" -->
                     <UiButton
                         class="min-w-[370px] min-h-12 max-md:min-w-40 max-md:flex-grow max-xl:min-h-9 max-xl:h-9"
-                        @click="addToCart(prods[0])"
+                        @click="addToCart()"
                     >
                         立即贊助
                     </UiButton>
@@ -210,7 +210,9 @@ const projectId = route.params.pid;
 const isFavorite = ref(false);
 
 function addToCart(prod) {
-    navigateTo(`/cart/cart-fundraise?project_id=${projectId}&project_card_id=${prod.id}`);
+    let card = prod || prods.value.filter((item) => !item.soldOut)[0];
+
+    navigateTo(`/cart/cart-fundraise?project_id=${projectId}&project_card_id=${card.id}`);
 }
 
 function setIsFavorite(e, status) {
