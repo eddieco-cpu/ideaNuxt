@@ -59,7 +59,15 @@
 <script setup>
 import { cartStore } from "@/stores/cart";
 const router = useRouter();
+const route = useRoute();
 const cart = cartStore();
+const projectId = route.query.project_id;
+const projectCardId = route.query.project_card_id;
+
+let query = {
+    project_id: projectId,
+    project_card_id: projectCardId,
+};
 
 const productList = ref([]);
 
@@ -67,21 +75,30 @@ async function getProdsData() {
     const data = await GET(`/api/productsFundraise`);
 
     if (!!data) {
-        productList.value = data.prods.map((el, i) => ({
-            ...el,
-        }));
+        productList.value = data.prods;
 
-        cart.selectFundRaiseProducts = [productList.value[0]];
+        const selectProduct =
+            productList.value
+                .filter((item) => !item.soldOut)
+                .find((item) => item.id.toString() === projectCardId.toString()) ||
+            productList.value.filter((item) => !item.soldOut)[0];
+
+        query.project_card_id = selectProduct.id;
+        router.replace({ query });
+
+        cart.selectFundRaiseProducts = [selectProduct];
     }
 }
 getProdsData();
 
 function goCheckoutPage() {
-    navigateTo("/cart/checkout-fundraise");
+    navigateTo(`/cart/checkout-fundraise?project_id=${projectId}&project_card_id=${projectCardId}`);
 }
 
 function addToCart(item) {
     if (item.soldOut) return;
+    query.project_card_id = item.id;
+    router.replace({ query });
 
     cart.selectFundRaiseProducts = [item];
 }
