@@ -20,8 +20,10 @@ const pageTime = ref("2023/10/27 11:16");
 const fullContext = ref();
 
 async function getHtmlContext() {
-    const data = await GET(`/api/dashboard/details/product/fakeHtml`);
+    let data = await GET(`/api/dashboard/details/product/fakeHtml`);
     if (!!data) {
+        console.log("data.data", data.data);
+        data.data = cleanUpString(data.data);
         console.log("data.data", data.data);
         if (data.data) fullContext.value.editorContent = data.data;
     }
@@ -29,6 +31,14 @@ async function getHtmlContext() {
 onMounted(() => {
     getHtmlContext();
 });
+
+function cleanUpString(str) {
+    // 移除換行符或回車符
+    str = str.replace(/[\r\n]+/gm, "");
+    // 壓縮標籤之間的多個空白為一個空白，並移除標籤周圍的空白
+    str = str.replace(/>\s+</gm, "><").replace(/\s{2,}/g, " ");
+    return str;
+}
 
 function doSave() {
     console.log("doSubmit");

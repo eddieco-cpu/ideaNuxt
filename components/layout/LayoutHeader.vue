@@ -69,7 +69,7 @@
                         src="~assets/images/header/shoppingCart.svg"
                         alt="shoppingCart"
                         class="cursor-pointer"
-                        @click="goToPage('/cart')"
+                        @click.stop="goToPage('/cart')"
                     />
 
                     <div
@@ -101,7 +101,7 @@
                     <div class="flex" v-else>
                         <button
                             class="relative bg-Primary-50 px-4 py-2 flex items-center gap-x-1 rounded-lg text-sm text-Primary-400-Hover group max-md:bg-Primary-500-Primary max-md:border max-md:border-Primary-200 max-md:text-white"
-                            @click="goToPage('/member/information')"
+                            @click.stop="goToPage('/member/information')"
                         >
                             <img
                                 :src="store.userInfo.image"
@@ -121,8 +121,9 @@
                                         class="text-black hover:bg-Primary-50 w-full"
                                         v-for="(item, index) in memberCenterLink"
                                         :key="index"
+                                        @click.stop="goToPage(item.link)"
                                     >
-                                        <nuxt-link class="block w-full py-2" :to="item.link">{{ item.name }}</nuxt-link>
+                                        <span class="block w-full py-2" :to="item.link">{{ item.name }}</span>
                                     </li>
                                 </ul>
 
@@ -163,7 +164,7 @@
                                 v-for="(list, index) in item.lists"
                                 :key="index"
                                 class="mb-5 last:mb-0 cursor-pointer"
-                                @click="goToPage(list.link)"
+                                @click.stop="goToPage(list.link)"
                             >
                                 <p>{{ list.name }}</p>
                             </li>
@@ -176,7 +177,7 @@
                                 v-for="(list, index) in item.lists"
                                 :key="index"
                                 class="mb-5 last:mb-0 cursor-pointer"
-                                @click="goToPage(list.link)"
+                                @click.stop="goToPage(list.link)"
                             >
                                 <p>{{ list.name }}</p>
                             </li>
@@ -189,7 +190,7 @@
                             variant="ghost"
                             :ui="{ rounded: 'rounded-none' }"
                             class="text-Primary-600-Dark-Primary disabled:opacity-100 text-base justify-between p-0 pt-4 pb-2"
-                            @click="goToPage(item.link)"
+                            @click.stop="goToPage(item.link)"
                         >
                             <span class="truncate">{{ item.label }}</span>
 
