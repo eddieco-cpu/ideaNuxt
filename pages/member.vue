@@ -51,7 +51,9 @@
 
 <script setup>
 import { useAuthStore } from "@/stores/auth";
+import { useToast } from "vue-toastification";
 import Icon from "assets/images/";
+const toast = useToast();
 
 const store = useAuthStore();
 
@@ -96,9 +98,40 @@ const memberNavList = ref([
     },
 ]);
 
-function changeAvatar(e) {
-    if (!!e.target.files[0]) {
-        // 換頭照
+async function changeAvatar(event) {
+    if (!!event.target.files[0]) {
+
+        const file = event.target.files[0]; 
+
+        if (file.size > 1048576) { 
+
+            toast.error('圖片大小請小於1MB');
+
+        } else {
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                const base64 = e.target.result; 
+
+                try {
+                    await updateImage(base64);
+                } catch (error) {
+                    console.error('Error updating image:', error);
+                }
+            };
+
+            reader.onerror = (error) => {
+                console.error('Error reading file:', error);
+            };
+            reader.readAsDataURL(file); 
+        }
+    }
+}
+
+async function updateImage(base64) {
+    const data =  await POST("/updateUserImage", {'image' : base64 }, '');
+
+    if(!!data) {
+        store.userInfo = data.user;
     }
 }
 

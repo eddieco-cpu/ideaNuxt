@@ -6,19 +6,19 @@
 
         <div class="max-w-80 md:max-w-[1086px] -mt-[80px] mx-auto md:grid md:grid-cols-12 md:gap-x-6 md:mt-10">
             <!-- 團主檔案 -->
-            <div
+            <div v-if = "userData"
                 class="relative h-max flex flex-col items-center gap-y-4 pt-14 px-5 pb-6 bg-white rounded-2xl mx-auto md:col-span-4 md:mt-[150px]"
             >
                 <img
-                    src="https://avatars.githubusercontent.com/u/739984?v=4"
+                    :src="userData.image"
                     alt="avatar"
                     class="absolute -top-[100px] left-2/4 transform -translate-x-1/2 w-[152px] h-[152px] rounded-[48px]"
                 />
 
-                <h1 class="text-Primary-500-Primary text-xl font-medium text-center">媽媽我想嫁去台南</h1>
+                <h1 class="text-Primary-500-Primary text-xl font-medium text-center">{{ userData.name }}</h1>
 
                 <p class="text-sm text-Neutral-800">
-                    我是一位熱愛生活的一兒寶媽，我最喜歡的兩大興趣就是精心收納每個空間，而最讓我感到滿足的，莫過於透過以最優惠的價格，將我發現的好物介紹給朋友們。期待與大家共同探索更多美好生活的可能性！💖讓我們一同創造更精彩的生活吧！💐
+                    {{ userDetail.selfDescription }}
                 </p>
 
                 <div
@@ -26,19 +26,19 @@
                 >
                     <div class="flex flex-col items-center justify-center pr-4">
                         <h3 class="text-Neutral-900 text-sm">好物開團</h3>
-                        <p class="text-Primary-500-Primary font-medium">6</p>
+                        <p class="text-Primary-500-Primary font-medium">{{ groupCounts }}</p>
                     </div>
 
                     <div
                         class="flex flex-col items-center justify-center border border-y-0 border-l-Primary-100 border-r-Primary-100 px-4"
                     >
                         <h3 class="text-Neutral-900 text-sm">文章分享</h3>
-                        <p class="text-Primary-500-Primary font-medium">3</p>
+                        <p class="text-Primary-500-Primary font-medium">0</p>
                     </div>
 
                     <div class="flex flex-col items-center justify-center pl-4">
                         <h3 class="text-Neutral-900 text-sm">影音快播</h3>
-                        <p class="text-Primary-500-Primary font-medium">6</p>
+                        <p class="text-Primary-500-Primary font-medium">0</p>
                     </div>
                 </div>
 
@@ -46,16 +46,16 @@
                 <TagHeart :isAddKol="true" :isFavorite="true" />
 
                 <!-- 社群軟體 -->
-                <Media />
+                <Media v-bind="userDetail" />
             </div>
 
             <div class="md:col-span-8 md:grid md:gap-y-10">
                 <!-- 跟著我一起買 -->
-                <div v-if="true">
+                <div v-if="filteredOngoing && filteredOngoing.length > 0">
                     <div class="flex gap-4 items-center justify-between mt-8 mb-4 md:mt-0">
                         <h1 class="text-black text-xl font-medium">跟著我一起買(進行中)</h1>
 
-                        <USelectMenu
+                        <!-- <USelectMenu
                             variant="none"
                             size="sm"
                             class="border border-Neutral-100 rounded-md bg-white"
@@ -66,24 +66,24 @@
                             <template #trailing>
                                 <img src="~assets/images/icon/sort-icon.svg" alt="sort" />
                             </template>
-                        </USelectMenu>
+                        </USelectMenu> -->
                     </div>
 
                     <div class="grid grid-cols-1 gap-y-4 md:gap-5 md:grid-cols-3">
                         <!-- 卡片 -->
-                        <CardGroupBuying v-for="(item, index) in groupBuyingList" :key="index" v-bind="item" />
+                        <CardGroupBuying v-for="(item, index) in filteredOngoing" :key="index" v-bind="item" />
                     </div>
 
                     <UiPagination
                         class="mt-6"
-                        :currentPage="currentPage"
-                        :totalPages="totalPages"
-                        @updateCurrentPage="updateCurrentPage"
+                        :currentPage="onGoingCurrentPage"
+                        :totalPages="onGoingtotalPages"
+                        @updateCurrentPage="updateCurrentPageType1"
                     />
                 </div>
 
                 <!-- 影音快播 -->
-                <div v-if="true" class="overflow-x-auto none-scrollbar">
+                <!-- <div v-if="true" class="overflow-x-auto none-scrollbar">
                     <div class="flex gap-4 items-center justify-between mt-8 mb-4 md:mt-0">
                         <h1 class="text-black text-xl font-medium">點子影音快播</h1>
 
@@ -122,14 +122,14 @@
                             v-if="isOpenVideo"
                         />
                     </transition>
-                </div>
+                </div> -->
 
                 <!-- 即將開團 -->
-                <div v-if="true">
+                <div v-if="filteredUpcomping && filteredUpcomping.length > 0">
                     <div class="flex gap-4 items-center justify-between mt-8 mb-4 md:mt-0">
                         <h1 class="text-black text-xl font-medium">即將開團</h1>
 
-                        <USelectMenu
+                        <!-- <USelectMenu
                             variant="none"
                             size="sm"
                             class="border border-Neutral-100 rounded-md bg-white"
@@ -140,19 +140,19 @@
                             <template #trailing>
                                 <img src="~assets/images/icon/sort-icon.svg" alt="sort" />
                             </template>
-                        </USelectMenu>
+                        </USelectMenu> -->
                     </div>
 
                     <div class="grid grid-cols-1 gap-y-4 md:gap-5 md:grid-cols-2">
                         <!-- 卡片 -->
-                        <CardBlog v-for="(item, index) in comingBuyingList" :key="index" v-bind="item" />
+                        <CardBlog v-for="(item, index) in filteredUpcomping" :key="index" v-bind="item" />
                     </div>
 
                     <UiPagination
                         class="mt-6"
-                        :currentPage="currentPage"
-                        :totalPages="totalPages"
-                        @updateCurrentPage="updateCurrentPage"
+                        :currentPage="upcomingCurrentPage"
+                        :totalPages="upcomingtotalPages"
+                        @updateCurrentPage="updateCurrentPageType2"
                     />
                 </div>
 
@@ -161,7 +161,7 @@
                     <div class="flex gap-4 items-center justify-between mt-8 mb-4 md:mt-0">
                         <h1 class="text-black text-xl font-medium">開團紀錄</h1>
 
-                        <USelectMenu
+                        <!-- <USelectMenu
                             variant="none"
                             size="sm"
                             class="border border-Neutral-100 rounded-md bg-white"
@@ -172,13 +172,13 @@
                             <template #trailing>
                                 <img src="~assets/images/icon/sort-icon.svg" alt="sort" />
                             </template>
-                        </USelectMenu>
+                        </USelectMenu> -->
                     </div>
 
                     <div class="grid grid-cols-1 gap-y-4 md:gap-5 md:grid-cols-3">
                         <!-- 卡片 -->
                         <CardGroupBuying
-                            v-for="(item, index) in groupBuyingList"
+                            v-for="(item, index) in filteredFinished"
                             :key="index"
                             :isExpired="true"
                             v-bind="item"
@@ -187,9 +187,9 @@
 
                     <UiPagination
                         class="mt-6"
-                        :currentPage="currentPage"
-                        :totalPages="totalPages"
-                        @updateCurrentPage="updateCurrentPage"
+                        :currentPage="finishedCurrentPage"
+                        :totalPages="finishedtotalPages"
+                        @updateCurrentPage="updateCurrentPageType3"
                     />
                 </div>
 
@@ -203,29 +203,128 @@
 </template>
 
 <script setup>
-const sort = ["新到舊", "舊到新", "開團數", "活耀度"];
-const sortSelected = ref(sort[0]);
+const route  = useRoute();
+const userId = route.params.id;
 
-const sortComing = ["新到舊", "舊到新", "開團數", "活耀度"];
-const sortComingSelected = ref(sortComing[0]);
+const sort                = ["新到舊", "舊到新", "開團數", "活耀度"];
+const sortSelected        = ref(sort[0]);
 
-const sortHistory = ["新到舊", "舊到新", "開團數", "活耀度"];
+const sortComing          = ["新到舊", "舊到新", "開團數", "活耀度"];
+const sortComingSelected  = ref(sortComing[0]);
+
+const sortHistory         = ["新到舊", "舊到新", "開團數", "活耀度"];
 const sortHistorySelected = ref(sortHistory[0]);
 
-const groupBuyingList = ref([]);
+const groupBuyingList  = ref([]);
 const comingBuyingList = ref([]);
-const videoPlayList = ref([]);
+const videoPlayList    = ref([]);
 
-const scrollNavIndex = ref(0);
-const isOpenVideo = ref(false);
+const scrollNavIndex   = ref(0);
+const isOpenVideo      = ref(false);
 
-const videoNav = ref(null);
+const videoNav         = ref(null);
+const videoIndex       = ref(0);
 
-const videoIndex = ref(0);
+
+const onGoingCurrentPage  = ref(1);
+const upcomingCurrentPage = ref(1);
+const finishedCurrentPage = ref(1);
+
+const onGoingtotalPages   = ref(10);
+const upcomingtotalPages  = ref(10);
+const finishedtotalPages  = ref(10);
+
+getAllGroup();
 
 getGroupBuyingList();
 getComingBuyingList();
 getVideoList();
+
+const onGoingData      = ref(null);
+const upcomingData     = ref(null);
+const finishedData     = ref(null);
+const userData         = ref(null);
+const userDetail       = ref(null);
+const groupCounts      = ref(1);
+
+
+async function getAllGroup() {
+
+    const query = `&&onGoingCurrentPage=${onGoingCurrentPage.value}&&upcomingCurrentPage=${upcomingCurrentPage.value}&&finishedCurrentPage=${finishedCurrentPage.value}`
+
+    const data   = await GET(`/frontend/getAllGroup?userId=${userId}${query}`,1);
+    console.log(data)
+    if(!!data) {
+        if(data.ongoing.data.length > 0 ) {
+            onGoingData.value = data.ongoing.data;
+            onGoingtotalPages.value = data.ongoing.last_page;
+        }
+
+        if(data.finished.data.length > 0 ) {
+            finishedData.value = data.finished.data;
+            finishedtotalPages.value = data.finished.last_page;
+        }
+
+        if(data.upcomping.data.length > 0 ) {
+            upcomingData.value = data.upcomping.data;
+            upcomingtotalPages.value = data.upcomping.last_page;
+        }
+
+        userData.value    = data.user;
+        userDetail.value  = data.userDetail;
+        groupCounts.value = data.groupCounts;
+    }
+    
+}
+
+const filteredOngoing = computed(() => {
+    if(onGoingData.value) {
+        return onGoingData.value.map(item => ({
+                id:     item.id,
+                name:   item.users.name ,
+                image:  item.projects.image,
+                avatar: item.users.image ,
+                text:   item.projects.name ,
+                price:  [item.price_range['min_price'],item.price_range['max_price']],
+                tags:   item.product.tags ? item.product.tags : []
+            }));
+    } else {
+        return []
+    }
+});
+
+const filteredUpcomping = computed(() => {
+    if(upcomingData.value) {
+        return upcomingData.value.map(item => ({
+                id:     item.id,
+                name:   item.users.name ,
+                image:  item.projects.image,
+                avatar: item.users.image ,
+                text:   item.projects.name ,
+                price:  item.price,
+                tags:   item.product.tags ? item.product.tags : [],
+                start_time: item.start_time
+            }));
+    } else {
+        return []
+    }
+});
+
+const filteredFinished = computed(() => {
+    if(finishedData.value) {
+        return finishedData.value.map(item => ({
+                id:     item.id,
+                name:   item.users.name ,
+                image:  item.projects.image,
+                avatar: item.users.image ,
+                text:   item.projects.name ,
+                price:  item.price,
+                tags:   item.product.tags ? item.product.tags : []
+            }));
+    } else {
+        return []
+    }
+});
 
 function scrollVideoNav(index) {
     scrollNavIndex.value += index;
@@ -283,9 +382,27 @@ async function getVideoList() {
 }
 
 const currentPage = ref(1);
-const totalPages = ref(20);
-const updateCurrentPage = (newPage) => {
-    currentPage.value = newPage;
+
+
+const updateCurrentPageType3 = (newPage) => {
+    
+    finishedCurrentPage.value =  newPage;
+
+    getAllGroup()
+};
+
+const updateCurrentPageType2 = (newPage) => {
+    
+    upcomingCurrentPage.value =  newPage;
+
+    getAllGroup()
+};
+
+const updateCurrentPageType1 = (newPage) => {
+    
+    onGoingCurrentPage.value = newPage;
+
+    getAllGroup()
 };
 </script>
 

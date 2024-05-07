@@ -45,7 +45,7 @@ const { index, id, name, image, hash_id } = defineProps({
 });
 
 function goToPage() {
-    navigateTo(`/kol/${hash_id}`);
+    navigateTo(`/kol/${hash_id}/${name}`);
 }
 </script>
 

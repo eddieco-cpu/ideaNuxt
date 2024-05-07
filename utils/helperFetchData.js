@@ -21,6 +21,7 @@ export const POST = async (endpoint, payload, token='') => {
 
     return data;
   } catch (error) {
+    console.log(error)
     const {
       _data: { message },
     } = error.response;
@@ -40,22 +41,30 @@ export const GET = async (url, test = "0") => {
     url = `${baseUrl}${url}`;
   }
 
+  const cookie   = useCookie('jwt-token')
+  const jwtToken = cookie.value;
+  const store    = useAuthStore();
+
   try {
     const data = await $fetch(url, {
       method: "GET",
       headers: {
-        Authorization: "Bearer /* YOUR_TOKEN_HERE */",
+        'Authorization': `Bearer ${jwtToken}`,
       },
     });
 
     return data;
   } catch (error) {
     console.log(error);
-    // const {
-    //     _data: { message },
-    // } = error.response;
+    const {
+        _data: { message },
+    } = error.response;
 
-    // helperResponseHandle(error.statusCode, message);
+    if (error.statusCode == 401) {
+      store.clearToken();
+    }
+
+    helperResponseHandle(error.statusCode, message);
   }
 };
 

@@ -23,7 +23,7 @@
                 <HomeMainSlider :slides="bannerData.data" />
             </div>
 
-            <UiContainer>
+            <UiContainer v-if="filteredProjects && filteredProjects.length > 0">
                 <UiTitle>新點子集資</UiTitle>
                 <div v-if = "categoryData && categoryData.data.length > 0">
                     <div class="text-right mb-[-30px] max-md:mt-[-44px] max-md:mb-4" >
@@ -37,23 +37,23 @@
                     </div>
                
                     <UCarousel
-                    v-slot="{ item }"
-                    :items="categoryData.data"
-                    :ui="{ item: 'snap-start' }"
-                    class="max-w-[1200px] mx-auto mb-4 max-md:w-[calc(100%+48px)] max-md:ml-[-24px] max-md:pl-4"
-                >
-                    <NuxtLink
-                        to="/"
-                        :class="
-                            item.id == newIdeasTypes.typeActive
-                                ? 'bg-Primary-100 text-Primary-600-Dark-Primary'
-                                : 'bg-Primary-50 text-Primary-400-Hover'
-                        "
-                        class="block rounded-lg whitespace-nowrap text-sm leading-6 px-4 py-1 mr-4 hover:text-Primary-400-Hover active:text-Primary-600-Dark-Primary transition-colors duration-200 ease-in-out"
-                        @click=" newIdeasTypes.typeActive = item.id "
-                        >{{ item.name }}</NuxtLink
+                        v-slot="{ item }"
+                        :items="categoryData.data"
+                        :ui="{ item: 'snap-start' }"
+                        class="max-w-[1200px] mx-auto mb-4 max-md:w-[calc(100%+48px)] max-md:ml-[-24px] max-md:pl-4"
                     >
-                </UCarousel>
+                        <NuxtLink
+                            to="/"
+                            :class="
+                                item.id == newIdeasTypes.typeActive
+                                    ? 'bg-Primary-100 text-Primary-600-Dark-Primary'
+                                    : 'bg-Primary-50 text-Primary-400-Hover'
+                            "
+                            class="block rounded-lg whitespace-nowrap text-sm leading-6 px-4 py-1 mr-4 hover:text-Primary-400-Hover active:text-Primary-600-Dark-Primary transition-colors duration-200 ease-in-out"
+                            @click=" newIdeasTypes.typeActive = item.id "
+                            >{{ item.name }}</NuxtLink
+                        >
+                    </UCarousel>
 
                 </div>
              
@@ -71,7 +71,7 @@
                 </div>
             </UiContainer>
 
-            <UiContainer>
+            <UiContainer v-if = "filteredProjectsHot && filteredProjectsHot.length > 0">
                 <UiTitle>熱門點子推薦</UiTitle>
 
                 <UCarousel

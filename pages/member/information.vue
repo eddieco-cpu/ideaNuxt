@@ -90,17 +90,20 @@
             </CardContainer>
 
             <!-- 是否註冊開團達人 -->
-            <CardContainer>
-                <template #body>
-                    <UCheckbox
-                        v-model="memberInfo.register"
-                        name="register"
-                        label="我想註冊成為開團達人/推薦名人"
-                        class="mb-2"
-                        help="歡迎成為開團達人，我們將會為您設立個人頁面，開始你的團購之路！"
-                    />
-                </template>
-            </CardContainer>
+            <div v-show="!memberInfo.register">
+                <CardContainer>
+                    <template #body>
+                        <UCheckbox
+                            v-model="memberInfo.register"
+                            name="register"
+                            label="我想註冊成為開團達人/推薦名人"
+                            class="mb-2"
+                            help="歡迎成為開團達人，我們將會為您設立個人頁面，開始你的團購之路！"
+                        />
+                    </template>
+                </CardContainer>
+            </div>
+            
 
             <div v-show="memberInfo.register">
                 <h1 class="text-xl font-medium">團主資料</h1>
@@ -109,39 +112,41 @@
                 </p>
             </div>
 
-            <MemberBeLeader v-show="memberInfo.register" :name="memberInfo.nickName" />
+            <MemberBeLeader v-show="memberInfo.register" :name="memberInfo.nick_name" />
         </div>
     </div>
 </template>
 
 <script setup>
-import VueDatePicker from "@vuepic/vue-datepicker";
 import "assets/css/datepicker.css";
+import VueDatePicker               from "@vuepic/vue-datepicker";
 import { memberInformationSchema } from "~/validation";
-import { zhTW } from "date-fns/locale";
-import { useToast } from "vue-toastification";
-const toast = useToast();
-
+import { zhTW }                    from "date-fns/locale";
+import { useToast }                from "vue-toastification";
+const toast     = useToast();
 const authStore = useAuthStore();
-const token = authStore.token;
+const token     = authStore.token;
 
 
 const memberInfo = ref({
-    nick_name: undefined,
-    name: undefined,
-    phone: undefined,
-    email: undefined,
-    birth: undefined,
-    sex: "0",
-    notification: true,
-    subscription: true,
-    register: false,
+    nick_name    : undefined,
+    name         : undefined,
+    phone        : undefined,
+    email        : undefined,
+    birth        : undefined,
+    sex          : "0",
+    notification : true,
+    subscription : true,
+    register     : false,
 });
 
-
-
 onMounted(() => {
+
   memberInfo.value = { ...memberInfo.value, ...authStore.userInfo };
+
+  if(authStore.userInfo.type == 2) {
+     memberInfo.value.register = true;
+  }
 });
 
 const sexOptions = [

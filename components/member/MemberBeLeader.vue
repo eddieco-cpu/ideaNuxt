@@ -123,6 +123,8 @@
 <script setup>
 import { useAuthStore } from "@/stores/auth";
 import { leaderInformationSchema } from "~/validation";
+import { useToast } from "vue-toastification";
+const toast = useToast();
 
 const store = useAuthStore();
 
@@ -136,14 +138,40 @@ const { name } = defineProps({
 const leaderInfo = ref({
     selfDescription: undefined,
     siteName: undefined,
-    facebookSite: "https://www.facebookSite.com/",
-    instagramSite: "https://www.InstagramSite.com/",
-    youtubeSite: "https://www.youtubeSite.com/",
-    officialSite: "https://www.officialSite.com/",
+    facebookSite: undefined,
+    instagramSite: undefined,
+    youtubeSite: undefined,
+    officialSite: undefined
 });
 
-function onSubmit(event) {
-    console.log(event.data);
+async function getDetail() {
+
+    const detailData = await GET("/getUserDetail", 1);
+
+    if(!!detailData.data) {
+        Object.keys(leaderInfo.value).forEach(key => {
+            if (detailData.data[key] !== undefined) {
+                leaderInfo.value[key] = detailData.data[key];
+            }
+        });
+    }
+}
+
+
+onMounted(() => {
+    getDetail();
+})
+
+async function onSubmit(event) {
+
+    const payload = event.data;
+
+    const data = await POST("/updateUserDetail", payload, '');
+
+    if(!!data) {
+        store.userInfo = data.userInfo;
+        toast.success(data.message)
+    }
 }
 </script>
 

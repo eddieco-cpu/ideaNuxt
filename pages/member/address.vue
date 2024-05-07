@@ -75,22 +75,28 @@ async function editAddress(index, isEdit) {
         tempAddress.value = { ...addressInfo.value.find((item, i) => i === index), index };
         
     } else {
+        const lengthOfAddressInfo = addressInfo.value.length > 0 ? addressInfo.value.length +1 : 1
         // 新增地址
         tempAddress.value = {
-            index: Math.max(Math.max(...addressInfo.value.map((item) => item.index)), 0) + 1,
+            index: lengthOfAddressInfo,
         };
     }
 }
 
-function onAbort(payload) {
+async function onAbort(payload) {
     if (payload.title === "刪除") {
-        addressInfo.value = addressInfo.value.filter((item) => item.index !== payload.index);
+        const addressId = addressInfo.value[payload.index].id;
+
+        const data =  await POST("/deleteAddress", {id: addressId}, '');
+
+
+        if(!!data) {
+        }
+        console.log(data)
     }
-    tempAddress.value = null;
 }
 
 async function onSubmit(data, isEditmode) {
-    console.log(data)
     const { index, name, phone, email, address, defaultAddress, zipCode, city, district } = data;
 
     const payload = {

@@ -7,13 +7,13 @@
                     <p class="text-black/[0.85]">地址{{ index }}</p>
 
                     <div class="ml-auto flex gap-x-6">
-                        <button
+                        <!-- <button
                             class="underline text-Primary-500-Primary text-sm"
                             v-show="!defaultAddress"
                             @click="setDefaultAddress"
                         >
                             設為預設地址
-                        </button>
+                        </button> -->
 
                         <button class="underline text-Primary-500-Primary text-sm" @click="editAddress">編輯</button>
                     </div>

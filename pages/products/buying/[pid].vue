@@ -11,7 +11,7 @@
                     :links="[
                         { label: 'Home', to: '/' },
                         { label: '團主推薦' },
-                        { label: '3C科技', to: '/category/technology-ai?type=groupbuying' },
+                        // { label: '3C科技', to: '/category/technology-ai?type=groupbuying' },
                     ]"
                     :ui="{
                         active: 'text-white font-normal',
@@ -64,12 +64,12 @@
                                 >促銷</b
                             >
                         </div>
-                        <div class="items-baseline">
+                        <!-- <div class="items-baseline">
                             <b
                                 class="inline-block rounded px-2 py-1 bg-Primary-500-Primary text-white font-light whitespace-nowrap max-md:text-sm"
                                 >獨家</b
                             >
-                        </div>
+                        </div> -->
                     </div>
                     <h2 class="font-medium text-xl py-3">{{ pageData.projects?.name }}</h2>
                     <h3 class="font-noto text-xs text-Neutral-600-Dark-Primary">
@@ -92,7 +92,7 @@
                 <!-- art -->
                 <article class="w-[436px] flex flex-col justify-center items-center max-xl:w-auto">
                     <!-- avater -->
-                    <nuxt-link to="/kol/1"
+                    <nuxt-link :to="`/kol/${pageData.users?.hash_id}/${pageData.users?.name}`"
                         class="flex justify-between items-center gap-x-2 bg-white mb-2 p-3 rounded-lg w-full max-md:mb-5 max-md:translate-y-[-4px]"
                     >
                         <div class="flex justify-start items-center gap-x-3">
@@ -249,6 +249,7 @@ async function getDatas() {
     const data = await GET(`/frontend/getGroup${queryParam}`,1);
     if (!!data) {
         pageData.value = data.data;
+        console.log(pageData)
         
         recommendationSelects.splice(0, recommendationSelects.length, ...data.data.product_specs);
 

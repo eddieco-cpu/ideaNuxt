@@ -32,7 +32,7 @@
             </p>
 
             <div class="flex gap-x-3 items-center">
-                <p class="text-Neutral-500-Primary text-xs">2023/12/31</p>
+                <p class="text-Neutral-500-Primary text-xs">{{ start_time }}</p>
 
                 <div class="flex gap-x-2 items-center">
                     <UAvatar
@@ -45,7 +45,7 @@
                             },
                         }"
                     />
-                    <span class="text-xs text-Neutral-600-Dark-Primary">vicky 媽媽</span>
+                    <!-- <span class="text-xs text-Neutral-600-Dark-Primary">vicky 媽媽</span> -->
                 </div>
             </div>
         </div>
@@ -77,6 +77,10 @@ const { id } = defineProps({
         type: Boolean,
         default: false,
     },
+    start_time: {
+        type: String,
+        default: "",
+    }
 });
 </script>
 

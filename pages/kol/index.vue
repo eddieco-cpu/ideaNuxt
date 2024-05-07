@@ -23,7 +23,7 @@
 
                     <UtilCounter class="font-roboto text-4xl font-bold" :endNumber="kolCount" />
 
-                    位達人，一同分享好務!
+                    位達人，一同分享好物!
                 </p>
             </div>
 
@@ -34,7 +34,7 @@
                     <span class="text-Primary-500-Primary text-xs ml-2 leading-none">共{{ kolCount }}位</span>
                 </div>
 
-                <USelectMenu
+                <!-- <USelectMenu
                     variant="none"
                     size="sm"
                     class="border border-Neutral-100 rounded-md bg-white"
@@ -45,7 +45,7 @@
                     <template #trailing>
                         <img src="~assets/images/icon/sort-icon.svg" alt="sort" />
                     </template>
-                </USelectMenu>
+                </USelectMenu> -->
             </div>
 
             <!-- 精選團主卡片 -->
@@ -66,15 +66,14 @@
 <script setup>
 import { GET } from "~/utils/helperFetchData.js";
 
-const sort = ["新到舊", "舊到新", "開團數", "活耀度"];
+const sort         = ["新到舊", "舊到新", "開團數", "活耀度"];
 const sortSelected = ref(sort[0]);
-const kolList = ref([]);
-const kolRank = ref([]);
-const kolCount = ref(0)
+const kolList      = ref([]);
+const kolRank      = ref([]);
+const kolCount     = ref(0)
 
-
-const currentPage = ref(1);
-const totalPages = ref(20);
+const currentPage  = ref(1);
+const totalPages   = ref(20);
 const updateCurrentPage = (newPage) => {
     currentPage.value = newPage;
 };
@@ -82,11 +81,14 @@ const updateCurrentPage = (newPage) => {
 async function getKol() {
 
     const queryParam = `?page=${currentPage.value}`;
-    const data = await GET(`/frontend/getKols${queryParam}`,1);
+    const data       = await GET(`/frontend/getKols${queryParam}`,1);
 
     if (!!data) {
-        kolList.value = data.data.data;
-        kolCount.value = data.data.total
+        if(data.data.data.length > 0) {
+            kolList.value = data.data.data;
+            kolCount.value = data.data.total;
+            totalPages.value = data.data.last_page;
+        }
     }
 }
 
@@ -99,7 +101,6 @@ async function getKolRank() {
 
 getKol();
 getKolRank();
-
 
 </script>
 
