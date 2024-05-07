@@ -274,6 +274,7 @@ function cleanUpString(str) {
 <style lang="scss">
 @import "@/assets/css/quillContext.scss";
 
+/*
 .funding_main {
     .card_group::-webkit-scrollbar {
         width: 5px;
@@ -286,4 +287,5 @@ function cleanUpString(str) {
         background-color: transparent;
     }
 }
+*/
 </style>
