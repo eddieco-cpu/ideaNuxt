@@ -408,6 +408,7 @@ function cleanUpString(str) {
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
     }
+    /*
     .card_group::-webkit-scrollbar {
         width: 5px;
         height: 5px;
@@ -418,5 +419,6 @@ function cleanUpString(str) {
     .card_group::-webkit-scrollbar-track {
         background-color: transparent;
     }
+    */
 }
 </style>
