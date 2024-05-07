@@ -1,7 +1,7 @@
 <template>
     <section>
         <div
-            class="min-h-[calc(100vh-74px-32px-72px-32px-88px-40px-36px-12px)] max-md:min-h-[calc(100vh-55px-24px-72px-12px-50px-32px-36px-12px)]"
+            class="ql-context-wrapper min-h-[calc(100vh-74px-32px-72px-32px-88px-40px-36px-12px)] max-md:min-h-[calc(100vh-55px-24px-72px-12px-50px-32px-36px-12px)]"
         >
             <ClientOnly>
                 <QuillEditor

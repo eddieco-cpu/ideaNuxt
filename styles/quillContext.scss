@@ -1,4 +1,7 @@
-.ql-editor {
+.ql-editor,
+.ql-context-wrapper .ql-editor,
+.buying_main .ql-editor,
+.funding_main .ql-editor {
     min-height: 200px;
 
     &>p {

@@ -1,6 +1,6 @@
 <template>
     <section>
-        <div class="min-h-[300px] max-md:min-h-[600px]">
+        <div class="ql-context-wrapper min-h-[300px] max-md:min-h-[600px]">
             <ClientOnly>
                 <QuillEditor
                     class="min-h-[300px] max-md:min-h-[600px] border-[1px] border-[#E5E5E5] rounded-b-lg"
