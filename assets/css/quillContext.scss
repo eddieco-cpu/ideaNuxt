@@ -1,0 +1,77 @@
+.ql-editor {
+    min-height: 200px;
+
+    &>p {
+        margin-bottom: 16px;
+        /* background-color: lightblue; */
+    }
+
+    &>p:has(> :only-child):has(> br) {
+        /*
+        outline: 1px solid deeppink;
+        background-color: lightskyblue;
+        */
+        height: 0;
+    }
+
+    .ql-size-normal,
+    p,
+    ul,
+    li,
+    ol,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    blockquote,
+    a,
+    em,
+    strong,
+    u,
+    i,
+    table,
+    caption,
+    tbody,
+    tfoot,
+    thead,
+    tr,
+    th,
+    td,
+    article,
+    div,
+    section {
+        @apply text-base font-normal;
+    }
+
+    .ql-size-huge {
+        @apply text-[28px] leading-snug font-medium;
+    }
+
+    .ql-size-large {
+        @apply text-2xl font-medium;
+    }
+
+    .ql-size-small {
+        @apply text-xs font-light;
+    }
+
+    strong {
+        font-weight: 900 !important;
+
+        &.ql-size-small {
+            font-weight: 900;
+        }
+    }
+
+    ol {
+        list-style-type: decimal;
+        padding-left: 25px;
+    }
+
+    ul {
+        list-style-type: disc;
+        padding-left: 18px;
+    }
+}
