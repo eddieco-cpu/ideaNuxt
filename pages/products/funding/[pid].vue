@@ -1,5 +1,5 @@
 <template>
-    <section class="max-w-[1090px] mx-auto max-xl:px-6 max-xl:py-4 max-md:px-0">
+    <section class="funding_main max-w-[1090px] mx-auto max-xl:px-6 max-xl:py-4 max-md:px-0">
         <!--  -->
         <section class="pt-12 pb-5 max-md:px-6 max-md:pt-1 max-md:pb-3">
             <UBreadcrumb
@@ -139,43 +139,12 @@
                 </div>
 
                 <template v-if="activeNavItemId === 'a'">
-                    <article class="bg-white p-6 rounded-lg" ref="articleRef">
-                        <h1 class="text-[28px] leading-snug font-medium mb-4">
-                            {{ useState("a", () => helperLorem(20, 40)).value }}
-                        </h1>
-                        <h2 class="text-2xl font-medium mb-4">
-                            {{ useState("b", () => helperLorem(20, 40)).value }}
-                        </h2>
-                        <h3 class="text-xl font-medium mb-4">
-                            {{ useState("c", () => helperLorem(20, 40)).value }}
-                        </h3>
-                        <h4 class="text-base font-medium mb-4">
-                            {{ useState("d", () => helperLorem(20, 40)).value }}
-                        </h4>
-                        <h5 class="text-xs font-normal mb-4 text-[#696969]">
-                            {{ useState("e", () => helperLorem(20, 40)).value }}
-                        </h5>
-                        <picture class="block w-full mb-4">
-                            <img :src="helperPicture()" alt="" class="block w-full" />
-                        </picture>
-
-                        <picture class="block w-full mb-4">
-                            <img :src="helperPicture()" alt="" class="block w-full" />
-                        </picture>
-
-                        <picture class="block w-full mb-4">
-                            <img :src="helperPicture()" alt="" class="block w-full" />
-                        </picture>
-
-                        <picture class="block w-full mb-4">
-                            <img :src="helperPicture()" alt="" class="block w-full" />
-                        </picture>
-
-                        <picture class="block w-full mb-4">
-                            <img :src="helperPicture()" alt="" class="block w-full" />
-                        </picture>
-                        <ProductsAccordionTypeA />
-                    </article>
+                    <div ref="articleRef">
+                        <article class="bg-white p-6 rounded-lg ql-editor" v-html="articleHTML"></article>
+                        <article class="bg-white p-6 pt-0 rounded-lg">
+                            <ProductsAccordionTypeA />
+                        </article>
+                    </div>
                 </template>
                 <template v-if="activeNavItemId === 'b'">
                     <article class="bg-white p-6 rounded-lg">
@@ -203,6 +172,10 @@
 
 <script setup>
 import { useToast } from "vue-toastification";
+import "@vueup/vue-quill/dist/vue-quill.core.css";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import "@vueup/vue-quill/dist/vue-quill.bubble.css";
+
 const toast = useToast();
 
 const isFavorite = ref(false);
@@ -228,12 +201,24 @@ const maxHeight = ref(700);
 const articleRef = ref(null);
 const articleRefHeight = ref(0);
 
+const articleHTML = ref("");
+
 //
 onMounted(() => {
     if (articleRef.value) {
         //console.log("articleRef 高度:", articleRef.value.offsetHeight);
         articleRefHeight.value = articleRef.value.offsetHeight;
     }
+    async function getHtmlContext() {
+        let data = await GET(`/api/dashboard/details/product/fakeHtml`);
+        if (!!data) {
+            console.log("data.data", data.data);
+            data.data = cleanUpString(data.data);
+            console.log("data.data", data.data);
+            if (data.data) articleHTML.value = data.data;
+        }
+    }
+    getHtmlContext();
 });
 
 //
@@ -276,17 +261,29 @@ function goToCart() {
         navigateTo(`/cart`);
     }, 100);
 }
+
+function cleanUpString(str) {
+    // 移除換行符或回車符
+    str = str.replace(/[\r\n]+/gm, "");
+    // 壓縮標籤之間的多個空白為一個空白，並移除標籤周圍的空白
+    str = str.replace(/>\s+</gm, "><").replace(/\s{2,}/g, " ");
+    return str;
+}
 </script>
 
-<style scoped>
-.card_group::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-}
-.card_group::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-}
-.card_group::-webkit-scrollbar-track {
-    background-color: transparent;
+<style lang="scss">
+@import "@/assets/css/quillContext.scss";
+
+.funding_main {
+    .card_group::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+    .card_group::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+    }
+    .card_group::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
 }
 </style>
