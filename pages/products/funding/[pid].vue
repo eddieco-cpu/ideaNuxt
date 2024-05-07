@@ -275,7 +275,7 @@ function cleanUpString(str) {
 </script>
 
 <style lang="scss">
-@import "@/assets/css/quillContext.scss";
+@import "@/styles/quillContext.scss";
 
 /*
 .funding_main {

@@ -395,7 +395,7 @@ function cleanUpString(str) {
 </script>
 
 <style lang="scss">
-@import "@/assets/css/quillContext.scss";
+@import "@/styles/quillContext.scss";
 
 .buying_main {
     .banner_photo::after {
