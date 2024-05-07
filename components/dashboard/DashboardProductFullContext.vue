@@ -67,7 +67,7 @@ defineExpose({
 });
 </script>
 <style lang="scss">
-@import "@/assets/css/quillContext.scss";
+@import "@/styles/quillContext.scss";
 
 :deep(.ql-toolbar.ql-snow) {
     border-top-left-radius: 5px;
