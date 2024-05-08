@@ -21,7 +21,7 @@
 
         <!--  -->
         <picture class="block w-full mb-4 aspect-[396/142] max-md:aspect-[283/100]">
-            <img :src="prod.imgData" alt="" class="block w-full h-full object-cover" />
+            <img :src="prod.image" alt="" class="block w-full h-full object-cover" />
         </picture>
         <div class="flex justify-start items-center mb-3">
             <p class="inline-block px-[6px] py-1 rounded text-xs text-white bg-Primary-400-Hover mr-2">
@@ -31,9 +31,9 @@
                 剩餘{{ prod.salesLimitedQuantity }}組
             </p>
         </div>
-        <h3 class="text-base font-medium mb-1">{{ prod.projectName }}</h3>
+        <h3 class="text-base font-medium mb-1">{{ prod.title }}</h3>
         <p class="text-Status-Color-Danger-500-Primary text-xl font-medium mb-2">
-            NT${{ prod.specialOffer }}
+            NT${{ prod.price }}
             <span class="text-xs font-normal opacity-80 line-through">定價 ${{ prod.originalPrice }}</span>
             <span class="text-xs font-normal opacity-80">，現省 ${{ prod.originalPrice - prod.specialOffer }}</span>
         </p>
@@ -53,13 +53,13 @@ const props = defineProps({
         type: Object,
         default: () => ({
             id: "",
-            imgData: "",
+            image: "",
             sponsors: 0,
             salesLimit: true,
             salesLimitedQuantity: 0,
             projectName: "",
-            specialOffer: 0,
             originalPrice: 0,
+            price: 0,
             content: [],
             specification: [],
             soldOut: false,

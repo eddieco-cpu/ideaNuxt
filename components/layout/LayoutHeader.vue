@@ -69,7 +69,7 @@
                         src="~assets/images/header/shoppingCart.svg"
                         alt="shoppingCart"
                         class="cursor-pointer"
-                        @click="goToPage('/cart')"
+                        @click.stop="goToPage('/cart')"
                     />
                     <ClientOnly>
                     <div
@@ -96,6 +96,31 @@
                             <img src="~assets/images/header/user.svg" class="block md:hidden" />
 
                             <span class="font-normal"> 登入 /註冊 </span>
+                            <span class="font-normal"> 會員中心 </span>
+
+                            <div
+                                class="absolute top-full left-0 w-full bg-white rounded-lg py-1 shadow hidden md:group-hover:block"
+                            >
+                                <ul
+                                    class="flex flex-col items-center [&>*:nth-child(4)]:border-t-Neutral-200 [&>*:nth-child(4)]:border-t"
+                                >
+                                    <li
+                                        class="text-black hover:bg-Primary-50 w-full"
+                                        v-for="(item, index) in memberCenterLink"
+                                        :key="index"
+                                        @click.stop="goToPage(item.link)"
+                                    >
+                                        <span class="block w-full py-2" :to="item.link">{{ item.name }}</span>
+                                    </li>
+                                </ul>
+
+                                <button
+                                    class="bg-white border border-Primary-50 px-4 py-2 rounded-lg text-sm text-Primary-400-Hover w-[80px] mt-2"
+                                    @click="logout"
+                                >
+                                    <span class="text-Primary-400-Hover"> 登出 </span>
+                                </button>
+                            </div>
                         </button>
 
                         <!-- 會員已登入 -->
@@ -214,6 +239,73 @@
                     </UAccordion>
                 </div>
             </ClientOnly>
+
+                <UAccordion
+                    :items="navAccordionItems"
+                    color="black"
+                    size="xl"
+                    open-icon="i-heroicons-plus"
+                    close-icon="i-heroicons-minus"
+                    :ui="{
+                        item: { padding: 'p-0' },
+                    }"
+                    class="text-Primary-600-Dark-Primary px-7 md:hidden"
+                >
+                    <template #category="{ item }">
+                        <ul class="text-left bg-Primary-50 py-3 px-5 text-Neutral-900">
+                            <li
+                                v-for="(list, index) in item.lists"
+                                :key="index"
+                                class="mb-5 last:mb-0 cursor-pointer"
+                                @click.stop="goToPage(list.link)"
+                            >
+                                <p>{{ list.name }}</p>
+                            </li>
+                        </ul>
+                    </template>
+
+                    <template #proposal="{ item }">
+                        <ul class="text-left bg-Primary-50 py-3 px-5 text-Neutral-900">
+                            <li
+                                v-for="(list, index) in item.lists"
+                                :key="index"
+                                class="mb-5 last:mb-0 cursor-pointer"
+                                @click.stop="goToPage(list.link)"
+                            >
+                                <p>{{ list.name }}</p>
+                            </li>
+                        </ul>
+                    </template>
+
+                    <template #default="{ item, open }">
+                        <UButton
+                            color="white"
+                            variant="ghost"
+                            :ui="{ rounded: 'rounded-none' }"
+                            class="text-Primary-600-Dark-Primary disabled:opacity-100 text-base justify-between p-0 pt-4 pb-2"
+                            @click.stop="goToPage(item.link)"
+                        >
+                            <span class="truncate">{{ item.label }}</span>
+
+                            <template #trailing>
+                                <div v-show="item.showOpenIcon">
+                                    <UIcon
+                                        v-if="open"
+                                        name="i-heroicons-minus"
+                                        class="w-5 h-5 ms-auto transform transition-transform duration-200 flex"
+                                    />
+                                    <UIcon
+                                        v-else
+                                        name=" i-heroicons-plus"
+                                        class="w-5 h-5 ms-auto transform transition-transform duration-200 flex"
+                                    />
+                                </div>
+                            </template>
+                        </UButton>
+                    </template>
+                </UAccordion>
+            </div>
+
             <Transition name="mask">
                 <div
                     class="fixed md:hidden left-0 top-0 h-full w-full bg-black bg-opacity-50 z-[49]"

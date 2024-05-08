@@ -1,7 +1,7 @@
 <template>
     <section>
         <div
-            class="min-h-[calc(100vh-74px-32px-72px-32px-88px-40px-36px-12px)] max-md:min-h-[calc(100vh-55px-24px-72px-12px-50px-32px-36px-12px)]"
+            class="ql-context-wrapper min-h-[calc(100vh-74px-32px-72px-32px-88px-40px-36px-12px)] max-md:min-h-[calc(100vh-55px-24px-72px-12px-50px-32px-36px-12px)]"
         >
             <ClientOnly>
                 <QuillEditor
@@ -20,7 +20,9 @@
 </template>
 <script setup>
 import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.core.css";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import "@vueup/vue-quill/dist/vue-quill.bubble.css";
 
 //
 const quillEditorBody = ref();
@@ -63,10 +65,9 @@ defineExpose({
     quillEditorBody,
 });
 </script>
-<style scoped lang="css">
-:deep(.ql-editor) {
-    min-height: 200px;
-}
+<style lang="scss">
+@import "@/styles/quillContext.scss";
+
 :deep(.ql-toolbar.ql-snow) {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -74,26 +75,5 @@ defineExpose({
 :deep(.ql-container.ql-snow) {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-}
-:deep(.ql-size-huge) {
-    font-size: 2em;
-}
-:deep(.ql-size-large) {
-    font-size: 1.5em;
-}
-:deep(.ql-size-small) {
-    font-size: 0.75em;
-}
-:deep(.ql-size-normal) {
-    font-size: 1em;
-}
-
-:deep(.art ol) {
-    list-style-type: decimal;
-    padding-left: 30px;
-}
-:deep(.art ul) {
-    list-style-type: disc;
-    padding-left: 30px;
 }
 </style>

@@ -49,6 +49,10 @@ const props = defineProps({
     amount: {
         type: Number,
     },
+    qty: {
+        type: Number,
+        default: 1,
+    },
     img: {
         type: String,
         default: "",

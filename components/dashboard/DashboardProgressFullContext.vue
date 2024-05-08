@@ -1,6 +1,6 @@
 <template>
     <section>
-        <div class="min-h-[300px] max-md:min-h-[600px]">
+        <div class="ql-context-wrapper min-h-[300px] max-md:min-h-[600px]">
             <ClientOnly>
                 <QuillEditor
                     class="min-h-[300px] max-md:min-h-[600px] border-[1px] border-[#E5E5E5] rounded-b-lg"
@@ -62,10 +62,9 @@ defineExpose({
     quillEditorBody,
 });
 </script>
-<style scoped lang="css">
-:deep(.ql-editor) {
-    min-height: 200px;
-}
+<style lang="scss">
+@import "@/styles/quillContext.scss";
+
 :deep(.ql-toolbar.ql-snow) {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -73,26 +72,5 @@ defineExpose({
 :deep(.ql-container.ql-snow) {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-}
-:deep(.ql-size-huge) {
-    font-size: 2em;
-}
-:deep(.ql-size-large) {
-    font-size: 1.5em;
-}
-:deep(.ql-size-small) {
-    font-size: 0.75em;
-}
-:deep(.ql-size-normal) {
-    font-size: 1em;
-}
-
-:deep(.art ol) {
-    list-style-type: decimal;
-    padding-left: 30px;
-}
-:deep(.art ul) {
-    list-style-type: disc;
-    padding-left: 30px;
 }
 </style>

@@ -214,8 +214,8 @@
                             <p></p>
                         </li>
                     </template> -->
-                    <template v-for="prod in productsWithSoldOut" :key="prod.id">
-                        <ProductsFundraise :prod="prod" @click="addToCart" />
+                    <template v-for="(prod, i) in prods" :key="prod.id">
+                        <ProductsFundraise :prod="prod" @click="addToCart(prod)" />
                     </template>
                 </ul>
             </section>
@@ -228,9 +228,14 @@
 <script setup>
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { useToast } from "vue-toastification";
+import "@vueup/vue-quill/dist/vue-quill.core.css";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import "@vueup/vue-quill/dist/vue-quill.bubble.css";
+
 const toast = useToast();
 const route = useRoute();
 const authStore = useAuthStore();
+const projectId = route.params.pid;
 
 const isDisabled = ref(true);
 
@@ -259,7 +264,11 @@ async function getDatas() {
     pageData.value = data.data;
     cards.value = data.data.cards;
   }
-}
+// function addToCart(prod) {
+//     let card = prod || prods.value.filter((item) => !item.soldOut)[0];
+
+//     navigateTo(`/cart/cart-fundraise?project_id=${projectId}&project_card_id=${card.id}`);
+// }
 
 const productsWithSoldOut = computed(() =>
     projectData.value.data.cards.map(project => ({
@@ -295,11 +304,26 @@ const maxHeight = ref(700);
 const articleRef = ref(null);
 const articleRefHeight = ref(0);
 
+const articleHTML = ref("");
+
 //
 onMounted(() => {
   if (articleRef.value) {
     articleRefHeight.value = articleRef.value.offsetHeight;
   }
+    // if (articleRef.value) {
+    //     articleRefHeight.value = articleRef.value.offsetHeight;
+    // }
+    // async function getHtmlContext() {
+    //     let data = await GET(`/api/dashboard/details/product/fakeHtml`);
+    //     if (!!data) {
+    //         console.log("data.data", data.data);
+    //         data.data = cleanUpString(data.data);
+    //         console.log("data.data", data.data);
+    //         if (data.data) articleHTML.value = data.data;
+    //     }
+    // }
+    // getHtmlContext();
 });
 
 //
@@ -337,4 +361,38 @@ const activeNavItemId = ref("a");
 const updateNavItemId = id => {
   activeNavItemId.value = id;
 };
+
+//
+function goToCart() {
+    setTimeout(() => {
+        navigateTo(`/cart`);
+    }, 100);
+}
+
+function cleanUpString(str) {
+    // 移除換行符或回車符
+    str = str.replace(/[\r\n]+/gm, "");
+    // 壓縮標籤之間的多個空白為一個空白，並移除標籤周圍的空白
+    str = str.replace(/>\s+</gm, "><").replace(/\s{2,}/g, " ");
+    return str;
+}
 </script>
+
+<style lang="scss">
+@import "@/styles/quillContext.scss";
+
+/*
+.funding_main {
+    .card_group::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+    .card_group::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+    }
+    .card_group::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+}
+*/
+</style>

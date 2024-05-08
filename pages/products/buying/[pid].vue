@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div class="buying_main">
         <picture class="block h-36 w-auto relative z-[-1] banner_photo">
             <img :src="banner" alt="" class="block w-full h-full object-cover" />
         </picture>
@@ -187,7 +187,8 @@
                     </div>
 
                     <template v-if="activeNavItemId === 'a'">
-                        <div v-html="pageData.projects?.content"></div>
+                        <article class="bg-white p-6 rounded-lg ql-editor" ref="articleRef" v-html="pageData.projects?.content">    
+                        </article>
                     </template>
                     <template v-if="activeNavItemId === 'b'">
                         <article class="bg-white p-6 rounded-lg">
@@ -233,6 +234,10 @@
 
 <script setup>
 import { useToast } from "vue-toastification";
+import "@vueup/vue-quill/dist/vue-quill.core.css";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import "@vueup/vue-quill/dist/vue-quill.bubble.css";
+
 const toast = useToast();
 const route = useRoute();
 
@@ -276,6 +281,8 @@ const lockMaxHeightInMobile = ref(true);
 const maxHeight = 700;
 const articleRef = ref(null);
 const articleRefHeight = ref(0);
+
+const articleHTML = ref("")
 
 const banner = helperPicture();
 const avater = helperPicture();
@@ -332,7 +339,18 @@ onMounted(() => {
         //console.log("articleRef 高度:", articleRef.value.offsetHeight);
         articleRefHeight.value = articleRef.value.offsetHeight;
     }
-   
+    startCountdown(targetTime)
+
+    // async function getHtmlContext() {
+    //     let data = await GET(`/api/dashboard/details/product/fakeHtml`);
+    //     if (!!data) {
+    //         console.log("data.data", data.data);
+    //         data.data = cleanUpString(data.data);
+    //         console.log("data.data", data.data);
+    //         if (data.data) articleHTML.value = data.data;
+    //     }
+    // }
+    // getHtmlContext();
 });
 
 const progressMeter = 300;
@@ -356,19 +374,43 @@ const updateNavItemId = (id) => {
     activeNavItemId.value = id;
 };
 
+
 //
+function cleanUpString(str) {
+    // 移除換行符或回車符
+    str = str.replace(/[\r\n]+/gm, "");
+    // 壓縮標籤之間的多個空白為一個空白，並移除標籤周圍的空白
+    str = str.replace(/>\s+</gm, "><").replace(/\s{2,}/g, " ");
+    return str;
+}
 
 </script>
 
-<style scoped>
-.banner_photo::after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+<style lang="scss">
+@import "@/styles/quillContext.scss";
+
+.buying_main {
+    .banner_photo::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    /*
+    .card_group::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+    .card_group::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+    }
+    .card_group::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    */
 }
 </style>

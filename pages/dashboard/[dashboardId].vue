@@ -43,6 +43,37 @@
            
             
         </section>
+
+        <template v-if="!isRemindMessageClosed && remindMessage.type">
+            <section
+                class="max-w-[1082px] mx-auto px-4 py-2 mt-10 mb-[-20px] rounded-sm max-md:max-w-[100%-24px] max-md:mt-3 max-md:mb-3 max-xl:mx-3 max-xl:max-w-[100%] border-2 flex justify-center items-center gap-x-4"
+                :class="{
+                    'bg-[#FFFBE6]': remindMessage.type === 'warning',
+                    'bg-[#F6FAF0]': remindMessage.type === 'success',
+                    'bg-[#FFF8F2]': remindMessage.type === 'error',
+                    'border-[#FFE58F]': remindMessage.type === 'warning',
+                    'border-[#75BF46]': remindMessage.type === 'success',
+                    'border-[#EB5232]': remindMessage.type === 'error',
+                }"
+            >
+                <b
+                    class="shrink-0 flex justify-center items-center w-[14px] h-[14px] text-white text-[10px] rounded-full"
+                    :class="{
+                        'bg-[#FAAD14]': remindMessage.type === 'warning',
+                        'bg-[#75BF46]': remindMessage.type === 'success',
+                        'bg-[#EB5232]': remindMessage.type === 'error',
+                    }"
+                    >!
+                </b>
+                <p class="grow text-sm">{{ remindMessage.title }}： {{ remindMessage.content }}</p>
+                <UIcon
+                    name="i-heroicons-x-mark"
+                    class="shrink-0 cursor-pointer text-base text-gray-400"
+                    @click="isRemindMessageClosed = true"
+                />
+            </section>
+        </template>
+
         <section v-if = "data && data.data"
             class="max-w-[1082px] mx-auto p-3 mt-8 rounded-lg bg-white max-md:max-w-[100%-24px] max-md:mt-3 max-xl:mx-3 max-xl:max-w-[100%]"
         >
@@ -150,8 +181,21 @@ import { useToast }   from "vue-toastification";
 const toast           = useToast();
 const route           = useRoute();
 const dashboardId     = route.params.dashboardId;
-const stepsStatus     = ref(1);
-const stepsData       = ref([
+//
+
+//
+const isRemindMessageClosed = ref(false);
+const remindMessage = ref({
+    type: "warning", //"success", "warning", "error"
+    title: "專案退件原因",
+    content: "金額輸入不正確",
+});
+
+//
+
+//
+const stepsStatus = ref(4); //0~4
+const stepsData = ref([
     {
         id: "1",
         name: "提案準備",
