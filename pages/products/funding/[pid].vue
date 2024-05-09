@@ -169,7 +169,15 @@
                     :class="i === prods.length - 1 ? 'max-md:mb-5' : 'mb-5'"
                     @click="addToCart(prod)"
                 >
-                    <DashboardProposalsCard :item="prod" class="w-full" />
+                    <DashboardProposalsCard
+                        :item="prod"
+                        class="w-full"
+                        :class="
+                            prod.soldOut
+                                ? 'opacity-50 cursor-not-allowed pointer-events-none'
+                                : 'opacity-100 cursor-pointer active:border-white hover:border-Primary-400-Hover transition duration-300'
+                        "
+                    />
                 </li>
             </ul>
         </section>
