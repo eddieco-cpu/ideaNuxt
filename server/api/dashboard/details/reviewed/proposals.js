@@ -41,46 +41,53 @@ function generateRandomArray(minLength, maxLength) {
 }
 
 export default defineEventHandler(() => {
-    const proposals = Array.from({ length: 6 }, () => ({
-        //
-        id: generateUniqueId(),
-        projectName: helperLorem(15, 30),
-        projectPreview: helperPicture(),
+    const proposals = Array.from({ length: 6 }, (item, i) => {
+        const originalPrice = helperRandomNumber(10000, 13000);
+        const specialOffer = helperRandomNumber(8000, 10000);
+        const photo = helperPicture();
+        return {
+            //
+            id: i + 1, //generateUniqueId(),
+            projectName: helperLorem(15, 30),
+            projectPreview: photo,
+            image: photo,
 
-        //
-        originalPrice: 15000,
-        specialOffer: 10000,
+            //
+            originalPrice,
+            specialOffer,
+            price: specialOffer,
 
-        //
-        salesLimit: true,
-        salesLimitedQuantity: helperRandomNumber(30, 80),
+            //
+            salesLimit: true,
+            salesLimitedQuantity: helperRandomNumber(30, 80),
 
-        //
-        sponsors: helperRandomNumber(0, 10),
+            //
+            sponsors: helperRandomNumber(0, 10),
 
-        //
-        content: generateRandomArray(1, 3),
+            //
+            content: generateRandomArray(1, 3),
 
-        //
-        deliveryTime: formatDate(randomDate(new Date(2024, 3, 30), new Date(2025, 6, 30))),
+            //
+            deliveryTime: formatDate(randomDate(new Date(2024, 3, 30), new Date(2025, 6, 30))),
 
-        //
-        deliveOverseas: {
-            isAvailable: true,
-            fee: helperRandomNumber(0, 100),
-        },
-        deliveToStore: {
-            isAvailable: true,
-            fee: 0,
-        },
-        deliveToHouse: {
-            isAvailable: true,
-            fee: helperRandomNumber(0, 100),
-        },
+            //
+            deliveOverseas: {
+                isAvailable: true,
+                fee: helperRandomNumber(0, 100),
+            },
+            deliveToStore: {
+                isAvailable: true,
+                fee: 0,
+            },
+            deliveToHouse: {
+                isAvailable: true,
+                fee: helperRandomNumber(0, 100),
+            },
 
-        //
-        soldOut: false,
-    }));
+            //
+            soldOut: false,
+        };
+    });
     proposals[proposals.length - 1].soldOut = true;
     return { proposals };
 });
