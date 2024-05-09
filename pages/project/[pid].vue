@@ -94,7 +94,7 @@
                        
                         <UiButton 
                             class="min-w-[370px] min-h-12 max-md:min-w-40 max-md:flex-grow max-xl:min-h-9 max-xl:h-9"
-                            @click="addToCart"
+                            @click="addToCart()"
                         >
                             立即贊助
                         </UiButton>
@@ -142,7 +142,8 @@
 
                     <template v-if="activeNavItemId === 'a'">
                         <article class="bg-white p-6 rounded-lg" ref="articleRef">
-                            <div v-html="projectData.data.content"></div>
+                            <div class="ql-editor" v-html="projectData.data.content" >
+                            </div>
                         </article>
                     </template>
                     <!-- <template v-if="activeNavItemId === 'b'">
@@ -210,7 +211,7 @@
                         </li>
                     </template> -->
                     <template v-for="prod in productsWithSoldOut" :key="prod.id">
-                        <ProductsFundraise :prod="prod" @click="addToCart" />
+                        <ProductsFundraise :prod="prod" @click="addToCart(prod)" />
                     </template>
                 </ul>
             </section>
@@ -222,10 +223,14 @@
 
 <script setup>
 import { useToast } from "vue-toastification";
+import "@vueup/vue-quill/dist/vue-quill.core.css";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import "@vueup/vue-quill/dist/vue-quill.bubble.css";
 const toast = useToast();
 const route = useRoute();
 const authStore = useAuthStore();
 
+const projectId = route.params.pid;
 const isDisabled = ref(true);
 
 const { data:projectData }   = useCustomGetFetch(`/frontend/getProject?product_id=${route.params.pid}`);
@@ -233,13 +238,17 @@ const { data:projectData }   = useCustomGetFetch(`/frontend/getProject?product_i
 
 const isFavorite = ref(false);
 
-function addToCart(params) {
+function addToCart(prod) {
 
     // if(!authStore.isLogin) {
     //     toast.error('請先登入會員');
     //     return;
     // }
-    navigateTo(`/cart/cart-fundraise?id=${route.params.pid}`);
+    let card = prod || productsWithSoldOut.value.filter((item) => !item.soldOut)[0];
+    
+    console.log(card)
+    navigateTo(`/cart/cart-fundraise?project_id=${projectId}&project_card_id=${card.id}`);
+    // navigateTo(`/cart/cart-fundraise?id=${route.params.pid}`);
 }
 
 const pageData = ref([])
@@ -268,7 +277,7 @@ const productsWithSoldOut = computed(() =>
         sponsors: project.sell_qty,
         content: project.content, // 將 content 包裝為數組
         specification: [project.remark || "無特別說明"], // 預設值為"無特別說明"
-        imgData: project.image,
+        image: project.image,
         soldOut: project.sell_qty >= project.limit_qty
     
   }))

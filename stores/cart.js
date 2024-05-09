@@ -19,9 +19,7 @@ export const cartStore = defineStore("cart", () => {
         });
 
         const selectFundRaiseProducts = ref([]);
-    const totalFundRaisePrice = computed(() => {
-        return selectFundRaiseProducts.value.reduce((a, b) => a + b.price, 0);
-    });
+    
 
         const totalFundRaisePrice = computed(() => {
             return selectFundRaiseProducts.value.reduce((a, b) => a + b.specialOffer, 0);

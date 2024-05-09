@@ -264,6 +264,7 @@ async function getDatas() {
     pageData.value = data.data;
     cards.value = data.data.cards;
   }
+}
 // function addToCart(prod) {
 //     let card = prod || prods.value.filter((item) => !item.soldOut)[0];
 

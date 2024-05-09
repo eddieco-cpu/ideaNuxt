@@ -33,7 +33,7 @@
         </div>
         <h3 class="text-base font-medium mb-1">{{ prod.title }}</h3>
         <p class="text-Status-Color-Danger-500-Primary text-xl font-medium mb-2">
-            NT${{ prod.price }}
+            NT${{ prod.specialOffer }}
             <span class="text-xs font-normal opacity-80 line-through">定價 ${{ prod.originalPrice }}</span>
             <span class="text-xs font-normal opacity-80">，現省 ${{ prod.originalPrice - prod.specialOffer }}</span>
         </p>

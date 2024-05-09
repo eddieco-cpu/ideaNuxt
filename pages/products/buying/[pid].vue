@@ -187,7 +187,7 @@
                     </div>
 
                     <template v-if="activeNavItemId === 'a'">
-                        <article class="bg-white p-6 rounded-lg ql-editor" ref="articleRef" v-html="pageData.projects?.content">    
+                        <article class="bg-white p-6 rounded-lg ql-editor" ref="articleRef" v-html="articleHTML">    
                         </article>
                     </template>
                     <template v-if="activeNavItemId === 'b'">
@@ -341,16 +341,16 @@ onMounted(() => {
     }
     startCountdown(targetTime)
 
-    // async function getHtmlContext() {
-    //     let data = await GET(`/api/dashboard/details/product/fakeHtml`);
-    //     if (!!data) {
-    //         console.log("data.data", data.data);
-    //         data.data = cleanUpString(data.data);
-    //         console.log("data.data", data.data);
-    //         if (data.data) articleHTML.value = data.data;
-    //     }
-    // }
-    // getHtmlContext();
+    async function getHtmlContext() {
+        let data = await GET(`/api/dashboard/details/product/fakeHtml`);
+        if (!!data) {
+            console.log("data.data", data.data);
+            // data.data = cleanUpString(data.data);
+            console.log("data.data", data.data);
+            if (data.data) articleHTML.value = data.data;
+        }
+    }
+    getHtmlContext();
 });
 
 const progressMeter = 300;

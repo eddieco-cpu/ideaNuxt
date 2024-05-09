@@ -41,6 +41,7 @@ async function doSave() {
     const payload = {'content': fullContext.value.editorContent,'project_id': dashboardId};
 
     const data = await POST("/updateProjectContent", payload, '');
+    console.log(data)
     if(!!data) {
         toast.success(data.message)
     }

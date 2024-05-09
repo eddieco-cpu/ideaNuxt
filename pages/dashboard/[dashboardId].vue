@@ -108,7 +108,7 @@
                 >
 
                 <!-- completed -->
-                <a :href="`/preview/${data.data.hash_id}`" target="_blank">
+                <a :href="`/preview/${data.data.hash_id}`" target="_blank" v-if="dataStatus === 'completed'">
                     <button
                         class="w-8 h-8 border-2 border-Primary-100 rounded-lg flex justify-center items-center flex-shrink-0"
                     >   
@@ -184,7 +184,7 @@ const dashboardId     = route.params.dashboardId;
 //
 
 //
-const isRemindMessageClosed = ref(false);
+const isRemindMessageClosed = ref(true);
 const remindMessage = ref({
     type: "warning", //"success", "warning", "error"
     title: "專案退件原因",
@@ -223,7 +223,7 @@ const { data, refresh }  = useCustomFetch("/getOneProject", {'project_id' : dash
 watchEffect( () => {
     if(data && data.value?.data) {
     stepsStatus.value = data.value.data?.review_status
-    console.log(data.value.data?.review_status)
+    console.log(data.value)
 
     if(data.value.data?.review_status == 4 ) {
         stepsStatus.value = 3
@@ -240,6 +240,12 @@ watchEffect( () => {
         dataStatus.value = 'inProgress'
     } else {
         dataStatus.value = 'completed'
+    }
+    console.log(data.value?.projectMessage);
+    if(data.value?.projectMessage) {
+        console.log(22)
+        isRemindMessageClosed.value = false;
+        remindMessage.value.content = data.value.projectMessage['message'];
     }
 }
 })

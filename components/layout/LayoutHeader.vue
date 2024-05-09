@@ -96,7 +96,6 @@
                             <img src="~assets/images/header/user.svg" class="block md:hidden" />
 
                             <span class="font-normal"> 登入 /註冊 </span>
-                            <span class="font-normal"> 會員中心 </span>
 
                             <div
                                 class="absolute top-full left-0 w-full bg-white rounded-lg py-1 shadow hidden md:group-hover:block"
@@ -313,7 +312,6 @@
                     v-show="!hideSideNav"
                 ></div>
             </Transition>
-        </div>
     </header>
 </template>
 
