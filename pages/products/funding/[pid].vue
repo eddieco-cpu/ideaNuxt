@@ -216,6 +216,15 @@
                     </template> -->
                     <template v-for="(prod, i) in prods" :key="prod.id">
                         <ProductsFundraise :prod="prod" @click="addToCart(prod)" />
+                        <!-- <li
+                            v-for="(prod, i) in prods"
+                            :key="prod.id"
+                            class="md:mr-1"
+                            :class="i === prods.length - 1 ? 'max-md:mb-5' : 'mb-5'"
+                            @click="addToCart(prod)"
+                        >
+                            <DashboardProposalsCard :item="prod" class="w-full" />
+                        </li> -->
                     </template>
                 </ul>
             </section>
@@ -331,13 +340,14 @@ onMounted(() => {
 const prods = ref([]);
 
 async function getProdsData() {
-    const data = await GET(`/api/productsFundraise`);
+    const data = await GET(`/api/dashboard/details/reviewed/proposals`);
     if (!!data) {
         console.log('--------------')
         console.log(data.prods)
         prods.value = data.prods.map((el, i) => ({
             ...el,
         }));
+        prods.value = data.proposals;
     }
 }
 getProdsData();

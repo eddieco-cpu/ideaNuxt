@@ -15,8 +15,10 @@
                     container: 'gap-x-5 flex-col md:flex-row',
                 }"
             >
-                <ProductsFundraise
-                    class="border-Primary-50 hover:border-Primary-100 transition-all duration-300"
+                <DashboardProposalsCard
+                    :item="item"
+                    class="max-md:mb-5"
+                    @click="addToCart(item)"
                     :class="[
                         item.soldOut ? 'cursor-not-allowed' : 'cursor-pointer',
                         {
@@ -24,9 +26,6 @@
                                 cart.selectFundRaiseProducts[0]?.id === item.id,
                         },
                     ]"
-                    :prod="item"
-                    :soldOut="item.soldOut"
-                    @click="addToCart(item)"
                 />
             </UCarousel>
         </div>
@@ -72,6 +71,11 @@ let query = {
 const { data:projectData }   = useCustomGetFetch(`/frontend/getProject?product_id=${projectId}`);
 
 
+// async function getProdsData() {
+//     const data = await GET(`/api/dashboard/details/reviewed/proposals`);
+
+//     if (!!data) {
+//         productList.value = data.proposals;
 
 
 
