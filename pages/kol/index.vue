@@ -5,9 +5,11 @@
         >
             <!-- 團主排名卡片 -->
             <div
-                class="none-scrollbar px-6 md:max-w-[1200px] md:gap-y-4 md:mx-auto flex flex-nowrap md:grid md:grid-cols-3 gap-x-3 overflow-x-auto overscroll-x-none transform translate-y-[12.5rem]"
+                class="none-scrollbar px-6 md:max-w-[1200px] md:gap-y-4 md:mx-auto flex flex-nowrap md:grid md:grid-cols-3 gap-x-3 md:gap-x-12 overflow-x-auto overscroll-x-none transform translate-y-[12.5rem]"
             >
-                <CardKolRank v-for="(item, index) in kolRank" :key="index" v-bind="item" />
+                <div class="flex-shrink-0" v-for="(item, index) in kolRank" :key="index">
+                    <CardKolRank v-bind="item" />
+                </div>
             </div>
         </div>
 

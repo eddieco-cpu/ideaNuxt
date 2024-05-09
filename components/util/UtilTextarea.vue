@@ -5,8 +5,9 @@
             :placeholder="placeholder"
             :value="modelValue"
             @input="emit('update:modelValue', $event.target.value)"
+            :maxlength="max"
         />
-        <p class="absolute bottom-[-22px] right-0 text-black/25 text-sm">{{ modelValue.length }} / {{ max }}</p>
+        <p class="number absolute bottom-[-22px] right-0 text-black/25 text-sm">{{ modelValue.length }} / {{ max }}</p>
     </div>
 </template>
 

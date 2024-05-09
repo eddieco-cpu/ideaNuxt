@@ -30,7 +30,9 @@ function numberConutUp(num, maxNumber) {
             timer = requestAnimationFrame(numSlideFun);
         }
 
-        span.value.innerHTML = numText;
+        if (span.value) {
+            span.value.innerHTML = numText;
+        }
     }
 
     numSlideFun();

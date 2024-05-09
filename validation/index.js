@@ -148,6 +148,12 @@ export const basicProgressSchema = z.object({
         ),
 });
 
+export const checkOutSchema = z.object({
+    name: z.string(commonErrorMessage).min(1, "必填"),
+    isAgree: z.boolean({
+        required_error: "必填",
+    }),
+});
 export const proposalSchema = z.object({
     projectName: z.string(commonErrorMessage).min(1, "必填"),
     originalPrice: z
@@ -191,4 +197,10 @@ export const proposalSchema = z.object({
 
     salesLimit: z.boolean(),
     salesLimitedQuantity: z.number().min(1, { message: "必須大於等於 1" }).nullable(),
+});
+
+export const contactUsSchema = z.object({
+    name: z.string(commonErrorMessage).min(1, "必填"),
+    email: z.string(commonErrorMessage).regex(emailRegex, "請輸入有效電子信箱").min(1, "必填"),
+    description: z.string(commonErrorMessage).min(1, "必填"),
 });

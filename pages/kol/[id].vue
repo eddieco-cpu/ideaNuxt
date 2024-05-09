@@ -7,7 +7,7 @@
         <div class="max-w-80 md:max-w-[1086px] -mt-[80px] mx-auto md:grid md:grid-cols-12 md:gap-x-6 md:mt-10">
             <!-- 團主檔案 -->
             <div
-                class="relative h-max max-w-[323px] flex flex-col items-center gap-y-4 pt-14 px-5 pb-6 bg-white rounded-2xl mx-auto md:col-span-4 md:mt-[150px]"
+                class="relative h-max flex flex-col items-center gap-y-4 pt-14 px-5 pb-6 bg-white rounded-2xl mx-auto md:col-span-4 md:mt-[150px]"
             >
                 <img
                     src="https://avatars.githubusercontent.com/u/739984?v=4"

@@ -38,7 +38,29 @@
                 </UFormGroup>
 
                 <UFormGroup label="收件人地址" name="address" help="如使用宅配到府得以直接帶入該地址。" required>
-                    <UInput placeholder="新北市樹林區五重路25巷3號3F" v-model="addressInfo.address" />
+                    <div class="twzipcode w-full flex flex-wrap gap-2 mb-2">
+                        <input
+                            placeholder="郵遞區號"
+                            data-role="zipcode"
+                            ref="zipcode"
+                            class="zipcode w-[calc(50%-4px)] md:flex-1 border border-Neutral-400-Hover rounded-md py-[7px] px-3 focus-visible:outline-Primary-400-Hover bg-white"
+                        />
+                        <select
+                            placeholder="縣市"
+                            data-role="county"
+                            class="w-[calc(50%-4px)] md:flex-1 border border-Neutral-400-Hover rounded-md py-[7px] px-3 focus-visible:outline-Primary-400-Hover bg-white"
+                            @change="getZipCode"
+                            v-model="addressInfo.city"
+                        ></select>
+                        <select
+                            placeholder="鄉鎮市區"
+                            data-role="district"
+                            class="w-full md:flex-1 border border-Neutral-400-Hover rounded-md py-[7px] px-3 focus-visible:outline-Primary-400-Hover bg-white"
+                            @change="getZipCode"
+                            v-model="addressInfo.district"
+                        ></select>
+                    </div>
+                    <UInput placeholder="詳細地址" v-model="addressInfo.address" />
                 </UFormGroup>
 
                 <!-- 儲存更新 -->
@@ -61,12 +83,15 @@
 </template>
 
 <script setup>
+import TWzipcode from "twzipcode.js";
 import { addressSchema } from "~/validation";
 import { useToast } from "vue-toastification";
 
 const toast = useToast();
+const twzipcode = ref(null);
+const zipcode = ref(null);
 
-const { index, defaultAddress, name, phone, email, address, isEditmode } = defineProps({
+const { index, defaultAddress, name, phone, email, address, zipCode, city, district, isEditmode } = defineProps({
     index: {
         type: Number,
         default: 1,
@@ -91,6 +116,18 @@ const { index, defaultAddress, name, phone, email, address, isEditmode } = defin
         type: String,
         default: "",
     },
+    zipCode: {
+        type: String,
+        default: undefined,
+    },
+    city: {
+        type: String,
+        default: "",
+    },
+    district: {
+        type: String,
+        default: "",
+    },
     isEditmode: {
         type: Boolean,
         default: false,
@@ -105,8 +142,19 @@ const addressInfo = reactive({
     name: name,
     phone: phone,
     email: email,
+    zipCode: zipCode,
+    city: city,
+    district: district,
     address: address,
 });
+
+async function getZipCode() {
+    await nextTick();
+
+    setTimeout(() => {
+        addressInfo.zipCode = zipcode.value.value;
+    }, 0);
+}
 
 function abortAddress() {
     if (defaultAddress) {
@@ -127,6 +175,20 @@ function setDefaultAddress() {
 function onSubmit(event) {
     emit("onSubmit", event.data, isEditmode);
 }
+
+onMounted(() => {
+    twzipcode.value = new TWzipcode();
+
+    if (!!zipCode) {
+        twzipcode.value.set(zipCode);
+    }
+});
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.twzipcode select {
+    -moz-appearance: none; /* Firefox */
+    -webkit-appearance: none; /* Safari and Chrome */
+    appearance: none;
+}
+</style>

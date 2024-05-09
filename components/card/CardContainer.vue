@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full p-3 md:p-5 rounded-lg relative" :class="bgColor">
+    <div class="w-full p-3 md:p-5 rounded-lg relative shadow-[0_0_5px_0_rgba(0,0,0,0.02)]" :class="bgColor">
         <div class="pb-3" v-if="hasTitle">
             <h1 class="font-medium" v-if="title !== ''">{{ title }}</h1>
             <p class="text-Neutral-600-Dark-Primary text-xs" v-if="subTitle !== ''">{{ subTitle }}</p>

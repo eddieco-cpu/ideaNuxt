@@ -1,9 +1,7 @@
 <template>
     <div>
         <div>
-            <ul
-                class="relative max-w-[570px] hidden py-4 font-medium border-b-2 border-Neutral-200 mb-6 md:flex md:justify-between"
-            >
+            <ul class="relative hidden py-4 font-medium border-b-2 border-Neutral-200 mb-6 md:flex md:gap-x-8">
                 <li
                     v-for="(item, index) in mapfollowType"
                     :key="index"
@@ -74,7 +72,7 @@
                     <CardBlog
                         v-for="(item, index) in comingBuyingList"
                         :key="index"
-                        v-if="followTypeSelected === '好文部落格'"
+                        v-if="followTypeSelected === '好物分享'"
                         v-bind="item"
                     />
                 </div>
@@ -111,7 +109,7 @@ const updateCurrentPage = (newPage) => {
 const sortType = ["新到舊", "舊到新"];
 const sortTypeSelected = ref(sortType[0]);
 
-const followType = ["集資專案", "好評團購", "名人與團主", "好文部落格"];
+const followType = ["集資專案", "好評團購", "名人與團主", "好物分享"];
 const followTypeSelected = ref(followType[0]);
 
 const kolList = ref([]);
@@ -143,7 +141,7 @@ const mapfollowType = computed(() => {
             case "名人與團主":
                 obj.number = kolList.value.length;
                 break;
-            case "好文部落格":
+            case "好物分享":
                 obj.number = comingBuyingList.value.length;
                 break;
             default:
@@ -163,7 +161,7 @@ const showCardClass = computed(() => {
     switch (followTypeSelected.value) {
         case "名人與團主":
             return "grid-cols-2 md:grid-cols-5";
-        case "好文部落格":
+        case "好物分享":
             return "md:grid-cols-2";
         default:
             return "md:grid-cols-3";
