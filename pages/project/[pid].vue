@@ -210,8 +210,17 @@
                             <p></p>
                         </li>
                     </template> -->
+                     <!-- <li
+                            v-for="(prod, i) in prods"
+                            :key="prod.id"
+                            class="md:mr-1"
+                            :class="i === prods.length - 1 ? 'max-md:mb-5' : 'mb-5'"
+                            @click="addToCart(prod)"
+                        >
+                            <DashboardProposalsCard :item="prod" class="w-full" />
+                        </li> -->
                     <template v-for="prod in productsWithSoldOut" :key="prod.id">
-                        <ProductsFundraise :prod="prod" @click="addToCart(prod)" />
+                        
                     </template>
                 </ul>
             </section>
@@ -235,6 +244,17 @@ const isDisabled = ref(true);
 
 const { data:projectData }   = useCustomGetFetch(`/frontend/getProject?product_id=${route.params.pid}`);
 
+const proposals = ref([]);
+
+async function getReviewedProposalsData() {
+
+    const data = await POST("/getProjectCardData", {'project_id' : projectId, type:'hash' }, '');
+
+    if (!!data) {
+        proposals.value = data.data;
+    }
+}
+getReviewedProposalsData();
 
 const isFavorite = ref(false);
 

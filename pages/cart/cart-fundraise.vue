@@ -9,7 +9,7 @@
         <div class="ml-[calc((100vw-324px)/2)] md:ml-[calc((100vw-1100px)/2)]">
             <UCarousel
                 v-slot="{ item }"
-                :items="cardData"
+                :items="proposals"
                 :ui="{
                     item: 'snap-start max-w-[324px] md:basis-[320px]',
                     container: 'gap-x-5 flex-col md:flex-row',
@@ -71,11 +71,18 @@ let query = {
 const { data:projectData }   = useCustomGetFetch(`/frontend/getProject?product_id=${projectId}`);
 
 
-// async function getProdsData() {
-//     const data = await GET(`/api/dashboard/details/reviewed/proposals`);
 
-//     if (!!data) {
-//         productList.value = data.proposals;
+const proposals = ref([]);
+
+async function getReviewedProposalsData() {
+
+    const data = await POST("/getProjectCardData", {'project_id' : projectId, type:'hash' }, '');
+
+    if (!!data) {
+        proposals.value = data.data;
+    }
+}
+getReviewedProposalsData();
 
 
 
