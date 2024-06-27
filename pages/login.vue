@@ -21,7 +21,7 @@
           <span class="text-sm text-Primary-600-Dark-Primary underline cursor-pointer">尚未有帳號，點此註冊 </span>
         </NuxtLink>
 
-        <span class="text-sm text-Primary-600-Dark-Primary underline cursor-pointer" @click="openModal('forgotPassword')">忘記密碼</span>
+        <!-- <span class="text-sm text-Primary-600-Dark-Primary underline cursor-pointer" @click="openModal('forgotPassword')">忘記密碼</span> -->
       </div>
 
       <button type="submit" class="w-full bg-Primary-500-Primary block p-2 rounded-lg text-white mt-3 text-sm">登入</button>
@@ -31,16 +31,18 @@
 
 <script setup>
 import { useAuthStore } from "@/stores/auth";
+import { cartStore } from "@/stores/cart";
 import { useToast } from "vue-toastification";
 
 import { POST } from "~/utils/helperFetchData.js";
 const openModal = inject("openModal");
 const toast = useToast();
 const store = useAuthStore();
+const cart = cartStore();
 
 const state = reactive({
-  phone: "kminchelle",
-  password: "0lelplR",
+  phone: "",
+  password: "",
 });
 
 async function onSubmit(event) {
@@ -52,10 +54,14 @@ async function onSubmit(event) {
     const data = await POST("/login", payload);
     if (!!data) {
       toast.success("登入成功");
-
+     
       store.isLogin = true;
-      store.setToken(data.access_token);
+      await new Promise((resolve) => {
+            store.setToken(data.access_token);
+            resolve();
+        });
       store.userInfo = data.user;
+      cart.checkCartItem();
       const redirectUrl = sessionStorage.getItem("redirectAfterLogin") || "/";
       sessionStorage.removeItem("redirectAfterLogin"); // 清除存儲，以免後續登入受影響
       // 使用 Nuxt 的 navigateTo 函數進行導航

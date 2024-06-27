@@ -1,16 +1,14 @@
 <template>
     <div class="max-w-[324px] md:max-w-[1082px] mx-auto mt-8">
         <div>
-            <CartAds v-if="isFundRaiseCheckout" />
-            <CartHeader :step="2" v-else />
+            <CartHeader :step="2" />
         </div>
 
         <!-- 商品資訊 -->
+        <!-- :schema="checkOutSchema" -->
         <UForm
-            :schema="checkOutSchema"
             :state="checkoutPayload"
             class="pt-6 grid grid-cols-1 md:grid-cols-[76%_auto] items-start gap-6"
-            @submit="goFinishedPage"
         >
             <div class="flex flex-col gap-6">
                 <CardContainer title="訂單明細">
@@ -64,13 +62,15 @@
 
                             <div class="flex flex-col gap-y-4" v-if="checkoutPayload.deliveryType === 2">
                                 <MemberEditAddress
+                                    v-if="tempAddress"
                                     class="border border-Primary-100"
                                     bgColor="bg-Primary-50"
                                     v-bind="tempAddress"
                                     @onAbort="addressOnAbort"
-                                    @onSubmit="addressOnSubmit"
-                                    v-if="tempAddress"
+                                    @onSubmit="onAddressOnSubmit"
+                                    
                                 />
+                                
 
                                 <label v-for="(item, index) in addressInfo" :key="index">
                                     <CardMemberAddress
@@ -100,7 +100,7 @@
 
                                 <button
                                     class="flex gap-x-1 items-center justify-center w-full rounded-lg border border-Primary-100 bg-Primary-50 py-2"
-                                    @click="editAddress"
+                                    @click="editAddress()"
                                 >
                                     <img src="~assets/images/icon/plus-icon.svg" alt="add" />
                                     <span class="text-Primary-400-Hover text-sm">新增地址</span>
@@ -112,7 +112,7 @@
 
                 <CardContainer title="訂購人資訊">
                     <template #body>
-                        <div class="grid md:grid-cols-2 gap-3">
+                        <!-- <div class="grid md:grid-cols-2 gap-3">
                             <UFormGroup label="訂購人" name="name" required>
                                 <UInput placeholder="請輸入訂購人" v-model="checkoutPayload.name" />
                             </UFormGroup>
@@ -120,7 +120,7 @@
                             <UFormGroup label="訂購人手機" name="phone">
                                 <UInput placeholder="請輸入訂購人" v-model="checkoutPayload.phone" />
                             </UFormGroup>
-                        </div>
+                        </div> -->
 
                         <div>
                             <UFormGroup label="發票種類" name="invoice" :help="invoiceHint" required>
@@ -225,7 +225,7 @@
                                 class="flex justify-between text-Neutral-700 text-sm pb-3 border-b border-b-Neutral-200"
                             >
                                 <p>運費</p>
-                                <p>NT$0</p>
+                                <p>NT${{fee}}</p>
                             </div>
                         </div>
                     </template>
@@ -247,14 +247,13 @@
                                 <p
                                     class="text-xl text-Neutral-800 md:text-Primary-500-Primary font-roboto font-medium md:text-right md:pb-3"
                                 >
-                                    NT${{ helperMoneyComma(total) }}
+                                    NT${{ total + fee }}
                                 </p>
                             </div>
 
                             <div class="flex gap-y-2 md:gap-y-0 flex-col">
                                 <UCheckbox
                                     v-model="checkoutPayload.isAgree"
-                                    required
                                     name="agreement"
                                     label="我已閱讀 售後服務 並同意"
                                     class="md:mb-3 md:w-full"
@@ -271,6 +270,7 @@
                                     <button
                                         type="submit"
                                         class="px-2 py-2 text-sm bg-Primary-500-Primary text-center rounded-lg w-full text-white flex-1"
+                                        @click="goFinishedPage"
                                     >
                                         付款結帳
                                     </button>
@@ -292,75 +292,270 @@
         <div class="w-screen h-screen pt-[170px] fixed top-0 left-0 bg-Neutral-bg" v-if="inProcessing">
             <CartProcessing :progress="progress" />
         </div>
+            <form ref="hiddenForm"  style="display: none;" :action="url" method="post">
+                <input type="hidden" name="MerchantID" v-model="merchantId">
+                <input type="hidden" name="Version"  value="2.0">
+                <input type="hidden" name="TradeInfo" v-model="tradeInfo">
+                <input type="hidden" name="TradeSha"  v-model="tradeSha">
+            <button type="submit">Submit</button>
+        </form>
+        
     </div>
+    
+    
 </template>
 
 <script setup>
 import { checkOutSchema } from "~/validation";
-import { cartStore } from "@/stores/cart";
-import Icon from "assets/images/";
+import { cartStore }      from "@/stores/cart";
+import { useToast }       from "vue-toastification";
+import Icon               from "assets/images/";
+import { debounce }       from 'lodash';
 
-const authStore = useAuthStore();
-const token = authStore.token;
-const cart = cartStore();
-const route = useRoute();
+const showLoading = inject('showLoading');
+const hideLoading = inject('hideLoading');
 
-const inProcessing = ref(false);
-const progress = ref(0);
-const progressTimer = ref(0);
+const cart   = cartStore();
+const route  = useRoute();
+const toast  = useToast();
+
+const inProcessing    = ref(false);
+const progress        = ref(0);
+const progressTimer   = ref(0);
 const showTotalDetail = ref(false);
+
+const group_id  = ref(route.query.group);
+const cartData  = ref([]);
+const groupData = ref([]);
 
 const invoiceOptions = [
     { label: "一般發票", value: 0 },
-    // { label: "手機條碼載具", value: 1 },
-    // { label: "自然人憑證", value: 2 },
     { label: "公司統編", value: 3 },
-    // { label: "捐贈發票", value: 4 },
 ];
 const paymentOptions = [
-    // {
-    //     value: 1,
-    //     label: "信用卡(3、6期)",
-    // },
-    // {
-    //     value: 2,
-    //     label: "ATM 轉帳",
-    // },
     {
-        value: 3,
-        label: "貨到付款",
+        value: 1,
+        label: "信用卡",
     },
-    // {
-    //     value: 4,
-    //     label: "LINE Pay",
-    // },
 ];
 const deliveryOptions = [
-    // {
-    //     value: 1,
-    //     label: "超商取貨",
-    // },
     {
         value: 2,
         label: "宅配到府",
     },
 ];
 
-const deliveryAddress = ref();
-
-const addressInfo = ref([]);
+const deliveryAddress = ref(null);
+const addressInfo     = ref([]);
 
 getAddress();
+getCartData()
 
 async function getAddress () {
-    const data = await POST("/getAddress", {}, token);
+    const data = await POST("/getAddress", {});
 
     if(!!data.status) {
-        addressInfo.value = data.data
+        addressInfo.value     = data.data
         deliveryAddress.value = addressInfo.value[0]
     }
 }
 
+async function getCartData () {
+    const payload = {'group_id': route.query.group};
+
+    const data = await POST("/getItemByCheckoutPage", payload);
+    
+    if(!!data.status) {
+
+        cartData.value = data.data
+        groupData.value = data.group
+    } else {
+        toast.error(data.message);
+        navigateTo('/');
+    }
+}
+
+const checkoutPayload = ref({
+
+    invoiceType    : invoiceOptions[0].value,
+    donateInvoice  : "",
+    orgInvoice     : { title: "", taxIdNumber: "", address: "", email: "" },
+    payment        : 1,
+    deliveryType   : 2,
+    isAgree        : false,
+    remark         : "",
+
+    name           : "",
+    phone          : "",
+    invoiceCarrier : "",
+    citizenDigitalCertificate: "",
+});
+
+
+
+const productLists = computed(() => {
+  if (Array.isArray(cartData.value.items)) {
+    return cartData.value.items.reduce((accumulator, item) => {
+      if (item.group_specs) {
+        const productSpecWithItemId = {
+          ...item.group_specs, 
+          cartItemId: item.id, 
+          amount: item.quantity 
+        };
+        return [...accumulator, productSpecWithItemId];
+      } else {
+        return accumulator;
+      }
+    }, []);
+  } else {
+    return [];
+  }
+});
+
+const total = computed(() => {
+  return productLists.value.reduce((accumulator, spec) => {
+    return accumulator + (spec.sales_price * spec.amount);
+  }, 0);
+});
+
+const fee = computed(() => {
+    
+    if(groupData.value && groupData.value.ship) {
+
+        let fee     = 0;
+        let feeDoor = 0;
+
+        groupData.value.ship.forEach( item => {
+
+        if(item.type == 'deliveToHouse') {
+                fee = item.value
+                feeDoor = item.fee_door
+            }
+        })
+
+        if(total.value >= feeDoor) {
+            fee = 0
+        }
+       
+        return fee;
+    } else {
+        return 200;
+    }
+});
+
+const productListsLength = computed(() => {
+  return productLists.value.reduce((total, spec) => {
+    return total + (spec.amount || 0);
+  }, 0);
+});
+
+const tempAddress = ref(null);
+
+async function editAddress() {
+
+    tempAddress.value = null;
+    await nextTick();
+    tempAddress.value = {
+        index: Object.keys(addressInfo.value).length + 1,
+    };
+}
+
+function addressOnAbort() {
+    tempAddress.value = null;
+}
+
+
+const onAddressOnSubmit = debounce(addressOnSubmit, 300);
+async function addressOnSubmit(addressData) {
+
+    const { index, name, phone, email, address, defaultAddress, zipCode, city, district } = addressData;
+
+    const payload = {
+        index,
+        defaultAddress,
+        name,
+        phone,
+        email,
+        address,
+        zipCode,
+        city,
+        district,
+    };
+
+    const data = await POST("/addAddress", payload);
+
+    if(!!data.status) {
+        getAddress();
+        tempAddress.value = null;
+    }
+}
+
+function goBack() {
+    navigateTo("/cart");
+}
+
+const hiddenForm = ref(null);
+const merchantId = ref(null);
+const tradeInfo  = ref(null);
+const tradeSha   = ref(null);
+const url        = ref(null);
+
+async function goFinishedPage() {
+
+    if(!checkoutPayload.value.isAgree) {
+        toast.error('請閱讀售後服務並同意');
+        return;
+    }
+    
+    if(checkoutPayload.value.deliveryType == 2 && deliveryAddress.value == null) {
+        toast.error('地址不可為空');
+        return;
+    }
+
+    if(checkoutPayload.value.invoiceType == 3) {
+        const { address, email, taxIdNumber, title } = checkoutPayload.value.orgInvoice;
+
+        if ([address, email, taxIdNumber, title].some(field => field === '')) {
+            toast.error('公司統編資料為必填');
+            return;
+        }
+    }
+
+    checkoutPayload.value.deliveryAddress = deliveryAddress.value;
+    checkoutPayload.value.group_id        = group_id.value;
+    
+    showLoading()
+    const data = await POST("/createOrder", checkoutPayload.value, );
+    hideLoading()
+    
+
+    if(!!data.status) {
+        if(data.isCartEmpty) {
+            cart.isHaveCartItem = false
+        }
+
+        merchantId.value = data.hashData.mid;
+        tradeInfo.value  = data.hashData.edata;
+        tradeSha.value   = data.hashData.hash;
+        url.value        = data.hashData.url;
+        await nextTick();
+        hiddenForm.value.submit();
+
+        // inProcessing.value = true;
+        // progressTimer.value = setInterval(() => {
+        //     progress.value += 10;
+        //     if (progress.value >= 80) {
+        //         navigateTo("/cart/finished");
+        //     }
+        // }, 500);
+    }
+}
+
+onBeforeUnmount(() => {
+    clearInterval(progressTimer.value);
+});
+
+const storeType   = ref(null);
 
 const convenienceStoreOptions = [
     {
@@ -374,20 +569,6 @@ const convenienceStoreOptions = [
         img: Icon.familyMart,
     },
 ];
-
-const checkoutPayload = ref({
-    name: "",
-    phone: "",
-    invoiceType: invoiceOptions[0].value,
-    invoiceCarrier: "",
-    citizenDigitalCertificate: "",
-    donateInvoice: "",
-    orgInvoice: { title: "", taxIdNumber: "", address: "", email: "" },
-    payment: 3,
-    deliveryType: 2,
-    isAgree: false,
-    remark: "",
-});
 
 const donateInvoiceOptions = [
     { label: "機構1", value: 1 },
@@ -406,142 +587,6 @@ const invoiceHint = computed(() => {
     }
 });
 
-const isFundRaiseCheckout = computed(() => {
-    return route.query.type === "fundraise";
-});
-
-const group_id = ref(route.query.group);
-
-const cartData = ref([]);
-
-getCartData()
-
-async function getCartData () {
-    const payload = {'group_id': route.query.group};
-
-    const data = await POST("/getItemByCheckoutPage", payload, token);
-    if(!!data.status) {
-        cartData.value = data.data
-        console.log(cartData.value)
-    }
-}
-
-const productLists = computed(() => {
-  if (Array.isArray(cartData.value.items)) {
-    return cartData.value.items.reduce((accumulator, item) => {
-        const productSpecsWithItemId = item.product_specs.map(spec => ({
-        ...spec, // 複製現有的 product_specs 屬性
-        cartItemId: 0 // 添加 itemId 屬性，設置其值為當前 item 的 id
-      }));
-      // 將修改後的 product_specs 數組合併到累加器中
-      return [...accumulator, ...productSpecsWithItemId];
-    }, []);
-  } else {
-    return [];
-  }
-});
-
-const total = computed(() => {
-  return productLists.value.reduce((accumulator, spec) => {
-    // 對每個 product_spec，計算其價值（sales_price * amount）並加到累加器上
-    return accumulator + (spec.sales_price * spec.amount);
-  }, 0); // 初始累加器值為 0
-});
-
-const productListsLength = computed(() => {
-    if (Array.isArray(cartData.value.items)) {
-    return cartData.value.items.length;
-  } else {
-    return 0;
-  }
-});
-
-const totalPrice = computed(() => {
-    return cart.totalGroupBuyPrice;
-});
-
-const tempAddress = ref(null);
-
-const storeType = ref(null);
-
-async function editAddress() {
-    tempAddress.value = null;
-
-    await nextTick();
-    tempAddress.value = {
-        index: Object.keys(addressInfo.value).length + 1,
-    };
-}
-
-function addressOnAbort() {
-    tempAddress.value = null;
-}
-
-async function addressOnSubmit(addressData) {
-
-    const { index, name, phone, email, address, defaultAddress, zipCode, city, district } = addressData;
-
-    const payload = {
-        index,
-        defaultAddress,
-        name,
-        phone,
-        email,
-        address,
-        zipCode,
-        city,
-        district,
-        
-    };
-
-    const data = await POST("/addAddress", payload, token);
-
-    if(!!data.status) {
-        getAddress();
-        tempAddress.value = null;
-    }
-}
-
-function goBack() {
-    navigateTo("/cart");
-}
-
-async function goFinishedPage() {
-
-    checkoutPayload.value.deliveryAddress = deliveryAddress.value;
-    checkoutPayload.value.group_id = group_id.value;
-    console.log(checkoutPayload.value)
-
-    const data = await POST("/createOrder", checkoutPayload.value, token);
-
-    console.log(data)
-
-    if(!!data.status) {
-        if(data.isCartEmpty) {
-            cart.isHaveCartItem = false
-        }
-
-        inProcessing.value = true;
-        progressTimer.value = setInterval(() => {
-            progress.value += 10;
-            if (progress.value >= 80) {
-                navigateTo("/cart/finished");
-            }
-        }, 500);
-    }
-
-    // inProcessing.value = true;
-    // progressTimer.value = setInterval(() => {
-    //     progress.value += 10;
-    //     if (progress.value >= 80) {
-    //         navigateTo("/cart/finished");
-    //     }
-    // }, 500);
-}
-
-onBeforeUnmount(() => {
-    clearInterval(progressTimer.value);
-});
 </script>
 
 <style scoped>

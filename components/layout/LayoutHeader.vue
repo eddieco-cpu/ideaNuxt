@@ -30,9 +30,9 @@
                         variant="none"
                         placeholder="找點子、找團購"
                         class="bg-Neutral-100 rounded-l-md mr-1"
-                        @click="openModal('search')"
+                        
                     />
-
+                    <!-- @click="openModal('search')" -->
                     <transition name="modal">
                         <LayoutSearch @openModal="openModal" v-if="isShowSearchContent" />
                     </transition>
@@ -64,12 +64,17 @@
                     :class="{ hidden: isShowSearchContent }"
                 />
 
-                <div class="relative flex-1 w-[20px]">
-                    <img
+                <div class="relative flex-1 w-[20px]" >
+                    <img v-if="cart.isHaveCartItem"
                         src="~assets/images/header/shoppingCart.svg"
                         alt="shoppingCart"
                         class="cursor-pointer"
                         @click.stop="goToPage('/cart')"
+                    />
+                    <img v-else
+                        src="~assets/images/header/shoppingCart.svg"
+                        alt="shoppingCart"
+                        class="cursor-pointer"
                     />
                     <ClientOnly>
                     <div
@@ -239,70 +244,7 @@
                 </div>
             </ClientOnly>
 
-                <UAccordion
-                    :items="navAccordionItems"
-                    color="black"
-                    size="xl"
-                    open-icon="i-heroicons-plus"
-                    close-icon="i-heroicons-minus"
-                    :ui="{
-                        item: { padding: 'p-0' },
-                    }"
-                    class="text-Primary-600-Dark-Primary px-7 md:hidden"
-                >
-                    <template #category="{ item }">
-                        <ul class="text-left bg-Primary-50 py-3 px-5 text-Neutral-900">
-                            <li
-                                v-for="(list, index) in item.lists"
-                                :key="index"
-                                class="mb-5 last:mb-0 cursor-pointer"
-                                @click.stop="goToPage(list.link)"
-                            >
-                                <p>{{ list.name }}</p>
-                            </li>
-                        </ul>
-                    </template>
-
-                    <template #proposal="{ item }">
-                        <ul class="text-left bg-Primary-50 py-3 px-5 text-Neutral-900">
-                            <li
-                                v-for="(list, index) in item.lists"
-                                :key="index"
-                                class="mb-5 last:mb-0 cursor-pointer"
-                                @click.stop="goToPage(list.link)"
-                            >
-                                <p>{{ list.name }}</p>
-                            </li>
-                        </ul>
-                    </template>
-
-                    <template #default="{ item, open }">
-                        <UButton
-                            color="white"
-                            variant="ghost"
-                            :ui="{ rounded: 'rounded-none' }"
-                            class="text-Primary-600-Dark-Primary disabled:opacity-100 text-base justify-between p-0 pt-4 pb-2"
-                            @click.stop="goToPage(item.link)"
-                        >
-                            <span class="truncate">{{ item.label }}</span>
-
-                            <template #trailing>
-                                <div v-show="item.showOpenIcon">
-                                    <UIcon
-                                        v-if="open"
-                                        name="i-heroicons-minus"
-                                        class="w-5 h-5 ms-auto transform transition-transform duration-200 flex"
-                                    />
-                                    <UIcon
-                                        v-else
-                                        name=" i-heroicons-plus"
-                                        class="w-5 h-5 ms-auto transform transition-transform duration-200 flex"
-                                    />
-                                </div>
-                            </template>
-                        </UButton>
-                    </template>
-                </UAccordion>
+             
             </div>
 
             <Transition name="mask">
@@ -340,10 +282,10 @@ const navLink = [
         label: "團主推薦",
         link: "/kol",
     },
-    {
-        label: "好物分享",
-        link: "/blog",
-    },
+    // {
+    //     label: "好物分享",
+    //     link: "/blog",
+    // },
     {
         label: "提案",
         link: "/proposal",
@@ -422,6 +364,7 @@ async function openModal(type) {
 }
 
 function goToPage(link) {
+    
     if (link) {
         hideSideNav.value = true;
 
@@ -431,7 +374,7 @@ function goToPage(link) {
 
 async function logout(e) {
     e.stopPropagation();
-
+    cart.isHaveCartItem = false;
     store.isLogin = false;
     store.userInfo = {};
     store.clearToken();

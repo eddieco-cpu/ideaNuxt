@@ -45,8 +45,10 @@
                 </UInput>
             </div>
         </div>
-        <UCarousel v-slot="{ item }" :items="['1']" :ui="{ item: 'snap-start' }" class="max-w-[800px] mx-auto" v-if= "!pending">
-            <div>
+        
+        <UCarousel v-slot="{ item }" :items="['1']" :ui="{ item: 'snap-start' }" class="max-w-[800px] mx-auto w-full " v-if= "!pending">
+            
+            <div class="w-full">
                 <UTable
                     :rows="datas"
                     :columns="columns"
@@ -60,7 +62,7 @@
                             size: 'text-sm',
                         },
                     }"
-                    class="rounded-lg"
+                    class="rounded-lg w-full"
                 >
                     <template #id-data="{ row }">
                         <nuxt-link
@@ -181,39 +183,40 @@ const columns = [
 
 const datas = computed(() => {
     if(allDatas.value) {
+        console.log('--------------')
+
+        console.log(allDatas.value)
         const start = (currentPage.value - 1) * 10;
         const end = start + 10;
-        return 
-             allDatas.value.detail.orders.slice(start, end).map((el) => ({
-                id: {
-                    val: el.number,
-                    class: "min-w-[150px] max-w-[150px]",
-                },
-                time: { // 对应created_at
-                    val: el.created_at,
-                    class: "min-w-[150px] max-w-[150px]",
-                },
-                name: { // 对应userInfo的name
-                    val: el.user_info.name,
-                    class: "min-w-[150px] max-w-[150px]",
-                },
-                amount: { // 对应total+ship
-                    val: '$ ' + el.total + el.ship,
-                    class: "min-w-[150px] max-w-[150px]",
-                },
-                payment: { // 固定字符串: 信用卡支付
-                    val: '信用卡支付',
-                    class: "min-w-[130px] max-w-[130px]",
-                },
-                status: { // 判断pay_status, pay_status == 1 为已成立，其他为不成立
-                    val: el.pay_status === 1 ? '已成立' : '不成立',
-                    class: "min-w-[70px] max-w-[70px]",
-                },
-            }))
+        return allDatas.value.detail.orders.slice(start, end).map((el) => ({
+            id: {
+                val: el.number,
+                class: "min-w-[150px] max-w-[150px]",
+            },
+            time: { // 对应created_at
+                val: el.created_at,
+                class: "min-w-[150px] max-w-[150px]",
+            },
+            name: { // 对应userInfo的name
+                val: el.user_info.name,
+                class: "min-w-[150px] max-w-[150px]",
+            },
+            amount: { // 对应total+ship
+                val: '$ ' + el.total,
+                class: "min-w-[150px] max-w-[150px]",
+            },
+            payment: { // 固定字符串: 信用卡支付
+                val: '信用卡支付',
+                class: "min-w-[130px] max-w-[130px]",
+            },
+            status: { // 判断pay_status, pay_status == 1 为已成立，其他为不成立
+                val: el.pay_status === 1 ? '已成立' : '不成立',
+                class: "min-w-[70px] max-w-[70px]",
+            },
+        }))
     } else {
         return []
     }
-    
 })
 
 

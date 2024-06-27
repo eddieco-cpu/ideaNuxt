@@ -1,9 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import fs from 'fs'
+import dotenv from 'dotenv'
 
 const host = process.env.NUXT_PUBLIC_HOST;
 const port = process.env.NUXT_PUBLIC_PORT;
 const baseUrl = process.env.NODE_ENV === "development" ? `http://${host}:${port}` : `http://idea2gether.com/`;
+
+dotenv.config({
+  path: `.env.${process.env.NODE_ENV}`
+})
 
 export default defineNuxtConfig({
     devtools: { enabled: true },

@@ -18,7 +18,7 @@
                             >
                                 <div class="cursor-pointer" @click="selectProduct(item.group.id)">
                                     <img
-                                        :src="item.projects.image"
+                                        :src="item.group.image_first"
                                         alt="product"
                                         class="rounded-lg w-[126px] flex-1 h-[81px] object-cover"
                                         :class="{
@@ -31,36 +31,62 @@
                     </template>
                 </CardContainer>
 
-                <CardContainer title="結帳商品">
+                <CardContainer title="結帳商品" v-if = "currentData">
                     <template #tip>
-                        <div class="flex flex-col gap-y-1 pb-3">
+                        <div class="flex flex-col gap-y-1 pb-3"  >
                             <div class="flex items-center gap-x-1">
                                 <Tag :tag="{ name: '限時團購', color: 'primary', type: 'text' }" />
                                 <p class="text-Primary-500-Primary text-sm font-medium truncate flex-1">
-                                    {{ currentData?.projects?.name}}
+                                    {{ currentData?.group.name}}
                                 </p>
                             </div>
-                            <div class="md:flex md:gap-x-6">
+                            <ul class="bg-white py-3 flex-grow w-full">
+                           
+                                <li class="mb-2">
+                                    <p class="flex justify-start items-center text-Primary-500-Primary text-sm gap-x-1 mb-1">
+                                        <UIcon name="i-heroicons-shopping-bag" />
+                                        <span>出貨時間</span>
+                                    </p>
+                                    
+                                    <pre class="text-xs leading-relaxed">{{ currentData?.group.ship_time }}</pre>
+                                </li>
+                                <li class="mb-2" v-if = "shipText">
+                                    <p class="flex justify-start items-center text-Primary-500-Primary text-sm gap-x-1 mb-1">
+                                        <UIcon name="i-heroicons-truck" />
+                                        <span>宅配運費</span>
+                                    </p>
+                                    <pre class="text-xs leading-relaxed">{{ shipText }}</pre>
+                                </li>
+
+                                <li class="mb-2">
+                                    <p class="flex justify-start items-center text-Primary-500-Primary text-sm gap-x-1 mb-1">
+                                        <UIcon name="i-heroicons-gift" />
+                                        <span>滿額增品</span>
+                                    </p>
+                                    <pre class="text-xs leading-relaxed">{{ currentData?.group.give }}</pre>
+                                </li>
+                            </ul>
+                            <!-- <div class="md:flex md:gap-x-6">
                                 <div class="flex items-center gap-x-1">
                                     <img
                                         src="~assets/images/icon/shopping-icon.svg"
                                         alt="shopping"
                                         class="size-[14px]"
                                     />
-                                    <p class="text-xs text-Neutral-800" v-html="currentData?.group?.ship_remark">
-                                    </p>
+                                    <pre class="text-xs text-Neutral-800"> {{ currentData?.group.ship_time }}</pre>
+                                  
                                 </div>
-                                <!-- <div class="flex items-center gap-x-1">
+                                <div class="flex items-center gap-x-1">
                                     <img src="~assets/images/icon/car-icon.svg" alt="car" class="size-[14px]" />
-                                    <p class="text-xs text-Neutral-800">$100 元 (滿 $1,000 元免運)，限台灣本島配送</p>
-                                </div> -->
-                            </div>
+                                    <p class="text-xs text-Neutral-800">{{shipText}}</p>
+                                </div>
+                            </div> -->
                         </div>
                     </template>
 
                     <template #body>
                         <CardCheckOutProduct
-                            v-for="(item, index) in currentData?.productSpecs"
+                            v-for="(item, index) in currentData?.items"
                             :key="index"
                             v-bind="item"
                             :get-data="getData"
@@ -81,14 +107,14 @@
                         >
                             <h1 class="pb-3 text-black/85 font-medium border-b border-b-Neutral-200">總計</h1>
                             <div class="flex justify-between text-Neutral-700 text-sm">
-                                <p>{{ currentData?.productSpecs?.length ?? 0 }}件商品</p>
+                                <p>{{ currentData?.productLength }}件商品</p>
                                 <p>NT${{ currentData?.total }}</p>
                             </div>
                             <div
                                 class="flex justify-between text-Neutral-700 text-sm pb-3 border-b border-b-Neutral-200"
                             >
                                 <p>運費</p>
-                                <p>NT$0</p>
+                                <p>NT${{ currentData?.fee }}</p>
                             </div>
                         </div>
                     </template>
@@ -110,7 +136,7 @@
                                 <p
                                     class="text-xl text-Neutral-800 md:text-Primary-500-Primary font-roboto font-medium md:text-right md:pb-3"
                                 >
-                                    NT${{ currentData?.total }}
+                                    NT${{ currentData?.total +  currentData?.fee}}
                                     <!-- helperMoneyComma -->
                                 </p>
                             </div>
@@ -119,7 +145,7 @@
                                 class="px-4 py-2 text-sm bg-Primary-500-Primary text-center rounded-lg w-full text-white flex-1"
                                 @click="goCheckoutPage"
                             >
-                                去結帳 ({{ currentData?.productSpecs?.length ?? 0 }})
+                                去結帳 ({{ currentData?.productLength }})
                             </button>
                         </div>
                     </template>
@@ -156,24 +182,39 @@
 
 <script setup>
 import { cartStore } from "@/stores/cart";
+import { useToast } from "vue-toastification";
 const cart = cartStore();
 const authStore = useAuthStore();
+const toast = useToast();
 const token = authStore.token;
+
 
 const datas = ref([]);
 const groupKey = ref(null)
 
+
 getData()
 
 async function getData () {
-    const payload = {};
 
-    const data = await POST("/getItemByCartPage", payload, token);
+    try{
+        const data = await POST("/getItemByCartPage", {}, token);
+        if(!!data) {
+            if(data.status) {
+                datas.value = data.data
+                console.log(datas.value)
 
-    if(!!data.status) {
-        datas.value = data.data
-
-        groupKey.value = Object.keys(datas.value)[0];
+                groupKey.value = Object.keys(datas.value)[0];
+            } else {
+                toast.error(data.message)
+                cart.isHaveCartItem = false
+                navigateTo("/");
+            }
+          
+        }
+    }catch (error) {
+        toast.error(error.message)
+        navigateTo("/");
     }
 }
 
@@ -189,31 +230,77 @@ const allData = computed(() => {
   return tempData;
 });
 
+
 const currentData = computed(() => {
   const key = groupKey.value;
   let data = datas.value[key];
 
-  if (data && Array.isArray(data.productSpecs)) {
-    const total = data.productSpecs.reduce((sum, item) => {
-      const salesPrice = Number(item.sales_price);
-      const amount = Number(item.amount);
-      return sum + salesPrice * amount;
+  if (data && Array.isArray(data.items)) {
+    let productLength = 0;
+
+    const total = data.items.reduce((sum, item) => {
+        const salesPrice = Number(item.sales_price);
+        const quantity = Number(item.quantity);
+        productLength += quantity;
+        return sum + salesPrice * quantity;
     }, 0);
 
-    data = { ...data, total };
+    let fee = 0;
+    let feeDoor = 0;
+
+    data.group.ship.forEach( item => {
+
+        if(item.type == 'deliveToHouse') {
+            fee = item.value
+            feeDoor = item.fee_door
+        }
+    })
+
+    if(total >= feeDoor ) {
+        fee = 0;
+    }
+
+    data = { ...data, total, fee, productLength };
   }
 
   return data;
 });
 
+const shipText = computed( () => {
+
+    const key = groupKey.value;
+    let data = datas.value[key];
+
+    let text = '';
+
+    if(data) {
+            data.group.ship.forEach( item => {
+
+            let fee = item.value;
+            if(fee > 0) {
+                if(item.type == 'deliveToHouse') {
+                    text+= `宅配運費 $${fee}元 (滿$${item.fee_door}元免運)`
+                }
+            }else {
+                    text+= `免運`
+            }
+        })
+
+        return text
+    } else {
+        return ''
+    }
+}) 
+
+
 const showTotalDetail = ref(false);
 
 function isProductBeSelected(cartId) {
-    return groupKey.value === cartId;
+    return groupKey.value == cartId;
 }
 console.log(" cart.selectGroupBuyProducts", cart.selectGroupBuyProducts);
-function selectProduct(products) {
-    groupKey.value = products
+function selectProduct(groupId) {
+    groupKey.value = groupId
 }
 
 function goCheckoutPage() {

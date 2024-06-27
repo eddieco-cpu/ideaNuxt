@@ -6,7 +6,7 @@
                     :schema="leaderInformationSchema"
                     :state="leaderInfo"
                     class="flex flex-col gap-y-3 md:max-w-[434px] flex-1"
-                    @submit="onSubmit"
+                    @submit="onSubmitDebounced"
                 >
                     <UFormGroup label="個人網址名稱" name="siteName" help="此網址為您在本站的個人網址。" required>
                         <UButtonGroup orientation="horizontal" class="shadow-none w-full">
@@ -30,7 +30,7 @@
                         />
                     </UFormGroup>
 
-                    <UFormGroup label="Facebook 網址" name="facebook" class="mt-9">
+                    <UFormGroup label="Facebook 網址" name="facebook" class="mt-9" required>
                         <UInput
                             placeholder="請輸入網址"
                             trailingIcon="i-heroicons-cog-6-tooth"
@@ -38,7 +38,7 @@
                         />
                     </UFormGroup>
 
-                    <UFormGroup label="Instagram網址" name="instagram">
+                    <UFormGroup label="Instagram網址" name="instagram" required>
                         <UInput
                             placeholder="請輸入網址"
                             trailingIcon="i-heroicons-cog-6-tooth"
@@ -46,7 +46,7 @@
                         />
                     </UFormGroup>
 
-                    <UFormGroup label="YouTube網址" name="youtube">
+                    <UFormGroup label="YouTube網址" name="youtube" required>
                         <UInput
                             placeholder="請輸入網址"
                             trailingIcon="i-heroicons-cog-6-tooth"
@@ -54,7 +54,7 @@
                         />
                     </UFormGroup>
 
-                    <UFormGroup label="個人/官方網站網址" name="officialSite">
+                    <UFormGroup label="個人/官方網站網址" name="officialSite" required>
                         <UInput
                             placeholder="請輸入網址"
                             trailingIcon="i-heroicons-cog-6-tooth"
@@ -121,17 +121,19 @@
 </template>
 
 <script setup>
-import { useAuthStore } from "@/stores/auth";
+import { useAuthStore }            from "@/stores/auth";
 import { leaderInformationSchema } from "~/validation";
-import { useToast } from "vue-toastification";
-const toast = useToast();
+import { useToast }                from "vue-toastification";
+import { debounce }                from 'lodash';
 
-const store = useAuthStore();
+const toast     = useToast();
+const authStore = useAuthStore();
+const store     = useAuthStore();
 
-const { name } = defineProps({
+const props = defineProps({
     name: {
         type: String,
-        default: "您的暱稱",
+        default: "",
     },
 });
 
@@ -157,19 +159,23 @@ async function getDetail() {
     }
 }
 
-
 onMounted(() => {
     getDetail();
 })
 
+const onSubmitDebounced = debounce(onSubmit, 300);
+
 async function onSubmit(event) {
 
+    if(props.name == null) {
+        toast.error('暱稱不可為空，請先儲存基本資料')
+        return;
+    }
     const payload = event.data;
-
-    const data = await POST("/updateUserDetail", payload, '');
+    const data    = await POST("/updateUserDetail", payload, '');
 
     if(!!data) {
-        store.userInfo = data.userInfo;
+        authStore.userInfo.type = 2
         toast.success(data.message)
     }
 }

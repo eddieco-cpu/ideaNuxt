@@ -16,7 +16,7 @@
         <div class="px-3 py-4">
             <h2 class="text-xs text-Neutral-700">NO.{{ index }} 推薦達人</h2>
 
-            <h1 class="font-medium text-Neutral-900">{{ name }}</h1>
+            <h1 class="font-medium text-Neutral-900">{{ nick_name }}</h1>
 
             <p
                 class="text-Secondary-500-Primary text-sm tracking-wide flex items-center gap-x-1 mt-9 group-hover:underline group-hover:text-Secondary-400-Hover"
@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-const { index, id, name, image, hash_id } = defineProps({
+const { index, id, name, image, hash_id, nick_name, siteName } = defineProps({
     index: {
         type: Number,
     },
@@ -47,11 +47,17 @@ const { index, id, name, image, hash_id } = defineProps({
     hash_id: {
         type: String,
         default: "",
-    }
+    },
+    nick_name: {
+        type: String,
+    },
+    siteName: {
+        type: String,
+    },
 });
 
 function goToPage() {
-    navigateTo(`/kol/${hash_id}/${name}`);
+    navigateTo(`/kol/${hash_id}/${nick_name}?${siteName}`);
 }
 </script>
 

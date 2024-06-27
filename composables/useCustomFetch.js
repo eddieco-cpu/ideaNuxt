@@ -6,6 +6,7 @@ export function useCustomFetch(endpoint, payload, token) {
     const cookie    = useCookie('jwt-token')
     const jwtToken  = cookie.value;
     const authStore = useAuthStore();
+    const cart      = cartStore();
 
     const fetchOptions = {
         method: 'POST',
@@ -19,6 +20,7 @@ export function useCustomFetch(endpoint, payload, token) {
         onResponseError({ request, response, options }) {
              if (response.status === 401) {
                 authStore.clearToken();
+                cart.isHaveCartItem = false;
                 return navigateTo('/')
             }
         }
@@ -36,6 +38,7 @@ export function useCustomGetFetch(endpoint) {
     const cookie    = useCookie('jwt-token')
     const jwtToken  = cookie.value;
     const authStore = useAuthStore();
+    const cart      = cartStore();
     
 
     const fetchOptions = {
@@ -50,6 +53,7 @@ export function useCustomGetFetch(endpoint) {
         onResponseError({ request, response, options }) {
              if (response.status === 401) {
                 authStore.clearToken();
+                cart.isHaveCartItem = false;
                 return navigateTo('/')
             }
         }

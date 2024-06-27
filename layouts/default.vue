@@ -1,4 +1,7 @@
 <template>
+  <CustomLoading  ref="customLoading"/>
+  <NuxtLoadingIndicator />
+
   <!-- <Header /> -->
   <LayoutHeader @openModal="openModal" />
 
@@ -17,12 +20,30 @@
 </template>
 
 <script setup>
+import CustomLoading from '~/components/loading/CustomLoading.vue';
+
 const showModal = ref("");
 
 function openModal(modalName = "close") {
   showModal.value = modalName;
 }
 
+const customLoading = ref(null);
+
+function showLoading() {
+  if (customLoading.value) {
+    customLoading.value.show();
+  }
+}
+
+function hideLoading() {
+  if (customLoading.value) {
+    customLoading.value.hide();
+  }
+}
+
+provide('showLoading', showLoading);
+provide('hideLoading', hideLoading);
 provide("openModal", openModal);
 </script>
 

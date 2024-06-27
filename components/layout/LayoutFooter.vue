@@ -47,7 +47,7 @@
                     </template>
                 </nav>
                 <p class="text-xs text-Neutral-600-Dark-Primary mb-3 max-lg:text-center">
-                    愛上大數據股份有限公司｜ 統一編號：85013744
+                    愛上大數據股份有限公司｜ 統一編號：52711564
                 </p>
                 <p class="text-xs text-Neutral-600-Dark-Primary max-lg:text-center">
                     Copyright © 2024 idea2gether. All rights reserved.
@@ -86,9 +86,9 @@ const footerLinks = reactive([
     },
 ]);
 const socialLinks = reactive([
-    { name: "facebook", iconUrl: Icon.facebook, url: "https://www.facebook.com" },
-    { name: "instagram", iconUrl: Icon.instagram, url: "https://www.instagram.com" },
-    { name: "line", iconUrl: Icon.line, url: "https://www.line.com" },
-    { name: "youtube", iconUrl: Icon.youtube, url: "https://www.youtube.com" },
+    { name: "facebook", iconUrl: Icon.facebook, url: "https://www.facebook.com/profile.php?id=61557972312408" },
+    { name: "instagram", iconUrl: Icon.instagram, url: "https://www.instagram.com/idea2gether.tw/" },
+    { name: "line", iconUrl: Icon.line, url: "https://lin.ee/X534Xzm" },
+    // { name: "youtube", iconUrl: Icon.youtube, url: "https://www.youtube.com" },
 ]);
 </script>

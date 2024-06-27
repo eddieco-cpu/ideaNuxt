@@ -18,7 +18,7 @@
             <div class="flex justify-between pt-[10px] mt-[70px] border-t border-t-Neutral-200">
                 <p class="text-Neutral-700 text-sm">總金額</p>
                 <p class="text-Neutral-900 font-roboto font-medium">
-                    NT${{ total + ship }}
+                    NT${{ total }}
                 </p>
             </div>
         </template>

@@ -231,6 +231,16 @@
         </div>
 
 
+                    <!-- <DashboardProposalsCard
+                        :item="prod"
+                        class="w-full"
+                        :class="
+                            prod.soldOut
+                                ? 'opacity-50 cursor-not-allowed pointer-events-none'
+                                : 'opacity-100 cursor-pointer active:border-white hover:border-Primary-400-Hover transition duration-300'
+                        "
+                    />
+                </li> -->
     </section>
 </template>
 
@@ -342,8 +352,6 @@ const prods = ref([]);
 async function getProdsData() {
     const data = await GET(`/api/dashboard/details/reviewed/proposals`);
     if (!!data) {
-        console.log('--------------')
-        console.log(data.prods)
         prods.value = data.prods.map((el, i) => ({
             ...el,
         }));

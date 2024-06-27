@@ -1,6 +1,6 @@
 import { useToast } from "vue-toastification";
 
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin((nuxtApp) => {
 
     const config = useRuntimeConfig()
     const authStore = useAuthStore();

@@ -15,7 +15,7 @@
                     class="absolute -top-[100px] left-2/4 transform -translate-x-1/2 w-[152px] h-[152px] rounded-[48px]"
                 />
 
-                <h1 class="text-Primary-500-Primary text-xl font-medium text-center">{{ userData.name }}</h1>
+                <h1 class="text-Primary-500-Primary text-xl font-medium text-center">{{ userData.nick_name }}</h1>
 
                 <p class="text-sm text-Neutral-800">
                     {{ userDetail.selfDescription }}
@@ -157,7 +157,7 @@
                 </div>
 
                 <!-- 開團紀錄 -->
-                <div v-if="true">
+                <div v-if="filteredFinished && filteredFinished.length > 0">
                     <div class="flex gap-4 items-center justify-between mt-8 mb-4 md:mt-0">
                         <h1 class="text-black text-xl font-medium">開團紀錄</h1>
 
@@ -193,10 +193,10 @@
                     />
                 </div>
 
-                <div class="pt-14 md:mt-9" v-else>
+                <!-- <div class="pt-14 md:mt-9" v-else>
                     <img src="~assets/images/status/emptyData.svg" alt="empty" class="mx-auto" />
                     <p class="mt-2 text-xl font-medium text-Primary-500-Primary text-center">查無符合資料</p>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -236,9 +236,9 @@ const finishedtotalPages  = ref(10);
 
 getAllGroup();
 
-getGroupBuyingList();
-getComingBuyingList();
-getVideoList();
+// getGroupBuyingList();
+// getComingBuyingList();
+// getVideoList();
 
 const onGoingData      = ref(null);
 const upcomingData     = ref(null);
@@ -282,11 +282,11 @@ const filteredOngoing = computed(() => {
         return onGoingData.value.map(item => ({
                 id:     item.id,
                 name:   item.users.name ,
-                image:  item.projects.image,
+                image:  item.image_first,
                 avatar: item.users.image ,
-                text:   item.projects.name ,
+                text:   item.name ,
                 price:  [item.price_range['min_price'],item.price_range['max_price']],
-                tags:   item.product.tags ? item.product.tags : []
+                // tags:   item.product.tags ? item.product.tags : []
             }));
     } else {
         return []
@@ -296,13 +296,12 @@ const filteredOngoing = computed(() => {
 const filteredUpcomping = computed(() => {
     if(upcomingData.value) {
         return upcomingData.value.map(item => ({
-                id:     item.id,
+            id:     item.id,
                 name:   item.users.name ,
-                image:  item.projects.image,
+                image:  item.image_first,
                 avatar: item.users.image ,
-                text:   item.projects.name ,
-                price:  item.price,
-                tags:   item.product.tags ? item.product.tags : [],
+                text:   item.name ,
+                // tags:   item.product.tags ? item.product.tags : [],
                 start_time: item.start_time
             }));
     } else {
@@ -315,11 +314,11 @@ const filteredFinished = computed(() => {
         return finishedData.value.map(item => ({
                 id:     item.id,
                 name:   item.users.name ,
-                image:  item.projects.image,
+                image:  item.image_first,
                 avatar: item.users.image ,
-                text:   item.projects.name ,
+                text:   item.name ,
                 price:  item.price,
-                tags:   item.product.tags ? item.product.tags : []
+                // tags:   item.product.tags ? item.product.tags : []
             }));
     } else {
         return []

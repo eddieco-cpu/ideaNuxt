@@ -1,11 +1,11 @@
 <template>
     <div class="flex md:flex-row gap-4">
-        <img :src="img" alt="product" class="size-[66px] md:size-[100px] rounded" />
+        <img :src="image" alt="product" class="size-[66px] md:size-[100px] rounded" />
 
         <div class="flex flex-col justify-between gap-y-3 md:flex-row md:gap-x-6 flex-1 relative">
             <div class="md:max-w-[450px]">
                 <h1 class="text-Neutral-800 text-sm font-medium line-clamp-2">
-                    {{ name }}
+                    {{ name }} * {{ amount }}
                 </h1>
 
                 <!-- <p class="text-Neutral-700 text-xs mt-1">{{ text }}</p> -->
@@ -53,7 +53,7 @@ const props = defineProps({
         type: Number,
         default: 1,
     },
-    img: {
+    image: {
         type: String,
         default: "",
     },
@@ -63,7 +63,7 @@ const props = defineProps({
     },
     cartItemId: {
         type: Number ,
-        default: "",
+        default: 0,
     },
     getData: Function 
 });

@@ -150,6 +150,7 @@ export const basicProgressSchema = z.object({
 
 export const checkOutSchema = z.object({
     name: z.string(commonErrorMessage).min(1, "必填"),
+    phone: z.string(commonErrorMessage).regex(phoneRegex_TW, "請輸入有效手機號碼").min(1, "必填"),
     isAgree: z.boolean({
         required_error: "必填",
     }),

@@ -94,7 +94,6 @@
                        
                         <UiButton 
                             class="min-w-[370px] min-h-12 max-md:min-w-40 max-md:flex-grow max-xl:min-h-9 max-xl:h-9"
-                            @click="addToCart"
                         >
                             立即贊助
                         </UiButton>
@@ -141,7 +140,8 @@
 
                     <template v-if="activeNavItemId === 'a'">
                         <article class="bg-white p-6 rounded-lg" ref="articleRef">
-                            <pre v-html="projectData.data.content"></pre>
+                            <div class="ql-editor" v-html="projectData.data.content" >
+                            </div>
                         </article>
                     </template>
                     <!-- <template v-if="activeNavItemId === 'b'">
@@ -208,9 +208,24 @@
                             <p></p>
                         </li>
                     </template> -->
-                    <template v-for="prod in productsWithSoldOut" :key="prod.id">
-                        <ProductsFundraise :prod="prod" @click="addToCart" />
-                    </template>
+                    
+
+                    <li
+                            v-for="(prod, i) in proposals"
+                            :key="prod.id"
+                            class="md:mr-1"
+                            :class="i === prods.length - 1 ? 'max-md:mb-5' : 'mb-5'"
+                        >
+                        <DashboardProposalsCard
+                            :item="prod"
+                            class="w-full"
+                            :class="
+                                prod.soldOut
+                                    ? 'opacity-50 cursor-not-allowed pointer-events-none'
+                                    : 'opacity-100 cursor-pointer active:border-white hover:border-Primary-400-Hover transition duration-300'
+                            "
+                        />
+                        </li>
                 </ul>
             </section>
         </div>
@@ -221,15 +236,29 @@
 
 <script setup>
 import { useToast } from "vue-toastification";
+import "@vueup/vue-quill/dist/vue-quill.core.css";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import "@vueup/vue-quill/dist/vue-quill.bubble.css";
 const toast = useToast();
 const route = useRoute();
 const authStore = useAuthStore();
+const projectId = route.params.pid;
 
 const isDisabled = ref(true);
 
 const { data:projectData }   = useCustomGetFetch(`/frontend/getProjectForReview?product_id=${route.params.pid}`);
 
-console.log(projectData.value)
+const proposals = ref([]);
+
+async function getReviewedProposalsData() {
+
+    const data = await POST("/getProjectCardData", {'project_id' : projectId, type:'hash' }, '');
+
+    if (!!data) {
+        proposals.value = data.data;
+    }
+}
+getReviewedProposalsData();
 
 const isFavorite = ref(false);
 
@@ -289,17 +318,17 @@ onMounted(() => {
 });
 
 //
-// const prods = ref([]);
+const prods = ref([]);
 
-// async function getProdsData() {
-//     const data = await GET(`/api/productsFundraise`);
-//     if (!!data) {
-//         prods.value = data.prods.map((el, i) => ({
-//             ...el,
-//         }));
-//     }
-// }
-// getProdsData();
+async function getProdsData() {
+    const data = await GET(`/api/productsFundraise`);
+    if (!!data) {
+        prods.value = data.prods.map((el, i) => ({
+            ...el,
+        }));
+    }
+}
+getProdsData();
 
 const progressMeter = 300;
 

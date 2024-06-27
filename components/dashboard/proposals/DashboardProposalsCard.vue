@@ -34,15 +34,17 @@
             <p class="w-full flex justify-start items-center gap-x-1 mb-[10px]">
                 <b class="text-Status-Color-Danger-500-Primary font-medium text-xl">NT$ {{ item.specialOffer }}</b>
                 <b class="text-Status-Color-Danger-400-Hover font-normal line-through text-xs"
-                    >定價 ${{ item.originalPrice }}，現省 ${{ item.specialOffer - item.originalPrice }}</b
+                    >定價 ${{ item.originalPrice }}，現省 ${{ item.originalPrice - item.specialOffer }}</b
                 >
             </p>
-
             <section class="w-full border-t-[1px] border-gray-100 py-[6px] mb-1">
                 <p class="text-xs font-medium mb-1">商品內容：</p>
-                <article class="text-xs">
-                    <pre>{{ item.content }}</pre>
-                </article>
+                <div>
+                    <article class="text-xs">
+                        <pre >{{ item.content }}</pre>
+                    </article>
+                </div>
+               
             </section>
             <ul class="flex-grow w-full text-xs text-Neutral-800 flex flex-col justify-start items-start gap-1 mb-3">
                 <li class="flex justify-start items-center gap-x-1 text-xs" v-if="item.deliveToStore.isAvailable">

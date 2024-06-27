@@ -93,3 +93,7 @@ sw.*
 
 # Vercel
 .vercel
+
+*.Zone.Identifier
+deploy.sh
+.env.production

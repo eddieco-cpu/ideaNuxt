@@ -1,5 +1,7 @@
 <template>
-    <div class="buying_main">
+
+    <div v-if="isLoading">
+        <div class="buying_main">
         <picture class="block h-36 w-auto relative z-[-1] banner_photo">
             <img :src="banner" alt="" class="block w-full h-full object-cover" />
         </picture>
@@ -9,7 +11,7 @@
                 <UBreadcrumb
                     divider="/"
                     :links="[
-                        { label: 'Home', to: '/' },
+                        { label: '首頁', to: '/' },
                         { label: '團主推薦' },
                         // { label: '3C科技', to: '/category/technology-ai?type=groupbuying' },
                     ]"
@@ -30,7 +32,7 @@
                 class="hidden max-xl:flex justify-between items-center max-xl:fixed max-xl:z-10 max-xl:bottom-0 max-xl:left-0 max-xl:w-full max-xl:bg-white max-xl:px-4 max-xl:py-2 max-md:gap-x-3"
             >
                 <!--  -->
-                <button
+                <button 
                     class="w-12 h-12 rounded-lg ring-1 ring-Neutral-500-Primary flex justify-center items-center max-xl:w-9 max-xl:h-9"
                     :class="isFavorite ? 'ring-[#FF4D4F]' : 'ring-Neutral-500-Primary'"
                     @click="setIsFavorite($event, !isFavorite)"
@@ -58,10 +60,10 @@
                             日<span>04</span>時<span>34</span>分<span>22</span>秒 -->
                             <p>{{ countdownTime }}</p>
                         </div>
-                        <div class="items-baseline">
-                            <b
-                                class="inline-block rounded px-2 py-1 bg-Status-Color-Danger-500-Primary text-white font-light whitespace-nowrap max-md:text-sm"
-                                >促銷</b
+                        <div class="items-baseline" v-if = "tagsData && tagsData.length > 0">
+                            <b v-for = "(item,index) in pageData.tags" :key = "index"
+                                :class="['inline-block rounded px-2 py-1 text-white font-light whitespace-nowrap max-md:text-sm mr-2', item.style]"
+                                >{{item.name}}</b
                             >
                         </div>
                         <!-- <div class="items-baseline">
@@ -71,9 +73,9 @@
                             >
                         </div> -->
                     </div>
-                    <h2 class="font-medium text-xl py-3">{{ pageData.projects?.name }}</h2>
+                    <h2 class="font-medium text-xl py-3">{{ pageData.name }}</h2>
                     <h3 class="font-noto text-xs text-Neutral-600-Dark-Primary">
-                        {{ pageData.projects?.description }}
+                        {{ pageData.desc }}
                     </h3>
                 </section>
             </section>
@@ -86,15 +88,14 @@
                 <section
                     class="w-[626px] h-[408px] aspect-[313/204] rounded-lg py-1 max-xl:w-full max-xl:aspect-auto max-xl:py-0 max-md:h-auto max-md:aspect-auto"
                 >
-                    <ProductsSlider :slides="[pageData.projects?.image]"/>
+                    <ProductsSlider :slides="pageData.image_data"/>
                 </section>
 
                 <!-- art -->
                 <article class="w-[436px] flex flex-col justify-center items-center max-xl:w-auto">
                     <!-- avater -->
-                    <nuxt-link :to="`/kol/${pageData.users?.hash_id}/${pageData.users?.name}`"
-                        class="flex justify-between items-center gap-x-2 bg-white mb-2 p-3 rounded-lg w-full max-md:mb-5 max-md:translate-y-[-4px]"
-                    >
+                   
+                    <div  class="flex justify-between items-center gap-x-2 bg-white mb-2 p-3 rounded-lg w-full max-md:mb-5 max-md:translate-y-[-4px]">
                         <div class="flex justify-start items-center gap-x-3">
                             <picture class="block w-[110px] aspect-[1/1] overflow-hidden rounded-lg flex-shrink-0">
                                 <img :src="pageData.users?.image" class="block w-full h-full object-cover" />
@@ -104,12 +105,15 @@
                                 <h1 class="text-base font-medium">{{ pageData.users?.name }}</h1>
                             </div>
                         </div>
+                         <nuxt-link v-if = "pageData.users?.type == 2" :to="`/kol/${pageData.users?.hash_id}/${pageData.users?.name}?${pageData.users?.userdetail?.siteName}`">
 
-                        <UIcon
-                            name="i-heroicons-arrow-right-circle"
-                            class="block w-8 h-8 text-Secondary-500-Primary flex-shrink-0"
-                        />
-                    </nuxt-link>
+                            <UIcon
+                                name="i-heroicons-arrow-right-circle"
+                                class="block w-8 h-8 text-Secondary-500-Primary flex-shrink-0"
+                            />
+                        </nuxt-link>
+                    </div>
+                       
 
                     <!-- detail -->
                     <ul class="bg-white py-3 px-5 flex-grow w-full">
@@ -125,28 +129,25 @@
                                 <UIcon name="i-heroicons-shopping-bag" />
                                 <span>出貨時間</span>
                             </p>
-                            <p v-html="pageData.ship_remark" class="text-xs leading-relaxed"></p>
+                            
+                            <pre class="text-xs leading-relaxed">{{ pageData.ship_time }}</pre>
                         </li>
 
-                        <!-- <li class="mb-2">
+                        <li class="mb-2" v-if = "shipText">
                             <p class="flex justify-start items-center text-Primary-500-Primary text-sm gap-x-1 mb-1">
                                 <UIcon name="i-heroicons-truck" />
                                 <span>宅配運費</span>
                             </p>
-                            <p class="text-xs leading-relaxed">$100 元 (滿 $1,000 元免運)，限台灣本島配送</p>
-                        </li> -->
+                            <pre class="text-xs leading-relaxed">{{ shipText }}</pre>
+                        </li>
 
-                        <!-- <li class="mb-2">
+                        <li class="mb-2">
                             <p class="flex justify-start items-center text-Primary-500-Primary text-sm gap-x-1 mb-1">
                                 <UIcon name="i-heroicons-gift" />
                                 <span>滿額增品</span>
                             </p>
-                            <ol class="list-decimal pl-5 text-xs">
-                                <li class="leading-relaxed">滿1600 送鮑魚干貝乾拌麵</li>
-                                <li class="leading-relaxed">滿2600 送和牛肉燥乾拌麵或味噌乾拌麵</li>
-                                <li class="leading-relaxed">滿3000元送麻辣鴨血寬粉</li>
-                            </ol>
-                        </li> -->
+                            <pre class="text-xs leading-relaxed">{{ pageData.give }}</pre>
+                        </li>
                     </ul>
                 </article>
             </section>
@@ -187,7 +188,9 @@
                     </div>
 
                     <template v-if="activeNavItemId === 'a'">
-                        <article class="bg-white p-6 rounded-lg ql-editor" ref="articleRef" v-html="articleHTML">    
+                        <article class="bg-white p-6 rounded-lg" ref="articleRef">
+                            <div class="ql-editor" v-html="pageData.content" >
+                            </div>
                         </article>
                     </template>
                     <template v-if="activeNavItemId === 'b'">
@@ -213,7 +216,6 @@
                             :key="select.id"
                             :id="select.id"
                             :select="select"
-                            :groupId = "groupId"
                         />
                     </ul>
 
@@ -230,6 +232,12 @@
             </section>
         </section>
     </div>
+    </div>
+    
+    
+
+
+
 </template>
 
 <script setup>
@@ -243,6 +251,7 @@ const route = useRoute();
 
 const isFavorite = ref(false);
 const pageData   = ref([])
+const isLoading  = ref(false)
 const groupId = route.params.pid;
 
 const recommendationSelects = reactive([]);
@@ -250,19 +259,64 @@ const recommendationSelects = reactive([]);
 getDatas()
 
 async function getDatas() {
-    const queryParam = `?type=group&id=${route.params.pid}`;
-    const data = await GET(`/frontend/getGroup${queryParam}`,1);
+    const data = await POST(`/frontend/getGroupData`,{id:route.params.pid}, '');
+
+    console.log(data)
+
     if (!!data) {
-        pageData.value = data.data;
-        console.log(pageData)
+        pageData.value = data;
         
-        recommendationSelects.splice(0, recommendationSelects.length, ...data.data.product_specs);
+        
+        
+        
+        recommendationSelects.splice(0, recommendationSelects.length, ...data.spec);
 
         targetTime.value = new Date(`${pageData.value.end_time}`).getTime();
         startCountdown(targetTime.value)
+        isLoading.value = true
         
     }
 }
+
+const shipText = computed( () => {
+
+    let text = '';
+
+    if(pageData.value.ship && pageData.value.ship.length > 0) {
+            pageData.value.ship.forEach( item => {
+
+            let fee = item.value;
+            if(fee > 0) {
+                if(item.type == 'deliveToHouse') {
+                    text+= `宅配運費 $${fee}元 (滿$${item.fee_door}元免運)`
+                }
+            }else {
+                    text+= `免運`
+            }
+        })
+
+        return text
+    } else {
+        return ''
+    }
+}) 
+
+const tagsData = computed (() => {
+    if(pageData.value.tags && pageData.value.tags.length > 0) {
+            const addStyle = pageData.value.tags.map( item => {
+
+                if(item.color == 'danger') {
+                    item.style = "bg-Status-Color-Danger-500-Primary"
+                } else {
+                    item.style = "bg-Primary-500-Primary" 
+                }
+        })
+
+        return addStyle
+    } else {
+        return []
+    }
+})
 
 
 function setIsFavorite(e, status) {
@@ -339,7 +393,7 @@ onMounted(() => {
         //console.log("articleRef 高度:", articleRef.value.offsetHeight);
         articleRefHeight.value = articleRef.value.offsetHeight;
     }
-    startCountdown(targetTime)
+    // startCountdown(targetTime.value)
 
     async function getHtmlContext() {
         let data = await GET(`/api/dashboard/details/product/fakeHtml`);
@@ -350,7 +404,7 @@ onMounted(() => {
             if (data.data) articleHTML.value = data.data;
         }
     }
-    getHtmlContext();
+    // getHtmlContext();
 });
 
 const progressMeter = 300;
@@ -360,14 +414,14 @@ const navItems = [
         id: "a",
         html: `專案內容`,
     },
-    {
-        id: "b",
-        html: "進度更新",
-    },
-    {
-        id: "c",
-        html: "常見問題",
-    },
+    // {
+    //     id: "b",
+    //     html: "進度更新",
+    // },
+    // {
+    //     id: "c",
+    //     html: "常見問題",
+    // },
 ];
 const activeNavItemId = ref("a");
 const updateNavItemId = (id) => {
@@ -400,6 +454,11 @@ function cleanUpString(str) {
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
     }
+    pre {
+    text-align: left !important;
+    margin: 0; /* 去除预设的边距 */
+    white-space: pre-wrap; /* 自动换行 */
+}
     /*
     .card_group::-webkit-scrollbar {
         width: 5px;

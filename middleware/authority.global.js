@@ -1,7 +1,7 @@
 import { useAuthStore } from "@/stores/auth";
 
 // 定義需要登入的路由列表
-const protectedRoutes = ["member", "proposal-submission", "cart-cart-fundraise"]; // 這裡添加需要保護的路由名稱
+const protectedRoutes = ["member", "proposal-submission", "cart-cart-fundraise", "cart"]; // 這裡添加需要保護的路由名稱
 const loginRoute = "/login"; // 登入頁面路由
 
 export default defineNuxtRouteMiddleware((to, from) => {

@@ -11,7 +11,7 @@
                 v-slot="{ item }"
                 :items="proposals"
                 :ui="{
-                    item: 'snap-start max-w-[324px] md:basis-[320px]',
+                    item: 'snap-start max-w-[380px] md:basis-[320px]',
                     container: 'gap-x-5 flex-col md:flex-row',
                 }"
             >
@@ -61,7 +61,7 @@ const router = useRouter();
 const route = useRoute();
 const cart = cartStore();
 const projectId = route.query.project_id;
-const projectCardId = route.query.project_card_id;
+let projectCardId = route.query.project_card_id;
 
 let query = {
     project_id: projectId,
@@ -69,8 +69,6 @@ let query = {
 };
 
 const { data:projectData }   = useCustomGetFetch(`/frontend/getProject?product_id=${projectId}`);
-
-
 
 const proposals = ref([]);
 
@@ -83,8 +81,6 @@ async function getReviewedProposalsData() {
     }
 }
 getReviewedProposalsData();
-
-
 
 
 const cardData = computed(() => {
@@ -116,13 +112,12 @@ const total = ref(0);
 watchEffect( () => {
     if(cardData.value) {
 
-        console.log(projectData.value)
+        console.log('每次跟著變動嗎')
         const selectProduct = cardData.value.filter((item) => !item.soldOut)
                             .find((item) => item.id.toString() === projectCardId.toString());
 
        
         if(selectProduct) {
-            console.log(selectProduct)
             query.project_card_id = selectProduct.id;
         router.replace({ query });
 
@@ -161,7 +156,9 @@ function goCheckoutPage() {
 }
 
 function addToCart(item) {
+    
     if (item.soldOut) return;
+    projectCardId = item.id;
     query.project_card_id = item.id;
     router.replace({ query });
 

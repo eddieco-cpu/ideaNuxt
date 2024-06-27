@@ -23,9 +23,9 @@
                 <HomeMainSlider :slides="bannerData.data" />
             </div>
 
-            <UiContainer v-if="filteredProjects && filteredProjects.length > 0">
+            <UiContainer v-if = "categoryData && categoryData.data.length > 0">
                 <UiTitle>新點子集資</UiTitle>
-                <div v-if = "categoryData && categoryData.data.length > 0">
+                <div >
                     <div class="text-right mb-[-30px] max-md:mt-[-44px] max-md:mb-4" >
                         <NuxtLink
                             :to="categoryData.data[0].link"
@@ -251,11 +251,11 @@ const filteredGroups = computed(() => {
         return groupListData.value.data.map(item => ({
                 id:     item.id,
                 name:   item.users.name ,
-                image:  item.projects.image,
+                image:  item.image_first,
                 avatar: item.users.image ,
-                text:   item.projects.name ,
+                text:   item.name ,
                 price:  item.price,
-                tags:   item.product.tags ? item.product.tags : []
+                // tags:   item.product.tags ? item.product.tags : []
             }));
     } else {
         return []
@@ -268,11 +268,11 @@ const filteredNotStartGroups = computed(() => {
         return NotStartGroupList.value.data.map(item => ({
                 id:     item.id,
                 name:   item.users.name ,
-                image:  item.projects.image,
+                image:  item.image_first,
                 avatar: item.users.image ,
-                text:   item.projects.name ,
+                text:   item.name ,
                 price:  item.price,
-                tags:   item.product.tags ? item.product.tags : []
+                // tags:   item.product.tags ? item.product.tags : []
             }));
     } else {
         return []

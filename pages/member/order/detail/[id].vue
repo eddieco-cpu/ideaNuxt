@@ -87,7 +87,7 @@ const orderItem = computed(() => {
     id: item.product_spec_id, 
     sales_price: item.price, 
     amount: item.quantity, 
-    img: item.product_image, 
+    image: item.product_image, 
     name: item.product_name,
     cartItemId: 0
   }))

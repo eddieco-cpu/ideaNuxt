@@ -112,11 +112,11 @@ const showCardClass = computed(() => {
 async function getAllLists() {
 
     const fundingRaiseQueryParam = `?category_name=${route.params.name}&type=fundraise&page=${currentPage}`;
-    const groupBuyingQueryParam = `?category_name=${route.params.name}&type=groupbuying&page=${currentPage}`;
+    const groupBuyingQueryParam  = `?category_name=${route.params.name}&type=groupbuying&page=${currentPage}`;
 
-    const [fundingRaiseData, groupBuyingData] = await Promise.all([
+    const [fundingRaiseData, groupBuyingData, ] = await Promise.all([
         GET(`/frontend/getCategoryPageData${fundingRaiseQueryParam}`, 1),
-        GET(`/frontend/getGroupCategoryPageData${groupBuyingQueryParam}`, 1),
+        GET(`/frontend/getCategoryList${groupBuyingQueryParam}`, 1),
     ]);
 
     if (!!fundingRaiseData.status) {
@@ -127,7 +127,9 @@ async function getAllLists() {
     }
 
     if (!!groupBuyingData.status) {
+        
         groupBuyingList.value = groupBuyingData.paginateData.data;
+        console.log(groupBuyingList.value)
         if(showCard.value == 'groupbuying') {
             totalPages.value = groupBuyingData.paginateData.last_page;
         }
@@ -158,11 +160,10 @@ const formattedGroupBuyingList = computed(() => {
     return sortedList.map(item => ({
       id: item.id,
       name: item.users ? item.users.name : 'Default Name',
-      image: item.projects ? item.projects.image : 'Default Image',
+      image: item.image_first,
       avatar: item.users ? item.users.image : 'Default Avatar',
-      text: item.projects ? item.projects.name : 'Default Text',
+      text: item.name ,
       price: item.price,
-      tags: item.product ? item.product.tags : []
     }));
   } else {
     return [];

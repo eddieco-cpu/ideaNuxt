@@ -91,12 +91,22 @@
                             <ProductsHeartInActive v-else class="xl:scale-[1.33]" />
                         </button> -->
 
+                        
                        
                         <UiButton 
+                            v-if = "projectData.data.credit_status == 3"
                             class="min-w-[370px] min-h-12 max-md:min-w-40 max-md:flex-grow max-xl:min-h-9 max-xl:h-9"
                             @click="addToCart()"
                         >
                             立即贊助
+                        </UiButton>
+
+                        <UiButton 
+                            v-else
+                            class="min-w-[370px] min-h-12 max-md:min-w-40 max-md:flex-grow max-xl:min-h-9 max-xl:h-9 bg-gray-300 pointer-events-none"
+                            disabled
+                        >
+                            募資準備中！敬請期待
                         </UiButton>
                       
                     </div>
@@ -210,18 +220,26 @@
                             <p></p>
                         </li>
                     </template> -->
-                     <!-- <li
-                            v-for="(prod, i) in prods"
+                     <li    
+                            v-for="(prod, i) in proposals"
                             :key="prod.id"
                             class="md:mr-1"
                             :class="i === prods.length - 1 ? 'max-md:mb-5' : 'mb-5'"
                             @click="addToCart(prod)"
                         >
-                            <DashboardProposalsCard :item="prod" class="w-full" />
-                        </li> -->
-                    <template v-for="prod in productsWithSoldOut" :key="prod.id">
+                        <DashboardProposalsCard
+                            :item="prod"
+                            class="w-full"
+                            :class="
+                                prod.soldOut
+                                    ? 'opacity-50 cursor-not-allowed pointer-events-none'
+                                    : 'opacity-100 cursor-pointer active:border-white hover:border-Primary-400-Hover transition duration-300'
+                            "
+                        />
+                        </li>
+                    <!-- <template v-for="prod in productsWithSoldOut" :key="prod.id">
                         
-                    </template>
+                    </template> -->
                 </ul>
             </section>
         </div>
@@ -260,13 +278,15 @@ const isFavorite = ref(false);
 
 function addToCart(prod) {
 
+    if(projectData.value?.data?.credit_status != 3) {
+        return;
+    }
     // if(!authStore.isLogin) {
     //     toast.error('請先登入會員');
     //     return;
     // }
     let card = prod || productsWithSoldOut.value.filter((item) => !item.soldOut)[0];
     
-    console.log(card)
     navigateTo(`/cart/cart-fundraise?project_id=${projectId}&project_card_id=${card.id}`);
     // navigateTo(`/cart/cart-fundraise?id=${route.params.pid}`);
 }
@@ -333,8 +353,6 @@ const prods = ref([]);
 async function getProdsData() {
     const data = await GET(`/api/productsFundraise`);
     if (!!data) {
-        console.log('--------------')
-        console.log(data.prods)
         prods.value = data.prods.map((el, i) => ({
             ...el,
         }));

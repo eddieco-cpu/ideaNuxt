@@ -75,7 +75,7 @@
                     <UFormGroup label="專案名稱" name="projectName" required class="mb-8">
                         <div class="relative">
                             <UTextarea
-                                placeholder="本次募資專案之名稱/品名，文字數量最多以 40字為限。"
+                                placeholder="本次募資專案之名稱/品名，文字數量最多以50字為限。"
                                 :rows="screenWidth <= 768 ? 2 : 1"
                                 resize
                                 class="w-full"
@@ -91,7 +91,7 @@
                     <UFormGroup label="專案簡介" name="projectDes" required class="mb-8">
                         <div class="relative">
                             <UTextarea
-                                placeholder=" 請您簡短的以  90字，快速的介紹本次計畫，將顯示於募資頁商品右側。"
+                                placeholder=" 請您簡短的以  200字，快速的介紹本次計畫，將顯示於募資頁商品右側。"
                                 :rows="screenWidth <= 768 ? 3 : 2"
                                 resize
                                 class="w-full"
@@ -497,7 +497,6 @@ async function doSubmit() {
         return alert("請同意提案契約書");
     }
     isLoading.value = true;
-    x
     try {
         const data = await POST("/stepOneProject", submissionData, '');
 

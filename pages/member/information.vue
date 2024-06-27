@@ -8,9 +8,9 @@
                         :schema="memberInformationSchema"
                         :state="memberInfo"
                         class="md:max-w-[434px] flex flex-col gap-y-3"
-                        @submit="onSubmit"
+                        @submit="onSubmitDebounced"
                     >
-                        <UFormGroup label="暱稱" name="nickName" help="使用平台時，大家會看到您的基本暱稱。">
+                        <UFormGroup label="暱稱" name="nickName" help="使用平台時，大家會看到您的基本暱稱。" required>
                             <UInput placeholder="凍齡教主小美" v-model="memberInfo.nick_name" />
                         </UFormGroup>
 
@@ -37,7 +37,7 @@
                         </UFormGroup>
 
                         <!-- 出生日 -->
-                        <UFormGroup label="出生日" name="birth">
+                        <UFormGroup label="出生日" name="birth" required>
                             <ClientOnly>
                             <VueDatePicker
                                 position="left"
@@ -104,7 +104,6 @@
                 </CardContainer>
             </div>
             
-
             <div v-show="memberInfo.register">
                 <h1 class="text-xl font-medium">團主資料</h1>
                 <p class="text-sm text-Neutral-600-Dark-Primary mt-2">
@@ -123,10 +122,11 @@ import VueDatePicker               from "@vuepic/vue-datepicker";
 import { memberInformationSchema } from "~/validation";
 import { zhTW }                    from "date-fns/locale";
 import { useToast }                from "vue-toastification";
+import { debounce }                from 'lodash';
+
 const toast     = useToast();
 const authStore = useAuthStore();
 const token     = authStore.token;
-
 
 const memberInfo = ref({
     nick_name    : undefined,
@@ -164,30 +164,32 @@ const sexOptions = [
     },
 ];
 
+const onSubmitDebounced = debounce(onSubmit, 300);
+
 async function onSubmit(event) {
 
     const { nick_name, name, email, birth, sex, notification, subscription } = event.data;
 
     const payload = {
-        nick_name: nick_name,
-        name: name,
-        email: email,
-        birth: birth,
-        sex: sex,
-        notification: notification,
-        subscription: subscription,
+        nick_name    : nick_name,
+        name         : name,
+        email        : email,
+        birth        : birth,
+        sex          : sex,
+        notification : notification,
+        subscription : subscription,
     }
 
     const data = await POST("/updateUserInfo", payload, token);
 
     if(!!data.status) {
         authStore.userInfo = data.userInfo;
+        console.log(data.userInfo)
         memberInfo.value = { ...memberInfo.value, ...data.userInfo };
         toast.success(data.message)
     } else {
         toast.error(data.message)
     }
-
 }
 </script>
 

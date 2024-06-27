@@ -11,7 +11,7 @@
         </button>
 
         <MemberEditAddress
-            v-bind="tempAddress"
+            v-bind="tempAddress"    
             :isEditmode="isEditmode"
             @onAbort="onAbort"
             @onSubmit="onSubmit"
@@ -36,20 +36,18 @@
 
 <script setup>
 
-const authStore = useAuthStore();
-const token = authStore.token;
-
+const authStore   = useAuthStore();
 const addressInfo = ref([]);
-
 
 getAddress();
 
-
 async function getAddress () {
-    const data = await POST("/getAddress", {}, token);
+    const data = await POST("/getAddress", {}, '');
 
     if(!!data.status) {
         addressInfo.value = data.data
+    } else {
+        addressInfo.value = []
     }
 }
 
@@ -75,7 +73,7 @@ async function editAddress(index, isEdit) {
         tempAddress.value = { ...addressInfo.value.find((item, i) => i === index), index };
         
     } else {
-        const lengthOfAddressInfo = addressInfo.value.length > 0 ? addressInfo.value.length +1 : 1
+        const lengthOfAddressInfo = addressInfo.value.length > 0 ? addressInfo.value.length + 1 : 1
         // 新增地址
         tempAddress.value = {
             index: lengthOfAddressInfo,
@@ -89,10 +87,10 @@ async function onAbort(payload) {
 
         const data =  await POST("/deleteAddress", {id: addressId}, '');
 
-
         if(!!data) {
+            getAddress();
+            tempAddress.value = null;
         }
-        console.log(data)
     }
 }
 
@@ -117,19 +115,16 @@ async function onSubmit(data, isEditmode) {
     if (isEditmode) {
         
         const addressId = addressInfo.value[index].id;
+        payload.id      = addressId;
 
-        payload.id = addressId;
-        
-        
-        const data =  await POST("/editAddress", payload, token);
-
+        const data =  await POST("/editAddress", payload, '');
 
         if(!!data.status) {
             check.value = true;
         }
     } else {
         
-        const data = await POST("/addAddress", payload, token);
+        const data = await POST("/addAddress", payload, '');
 
         if(!!data.status) {
             check.value = true;

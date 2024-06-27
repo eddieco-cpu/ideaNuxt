@@ -43,7 +43,7 @@
                         <!-- 方案圖片 -->
                         <UFormGroup
                             label="方案照片"
-                            help="請上傳檔案小於 1000KB 的圖片，尺寸必須為 873x284 像素"
+                            help="請上傳檔案小於 1000KB 的圖片，尺寸必須為 792x284 像素"
                             required
                             name="imgDataQuantity"
                             class="mb-3"

@@ -12,6 +12,17 @@ export const cartStore = defineStore("cart", () => {
             return arr.length === 0;
         });
 
+        const checkCartItem = async () =>  {
+    
+            const data  = await POST('/checkCartItem', {} , '');
+    
+            if(data) {
+                isHaveCartItem.value = true;
+            } else {
+                isHaveCartItem.value = false;
+            }
+        }
+
         const selectGroupBuyProducts = ref({});
 
         const totalGroupBuyPrice = computed(() => {
@@ -33,6 +44,7 @@ export const cartStore = defineStore("cart", () => {
             totalGroupBuyPrice,
             totalFundRaisePrice,
             isHaveCartItem,
+            checkCartItem
         };
     },
     {

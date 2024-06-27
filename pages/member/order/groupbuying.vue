@@ -54,7 +54,7 @@ getData()
 async function getData () {
     const payload = {};
 
-    const data = await POST("/getOrderForGroup", {}, token);
+    const data = await POST("/getOrderForGroup",  {type:1}, token);
 
     if(!!data.status) {
         orderList.value = data.orders;

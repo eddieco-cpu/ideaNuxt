@@ -56,8 +56,6 @@ const props = defineProps({
 });
 const emit = defineEmits(["updateCurrentPage"]);
 
-// console.log(props.currentPage);
-// console.log(props.totalPages);
 
 const visiblePages = computed(() => {
     if (props.totalPages <= 5) return Array.from({ length: props.totalPages }, (_, i) => i + 1);

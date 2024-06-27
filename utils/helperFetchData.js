@@ -1,11 +1,13 @@
 import { useRuntimeConfig } from "#app";
 import { useAuthStore } from "@/stores/auth";
+import { cartStore } from "@/stores/cart";
 
 export const POST = async (endpoint, payload, token='') => {
     const config   = useRuntimeConfig();
     const baseUrl  = config.public.apiBaseUrl;
     const url      = `${baseUrl}${endpoint}`
     const store    = useAuthStore();
+    const cart     = cartStore();
     const cookie   = useCookie('jwt-token')
     const jwtToken = cookie.value;
 
@@ -28,9 +30,12 @@ export const POST = async (endpoint, payload, token='') => {
 
     if (error.statusCode == 401) {
       store.clearToken();
+      cart.isHaveCartItem = false;
     }
 
     helperResponseHandle(error.statusCode, message);
+
+    throw error;
   }
 };
 
@@ -44,6 +49,7 @@ export const GET = async (url, test = "0") => {
   const cookie   = useCookie('jwt-token')
   const jwtToken = cookie.value;
   const store    = useAuthStore();
+  const cart     = cartStore();
 
   try {
     const data = await $fetch(url, {
@@ -62,6 +68,7 @@ export const GET = async (url, test = "0") => {
 
     if (error.statusCode == 401) {
       store.clearToken();
+      cart.isHaveCartItem = false;
     }
 
     helperResponseHandle(error.statusCode, message);

@@ -1,7 +1,7 @@
 <template>
     <li class="rounded-lg overflow-hidden bg-white">
         <picture class="block w-full aspect-[1/1] rounded-lg overflow-hidden">
-            <img :src="select.img" class="block w-full h-full object-cover" />
+            <img :src="select.image" class="block w-full h-full object-cover" />
         </picture>
         <section class="p-3 pb-2 max-md:aspect-[212/200] xl:aspect-[212/200]">
             <h4 class="text-sm font-medium text-ellipsis line-clamp-2 mb-2">{{ select.name }}</h4>
@@ -37,18 +37,21 @@ const cart = cartStore();
 const authStore = useAuthStore();
 const token = authStore.token;
 
-const { select, id, groupId } = defineProps({
+const { select, id } = defineProps({
     select: Object,
     id: Number,
-    groupId:String
 });
 async function addToCart() {
+
+    if(!authStore.isLogin) {
+        toast.error("請先登入會員");
+        return;
+    }
    
     const groupbuyingId = parseInt(route.params.pid);
     const productId = id;
 
-
-    const payload = { product_id: select.product_id, amount: select.amount, spec_id: select.id, groupId:groupId };
+    const payload = { amount: select.amount, spec_id: select.id, groupId:select.group_id };
 
     const data = await POST("/add2Cart", payload, token);
 

@@ -1,7 +1,7 @@
 <template>
   <Transition name="modal">
     <ModalContainer :text="'會員登入'" @openModal="openModal('close')" v-if="modelValue === 'login'">
-      <UForm :state="state" class="w-full" @submit="onSubmit">
+      <UForm :state="state" class="w-full" @submit="onSubmitDebounced">
         <UFormGroup name="phone" class="mb-6">
           <UInput v-model="state.phone" placeholder="輸入手機號碼">
             <template #leading>
@@ -43,10 +43,13 @@
 <script setup>
 import { useAuthStore } from "@/stores/auth";
 import { useToast }     from "vue-toastification";
+import { cartStore }    from "@/stores/cart";
 import { POST }         from "~/utils/helperFetchData.js";
+import { debounce }     from 'lodash';
 
 const toast = useToast();
 const store = useAuthStore();
+const cart  = cartStore();
 
 const { modelValue } = defineProps(["modelValue"]);
 const emit           = defineEmits(["update:modelValue"]);
@@ -56,26 +59,34 @@ function openModal(value = "") {
 }
 
 const state = reactive({
-    phone    : "kminchelle",
-    password : "0lelplR",
+    phone    : "",
+    password : "",
 });
 
 async function onSubmit(event) {
 
-    const { phone, password } = event.data;
+  const { phone, password } = event.data;
 
     const data = await POST("/login", { account: phone, password: password });
+    if (!!data) {
+      toast.success("登入成功");
+      
+      state.phone    = ""
+      state.password = ""
+      
+      store.isLogin = true;
+      await new Promise((resolve) => {
+              store.setToken(data.access_token);
+              resolve();
+          });
+      store.userInfo = data.user;
+      cart.checkCartItem();
 
-  if (!!data) {
-    toast.success("登入成功");
-
-    store.isLogin = true;
-    store.setToken(data.access_token);
-    store.userInfo = data.user;
-
-    openModal("close");
-  }
+      openModal("close");
+    }
 }
+
+const onSubmitDebounced = debounce(onSubmit, 300);
 </script>
 
 <style scoped lang="scss"></style>

@@ -75,7 +75,7 @@
 
                 <button
                     class="w-full bg-Primary-500-Primary block p-2 rounded-lg text-white mb-3 text-sm"
-                    @click="register"
+                    @click="onSubmitDebounced"
                 >
                     恭喜你，完成註冊！
                 </button>
@@ -87,6 +87,7 @@
 <script setup>
 import { useToast }     from "vue-toastification";
 import { useAuthStore } from "@/stores/auth";
+import { debounce }     from 'lodash';
 
 const { modelValue } = defineProps(["modelValue"]);
 const emit  = defineEmits(["update:modelValue"]);
@@ -101,24 +102,7 @@ const registerData = ref({
 });
 
 const registerStep = ref(1);
-
-function registerStepHandler(step) {
-
-    if(step == 2) {
-        if(registerData.value.captcha !=  tempSMS.value) {
-            toast.error('驗證碼錯誤');
-            return;
-        }
-
-        if(registerData.value.account !=  tempPhone.value) {
-            toast.error('手機與傳送驗證碼手機不一致');
-            return;
-        }
-    }
-    registerStep.value = step;
-}
-
-const timeLeft = ref(0);
+const timeLeft     = ref(0);
 
 const updateTimer = () => {
   const interval = setInterval(() => {
@@ -160,19 +144,35 @@ async function sendSMS() {
         return;
     }
 
-    const data = await POST("/sendSMS", { 'account' : account }, '');
+    const duration = 60;
+    const endTime  = Date.now() + duration * 1000;
+    localStorage.setItem('endTime', endTime);
+    updateTimer();
 
+    const data = await POST("/sendSMS", { 'account' : account }, '');
     if(!!data) {
-        console.log(data)
         tempPhone.value = data.account;
         tempSMS.value   = data.sms;
-
-        const duration = 60;
-        const endTime  = Date.now() + duration * 1000;
-        localStorage.setItem('endTime', endTime);
-        updateTimer();
     }
 }
+
+function registerStepHandler(step) {
+
+    if(step == 2) {
+        if(registerData.value.captcha !=  tempSMS.value) {
+            toast.error('驗證碼錯誤');
+            return;
+        }
+
+        if(registerData.value.account !=  tempPhone.value) {
+            toast.error('手機與傳送驗證碼手機不一致');
+            return;
+        }
+    }
+    registerStep.value = step;
+}
+
+const onSubmitDebounced = debounce(register, 300);
 
 async function register() {
 
@@ -186,6 +186,11 @@ async function register() {
 
     if (!!data) {
         toast.success("註冊成功");
+        registerStep.value = 1
+
+        for (let key in registerData.value) {
+            registerData.value[key] = undefined;
+        }
 
         store.isLogin  = true;
         store.userInfo = data.user;
