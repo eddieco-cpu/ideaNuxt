@@ -59,8 +59,8 @@ function openModal(value = "") {
 }
 
 const state = reactive({
-    phone: "kminchelle",
-    password: "0lelplR",
+    phone: "emilys",
+    password: "emilyspass",
 });
 
 async function onSubmit(event) {
